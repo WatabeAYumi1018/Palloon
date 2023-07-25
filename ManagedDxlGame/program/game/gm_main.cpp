@@ -46,7 +46,7 @@ class UI {};
 class Collision {};
 
 class Character {
-
+public:
 	Character(Vector3 m_pos, Vector3 m_velocity);
 	virtual ~Character();
 
