@@ -4,8 +4,7 @@
 #include "gm_main.h"
 
 
-using namespace std;
-using namespace tnl;
+
 
 //～8月中旬まで～
 //①マップ描画
@@ -30,48 +29,7 @@ using namespace tnl;
 // ～期限まで～
 //⑮最終確認
 
-class SceneBase {};
 
-//プレイヤー、敵、カメラ、アイテム、攻撃etc
-class ScenePlay
-	//:public SceneBase
-{};
-
-class Camera {};
-
-class Effect {};
-
-class UI {};
-
-class Collision {};
-
-class Character {
-public:
-	Character(Vector3 m_pos, Vector3 m_velocity);
-	virtual ~Character();
-
-protected:
-	int graph_hdl;						//画像ハンドル
-	int hp;
-
-
-	Vector3 m_pos;						//座標
-	Vector3 m_velocity;					//速度
-	Vector3 m_gravity;					//重力
-
-	bool is_Exit;						//存在フラグ
-	bool is_Jump;						//ジャンプ中
-	bool is_Attack;						//攻撃中
-
-	Collision* collision = nullptr;		//当たり判定
-	//Effect* effect = nullptr;
-};
-
-class Player :public Character {};
-
-class Enemy :public Character {};
-
-class Item :public Character {};
 
 
 
@@ -80,6 +38,7 @@ class Item :public Character {};
 void gameStart() {
 	srand(time(0));
 
+	
 }
 
 //------------------------------------------------------------------------------------------------------------

@@ -21,6 +21,21 @@
     <Filter Include="program\[001] dxlib_ext\create_mesh">
       <UniqueIdentifier>{11d8e443-8d64-409c-92f1-6895cd2dbbce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\[002]engine">
+      <UniqueIdentifier>{5ebced23-4deb-401c-8594-b6cb408db5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[003] game\[001]sceneTitle">
+      <UniqueIdentifier>{e1ce9618-8f43-4765-bf99-bdf29e2dfed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[003] game\[002]sceneSelect">
+      <UniqueIdentifier>{96e7863b-717c-4ec1-9d2f-868c11e0de1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[003] game\[003]scenePlay">
+      <UniqueIdentifier>{d6c1b13f-05da-4d0c-a4f2-d8bc7ac6b5f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[003] game\[004]sceneEnd">
+      <UniqueIdentifier>{5f8bafe5-dc44-4ea0-8092-3ebf0c4e1c03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ManagedDxlGame.cpp">
@@ -134,6 +149,33 @@
     <ClCompile Include="program\library\tnl_instance.cpp">
       <Filter>program\[000] library</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Object .cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Enemy.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Player.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Item.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Collision.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\scenePlay.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\engine\UI.cpp">
+      <Filter>program\[002]engine</Filter>
+    </ClCompile>
+    <ClCompile Include="program\engine\Effect.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -235,6 +277,39 @@
     </ClInclude>
     <ClInclude Include="program\library\tnl_instance.h">
       <Filter>program\[000] library</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Object.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\GameEngine.h">
+      <Filter>program\[002]engine</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Enemy.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Player.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Item.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Collision.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\scenePlay.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\UI.h">
+      <Filter>program\[002]engine</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\Effect.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\sceneBase.h">
+      <Filter>program\[002]engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
