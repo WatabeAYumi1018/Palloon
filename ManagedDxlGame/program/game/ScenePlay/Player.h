@@ -1,24 +1,40 @@
 #pragma once
+#include "../../engine/GameEngine.h"
 #include "Character.h"
 
 
 class Player :public Character {
 
 public:
-	Player(Vector3 m_pos, Vector3 m_velocity);
+	Player(Vector3 pos);
 	~Player();
 
-	//-----メンバ変数-----//
 private:
+	//-----定数-----//
+	const int PLAYER_SPEED_WALK = 400;		//移動速度（pix/fps）
+	const int PLAYER_SPEED_DASH = 800;		//ダッシュ速度（pix/fps）
+	const int PLAYER_HP = 5;				//プレイヤーのHP
+
+	//-----メンバ変数-----//
+	Vector3 m_jump_velocity = {0,0,0};		//ジャンプ力（pix/fps）
 	int m_dash;						//ダッシュスピード
-	eAttackType m_eAttackType;		//アタックタイプタグ判定用
 	Camera* m_camera = nullptr;		//カメラ
 
-	//-----メンバ関数-----//
 public:
-	void Initialize();
-	void Update(float delta_time);
-	void Draw();
-	void Finalize();
+	//-----メンバ関数-----//
+	void Initialize() override;
+	void Update(float delta_time) override;
+	void Draw() override;
+	void Finalize() override;
+
+	//-----Setter,Getter-----//
+	void SetDash(int dash) { m_dash = dash; }
+	int GetDash() { return m_dash; }
+
+	//void SetAttackType(eAttackType type) { m_eAttackType = type; }
+	//eAttackType GetAttackType() { return m_eAttackType; }
+	
+	void SetCamera(Camera* camera) { m_camera = camera; }
+	Camera* GetCamera() { return m_camera; }
 
 };

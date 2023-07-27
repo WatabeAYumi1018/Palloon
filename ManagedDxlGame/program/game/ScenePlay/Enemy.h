@@ -1,21 +1,23 @@
 #pragma once
+#include "../../engine/GameEngine.h"
 #include "Character.h"
+
 
 class Enemy :public Character {
 
 public:
-	Enemy(Vector3 m_pos, Vector3 m_velocity);
+	Enemy(Vector3 pos);
 	~Enemy();
-	//-----メンバ変数-----//
 
 private:
+	//-----メンバ変数-----//
 	eAttackType m_eAttackType;		//アタックタイプタグ判定用
 
-	//-----メンバ関数-----//
 public:
-	void Initialize();
-	void Update(float delta_time);
-	void Draw();
-	void Finalize();
+	//-----メンバ関数-----//
+	void Initialize() override;
+	void Update(float delta_time) override;
+	void Draw() override;
+	void Finalize() override;
 };
 

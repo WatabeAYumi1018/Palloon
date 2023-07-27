@@ -1,9 +1,8 @@
 #pragma once
 #include "../../engine/GameEngine.h"
 
-
 class Object {
-	Object(Vector3 m_pos);
+	Object(Vector3 pos);
 	virtual ~Object();
 
 protected:
@@ -11,8 +10,8 @@ protected:
 	Mesh* m_mesh;						//ÉÅÉbÉVÉÖ
 
 public:
-	virtual void Initialize();
-	virtual void Update(float delta_time);
-	virtual void Draw();
-	virtual void Finalize();
+	 void Initialize() {}
+	 void Update(float delta_time) {}
+	 void Draw() {}
+	 void Finalize() {}
 };

@@ -9,6 +9,6 @@ using namespace dxe;
 enum class eAttackType {
 	eAttack_Push,
 	eAttack_Fire,
-	eAttack_BigBeam,
+	eAttack_Beam,
 	eAttack_Max
 };
