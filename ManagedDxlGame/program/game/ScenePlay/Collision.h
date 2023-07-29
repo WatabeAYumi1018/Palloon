@@ -9,18 +9,19 @@ public:
 	Collision(int width,int height);
 	virtual ~Collision();
 
-	//-----矩形当たり判定-----//
 private:
+	//-----矩形当たり判定-----//
 	int m_width = 0;
 	int m_height = 0;
 
-	//-----メンバ関数-----//
 public:
+	//-----メンバ関数-----//
 	//キャラクター同士の当たり判定をチェック
 	bool HitCheck(const Vector3& pos,const Object* other);
+	//キャラクターと床の当たり判定をチェック
+	bool HitCheckFloor(const Vector3& pos, const Object* other);
 
 	//-----Setter,Getter-----//
-public:
 	void SetWidth(int width) { m_width = width; }
 	int GetWidth() { return m_width; }
 

@@ -17,8 +17,8 @@ private:
 
 	//-----メンバ変数-----//
 	Vector3 m_jump_velocity = {0,0,0};		//ジャンプ力（pix/fps）
-	int m_dash;						//ダッシュスピード
-	Camera* m_camera = nullptr;		//カメラ
+	int m_dash;								//ダッシュスピード
+	Camera* m_camera = nullptr;				//カメラ
 
 public:
 	//-----メンバ関数-----//
@@ -30,11 +30,10 @@ public:
 	//-----Setter,Getter-----//
 	void SetDash(int dash) { m_dash = dash; }
 	int GetDash() { return m_dash; }
-
-	//void SetAttackType(eAttackType type) { m_eAttackType = type; }
-	//eAttackType GetAttackType() { return m_eAttackType; }
 	
 	void SetCamera(Camera* camera) { m_camera = camera; }
 	Camera* GetCamera() { return m_camera; }
 
+	//void SetAttackType(eAttackType type) { m_eAttackType = type; }
+	//eAttackType GetAttackType() { return m_eAttackType; }
 };

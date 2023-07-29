@@ -1,4 +1,8 @@
 #pragma once
 
 
-class SceneBase {};
+class SceneBase 
+	//:gameManager
+{
+
+};

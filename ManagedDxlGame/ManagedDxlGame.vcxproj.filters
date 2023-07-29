@@ -176,6 +176,12 @@
     <ClCompile Include="program\engine\Effect.cpp">
       <Filter>program\[003] game\[003]scenePlay</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\MapChip.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\engine\backGround.cpp">
+      <Filter>program\[002]engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -309,6 +315,12 @@
       <Filter>program\[003] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\sceneBase.h">
+      <Filter>program\[002]engine</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\MapChip.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\backGround.h">
       <Filter>program\[002]engine</Filter>
     </ClInclude>
   </ItemGroup>
