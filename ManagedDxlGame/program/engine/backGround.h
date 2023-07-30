@@ -20,6 +20,5 @@ public:
 	//-----ƒƒ“ƒoŠÖ”-----//
 	void Initialize();
 	void Update(float delta_time);
-	//void Draw();
 	void Finalize();
 };
