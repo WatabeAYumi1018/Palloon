@@ -41,6 +41,11 @@
 Vector3 circle_pos = { 300,300,0 };
 float radius = 50.0f;
 
+float line_pos_start_x = 800;
+float line_pos_end_x = 500;
+float line_pos_start_y = 200;
+float line_pos_end_y = 400;
+
 Collision* collision = nullptr;
 
 //------------------------------------------------------------------------------------------------------------
@@ -71,8 +76,8 @@ void gameMain(float delta_time) {
 	//player->Update(delta_time);
 	//mapChip->Update(delta_time);
 
-	DrawLine(800, 200, 500, 400, -1, 10);
-	DrawCircle(circle_pos.x, circle_pos.y, radius, -1, 10);
+	DrawLine(line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y, -1, 1);
+	DrawCircle(circle_pos.x, circle_pos.y, radius, -1, 1);
 
 	//¶‰EƒL[‚Å‹…ˆÚ“®
 	if (Input::IsKeyDown(eKeys::KB_LEFT)) {
@@ -82,7 +87,7 @@ void gameMain(float delta_time) {
 		circle_pos.x += 10;
 	}
 	//‰~‚Æü‚Ì“–‚½‚è”»’è
-	if (collision->CircleLine(circle_pos, radius, 800, 200 ,  500, 400 )) {
+	if (collision->CircleLine(circle_pos, radius, line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y)) {
 		DrawFormatString(0, 0, -1, "“–‚½‚Á‚Ä‚é");
 	}
 	else {

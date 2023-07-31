@@ -24,7 +24,7 @@ public:
 	//キャラクターと床の当たり判定をチェック
 	bool HitCheckFloor(const Vector3& pos, const Object* other) {}
 	//円と線分との当たり判定
-	bool CircleLine(const Vector3& circle_pos, float radius, int line_pos_start_x, int line_pos_end_x, int line_pos_start_y, int line_pos_end_y);
+	bool CircleLine(const Vector3& circle_pos, float radius, float line_pos_start_x, float line_pos_end_x, float line_pos_start_y, float line_pos_end_y);
 
 
 	//-----Setter,Getter-----//
