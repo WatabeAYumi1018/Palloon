@@ -5,72 +5,42 @@ Collision::Collision(int radius) :m_radius(radius) {}
 
 Collision::~Collision() { delete this; }
 
-//★計算ミスのため、明日確認
-bool Collision::CircleLine(const Vector3& circle_pos, float radius, float line_pos_start_x, float line_pos_end_x, float line_pos_start_y, float line_pos_end_y) {
+//★出来てるはずなのになんか違うらしい
+// 線分と円の当たり判定
+bool Collision::CircleLine(const Vector3& circle_pos, float radius,float line_pos_start_x,
+                            float line_pos_end_x,float line_pos_start_y, float line_pos_end_y) 
+{
+    // 線分の始点と終点のベクトル
+    Vector3 line_vec = { line_pos_end_x - line_pos_start_x, line_pos_end_y - line_pos_start_y, 0 };
+    // 線分の始点から円の中心までのベクトル
+    Vector3 circle_vec = { circle_pos.x - line_pos_start_x, circle_pos.y - line_pos_start_y, 0 };
 
-	//Step 1: 円の中心と線分の最寄り点を求める
-	//線分のベクトル
-	float ABx = line_pos_end_x - line_pos_start_x;
-	float ABy = line_pos_end_y - line_pos_start_y;
-	//ABとAOの内積
-	float AB_dot = (circle_pos.x - line_pos_start_x) * ABx + (circle_pos.y - line_pos_start_y) * ABy;
-	//内積/線分の長さ
-	float t = AB_dot / (ABx * ABx + ABy * ABy);
-	t = fmax(0, fmin(1, t));
+    // 線分の長さの2乗
+    float line_length_pow = line_vec.x * line_vec.x + line_vec.y * line_vec.y;
+    // 線分の始点から円の中心までの距離（線分の向きを考慮した内積）
+    float dot_product = line_vec.x * circle_vec.x + line_vec.y * circle_vec.y;
 
-	// 線分の始点から最寄り点までのベクトルを求める
-	float closestPoint_x = line_pos_start_x + t * ABx;
-	float closestPoint_y = line_pos_start_y + t * ABy;
+    // 線分上の交点を計算
+    float t = dot_product / line_length_pow;
+    // 交点が線分上に存在するかを判定
+    bool point_on_segment = (t >= 0 && t <= 1.0f);
 
-	//Step 2: 最寄り点が線分上にあるかどうか判定する
-	//最寄り点と円の中心の距離の２乗を求める
-	float distanceSquared = (closestPoint_x - circle_pos.x) * (closestPoint_x - circle_pos.x)
-								+ (closestPoint_y - circle_pos.y) * (closestPoint_y - circle_pos.y);
-	
-	////円の半径の２乗と比較する（平方根での高コスト削減のため二乗で比較）
-	//if (distanceSquared < radius * radius || t < 0 || t > 1 ) {return false;}
+    if (point_on_segment) {
+        // 交点から円の中心までの距離を計算
+        Vector3 intersection_point = { line_pos_start_x + t * line_vec.x, line_pos_start_y + t * line_vec.y, 0 };
+        float distance_squared = (intersection_point.x - circle_pos.x) * (intersection_point.x - circle_pos.x) +
+            (intersection_point.y - circle_pos.y) * (intersection_point.y - circle_pos.y);
 
-	////Step 3: 最寄り点と円の中心の距離を求める
-	//float distance = distanceSquared;
-
-	//Step 4: 距離が円の半径よりも小さいかどうかを判定する
-	if(distanceSquared <= radius * radius) {return true;}
-
-	else { return false; }
+        // 距離が円の半径以下かを判定
+        float radius_squared = radius * radius;
+        if (distance_squared <= radius_squared) {
+            return true; // 当たり
+        }
+    }
+    return false; // 当たりなし
 }
 
-	////-----円の中心と線分の距離を求める-----//
-	////①AOのベクトルを求める(zは0)
-	//Vector3 AO = { circle_pos.x - line_pos_start_x,circle_pos.y - line_pos_start_y,0 };
-	////②AOの大きさ（長さ）を求める
-	//float AO_size = sqrt(AO.x * AO.x + AO.y * AO.y);
-	////③AOの単位ベクトルを求める（正規化）
-	//Vector3 AO_unit = { AO.x / AO_size,AO.y / AO_size,0 };
 
-	////④ABのベクトルを求める
-	//Vector3 AB = { line_pos_end_x - line_pos_start_x,line_pos_end_y - line_pos_start_y,0 };
-	////⑤ABの大きさ（長さ）を求める
-	//float AB_size = sqrt(AB.x * AB.x + AB.y * AB.y);
-	////⑥ABの単位ベクトルを求める（正規化）
-	//Vector3 AB_unit = { AB.x / AB_size,AB.y / AB_size,0 };
-
-	////⑦AOとABの内積を求める
-	//float AO_dot_AB = AO.x * AB_unit.x + AO.y * AB_unit.y;
-
-	////⑧点Pの座標を求める
-	//Vector3 P = { line_pos_start_x * AO_dot_AB, line_pos_start_y * AO_dot_AB ,0 };
-
-	////⑨AOとAPの外積
-	//float AO_cross_AP = AO.x * P.y - AO.y * P.x;
-	//
-	////OPの長さと円の半径を比較
-	//if (AO_cross_AP <= radius) {
-	//	return false;
-	//}
-	//else {
-	//	return true;
-	//}
-//}
 
 //キャラクター同士の当たり判定をチェック
 //bool Collision::HitCheck(const Vector3& pos, const Object* other) {}
