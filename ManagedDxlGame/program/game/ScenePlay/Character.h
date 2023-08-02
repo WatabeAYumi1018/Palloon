@@ -18,7 +18,6 @@ protected:
 	int m_attack;						//攻撃力
 	
 	Vector3 m_jump;						//ジャンプ力
-
 	Vector3 m_pos;						//座標(Object反映するまでの仮)
 	//Vector3 velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
 	Vector3 m_gravity = {0,100,0};		//重力
@@ -26,10 +25,11 @@ protected:
 	//Vector3 m_size;					//サイズ
 
 	bool m_is_Exit=false;				//存在フラグ
+	bool m_is_Ground=true;				//接地中
 	bool m_is_Jump=false;				//ジャンプ中
 	bool m_is_Attack=false;				//攻撃中
 
-	Collision* collision = nullptr;		//当たり判定
+	Collision* m_collision = nullptr;		//当たり判定
 	//Effect* effect = nullptr;
 
 	//-----メンバ関数-----//
@@ -38,4 +38,14 @@ public:
 	virtual void Update(float delta_time) ;
 	virtual void Draw() ;
 	virtual void Finalize() ;
+
+	//-----Getter,Setter-----//
+	//void SetIsExit(bool is_exit) { m_is_Exit = is_exit; }
+	//bool GetIsExit() const { return m_is_Exit; }
+	//
+	//void SetIsJump(bool is_jump) { m_is_Jump = is_jump; }
+	//bool GetIsJump() const { return m_is_Jump; }
+	//
+	//void SetIsAttack(bool is_attack) { m_is_Attack = is_attack; }
+	//bool GetIsAttack() const { return m_is_Attack; }
 };

@@ -33,18 +33,10 @@
 //⑯最終確認
 
 
-//Player* player;
-//MapChip* mapChip;
-//
-//backGround* back;
+Player* player;
+MapChip* mapChip;
 
-Vector3 circle_pos = { 300,300,0 };
-float radius = 50.0f;
-
-float line_pos_start_x = 800;
-float line_pos_end_x = 500;
-float line_pos_start_y = 200;
-float line_pos_end_y = 400;
+backGround* back;
 
 Collision* collision = nullptr;
 
@@ -54,17 +46,17 @@ void gameStart() {
 	srand(time(0));
 
 	////背景のコンストラクタ作成
-	//back = new backGround();
+	back = new backGround();
 
 	////プレイヤーのコンストラクタ生成
-	//player = new Player({ 100,100,0 });
+	player = new Player({ 100,100,0 });
 
 	////マップチップのCSVファイル
-	//string csv_map_tile_data = "csv/TileStage_1-1.csv";	
+	string csv_map_tile_data = "csv/TileStage_1-1.csv";	
 
 	////マップチップのコンストラクタ生成
-	//mapChip = new MapChip(csv_map_tile_data);
-	collision=new Collision(radius);
+	mapChip = new MapChip(csv_map_tile_data);
+	collision = new Collision({0,0,0}, 16);
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -72,28 +64,35 @@ void gameStart() {
 void gameMain(float delta_time) {
 
 	////生成したコンストラクタでUpdate回す
-	//back->Update(delta_time);
-	//player->Update(delta_time);
-	//mapChip->Update(delta_time);
+	back->Update(delta_time);
+	player->Update(delta_time);
+	mapChip->Update(delta_time);
 
-	DrawLine(line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y, -1, 1);
-	DrawCircle(circle_pos.x, circle_pos.y, radius, -1, 1);
+	//DrawLine(line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y, -1, 1);
+	//DrawCircle(circle_pos.x, circle_pos.y, radius, -1, 1);
 
-	//左右キーで球移動
-	if (Input::IsKeyDown(eKeys::KB_LEFT)) {
-		circle_pos.x -= 10;
-	}
-	if (Input::IsKeyDown(eKeys::KB_RIGHT)) {
-		circle_pos.x += 10;
-	}
-	//円と線の当たり判定
-	if (collision->CircleLine(circle_pos, radius, line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y)) {
-		DrawFormatString(0, 0, -1, "当たってる");
-	}
-	else {
-		DrawFormatString(0, 0, -1, "当たってない");
-	}
-		
+	////キー移動
+	//if (Input::IsKeyDown(eKeys::KB_LEFT)) {
+	//	circle_pos.x -= 10;
+	//}
+	//if (Input::IsKeyDown(eKeys::KB_RIGHT)) {
+	//	circle_pos.x += 10;
+	//}
+	//if (Input::IsKeyDown(eKeys::KB_UP)) {
+	//	circle_pos.y -= 10;
+	//}
+	//if (Input::IsKeyDown(eKeys::KB_DOWN)) {
+	//	circle_pos.y += 10;
+	//}
+
+	////円と線の当たり判定
+	//if (collision->CircleLine(circle_pos, radius, line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y)) {
+	//	DrawFormatString(0, 0, -1, "当たってる");
+	//}
+	//else {
+	//	DrawFormatString(0, 0, -1, "当たってない");
+	//}
+	//	
 }
 
 //------------------------------------------------------------------------------------------------------------

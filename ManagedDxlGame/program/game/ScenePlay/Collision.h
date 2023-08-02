@@ -1,31 +1,38 @@
 #pragma once
 #include "../../engine/GameEngine.h"
+#include "Player.h"
+
 
 class Object;
+class Player;
 
 class Collision {
 
 public:
-	Collision(int radius);
-	//Collision(int width,int height);
+	Collision(Vector3 pos,int radius);
+	Collision(Vector3 pos,int width,int height);
 	virtual ~Collision();
 
 private:
+	//-----メンバ変数-----//
+	Vector3 m_pos;
 	//-----矩形当たり判定-----//
 	int m_width = 0;
 	int m_height = 0;
-
-	int m_radius = 0;//試しに追加
+	//-----円当たり判定-----//
+	int m_radius = 0;
+	//-----線分当たり判定-----//
+	int m_lineStart = 0;
+	int m_lineEnd = 0;
 
 public:
 	//-----メンバ関数-----//
-	//キャラクター同士の当たり判定をチェック
-	bool HitCheck(const Vector3& pos, const Object* other) {}
-	//キャラクターと床の当たり判定をチェック
-	bool HitCheckFloor(const Vector3& pos, const Object* other) {}
-	//円と線分との当たり判定
-	bool CircleLine(const Vector3& circle_pos, float radius, float line_pos_start_x, float line_pos_end_x, float line_pos_start_y, float line_pos_end_y);
-
+	//キャラクター同士、エフェクトとの当たり判定（円同士）
+	bool HitCheck(const Vector3& circle01, const Object* circle02) {}
+	//キャラクターと床の当たり判定（円と矩形）
+	bool HitCheckFloor(const Vector3& circle, const Object* box) {}
+	//キャラクターと線分の当たり判定（円と線分）
+	bool HitCircleLine(const Vector3& circle, const Object& line);
 
 	//-----Setter,Getter-----//
 	void SetWidth(int width) { m_width = width; }
