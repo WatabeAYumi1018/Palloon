@@ -6,7 +6,7 @@
 class Enemy :public Character {
 
 public:
-	Enemy(Vector3 pos);
+	Enemy();
 	~Enemy();
 
 private:
@@ -17,7 +17,7 @@ public:
 	//-----ƒƒ“ƒoŠÖ”-----//
 	void Initialize() override;
 	void Update(float delta_time) override;
-	void Draw() override;
+	void Draw(float delta_time) override;
 	void Finalize() override;
 };
 

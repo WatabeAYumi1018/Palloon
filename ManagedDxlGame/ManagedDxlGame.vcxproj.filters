@@ -182,6 +182,9 @@
     <ClCompile Include="program\engine\backGround.cpp">
       <Filter>program\[002]engine</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\AnimLoop.cpp">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="program\engine\backGround.h">
       <Filter>program\[002]engine</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\AniｍLoop.h">
+      <Filter>program\[003] game\[003]scenePlay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

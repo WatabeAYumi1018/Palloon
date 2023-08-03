@@ -8,7 +8,7 @@ class Character
 {
 
 public:
-	Character(Vector3 pos,int hp,int attack, Vector3 jump);
+	Character(Vector3 pos,int hp,int attack, float jump_time, Vector3 jump_velocity);
 	virtual ~Character();
 
 	//-----メンバ変数-----//
@@ -16,12 +16,14 @@ protected:
 	int m_graph_hdl;					//画像ハンドル
 	int m_hp;							//HP
 	int m_attack;						//攻撃力
+	int m_jump_time;					//ジャンプ時間
 	
-	Vector3 m_jump;						//ジャンプ力
+	Vector3 m_jump_velocity;			//ジャンプ速度
 	Vector3 m_pos;						//座標(Object反映するまでの仮)
-	//Vector3 velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
 	Vector3 m_gravity = {0,100,0};		//重力
 	Quaternion m_rotation;				//回転
+
+	//Vector3 velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
 	//Vector3 m_size;					//サイズ
 
 	bool m_is_Exit=false;				//存在フラグ
@@ -36,7 +38,7 @@ protected:
 public:
 	virtual void Initialize() ;
 	virtual void Update(float delta_time) ;
-	virtual void Draw() ;
+	virtual void Draw(float delta_time) ;
 	virtual void Finalize() ;
 
 	//-----Getter,Setter-----//

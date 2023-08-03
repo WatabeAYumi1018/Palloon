@@ -49,7 +49,7 @@ void gameStart() {
 	back = new backGround();
 
 	////プレイヤーのコンストラクタ生成
-	player = new Player({ 100,100,0 });
+	player = new Player();
 
 	////マップチップのCSVファイル
 	string csv_map_tile_data = "csv/TileStage_1-1.csv";	

@@ -1,10 +1,11 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy(Vector3 pos) : Character(pos,m_hp,m_attack,m_jump){}
+
+Enemy::Enemy() : Character(m_pos,m_hp,m_attack,m_jump_time,m_jump_velocity){}
 Enemy::~Enemy(){}
 
 void Enemy::Initialize() {}
 void Enemy::Update(float delta_time) {}
-void Enemy::Draw() {}
+void Enemy::Draw(float delta_time) {}
 void Enemy::Finalize() {}

@@ -170,6 +170,7 @@
     <ClCompile Include="program\engine\Effect.cpp" />
     <ClCompile Include="program\engine\UI.cpp" />
     <ClCompile Include="program\game\gm_main.cpp" />
+    <ClCompile Include="program\game\ScenePlay\AnimLoop.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character.cpp" />
     <ClCompile Include="program\game\ScenePlay\Collision.cpp" />
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="program\engine\sceneBase.h" />
     <ClInclude Include="program\engine\UI.h" />
     <ClInclude Include="program\game\gm_main.h" />
+    <ClInclude Include="program\game\ScenePlay\AniｍLoop.h" />
     <ClInclude Include="program\game\ScenePlay\Character.h" />
     <ClInclude Include="program\game\ScenePlay\Collision.h" />
     <ClInclude Include="program\game\ScenePlay\Enemy.h" />
