@@ -4,7 +4,7 @@
 class Item :public Object {
 
 public:
-	Item(Vector3 m_pos, Vector3 m_velocity);
+	Item(tnl::Vector3 m_pos, tnl::Vector3 m_velocity);
 	~Item();
 
 	//-----ƒƒ“ƒo•Ï”-----//

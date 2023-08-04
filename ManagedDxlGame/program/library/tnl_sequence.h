@@ -63,6 +63,14 @@ void gameMain(float delta_time) {
 		bool is_start_ = true;
 		bool is_change_ = false;
 		float sum_time_ = 0;
+		uint32_t sum_frame_ = 0;
+
+		uint32_t co_call_count_ = 0;
+		uint32_t co_call_through_ = 0;
+		int32_t co_frame_ = 0;
+		float co_time_ = 0;
+		bool co_is_break_ = false;
+
 		Sequence() {}
 	public:
 
@@ -88,6 +96,7 @@ void gameMain(float delta_time) {
 		inline bool update(const float deltatime) {
 			sum_time_ += deltatime;
 			bool ret = now_(object_, deltatime);
+			sum_frame_++;
 			if (!is_change_) {
 				is_start_ = false;
 				return ret;
@@ -96,7 +105,9 @@ void gameMain(float delta_time) {
 			p_now_ = p_next_;
 			is_start_ = true;
 			sum_time_ = 0;
+			sum_frame_ = 0;
 			is_change_ = false;
+			_co_reset_();
 			return ret;
 		}
 
@@ -114,6 +125,11 @@ void gameMain(float delta_time) {
 		// シーケンスの経過時間を取得 ( 秒 )
 		//===================================================================================
 		inline float getProgressTime() const { return sum_time_; }
+
+		//===================================================================================
+		// シーケンスの経過時間を取得 ( 秒 )
+		//===================================================================================
+		inline uint32_t getProgressFrame() const { return sum_frame_; }
 
 		//===================================================================================
 		// シーケンスの変更
@@ -153,8 +169,110 @@ void gameMain(float delta_time) {
 			p_now_ = func;
 			is_start_ = true;
 			sum_time_ = 0;
+			_co_reset_();
 			is_change_ = false;
 		}
+
+
+
+
+
+		//------------------------------------------------------------------------------------------------------------------------
+		//
+		//
+		// 疑似コルーチン
+		// 
+		//
+
+		// コルーチン機能付きシーケンス宣言マクロ
+		// arg1.. 包含クラス名
+		// arg2.. 初期シーケンス
+		#define TNL_CO_SEQUENCE( class_name, start_func )	tnl::Sequence<class_name> tnl_sequence_ = tnl::Sequence<class_name>(this, start_func);
+
+		// コルーチンシーケンス終了処理
+		// tips.. コルーチン使用メソッドの最後に必ずコールすること
+		#define TNL_SEQ_CO_END								tnl_sequence_._co_reset_call_count_(); return true ;
+
+		// コルーチン実行フレーム数の取得
+		#define TNL_SEQ_CO_PROG_FRAME						tnl_sequence_._co_get_prog_frame_()
+
+		// コルーチン実行時間の取得
+		#define TNL_SEQ_CO_PROG_TIME						tnl_sequence_._co_get_prog_time_()
+
+		// 当該コルーチンの破棄
+		#define TNL_SEQ_CO_BREAK							{ tnl_sequence_._co_break_() ; return ; }
+
+
+		// コルーチン内部処理実装マクロ( フレーム数指定 )
+		// arg1... 実行フレーム数 (マイナスの値で無限ループ)
+		// arg2... デルタタイム
+		// arg3... コルーチンで実行するユーザ定義処理( void() ラムダ式 )
+		// tips... 無限ループを指定した場合でも内部で経過フレーム数をカウントしています
+		// ....... フレーム数カウントは int32_t を超えると 0 にリセットされることに注意
+		#define TNL_SEQ_CO_FRM_YIELD_RETURN( lim_frame, delta_time, logic )		if (tnl_sequence_._co_yield_by_frame_( lim_frame, delta_time, logic ) ) return true ;
+
+		// コルーチン内部処理実装マクロ( 時間指定 )
+		// arg1... 実行時間
+		// arg2... デルタタイム
+		// arg3... コルーチンで実行するユーザ定義処理( void() ラムダ式 )
+		// tips... 時間指定した場合でも内部で経過フレーム数をカウントしています
+		// ....... フレーム数カウントは int32_t を超えると 0 にリセットされることに注意
+		#define TNL_SEQ_CO_TIM_YIELD_RETURN( lim_time, delta_time, logic )		if (tnl_sequence_._co_yield_by_time_( lim_time, delta_time, logic ) ) return true ;
+
+
+
+		//------------------------------------------------------------------------------------------------------------------------
+		// 
+		// ユーザによる直接コールは禁止
+		//
+		inline void		_co_break_() { co_is_break_ = true; }
+		inline int32_t	_co_get_prog_frame_() { return co_frame_; }
+		inline float	_co_get_prog_time_() { return co_time_; }
+		inline void		_co_reset_call_count_() { co_call_count_ = 0; }
+		inline bool		_co_yield_by_frame_(int32_t limit_frame, float delta_time, const std::function<void()>& logic) {
+			if (co_call_count_++ == co_call_through_) {
+				int32_t limit = (0 > limit_frame) ? INT32_MAX : limit_frame;
+				if (co_frame_ >= limit) return true;
+				co_call_count_ = 0;
+				co_time_ += delta_time;
+				logic();
+				co_frame_++ ;
+				if (limit_frame < 0 && INT32_MAX == co_frame_) co_frame_ = 0;
+				if (limit_frame < 0 && !co_is_break_) return true;
+				if (co_frame_ < limit && !co_is_break_) return true;
+				co_call_through_++;
+				co_frame_ = 0;
+				co_time_ = 0;
+				co_is_break_ = false;
+				return true;
+			}
+			return false;
+		}
+		inline bool		_co_yield_by_time_(float limit_time, float delta_time, const std::function<void()>& logic) {
+			if (co_call_count_++ == co_call_through_) {
+				if (co_time_ >= limit_time) return true;
+				co_call_count_ = 0;
+				co_time_ += delta_time;
+				logic();
+				co_frame_++;
+				if(INT32_MAX == co_frame_) co_frame_ = 0;
+				if (co_time_ < limit_time && !co_is_break_) return true;
+				co_call_through_++;
+				co_frame_ = 0;
+				co_time_ = 0;
+				co_is_break_ = false;
+				return true;
+			}
+			return false;
+		}
+		inline void		_co_reset_() {
+			co_call_count_ = 0;
+			co_call_through_ = 0;
+			co_frame_ = 0;
+			co_time_ = 0;
+			co_is_break_ = false;
+		}
+
 
 	};
 

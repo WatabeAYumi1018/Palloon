@@ -361,6 +361,76 @@ namespace tnl {
     }
 
 
+    std::tuple<tnl::Vector3, tnl::Vector3> GetNearestLines(const tnl::Vector3& s1, const tnl::Vector3& e1, const tnl::Vector3& s2, const tnl::Vector3& e2) {
+
+        float s, t ;
+        tnl::Vector3 c1, c2;
+
+        tnl::Vector3 d1 = e1 - s1;
+        tnl::Vector3 d2 = e2 - s2;
+        tnl::Vector3 r = s1 - s2;
+        float a = tnl::Vector3::Dot(d1, d1);
+        float e = tnl::Vector3::Dot(d2, d2);
+        float f = tnl::Vector3::Dot(d2, r);
+
+        if (a <= FLT_EPSILON && e <= FLT_EPSILON) {
+            s = t = 0.0f;
+            c1 = s1;
+            c2 = s2;
+            return std::make_tuple(c1, c2);
+        }
+        if (a <= FLT_EPSILON) {
+            s = 0.0f;
+            t = f / e;
+            t = std::clamp(t, 0.0f, 1.0f);
+        }
+        else {
+            float c = tnl::Vector3::Dot(d1, r);
+            if (e <= FLT_EPSILON) {
+                t = 0.0f;
+                s = std::clamp(-c/a, 0.0f, 1.0f);
+            }
+            else {
+                float b = tnl::Vector3::Dot(d1, d2);
+                float denom = a * e - b * b;
+                if (denom != 0.0f) {
+                    s = std::clamp((b * f - c * e) / denom, 0.0f, 1.0f);
+                }
+                else s = 0.0f;
+
+                t = (b * s + f) / e;
+
+                if (t < 0.0f) {
+                    t = 0.0f;
+                    s = std::clamp(-c/a, 0.0f, 1.0f);
+                }
+                else if(t > 1.0f) {
+                    t = 1.0f;
+                    s = std::clamp((b-c)/a, 0.0f, 1.0f);
+                }
+            }
+        }
+        c1 = s1 + d1 * s;
+        c2 = s2 + d2 * t;
+        return std::make_tuple( c1, c2 );
+
+    }
+
+
+    std::tuple<tnl::Vector3, float> CircumscribedCircle(const tnl::Vector3& a, const tnl::Vector3& b, const tnl::Vector3& c){
+        tnl::Vector3 a2 = a * a;
+        tnl::Vector3 b2 = b * b;
+        tnl::Vector3 c2 = c * c;
+
+        float CT = 2 * ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
+        float x = ((c.y - a.y) * (b2.x - a2.x + b2.y - a2.y) + (a.y - b.y) * (c2.x - a2.x + c2.y - a2.y)) / CT;
+        float y = ((a.x - c.x) * (b2.x - a2.x + b2.y - a2.y) + (b.x - a.x) * (c2.x - a2.x + c2.y - a2.y)) / CT;
+
+        float r = (tnl::Vector3(x, y, 0) - a).length();
+
+        return std::make_tuple(tnl::Vector3(x, y, 0), r);
+    }
+
 
     Vector3 BezierSpline(const Vector3& _a1, const Vector3& _a2, const Vector3& _a3, const Vector3& _a4, float t) {
 

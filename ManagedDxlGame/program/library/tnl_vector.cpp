@@ -7,7 +7,7 @@ namespace tnl {
 
 	using namespace DirectX;
 
-	const Vector3 Vector3::front	= { 0,  0,  1 };
+	const Vector3 Vector3::forward	= { 0,  0,  1 };
 	const Vector3 Vector3::back		= { 0,  0, -1 };
 	const Vector3 Vector3::left		= {-1,  0,  0 };
 	const Vector3 Vector3::right	= { 1,  0,  0 };
@@ -15,7 +15,7 @@ namespace tnl {
 	const Vector3 Vector3::down		= { 0, -1,  0 };
 
 	const Vector3 Vector3::axis[static_cast<uint32_t>(eAxis::MAX)] = {
-		Vector3::front,
+		Vector3::forward,
 		Vector3::back,
 		Vector3::left,
 		Vector3::right,

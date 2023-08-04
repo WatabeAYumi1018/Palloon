@@ -14,7 +14,7 @@ void Player::Initialize()
 	//m_collision = new Collision(m_pos, 50);
 
 	//画像の読み込み(animLoopクラスを使用して読み込む)
-	animLoop=new AnimLoop("graphics / slim");
+	animLoop=new AnimLoop("graphics/slim");
 }
 void Player::Update(float delta_time) 
 {
@@ -43,8 +43,8 @@ void Player::Draw(float delta_time) {
 void Player::Move(float delta_time) {
 
 	//キャラクターの移動
-	if (Input::IsKeyDown(eKeys::KB_RIGHT)) { m_pos.x += PLAYER_SPEED_WALK * delta_time; }
-	if (Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_SPEED_WALK * delta_time; }
+	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) { m_pos.x += PLAYER_SPEED_WALK * delta_time; }
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_SPEED_WALK * delta_time; }
 
 	//重力で下に落ちる
 	m_pos.y += m_gravity.y * delta_time;
@@ -52,7 +52,7 @@ void Player::Move(float delta_time) {
 	//着地中
 	if (m_is_Ground) {
 		//スペースボタンでジャンプ
-		if (Input::IsKeyDownTrigger(eKeys::KB_SPACE)) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE)) {
  			m_is_Jump = true;
 			m_is_Ground = false;
 			m_jump_velocity.y = 500.0f;

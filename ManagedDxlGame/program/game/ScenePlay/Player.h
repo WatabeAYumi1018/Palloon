@@ -16,7 +16,7 @@ private:
 	const int PLAYER_HP = 5;				//プレイヤーのHP
 
 	//-----メンバ変数-----//
-	Camera* m_camera = nullptr;				//カメラ
+	dxe::Camera* m_camera = nullptr;		//カメラ
 	AnimLoop* animLoop = nullptr;			//アニメーションループ
 
 public:
@@ -28,8 +28,8 @@ public:
 	void Finalize() override;
 
 	//-----Setter,Getter-----//
-	void SetCamera(Camera* camera) { m_camera = camera; }
-	Camera* GetCamera() const { return m_camera; }
+	void SetCamera(dxe::Camera* camera) { m_camera = camera; }
+	dxe::Camera* GetCamera() const { return m_camera; }
 
 	//void SetAttackType(eAttackType type) { m_eAttackType = type; }
 	//eAttackType GetAttackType() { return m_eAttackType; }

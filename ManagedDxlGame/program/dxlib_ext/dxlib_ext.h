@@ -1,5 +1,6 @@
 #pragma once
 #include "../library/tnl_util.h"
+#include "../library/tnl_csv.h"
 #include "../library/tnl_font_texture.h"
 #include "../library/tnl_hierarchy_tree.h"
 #include "../library/tnl_input.h"

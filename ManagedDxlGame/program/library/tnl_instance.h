@@ -3,24 +3,10 @@
 #include <unordered_map>
 #include <functional>
 #include <any>
-#include <string>
 #include "tnl_using.h"
 #include "tnl_shared_factory.h"
 
 namespace tnl {
-
-    /*
-    
-    ・ゲーム個別で特定箇所の処理をどのように実装したか
-     ( 実装過程で苦労したポイントをどのように工夫したか )
-    ・メモリ管理はどうしているか
-    ・ゲーム全体の設計で工夫したポイントはどういった所か
-    ・制作したゲームの面白いと思う( 売りになる )ポイントはどこか
-    ・完成度はどのくらいか ( 考えられる残作業と優先度はどう考えているか )
-
-    
-    */
-
 
     TNL_SHARED_FACTORY_CLASS(Instance, tnl::SharedFactory<Instance>)
     public:

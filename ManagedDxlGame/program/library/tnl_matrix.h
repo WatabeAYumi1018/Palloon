@@ -92,6 +92,16 @@ namespace tnl{
 			_41 = _42 = _43 = 0;
 		}
 
+		inline std::string toString(const std::string& format = "%f") {
+			std::string str ;
+			for (uint32_t i = 0; i < 4; ++i) {
+				for (uint32_t k = 0; k < 4; ++k) {
+					str += "[ "; str += FloatToString(m[i][k], format);	str += " ] ";
+				}
+				str += "\n";
+			}
+			return str;
+		}
 
 		//-----------------------------------------------------------------------------------------------------
 		//

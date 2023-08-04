@@ -2,12 +2,12 @@
 #include "../../engine/GameEngine.h"
 
 class Object {
-	Object(Vector3 pos);
+	Object(tnl::Vector3 pos);
 	virtual ~Object();
 
 protected:
-	Vector3 m_pos;						//座標
-	Mesh* m_mesh;						//メッシュ
+	tnl::Vector3 m_pos;						//座標
+	dxe::Mesh* m_mesh;						//メッシュ
 
 public:
 	 void Initialize() {}

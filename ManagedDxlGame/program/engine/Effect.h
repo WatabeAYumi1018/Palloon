@@ -4,7 +4,7 @@
 class Effect : public Object {
 
 public:
-	Effect(Vector3 m_pos);
+	Effect(tnl::Vector3 m_pos);
 	virtual ~Effect();
 
 	//-----ƒƒ“ƒo•Ï”-----//

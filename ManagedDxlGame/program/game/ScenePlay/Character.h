@@ -8,7 +8,7 @@ class Character
 {
 
 public:
-	Character(Vector3 pos,int hp,int attack, float jump_time, Vector3 jump_velocity);
+	Character(tnl::Vector3 pos,int hp,int attack, float jump_time, tnl::Vector3 jump_velocity);
 	virtual ~Character();
 
 	//-----メンバ変数-----//
@@ -18,10 +18,10 @@ protected:
 	int m_attack;						//攻撃力
 	int m_jump_time;					//ジャンプ時間
 	
-	Vector3 m_jump_velocity;			//ジャンプ速度
-	Vector3 m_pos;						//座標(Object反映するまでの仮)
-	Vector3 m_gravity = {0,100,0};		//重力
-	Quaternion m_rotation;				//回転
+	tnl::Vector3 m_jump_velocity;			//ジャンプ速度
+	tnl::Vector3 m_pos;						//座標(Object反映するまでの仮)
+	tnl::Vector3 m_gravity = {0,100,0};		//重力
+	tnl::Quaternion m_rotation;				//回転
 
 	//Vector3 velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
 	//Vector3 m_size;					//サイズ

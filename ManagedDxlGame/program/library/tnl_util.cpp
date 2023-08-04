@@ -6,6 +6,7 @@
 #include <wrl.h>
 #include "tnl_util.h"
 #include "tnl_vector.h"
+#include "stb_image.h"
 
 namespace tnl {
 
@@ -102,6 +103,40 @@ namespace tnl {
 		std::string ext = file_path.substr(n2 + 1, n3);
 
 		return std::make_tuple(path, file, ext);
+	}
+
+	//----------------------------------------------------------------------------------------------
+	std::tuple<uint8_t*, uint32_t, uint32_t, uint32_t> LoadGraphicColorBuffer(const std::string& file_path) {
+
+		unsigned char* stb_memory = nullptr ;
+		uint8_t* pixels = nullptr ;
+		int width;
+		int height;
+		int bpp;
+
+		stb_memory = stbi_load(file_path.c_str(), &width, &height, &bpp, 0);
+
+		uint32_t data_size = width * height * 4;
+		pixels = new uint8_t[ data_size ];
+
+		for (uint32_t y = 0; y < height; ++y) {
+			for (uint32_t x = 0; x < width; ++x) {
+
+				uint8_t a = (4 == bpp) ? stb_memory[(y * width + x) * bpp + 3] : 0xff;
+				uint8_t r = stb_memory[(y * width + x) * bpp + 0];
+				uint8_t g = stb_memory[(y * width + x) * bpp + 1];
+				uint8_t b = stb_memory[(y * width + x) * bpp + 2];
+
+				pixels[((y * width + x) * 4) + 0] = r;
+				pixels[((y * width + x) * 4) + 1] = g;
+				pixels[((y * width + x) * 4) + 2] = b;
+				pixels[((y * width + x) * 4) + 3] = a;
+			}
+		}
+		stbi_image_free(stb_memory);
+
+		return std::make_tuple(pixels, width, height, data_size);
+
 	}
 
 
@@ -312,6 +347,11 @@ namespace tnl {
 		return strUTF8;
 	}
 
+	std::string FloatToString(float value, const std::string& fmt) {
+		char buf[64] = { 0 };
+		sprintf_s(buf, fmt.c_str(), value);
+		return buf;
+	}
 
 	//----------------------------------------------------------------------------------------------
 	int SpaceBit32(int n) {
@@ -453,38 +493,6 @@ namespace tnl {
 		v |= (v << 32);
 		out = 64 - CountBit64(v);
 		return true;
-	}
-
-
-	//----------------------------------------------------------------------------------------------
-	std::vector<std::vector<std::string>> LoadCsv(const std::string& file_path) {
-
-		std::vector<std::vector<std::string>> ret;
-
-		FILE* fp = nullptr;
-		fopen_s(&fp, file_path.c_str(), "r");
-
-		char buff[1024] = { 0 };
-		while (fgets(buff, sizeof(buff), fp)) {
-			std::string line = buff;
-			std::vector<std::string> data;
-
-			while (1) {
-				size_t c = line.find(",");
-				if (c == std::string::npos) {
-					c = line.find("\n");
-				}
-				std::string s = line.substr(0, c);
-				data.emplace_back(std::move(s));
-				line = line.substr(c+1, line.length()-(c+1));
-				if (line.empty() || line == "/n") break;
-			}
-			ret.emplace_back(std::move(data));
-			memset(buff, 0, sizeof(buff));
-		}
-
-		fclose(fp);
-		return ret;
 	}
 
 

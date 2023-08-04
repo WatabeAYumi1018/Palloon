@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "tnl_vector.h"
+#include <tuple>
 #include "tnl_using.h"
 
 namespace tnl{
@@ -72,50 +72,24 @@ namespace tnl{
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------------
-	// setter getter 一括定義 ( setter 参照 )
-	#define TNL_REFERENCE_ACCESSOR(ins)                                 \
-	public :                                                            \
-	decltype(ins##_) get_##ins() const { return ins##_ ; }              \
-	void set_##ins( const decltype(ins##_)& desc ){ ins##_ = desc ; }   \
+	// フィールドと getter 一括定義
+	#define TNL_VL_FIELD(instance_type, instance_name, initialize_value)					\
+	private :																				\
+	instance_type instance_name##_ = initialize_value ;										\
+	public:																					\
+	const instance_type get_##instance_name() const { return instance_name##_; }			\
 
-	// setter getter 一括定義 ( setter 値渡 )
-	#define TNL_VALUE_ACCESSOR(ins)                                     \
-	public :                                                            \
-	decltype(ins##_) get_##ins() const { return ins##_ ; }              \
-	void set_##ins( const decltype(ins##_) desc ){ ins##_ = desc ; }    \
-
-	// private インスタンス setter getter 一括定義 ( setter 参照  )
-	#define TNL_PRIVATE_DEFINE_REFERENCE_ACCESSOR(type, ins, vl)        \
-	private :                                                           \
-	type ins##_ = vl ;                                                  \
-	TNL_REFERENCE_ACCESSOR(ins)                                         \
-
-	// protected インスタンス setter getter 一括定義 ( setter 参照  )
-	#define TNL_PROTECTED_DEFINE_REFERENCE_ACCESSOR(type, ins, vl)      \
-	protected :                                                         \
-	type ins##_ = vl ;                                                  \
-	TNL_REFERENCE_ACCESSOR(ins)                                         \
-
-	// private インスタンス setter getter 一括定義 ( setter 値渡  )
-	#define TNL_PRIVATE_DEFINE_VALUE_ACCESSOR(type, ins, vl)            \
-	private :                                                           \
-	type ins##_ = vl ;                                                  \
-	TNL_VALUE_ACCESSOR(ins)                                             \
-
-	// protected インスタンス setter getter 一括定義 ( setter 値渡  )
-	#define TNL_PROTECTED_DEFINE_VALUE_ACCESSOR(type, ins, vl)          \
-	protected :                                                         \
-	type ins##_ = vl ;                                                  \
-	TNL_VALUE_ACCESSOR(ins)                                             \
+	// フィールドと getter(const 参照返し) 一括定義
+	#define TNL_RF_FIELD(instance_type, instance_name, initialize_value)					\
+	private :																				\
+	instance_type instance_name##_ = initialize_value ;										\
+	public:																					\
+	const instance_type& get_##instance_name() const { return instance_name##_; }			\
 
 
 	//----------------------------------------------------------------------------------------------
 	// ファイルサイズの取得
 	uint64_t GetFileSize(const char* fileName);
-
-	//----------------------------------------------------------------------------------------------
-	// CSV Loader
-	std::vector<std::vector<std::string>> LoadCsv( const std::string& file_name );
 
 	//----------------------------------------------------------------------------------------------
 	// ファイルパスをパスとファイル名と拡張子に分離する
@@ -126,6 +100,17 @@ namespace tnl{
 	// ttf フォントの追加
 	void AddFontTTF( const std::string& ttf_file_path );
 
+
+	//----------------------------------------------------------------------------------------------
+	// リソースファイルからカラーバッファをロードする
+	// arg1... ファイルパス
+	// ret.... <0> カラーバッファ (rgba 各8bit)
+	// ....... <1> 幅
+	// ....... <2> 高さ
+	// ....... <3> データサイズ
+	// tips... この関数で得られたメモリは内部で新たに確保されたメモリです
+	//         使用者が解放してください
+	std::tuple<uint8_t*, uint32_t, uint32_t, uint32_t> LoadGraphicColorBuffer( const std::string& file_path );
 
 	//----------------------------------------------------------------------------------------------
 	// カラーバッファからBMPフォーマットのバッファを作成
@@ -160,6 +145,9 @@ namespace tnl{
 	// Sjis UTF8 相互変換
 	std::string UTF8toSjis(const std::string& srcUTF8);
 	std::string SjistoUTF8(const std::string& srcSjis);
+
+	// float -> string 変換 ( フォーマット指定付き )
+	std::string FloatToString(float value, const std::string& fmt = "%f");
 
 	//----------------------------------------------------------------------------------------------
 	// デバッグコンソールへの出力

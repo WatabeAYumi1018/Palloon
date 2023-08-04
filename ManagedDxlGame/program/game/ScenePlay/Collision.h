@@ -9,13 +9,13 @@ class Player;
 class Collision {
 
 public:
-	Collision(Vector3 pos,int radius);
-	Collision(Vector3 pos,int width,int height);
+	Collision(tnl::Vector3 pos,int radius);
+	Collision(tnl::Vector3 pos,int width,int height);
 	virtual ~Collision();
 
 private:
 	//-----メンバ変数-----//
-	Vector3 m_pos;
+	tnl::Vector3 m_pos;
 	//-----矩形当たり判定-----//
 	int m_width = 0;
 	int m_height = 0;
@@ -28,11 +28,11 @@ private:
 public:
 	//-----メンバ関数-----//
 	//キャラクター同士、エフェクトとの当たり判定（円同士）
-	bool HitCheck(const Vector3& circle01, const Object* circle02) {}
+	bool HitCheck(const tnl::Vector3& circle01, const Object* circle02) {}
 	//キャラクターと床の当たり判定（円と矩形）
-	bool HitCheckFloor(const Vector3& circle, const Object* box) {}
+	bool HitCheckFloor(const tnl::Vector3& circle, const Object* box) {}
 	//キャラクターと線分の当たり判定（円と線分）
-	bool HitCircleLine(const Vector3& circle, const Object& line);
+	bool HitCircleLine(const tnl::Vector3& circle, const Object& line);
 
 	//-----Setter,Getter-----//
 	void SetWidth(int width) { m_width = width; }

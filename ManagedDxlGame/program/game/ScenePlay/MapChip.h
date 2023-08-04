@@ -5,7 +5,8 @@ class Collision;
 
 class MapChip {
 public:
-	MapChip(const string& csv_map_tile);
+	//int型でコンストラクタ
+	MapChip(const std::string& csv_map_tile);
 	~MapChip();
 
 private:
@@ -18,12 +19,9 @@ private:
 	const int MAP_ALL_NUM=49;				//マップチップの縦幅
 	const int MAP_CHIP_SIZE=16;				//マップチップのサイズ
 
-	//string型(csvファイル読み取り用)
-	vector<vector<string>> m_map_tile;		//csvファイル：マップタイルステージ
+	//int型でcsvファイルの読み込み
+	std::vector<std::vector<int>> m_map_tile;	//csvファイル：マップタイルステージ
 	
-	//int型に変換（描画用）
-	vector<vector<int>> m_map_tile_num;		//csvファイル：マップタイルステージ	
-
 public:
 	//-----メンバ関数-----//
 	void Initialize();

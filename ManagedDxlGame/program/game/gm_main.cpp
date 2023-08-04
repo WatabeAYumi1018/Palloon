@@ -52,7 +52,7 @@ void gameStart() {
 	player = new Player();
 
 	////マップチップのCSVファイル
-	string csv_map_tile_data = "csv/TileStage_1-1.csv";	
+	std::string csv_map_tile_data = "csv/TileStage_1-1.csv";	
 
 	////マップチップのコンストラクタ生成
 	mapChip = new MapChip(csv_map_tile_data);

@@ -1,5 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
+#include <string>
+#include "tnl_util.h"
 
 namespace tnl {
 	class Matrix;
@@ -13,15 +15,15 @@ namespace tnl {
 		explicit Vector3(DirectX::XMVECTOR& v) noexcept { DirectX::XMStoreFloat3(this, v); }
 		explicit Vector3(DirectX::XMFLOAT3& v) noexcept : DirectX::XMFLOAT3(v.x, v.y, v.z) {}
 
-		static const Vector3 front ;
+		static const Vector3 forward;
 		static const Vector3 back;
 		static const Vector3 left;
 		static const Vector3 right;
 		static const Vector3 up;
 		static const Vector3 down;
-		enum class eAxis : uint32_t { FRONT, BACK, LEFT, RIGHT, UP, DOWN, MAX };
+		enum class eAxis : uint32_t { FORWARD, BACK, LEFT, RIGHT, UP, DOWN, MAX };
 		enum class fAxis : uint32_t { 
-			FRONT	= (1 << static_cast<uint32_t>(eAxis::FRONT)),
+			FORWARD = (1 << static_cast<uint32_t>(eAxis::FORWARD)),
 			BACK	= (1 << static_cast<uint32_t>(eAxis::BACK)),
 			LEFT	= (1 << static_cast<uint32_t>(eAxis::LEFT)),
 			RIGHT	= (1 << static_cast<uint32_t>(eAxis::RIGHT)),
@@ -76,6 +78,7 @@ namespace tnl {
 		Vector3	xz()					const noexcept;
 		Vector3	yz()					const noexcept;
 		DirectX::XMFLOAT4 float4()		const noexcept;
+		std::string toString(const std::string& format = "%f")	const noexcept;
 
 		//-----------------------------------------------------------------------------------------------------
 		//
@@ -256,6 +259,18 @@ namespace tnl {
 
 	//-----------------------------------------------------------------------------------------------------
 	inline DirectX::XMFLOAT4 Vector3::float4() const noexcept { return { x, y, z, 1.0f }; }
+
+	//-----------------------------------------------------------------------------------------------------
+	inline std::string Vector3::toString(const std::string& format) const noexcept {
+		std::string str = "[ x : ";
+		str += FloatToString(x, format) ;
+		str += " ] [ y : ";
+		str += FloatToString(y, format);
+		str += " ] [ z : ";
+		str += FloatToString(z, format);
+		str += " ]";
+		return str ;
+	}
 
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::Normalize(const Vector3& v) noexcept {

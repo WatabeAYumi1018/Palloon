@@ -9,13 +9,13 @@ backGround::~backGround() { Finalize(); }
 void backGround::Initialize() {
 
 	//カメラ設定
-	m_camera = new Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
+	m_camera = new dxe::Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
 	
 	//{0,0,0}→エラー
 	// x：値大→左へスライド、値小→右へスライド
 	//y：値大→上へスライド（俯瞰して見る感じ）、値小→下へスライド（見上げる感じ）
 	//z：値大→奥　※正、負どちらも値が大きくなるほど奥に行く
-	m_camera->pos_ = { 0,0,100 };
+	m_camera->pos_ = { 0,0,-100 };
 	 
 	//メッシュの周りを回転しながら映すようなカメラ
 	//{0,0,0}→二次元での正面
@@ -27,12 +27,12 @@ void backGround::Initialize() {
 	//メッシュに背景画像を設定
 	 
 	//x:横幅,y:縦幅,z:奥行き(プレーンだと無効？よく分からん)
-	m_mesh = Mesh::CreatePlaneMV({1000,1000,0});
-	m_mesh->setTexture(Texture::CreateFromFile("graphics/PT_Skybox_Texture_01.png"));
+	m_mesh = dxe::Mesh::CreatePlaneMV({1000,1000,0});
+	m_mesh->setTexture(dxe::Texture::CreateFromFile("graphics/PT_Skybox_Texture_01.png"));
 	
 	//x,y:基本０でOK
 	//Z：奥行（正の値大→手前、負の値大→奥）
-	m_mesh->pos_= { 0,0,-100 };
+	m_mesh->pos_= { 0,0,100 };
 }
 
 void backGround::Update(float delta_time) {

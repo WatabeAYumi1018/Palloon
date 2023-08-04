@@ -9,14 +9,14 @@ public:
     AnimLoop(const char* pathName);
     ~AnimLoop();
 
-    void loadAnimLoopFile(const char* path);
-    void drawAnimLoopFile(float delta_time,Vector3 pos, float angle=0, float scale=1.0f);
+    void loadAnimLoopFile(const char* path);                                                    //ファイルを読み込む関数
+    void drawAnimLoopFile(float delta_time, tnl::Vector3 pos, float angle=0, float scale=1.0f); //アニメーションを描画する関数
 
 private:
-    std::vector<int> Imgs;
-    int NumImgs;
-    bool LoopFlag; 
-    int currentFrame;
-    float elapsedTime;
-    float frameDuration;
+    std::vector<int> Imgs;      //読み込んだpng画像のハンドルを格納する配列
+    int NumImgs;				//読み込んだpng画像の数  
+    bool LoopFlag; 			    //ループするかどうか
+    int currentFrame;			//現在のフレーム
+    float elapsedTime;			//経過時間
+    float frameDuration;		//1フレームの時間（あsにメーション描画のスピード調整）
 };
