@@ -182,7 +182,7 @@
     <ClCompile Include="program\engine\backGround.cpp">
       <Filter>program\[002]engine</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\AnimLoop.cpp">
+    <ClCompile Include="program\game\ScenePlay\Anim.cpp">
       <Filter>program\[003] game\[003]scenePlay</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,7 +326,7 @@
     <ClInclude Include="program\engine\backGround.h">
       <Filter>program\[002]engine</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\AniｍLoop.h">
+    <ClInclude Include="program\game\ScenePlay\Aniｍ.h">
       <Filter>program\[003] game\[003]scenePlay</Filter>
     </ClInclude>
   </ItemGroup>

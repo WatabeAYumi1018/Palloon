@@ -1,7 +1,7 @@
 #pragma once
 #include "../../engine/GameEngine.h"
 #include "Character.h"
-#include "AniｍLoop.h"
+#include "Aniｍ.h"
 
 class Player :public Character {
 
@@ -17,7 +17,7 @@ private:
 
 	//-----メンバ変数-----//
 	dxe::Camera* m_camera = nullptr;		//カメラ
-	AnimLoop* animLoop = nullptr;			//アニメーションループ
+	Anim* animLoop = nullptr;			//アニメーションループ
 
 public:
 	//-----メンバ関数-----//

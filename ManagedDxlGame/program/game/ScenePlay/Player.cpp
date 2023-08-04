@@ -14,7 +14,7 @@ void Player::Initialize()
 	//m_collision = new Collision(m_pos, 50);
 
 	//画像の読み込み(animLoopクラスを使用して読み込む)
-	animLoop=new AnimLoop("graphics/slim");
+	animLoop=new Anim("graphics/slim");
 }
 void Player::Update(float delta_time) 
 {
