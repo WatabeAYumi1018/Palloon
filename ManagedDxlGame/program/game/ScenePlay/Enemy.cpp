@@ -1,6 +1,4 @@
-
 #include "Enemy.h"
-
 
 Enemy::Enemy() : Character(m_pos,m_hp,m_attack,m_jump_time,m_jump_velocity){}
 Enemy::~Enemy(){}

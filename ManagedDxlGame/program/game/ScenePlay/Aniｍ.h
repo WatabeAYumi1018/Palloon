@@ -8,8 +8,10 @@ public:
     Anim(const char* pathName);
     ~Anim();
 
-    void loadAnimLoopFile(const char* path);                                                    //ファイルを読み込む関数
-    void drawAnimLoopFile(float delta_time, tnl::Vector3 pos, float angle=0, float scale=1.0f); //アニメーションを描画する関数
+    //ファイルを読み込む関数
+    void loadAnimLoopFile(const char* path);                                                    
+    //アニメーションを描画する関数
+    void drawAnimLoopFile(float delta_time, tnl::Vector3 pos, const char* path, float angle=0, float scale=1.0f);
 
 private:
     std::vector<int> Imgs;      //読み込んだpng画像のハンドルを格納する配列

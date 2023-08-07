@@ -1,4 +1,5 @@
 #include "Player.h"
+//#include "../../wta_library/wta_Animation.h"
 
 //キャラクターの初期化子
 Player::Player() :Character({ 100,0,0 }, 5, 1,5.0f, {0,500,0})
@@ -13,8 +14,10 @@ void Player::Initialize()
 	//円形の当たり判定をもつ
 	//m_collision = new Collision(m_pos, 50);
 
-	//画像の読み込み(animLoopクラスを使用して読み込む)
-	animLoop=new Anim("graphics/slim");
+	//★画像の読み込み(animLoopクラスを使用して読み込む)（非効率のため修正必須）
+	animLoop = new Anim("graphics/slim/blue/move_left");
+	animLoop2 = new Anim("graphics/slim/blue/move_right");
+	animLoop3 = new Anim("graphics/slim/blue/idle_right");
 }
 void Player::Update(float delta_time) 
 {
@@ -24,20 +27,15 @@ void Player::Update(float delta_time)
 }
 
 void Player::Draw(float delta_time) {
-
-	////画像をY軸回転
-	//if (Input::IsKeyDown(eKeys::KB_RIGHT)) {
-	//	// Y軸回転を適用した画像を描画
-	//	Matrix mat = m_rotation.getMatrix();
-
-	//	DrawGraph(m_pos.x, m_pos.y, m_graph_hdl, TRUE);}
-	//else if (Input::IsKeyDown(eKeys::KB_LEFT)) {DrawGraph(m_pos.x, m_pos.y, m_graph_hdl, TRUE);}
-	//else {
-		//DrawGraph(m_pos.x, m_pos.y, m_graph_hdl, TRUE);
-//}
-
+	//★現状方法が非効率のため、後日修正
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
+		animLoop->drawAnimLoopFile(delta_time, m_pos, "graphics/slim/blue/move_left");
+	}
+	else if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
+		animLoop2->drawAnimLoopFile(delta_time, m_pos, "graphics/slim/blue/move_right"); 
+	}
 	//アニメーション画像描画
-	animLoop->drawAnimLoopFile(delta_time,m_pos);
+	else{ animLoop3->drawAnimLoopFile(delta_time, m_pos, "graphics/slim/blue/idle_right");}
 }
 
 void Player::Move(float delta_time) {
@@ -83,5 +81,11 @@ void Player::Move(float delta_time) {
 
 void Player::Finalize() 
 {
-	DeleteGraph(m_graph_hdl);
+	//画像の解放
+	delete animLoop;
+	animLoop = nullptr;
+	delete animLoop2;
+	animLoop2 = nullptr;
+	delete animLoop3;
+	animLoop3 = nullptr;
 }

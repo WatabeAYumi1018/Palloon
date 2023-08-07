@@ -177,6 +177,7 @@
     <ClCompile Include="program\game\ScenePlay\Item.cpp" />
     <ClCompile Include="program\game\ScenePlay\MapChip.cpp" />
     <ClCompile Include="program\game\ScenePlay\Object .cpp" />
+    <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp" />
     <ClCompile Include="program\game\ScenePlay\Player.cpp" />
     <ClCompile Include="program\game\ScenePlay\scenePlay.cpp" />
     <ClCompile Include="program\library\json11.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="program\library\tnl_seek_unit.cpp" />
     <ClCompile Include="program\library\tnl_util.cpp" />
     <ClCompile Include="program\library\tnl_vector.cpp" />
+    <ClCompile Include="program\wta_library\wta_Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc" />
@@ -221,6 +223,7 @@
     <ClInclude Include="program\game\ScenePlay\Item.h" />
     <ClInclude Include="program\game\ScenePlay\MapChip.h" />
     <ClInclude Include="program\game\ScenePlay\Object.h" />
+    <ClInclude Include="program\game\ScenePlay\PlayCamera.h" />
     <ClInclude Include="program\game\ScenePlay\Player.h" />
     <ClInclude Include="program\game\ScenePlay\scenePlay.h" />
     <ClInclude Include="program\library\json11.hpp" />
@@ -243,6 +246,7 @@
     <ClInclude Include="program\library\tnl_using.h" />
     <ClInclude Include="program\library\tnl_util.h" />
     <ClInclude Include="program\library\tnl_vector.h" />
+    <ClInclude Include="program\wta_library\wta_Animation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

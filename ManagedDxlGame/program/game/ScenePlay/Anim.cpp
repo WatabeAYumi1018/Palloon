@@ -1,9 +1,8 @@
 #include "Aniｍ.h"
 #include <fstream>
 
-
 Anim::Anim(const char* pathName) :
-    NumImgs(0), LoopFlag(true), currentFrame(0), elapsedTime(0.0f), frameDuration(0.1f)
+    NumImgs(0), LoopFlag(true), currentFrame(0), elapsedTime(0.0f), frameDuration(0.2f)
 {
     loadAnimLoopFile(pathName);
 }
@@ -41,17 +40,16 @@ void Anim::loadAnimLoopFile(const char* path) {
 }
 
 //画像をループ描画する
-void Anim::drawAnimLoopFile(float delta_time, tnl::Vector3 pos, float angle, float scale) {
+void Anim::drawAnimLoopFile(float delta_time,tnl::Vector3 pos, const char* path, float angle, float scale) {
     elapsedTime += delta_time;
+    //経過時間がフレーム時間を超えた場合
     if (elapsedTime >= frameDuration) {
         elapsedTime -= frameDuration;
         ++currentFrame;
-        if (LoopFlag) {
-            currentFrame %= NumImgs;
-        }
-        else if (currentFrame >= NumImgs) {
-            currentFrame = NumImgs - 1;
-        }
+        //ループする(余りの数でループ)
+        if (LoopFlag) {currentFrame %= NumImgs;}
+        //ループしない
+        else if (currentFrame >= NumImgs) {currentFrame = NumImgs - 1;}
     }
-    DrawRotaGraph(static_cast<int>(pos.x), static_cast<int>(pos.y), 1.0f, tnl::ToRadian(-45), Imgs[currentFrame], TRUE);
+    DrawRotaGraph(static_cast<int>(pos.x), static_cast<int>(pos.y), 1.0f, tnl::ToRadian(0), Imgs[currentFrame], TRUE);
 }

@@ -1,6 +1,6 @@
 #include "MapChip.h",
 
-MapChip::MapChip(const std::string& csv_map_tile){
+MapChip::MapChip(const std::string& csv_map_tile):Object(m_pos){
 	//csvƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 	m_map_tile=tnl::LoadCsv<int>(csv_map_tile);
 	Initialize();

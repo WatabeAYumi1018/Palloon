@@ -2,7 +2,6 @@
 #include "../../engine/GameEngine.h"
 #include "Player.h"
 
-
 class Object;
 class Player;
 

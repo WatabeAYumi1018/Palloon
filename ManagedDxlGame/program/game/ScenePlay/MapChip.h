@@ -1,9 +1,10 @@
 #pragma once
 #include "../../engine/GameEngine.h"
+#include "Object.h"
 
 class Collision;
 
-class MapChip {
+class MapChip :public Object{
 public:
 	//int型でコンストラクタ
 	MapChip(const std::string& csv_map_tile);

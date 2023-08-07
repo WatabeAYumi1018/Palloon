@@ -15,26 +15,29 @@
     <Filter Include="program\[001] dxlib_ext">
       <UniqueIdentifier>{413cd02b-9e9c-4380-878e-8de31d0aa61f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[003] game">
-      <UniqueIdentifier>{6febca5b-94b9-462e-9667-612e572524b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="program\[001] dxlib_ext\create_mesh">
       <UniqueIdentifier>{11d8e443-8d64-409c-92f1-6895cd2dbbce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[002]engine">
+    <Filter Include="program\[003]engine">
       <UniqueIdentifier>{5ebced23-4deb-401c-8594-b6cb408db5df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[003] game\[001]sceneTitle">
+    <Filter Include="program\[004] game">
+      <UniqueIdentifier>{6febca5b-94b9-462e-9667-612e572524b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[004] game\[001]sceneTitle">
       <UniqueIdentifier>{e1ce9618-8f43-4765-bf99-bdf29e2dfed4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[003] game\[002]sceneSelect">
+    <Filter Include="program\[004] game\[002]sceneSelect">
       <UniqueIdentifier>{96e7863b-717c-4ec1-9d2f-868c11e0de1c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[003] game\[003]scenePlay">
+    <Filter Include="program\[004] game\[003]scenePlay">
       <UniqueIdentifier>{d6c1b13f-05da-4d0c-a4f2-d8bc7ac6b5f5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[003] game\[004]sceneEnd">
+    <Filter Include="program\[004] game\[004]sceneEnd">
       <UniqueIdentifier>{5f8bafe5-dc44-4ea0-8092-3ebf0c4e1c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[002]wta_library">
+      <UniqueIdentifier>{a975536e-6222-4702-be46-a8d4f0d0ea0a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +138,7 @@
       <Filter>program\[001] dxlib_ext\create_mesh</Filter>
     </ClCompile>
     <ClCompile Include="program\game\gm_main.cpp">
-      <Filter>program\[003] game</Filter>
+      <Filter>program\[004] game</Filter>
     </ClCompile>
     <ClCompile Include="program\dxlib_ext\create_mesh\dxlib_ext_mesh_hollow_out_disk_plane.cpp">
       <Filter>program\[001] dxlib_ext\create_mesh</Filter>
@@ -150,40 +153,46 @@
       <Filter>program\[000] library</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Object .cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Player.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Item.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Collision.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\scenePlay.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\engine\UI.cpp">
-      <Filter>program\[002]engine</Filter>
+      <Filter>program\[003]engine</Filter>
     </ClCompile>
     <ClCompile Include="program\engine\Effect.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\MapChip.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\engine\backGround.cpp">
-      <Filter>program\[002]engine</Filter>
+      <Filter>program\[003]engine</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Anim.cpp">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\wta_library\wta_Animation.cpp">
+      <Filter>program\[002]wta_library</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp">
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,7 +282,7 @@
       <Filter>program\[001] dxlib_ext</Filter>
     </ClInclude>
     <ClInclude Include="program\game\gm_main.h">
-      <Filter>program\[003] game</Filter>
+      <Filter>program\[004] game</Filter>
     </ClInclude>
     <ClInclude Include="program\dxlib_ext\dxlib_ext_mesh_desc.h">
       <Filter>program\[001] dxlib_ext</Filter>
@@ -288,46 +297,52 @@
       <Filter>program\[000] library</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Object.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\GameEngine.h">
-      <Filter>program\[002]engine</Filter>
+      <Filter>program\[003]engine</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Enemy.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Player.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Item.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Collision.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\scenePlay.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\UI.h">
-      <Filter>program\[002]engine</Filter>
+      <Filter>program\[003]engine</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\Effect.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\sceneBase.h">
-      <Filter>program\[002]engine</Filter>
+      <Filter>program\[003]engine</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\MapChip.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\backGround.h">
-      <Filter>program\[002]engine</Filter>
+      <Filter>program\[003]engine</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Aniｍ.h">
-      <Filter>program\[003] game\[003]scenePlay</Filter>
+      <Filter>program\[004] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\wta_library\wta_Animation.h">
+      <Filter>program\[002]wta_library</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\PlayCamera.h">
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

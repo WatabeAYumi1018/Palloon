@@ -7,6 +7,7 @@
 #include "../game/ScenePlay/MapChip.h"
 #include "../engine/backGround.h"
 #include "../game/ScenePlay/Collision.h"
+#include "ScenePlay/PlayCamera.h"
 
 //`8ŒŽ’†{‚Ü‚Å`
 //‡@ƒ}ƒbƒvA”wŒi•`‰æ OK
@@ -35,7 +36,7 @@
 
 Player* player;
 MapChip* mapChip;
-
+PlayCamera* camera;
 backGround* back;
 
 Collision* collision = nullptr;
@@ -57,6 +58,8 @@ void gameStart() {
 	////ƒ}ƒbƒvƒ`ƒbƒv‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^¶¬
 	mapChip = new MapChip(csv_map_tile_data);
 	collision = new Collision({0,0,0}, 16);
+	
+	camera=new PlayCamera({ 0,0,0 },player);
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -67,6 +70,7 @@ void gameMain(float delta_time) {
 	back->Update(delta_time);
 	player->Update(delta_time);
 	mapChip->Update(delta_time);
+	camera->Update(delta_time);
 
 	//DrawLine(line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y, -1, 1);
 	//DrawCircle(circle_pos.x, circle_pos.y, radius, -1, 1);

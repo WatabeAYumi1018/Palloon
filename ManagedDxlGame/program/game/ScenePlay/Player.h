@@ -16,8 +16,11 @@ private:
 	const int PLAYER_HP = 5;				//プレイヤーのHP
 
 	//-----メンバ変数-----//
-	dxe::Camera* m_camera = nullptr;		//カメラ
+	int animFileHdl=0;					//画像のハンドル
+	dxe::Camera* m_camera = nullptr;	//カメラ
 	Anim* animLoop = nullptr;			//アニメーションループ
+	Anim* animLoop2 = nullptr;			//アニメーションループ
+	Anim* animLoop3 = nullptr;			//アニメーションループ
 
 public:
 	//-----メンバ関数-----//
@@ -30,6 +33,8 @@ public:
 	//-----Setter,Getter-----//
 	void SetCamera(dxe::Camera* camera) { m_camera = camera; }
 	dxe::Camera* GetCamera() const { return m_camera; }
+	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
+	tnl::Vector3 GetPos() const { return m_pos; }
 
 	//void SetAttackType(eAttackType type) { m_eAttackType = type; }
 	//eAttackType GetAttackType() { return m_eAttackType; }
