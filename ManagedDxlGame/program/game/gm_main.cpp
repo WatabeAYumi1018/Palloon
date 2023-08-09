@@ -59,7 +59,7 @@ void gameStart() {
 	mapChip = new MapChip(csv_map_tile_data);
 	collision = new Collision({0,0,0}, 16);
 	
-	camera=new PlayCamera({ 0,0,0 },player);
+	camera = new PlayCamera({0,0,0}, player);
 }
 
 //------------------------------------------------------------------------------------------------------------

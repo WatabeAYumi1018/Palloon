@@ -27,6 +27,7 @@ void Player::Update(float delta_time)
 }
 
 void Player::Draw(float delta_time) {
+	DrawFormatString(10, 30, 1, "Player X: %.2f", m_pos.x);
 	//šŒ»ó•û–@‚ª”ñŒø—¦‚Ì‚½‚ßAŒã“úC³
 	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
 		animLoop->drawAnimLoopFile(delta_time, m_pos, "graphics/slim/blue/move_left");

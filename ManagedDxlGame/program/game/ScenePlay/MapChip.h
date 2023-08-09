@@ -2,6 +2,7 @@
 #include "../../engine/GameEngine.h"
 #include "Object.h"
 
+class PlayCamera;
 class Collision;
 
 class MapChip :public Object{
@@ -14,6 +15,7 @@ private:
 	//-----メンバ変数-----//
 	int m_map_hdl[49];						//マップチップのタイルハンドル
 	Collision* collision_map=nullptr;		//当たり判定用クラス
+	PlayCamera* m_play_camera = nullptr;	//プレイヤー追従カメラ
 
 	//-----定数-----//
 	const int MAP_ROW_COL=7;				//マップチップの横幅
@@ -29,4 +31,7 @@ public:
 	void Update(float delta_time);
 	void Draw();
 	void Finalize();
+
+	// 座標を調整する関数
+	void AdjustPosition(const tnl::Vector3& offset) {m_pos.x+=offset.x;}
 };

@@ -17,7 +17,7 @@ private:
 
 	//-----メンバ変数-----//
 	int animFileHdl=0;					//画像のハンドル
-	dxe::Camera* m_camera = nullptr;	//カメラ
+	//dxe::Camera* m_camera = nullptr;	//カメラ
 	Anim* animLoop = nullptr;			//アニメーションループ
 	Anim* animLoop2 = nullptr;			//アニメーションループ
 	Anim* animLoop3 = nullptr;			//アニメーションループ
@@ -31,8 +31,8 @@ public:
 	void Finalize() override;
 
 	//-----Setter,Getter-----//
-	void SetCamera(dxe::Camera* camera) { m_camera = camera; }
-	dxe::Camera* GetCamera() const { return m_camera; }
+	//void SetCamera(dxe::Camera* camera) { m_camera = camera; }
+	//dxe::Camera* GetCamera() const { return m_camera; }
 	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
 	tnl::Vector3 GetPos() const { return m_pos; }
 

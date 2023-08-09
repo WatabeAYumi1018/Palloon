@@ -1,8 +1,9 @@
 #pragma once
 #include "../../engine/GameEngine.h"
-#include "Player.h"
+#include "Object.h"
 
-class Object;
+class Player;
+class MapChip;
 
 //プレイヤー追従カメラ
 class PlayCamera :public Object{
@@ -17,11 +18,13 @@ private:
 	tnl::Vector3 m_move;		//移動量
 	float m_height;				//高さ
 	float m_speed;				//移動速度
-	Player* m_player;			//プレイヤー
+	Player* m_player = nullptr;	//プレイヤー
+	MapChip* m_map_chip = nullptr;	//マップチップ
 
 public:
 	//-----メンバ関数-----//
-	void Update(float delta_time);	//座標更新
+	void Update(float delta_time);						//座標更新
+	void Draw();		//スクリーン画面外描画
 
 	//-----Setter,Getter-----//
 	void SetMove(tnl::Vector3 move) { m_move = move; }
