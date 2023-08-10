@@ -12,7 +12,7 @@ MapChip::~MapChip() {Finalize();}
 
 void MapChip::Initialize() {
 	//âÊëúÇÃì«Ç›çûÇ›
-	LoadDivGraph("graphics/Sprites.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
+	LoadDivGraph("graphics/Sprites32.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 }
 
 void MapChip::Update(float delta_time,float scroll_x) {

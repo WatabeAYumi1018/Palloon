@@ -13,7 +13,7 @@ public:
 	//-----定数-----//
 	const int MAP_ROW_COL=7;				//マップチップの横幅
 	const int MAP_ALL_NUM=49;				//マップチップの縦幅
-	const int MAP_CHIP_SIZE=16;				//マップチップのサイズ
+	const int MAP_CHIP_SIZE = 32;			//マップチップのサイズ
 
 private:
 	//-----メンバ変数-----//
@@ -22,7 +22,7 @@ private:
 
 	//-----csvファイル関連の変数-----//
 	//読み取り
-	std::string csv_map_tile_data = "csv/TileStage_1-1.csv";
+	std::string csv_map_tile_data = "csv/TileStage_1-1re32.csv";
 	//int型で描画
 	std::vector<std::vector<int>> m_map_tile;	//csvファイル：マップタイルステージ
 	

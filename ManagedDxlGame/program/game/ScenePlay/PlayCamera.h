@@ -26,8 +26,7 @@ private:
 
 public:
 	//-----メンバ関数-----//
-	void Update(float delta_time);						//座標更新
-	void Draw();		//スクリーン画面外描画
+	void Update(float delta_time);	//座標更新
 
 	//-----Setter,Getter-----//
 	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
