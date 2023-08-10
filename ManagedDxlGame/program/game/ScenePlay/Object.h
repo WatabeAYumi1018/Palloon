@@ -15,10 +15,4 @@ public:
 	 void Update(float delta_time) {}
 	 void Draw() {}
 	 void Finalize() {}
-	 // À•W‚ğ’²®‚·‚éŠÖ”
-	 void AdjustPosition(const tnl::Vector3& offset) {m_pos += offset;}
-
-	 //-----Setter,Getter-----//
-	 //void SetPos(const tnl::Vector3& pos) {m_pos = pos;}
-	 //tnl::Vector3 GetPos() const {return m_pos;}
 };

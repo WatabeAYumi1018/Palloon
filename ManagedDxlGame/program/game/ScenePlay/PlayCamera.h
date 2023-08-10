@@ -18,6 +18,9 @@ private:
 	tnl::Vector3 m_move;		//移動量
 	float m_height;				//高さ
 	float m_speed;				//移動速度
+	float m_scroll_x;			//スクロールのX座標
+
+	//-----クラスポインタ変数-----//
 	Player* m_player = nullptr;	//プレイヤー
 	MapChip* m_map_chip = nullptr;	//マップチップ
 
@@ -27,6 +30,8 @@ public:
 	void Draw();		//スクリーン画面外描画
 
 	//-----Setter,Getter-----//
+	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
+	tnl::Vector3 GetPos() const { return m_pos; }
 	void SetMove(tnl::Vector3 move) { m_move = move; }
 	tnl::Vector3 GetMove () { return m_move; }
 	void SetHeight(float height) { m_height = height; }
@@ -39,4 +44,6 @@ public:
 	tnl::Vector3 GetRight () { return m_right; }
 	void SetFront(tnl::Vector3 front) { m_front = front; }
 	tnl::Vector3 GetFront () { return m_front; }
+
+	float GetScrollX() const {return m_scroll_x;}
 };

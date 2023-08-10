@@ -4,7 +4,7 @@
 class Collision;
 
 class Character 
-	//:public Object 
+//	:public Object 
 {
 
 public:
@@ -40,14 +40,4 @@ public:
 	virtual void Update(float delta_time) ;
 	virtual void Draw(float delta_time) ;
 	virtual void Finalize() ;
-
-	//-----Getter,Setter-----//
-	//void SetIsExit(bool is_exit) { m_is_Exit = is_exit; }
-	//bool GetIsExit() const { return m_is_Exit; }
-	//
-	//void SetIsJump(bool is_jump) { m_is_Jump = is_jump; }
-	//bool GetIsJump() const { return m_is_Jump; }
-	//
-	//void SetIsAttack(bool is_attack) { m_is_Attack = is_attack; }
-	//bool GetIsAttack() const { return m_is_Attack; }
 };

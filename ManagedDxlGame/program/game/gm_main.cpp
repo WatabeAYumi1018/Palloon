@@ -46,19 +46,10 @@ Collision* collision = nullptr;
 void gameStart() {
 	srand(time(0));
 
-	////背景のコンストラクタ作成
+	//コンストラクタ作成
 	back = new backGround();
-
-	////プレイヤーのコンストラクタ生成
 	player = new Player();
-
-	////マップチップのCSVファイル
-	std::string csv_map_tile_data = "csv/TileStage_1-1.csv";	
-
-	////マップチップのコンストラクタ生成
-	mapChip = new MapChip(csv_map_tile_data);
-	collision = new Collision({0,0,0}, 16);
-	
+	collision = new Collision({0,0,0}, 16);	
 	camera = new PlayCamera({0,0,0}, player);
 }
 
@@ -69,7 +60,6 @@ void gameMain(float delta_time) {
 	////生成したコンストラクタでUpdate回す
 	back->Update(delta_time);
 	player->Update(delta_time);
-	mapChip->Update(delta_time);
 	camera->Update(delta_time);
 
 	//DrawLine(line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y, -1, 1);

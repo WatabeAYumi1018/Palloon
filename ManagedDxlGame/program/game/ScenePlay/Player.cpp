@@ -1,5 +1,5 @@
 #include "Player.h"
-//#include "../../wta_library/wta_Animation.h"
+#include "MapChip.h"
 
 //キャラクターの初期化子
 Player::Player() :Character({ 100,0,0 }, 5, 1,5.0f, {0,500,0})
@@ -13,6 +13,7 @@ void Player::Initialize()
 {
 	//円形の当たり判定をもつ
 	//m_collision = new Collision(m_pos, 50);
+	m_mapchip = new MapChip();
 
 	//★画像の読み込み(animLoopクラスを使用して読み込む)（非効率のため修正必須）
 	animLoop = new Anim("graphics/slim/blue/move_left");
@@ -23,7 +24,6 @@ void Player::Update(float delta_time)
 {
 	Draw(delta_time);
 	Move(delta_time);
-
 }
 
 void Player::Draw(float delta_time) {
@@ -40,7 +40,6 @@ void Player::Draw(float delta_time) {
 }
 
 void Player::Move(float delta_time) {
-
 	//キャラクターの移動
 	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) { m_pos.x += PLAYER_SPEED_WALK * delta_time; }
 	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_SPEED_WALK * delta_time; }
@@ -58,13 +57,11 @@ void Player::Move(float delta_time) {
 			m_jump_time = 5.0f;
 		}
 	}
-
 	//ジャンプ中
 	if (m_is_Jump) {
 		m_pos.y -= m_jump_velocity.y * delta_time;			//ジャンプ速度分y座標を上げる
 		m_jump_velocity.y -= m_gravity.y * delta_time;		//ジャンプしたら重力適応
 		m_jump_time -= delta_time;							//ジャンプ滞空時間を減らす
-		
 		//0になったらジャンプ終了
 		if (m_jump_time <= 0) {
 			m_is_Jump = false;

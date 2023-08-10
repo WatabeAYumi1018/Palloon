@@ -3,6 +3,8 @@
 #include "Character.h"
 #include "Aniｍ.h"
 
+class MapChip;
+
 class Player :public Character {
 
 public:
@@ -18,6 +20,7 @@ private:
 	//-----メンバ変数-----//
 	int animFileHdl=0;					//画像のハンドル
 	//dxe::Camera* m_camera = nullptr;	//カメラ
+	MapChip* m_mapchip = nullptr;		//マップチップ
 	Anim* animLoop = nullptr;			//アニメーションループ
 	Anim* animLoop2 = nullptr;			//アニメーションループ
 	Anim* animLoop3 = nullptr;			//アニメーションループ
@@ -29,13 +32,10 @@ public:
 	void Draw(float delta_time) override;
 	void Move(float delta_time);
 	void Finalize() override;
+	
+	float overCenterX();
 
 	//-----Setter,Getter-----//
-	//void SetCamera(dxe::Camera* camera) { m_camera = camera; }
-	//dxe::Camera* GetCamera() const { return m_camera; }
 	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
 	tnl::Vector3 GetPos() const { return m_pos; }
-
-	//void SetAttackType(eAttackType type) { m_eAttackType = type; }
-	//eAttackType GetAttackType() { return m_eAttackType; }
 };
