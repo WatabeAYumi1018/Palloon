@@ -176,6 +176,7 @@
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp" />
     <ClCompile Include="program\game\ScenePlay\Item.cpp" />
     <ClCompile Include="program\game\ScenePlay\MapChip.cpp" />
+    <ClCompile Include="program\game\ScenePlay\MapChipID.cpp" />
     <ClCompile Include="program\game\ScenePlay\Object .cpp" />
     <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp" />
     <ClCompile Include="program\game\ScenePlay\Player.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="program\game\ScenePlay\Enemy.h" />
     <ClInclude Include="program\game\ScenePlay\Item.h" />
     <ClInclude Include="program\game\ScenePlay\MapChip.h" />
+    <ClInclude Include="program\game\ScenePlay\MapChipID.h" />
     <ClInclude Include="program\game\ScenePlay\Object.h" />
     <ClInclude Include="program\game\ScenePlay\PlayCamera.h" />
     <ClInclude Include="program\game\ScenePlay\Player.h" />

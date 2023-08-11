@@ -21,7 +21,10 @@ void PlayCamera::Update(float delta_time) {
 	float centerY = m_player->GetPos().y;
 	// プレイヤーが画面の中央に到達したか
 	if (centerX >= DXE_WINDOW_WIDTH / 2) {
-		m_scroll_x = centerX - DXE_WINDOW_WIDTH / 2;}
+		m_scroll_x = centerX - DXE_WINDOW_WIDTH / 2;
+		//スクロールスピードを設定(背景とチップでのスクロールスピード調整のために使うかも)
+		m_scroll_x *= 0.1f;
+	}
 
 	Draw();
 	// マップチップの更新と描画

@@ -16,9 +16,11 @@ void Player::Initialize()
 	m_mapchip = new MapChip();
 
 	//★画像の読み込み(animLoopクラスを使用して読み込む)（非効率のため修正必須）
-	animLoop = new Anim("graphics/slim/blue/move_left");
-	animLoop2 = new Anim("graphics/slim/blue/move_right");
-	animLoop3 = new Anim("graphics/slim/blue/idle_right");
+	animLoop = new Anim("graphics/player/walk_right");
+	animLoop2 = new Anim("graphics/player/walk_left");
+	animLoop3 = new Anim("graphics/player/jump_right");
+	animLoop4 = new Anim("graphics/player/jump_left");
+	animLoop5 = new Anim("graphics/player/idle_right");
 }
 void Player::Update(float delta_time) 
 {
@@ -28,15 +30,34 @@ void Player::Update(float delta_time)
 
 void Player::Draw(float delta_time) {
 	DrawFormatString(10, 30, 1, "Player X: %.2f", m_pos.x);
-	//★現状方法が非効率のため、後日修正
-	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
-		animLoop->drawAnimLoopFile(delta_time, m_pos, "graphics/slim/blue/move_left");
+	//★現状方法が非効率のように感じる…
+	 
+	//このあたりは別で専用のクラスを作成して、そこで処理するようにする方がスマート
+	//歩きアニメーション
+	if(m_is_Ground){
+		if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
+			animLoop->drawAnimLoopFile(delta_time, m_pos, "graphics/player/walk_right");
+		}
+		else if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
+			animLoop2->drawAnimLoopFile(delta_time, m_pos, "graphics/player/walk_left");
+		}
+		//アニメーション画像描画
+		else{ 
+			animLoop5->drawAnimLoopFile(delta_time, m_pos, "graphics/player/idle_right");
+		}
 	}
-	else if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
-		animLoop2->drawAnimLoopFile(delta_time, m_pos, "graphics/slim/blue/move_right"); 
+	//ジャンプアニメーション
+	else {
+		if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
+			animLoop3->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_right");
+		}
+		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
+			animLoop4->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_left");
+		}
+		else {
+			animLoop3->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_right");
+		}
 	}
-	//アニメーション画像描画
-	else{ animLoop3->drawAnimLoopFile(delta_time, m_pos, "graphics/slim/blue/idle_right");}
 }
 
 void Player::Move(float delta_time) {
@@ -50,11 +71,11 @@ void Player::Move(float delta_time) {
 	//着地中
 	if (m_is_Ground) {
 		//スペースボタンでジャンプ
-		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE)) {
+		if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) {
  			m_is_Jump = true;
 			m_is_Ground = false;
-			m_jump_velocity.y = 500.0f;
-			m_jump_time = 5.0f;
+			m_jump_velocity.y = 1000.0f;
+			m_jump_time = 10.0f;
 		}
 	}
 	//ジャンプ中

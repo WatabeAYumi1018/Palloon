@@ -24,6 +24,8 @@ private:
 	Anim* animLoop = nullptr;			//アニメーションループ
 	Anim* animLoop2 = nullptr;			//アニメーションループ
 	Anim* animLoop3 = nullptr;			//アニメーションループ
+	Anim* animLoop4 = nullptr;			//アニメーションループ
+	Anim* animLoop5 = nullptr;			//アニメーションループ
 
 public:
 	//-----メンバ関数-----//
