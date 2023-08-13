@@ -15,6 +15,7 @@ void MapChip::Initialize() {
 	//画像の読み込み
 	LoadDivGraph("graphics/Sprites32.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 	//当たり判定の読み込み
+	LoadMapChipInfo();
 	LoadMapChipCollision();
 }
 
@@ -35,16 +36,31 @@ void MapChip::Draw(float scroll_x) {
 	}
 }
 
-//マップチップIDの情報から、チップが自分自身の判定を持つようにする
+//IDとCollision情報のみを一時格納
+void MapChip::LoadMapChipInfo() {
+	//読み取った情報をvectorに格納
+	for (int i = MAP_CHIP_ID_ROW_START; i < MAP_CHIP_ID_ROW_END; ++i) {
+		std::vector<int> row;
+		for (int j = MAP_CHIP_ID_COL_START; j < MAP_CHIP_ID_COL_END; ++j) {
+			row.emplace_back(m_csv_info[i][j]);
+		}
+		map_id_collision.emplace_back(row);
+	}
+}
+
+//読み取った情報を基に、チップが自分自身の判定を持つようにする
 void MapChip::LoadMapChipCollision() {
 	// 当たり判定情報を格納するためにサイズを設定
 	m_map_chip_collision.resize(m_map_tile.size(),
 								std::vector<Collision>(m_map_tile[0].size()));
-	for (int i = 0; i < m_csv_info.size(); ++i) {
-		for (int j = 0; j < m_csv_info[i].size(); ++j) {
-			eCollisionType type = eCollisionType::eCollision_None;
-			if (m_csv_info[i][j] == 1) {type = eCollisionType::eCollision_Block;}
-			else if (m_csv_info[i][j] == 2) {type = eCollisionType::eCollision_Line;}
+	for (int i = 0; i < map_id_collision.size(); ++i) {
+		for (int j = 0; j < map_id_collision[i].size(); ++j) {
+			eCollisionType type = eCollisionType::eCollision_Block;
+			//Collisionが1のIDはBox
+			if (map_id_collision[i][1] == 1) {type = eCollisionType::eCollision_Block;}
+			//Collisionが2のIDはLine
+			else if (map_id_collision[i][1] == 2) {type = eCollisionType::eCollision_Line;}
+			//マップタイルのIDとCollisionの情報を格納
 			m_map_chip_collision[i][j] = Collision(type);
 		}
 	}

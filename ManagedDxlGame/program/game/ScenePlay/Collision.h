@@ -6,7 +6,6 @@ class Object;
 class Player;
 
 enum class eCollisionType {
-	eCollision_None,
 	eCollision_Block,
 	eCollision_Line,
 	eCollision_Max
