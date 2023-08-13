@@ -194,9 +194,6 @@
     <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\MapChipID.cpp">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -345,9 +342,6 @@
       <Filter>program\[002]wta_library</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\PlayCamera.h">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\MapChipID.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
   </ItemGroup>

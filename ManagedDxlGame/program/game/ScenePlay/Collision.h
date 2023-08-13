@@ -5,16 +5,24 @@
 class Object;
 class Player;
 
+enum class eCollisionType {
+	eCollision_None,
+	eCollision_Block,
+	eCollision_Line,
+	eCollision_Max
+};
+
 class Collision {
 
 public:
 	Collision(tnl::Vector3 pos,int radius);
-	Collision(tnl::Vector3 pos,int width,int height);
+	Collision(eCollisionType type);		//マップ当たり判定
 	virtual ~Collision();
 
 private:
 	//-----メンバ変数-----//
 	tnl::Vector3 m_pos;
+	eCollisionType m_type = eCollisionType::eCollision_None;
 	//-----矩形当たり判定-----//
 	int m_width = 0;
 	int m_height = 0;
