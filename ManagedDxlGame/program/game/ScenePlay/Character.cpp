@@ -8,7 +8,6 @@ Character::Character(tnl::Vector3 pos, int hp, int attack, float jump_time, tnl:
 
 Character::~Character() {}
 
-
 void Character::Initialize() {}
 
 void Character::Update(float delta_time) {}

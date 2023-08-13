@@ -3,9 +3,10 @@
 
 Collision::Collision(tnl::Vector3 pos,int radius):m_pos(pos),m_radius(radius){}
 
-
-
 Collision::~Collision() { delete this; }
+
+bool Collision::HitCheckMap(const tnl::Vector3& circle, const Object* box);
+
 
 //// //ü•ª‚Æ‰~‚Ì“–‚½‚è”»’è
 //bool Collision::HitCircleLine(const Player& circle, const Object& line) {

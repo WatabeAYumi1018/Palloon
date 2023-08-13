@@ -21,11 +21,12 @@ private:
 	Collision* collision_map=nullptr;		//当たり判定用クラス
 
 	//-----csvファイル関連の変数-----//
-	//読み取り
+	
+	//マップチップデータの読み取り
 	std::string csv_map_tile_data = "csv/TileStage_1-1re32.csv";
 	//int型で描画
 	std::vector<std::vector<int>> m_map_tile;	//csvファイル：マップタイルステージ
-	
+
 public:
 	//-----メンバ関数-----//
 	void Initialize();

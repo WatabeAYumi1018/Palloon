@@ -6,7 +6,6 @@ class Collision;
 class Character 
 //	:public Object 
 {
-
 public:
 	Character(tnl::Vector3 pos,int hp,int attack, float jump_time, tnl::Vector3 jump_velocity);
 	virtual ~Character();
