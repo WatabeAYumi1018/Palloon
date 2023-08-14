@@ -30,27 +30,27 @@ private:
 	//マップチップ描画データの読み取り
 	std::string csv_map_tile_data = "csv/TileStage_1-1re32.csv";
 	//int型で描画
-	std::vector<std::vector<int>> m_map_tile;					//マップタイルステージ
+	std::vector<std::vector<int>> m_map_tile;		//マップタイル描画情報
 	
 	//-----csv当たり判定関連の変数-----//
 	//当たり判定情報の読み取り
 	std::string csv_map_tile_ID = "csv/tileStageID_1-1.csv";
 	//int型で描画
-	std::vector<std::vector<int>> m_csv_info;					//マップタイルステージ
-	std::vector<std::vector<IDCollision>> map_id_collision;		//必要情報のみ一時格納用
-	//当たり判定格納用
-	std::vector<std::vector<Collision>> m_map_chip_collision;	//当たり判定
+	std::vector<std::vector<int>> m_csv_info;		//マップタイル当たり判定情報
 
 public:
 	//-----メンバ関数-----//
 	void Initialize();
 	void Update(float delta_time,float m_scroll_x);
 	void Draw(float m_scroll_x);
-	void LoadMapChipInfo();
-	void LoadMapChipCollision();
+	void LoadMapChipCollisionType();
 	void Finalize();
 };
 
+
+//std::vector<IDCollision> map_id_collision;		//必要情報のみ一時格納用
+//当たり判定格納用
+//std::vector<eCollisionType> m_map_chip_collision;	//当たり判定
 
 //読み取りと描画（定義付け）のみ定義
 //Collisionクラスで当たり判定の計算処理を行う

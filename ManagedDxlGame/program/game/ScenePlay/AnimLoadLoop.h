@@ -2,11 +2,11 @@
 #include "../../engine/GameEngine.h"
 
 //別々のpngファイルを読み込んで、それぞれの画像をループ表示してアニメーションを再生するクラス
-class AnimLoad {
+class AnimLoadLoop {
 
 public:
-    AnimLoad(const char* pathName);
-    ~AnimLoad();
+    AnimLoadLoop(const char* pathName);
+    ~AnimLoadLoop();
 
     //ファイルを読み込む関数
     void loadAnimLoopFile(const char* path);                                                    
@@ -22,4 +22,4 @@ private:
     float frameDuration;		//1フレームの時間（あsにメーション描画のスピード調整）
 };
 
-//アニメーション画像の読み取りを行うクラス
+//アニメーションループ画像の読み取りを行うクラス

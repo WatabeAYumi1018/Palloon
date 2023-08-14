@@ -26,7 +26,7 @@ void PlayCamera::Update(float delta_time) {
 		m_scroll_x *= 0.1f;
 	}
 	// マップチップの更新と描画
-	//m_map_chip->Update(delta_time,m_scroll_x);
+	m_map_chip->Update(delta_time,m_scroll_x);
 }
 
 //PlayCamera内でMapChipを生成するとエラーなったのは、MapChip内でもPlayCameraのコンストラクタを呼び出しているため

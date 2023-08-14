@@ -6,7 +6,7 @@
 #include "../game/ScenePlay/Player.h"
 #include "../game/ScenePlay/MapChip.h"
 #include "../engine/backGround.h"
-#include "../game/ScenePlay/Collision.h"
+#include "../game/ScenePlay/CollisionCalc.h"
 #include "ScenePlay/PlayCamera.h"
 #include "../engine/UI.h"
 

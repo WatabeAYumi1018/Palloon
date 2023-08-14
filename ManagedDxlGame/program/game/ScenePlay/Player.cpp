@@ -15,17 +15,18 @@ void Player::Initialize()
 	//m_collision = new Collision(m_pos, 50);
 	m_mapchip = new MapChip();
 
-	//★画像の読み込み(animLoopクラスを使用して読み込む)（非効率のため修正必須ぽい）
-	animLoop = new AnimLoad("graphics/player/walk_right");
-	animLoop2 = new AnimLoad("graphics/player/walk_left");
-	animLoop3 = new AnimLoad("graphics/player/jump_right");
-	animLoop4 = new AnimLoad("graphics/player/jump_left");
-	animLoop5 = new AnimLoad("graphics/player/idle_right");
-	animLoop6 = new AnimLoad("graphics/player/idle_left");
-	animLoop7 = new AnimLoad("graphics/player/run_right");
-	animLoop8 = new AnimLoad("graphics/player/run_left");
-	animLoop9 = new AnimLoad("graphics/player/touchdown_right");
-	animLoop10 = new AnimLoad("graphics/player/touchdown_left");
+	//★画像の読み込み(animLoopクラスを使用して読み込む)（冗長気味のため修正必須かなと）
+	//csvファイルでまとめる
+	animLoop  = new AnimLoadLoop("graphics/player/walk_right");
+	animLoop2 = new AnimLoadLoop("graphics/player/walk_left");
+	animLoop3 = new AnimLoadLoop("graphics/player/jump_right");
+	animLoop4 = new AnimLoadLoop("graphics/player/jump_left");
+	animLoop5 = new AnimLoadLoop("graphics/player/idle_right");
+	animLoop6 = new AnimLoadLoop("graphics/player/idle_left");
+	animLoop7 = new AnimLoadLoop("graphics/player/run_right");
+	animLoop8 = new AnimLoadLoop("graphics/player/run_left");
+	animLoop9 = new AnimLoadLoop("graphics/player/touchdown_right");
+	animLoop10= new AnimLoadLoop("graphics/player/touchdown_left");
 }
 void Player::Update(float delta_time) 
 {

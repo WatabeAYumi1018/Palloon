@@ -1,7 +1,6 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
 
-
 enum class eAttackType {
 	eAttack_Push,
 	eAttack_Fire,
@@ -16,8 +15,8 @@ enum class eCollisionType {
 	eCollision_Max
 };
 
-// ID‚Æ“–‚½‚è”»’è‚Ìî•ñ‚ğ•Û‚·‚é\‘¢‘Ì
-struct IDCollision {
-	int id;
-	eCollisionType collision;
+enum class eCharacterType {
+	eCharacter_Player,
+	eCharacter_Slim,
+	eCharacter_Max
 };

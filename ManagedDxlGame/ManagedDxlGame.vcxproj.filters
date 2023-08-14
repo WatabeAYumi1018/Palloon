@@ -167,7 +167,7 @@
     <ClCompile Include="program\game\ScenePlay\Item.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\Collision.cpp">
+    <ClCompile Include="program\game\ScenePlay\CollisionCalc.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\scenePlay.cpp">
@@ -185,13 +185,16 @@
     <ClCompile Include="program\engine\backGround.cpp">
       <Filter>program\[003]engine</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\AnimLoad.cpp">
+    <ClCompile Include="program\game\ScenePlay\AnimLoadLoop.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\wta_library\wta_Animation.cpp">
       <Filter>program\[002]wta_library</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp">
+      <Filter>program\[004] game\[003]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\DrawAnim.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
   </ItemGroup>
@@ -314,7 +317,7 @@
     <ClInclude Include="program\game\ScenePlay\Item.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\Collision.h">
+    <ClInclude Include="program\game\ScenePlay\CollisionCalc.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\scenePlay.h">
@@ -335,13 +338,16 @@
     <ClInclude Include="program\engine\backGround.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\AnimLoad.h">
+    <ClInclude Include="program\game\ScenePlay\AnimLoadLoop.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\wta_library\wta_Animation.h">
       <Filter>program\[002]wta_library</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\PlayCamera.h">
+      <Filter>program\[004] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\DrawAnim.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
   </ItemGroup>

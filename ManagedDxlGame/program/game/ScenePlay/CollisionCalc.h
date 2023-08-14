@@ -5,12 +5,12 @@
 class Object;
 class Player;
 
-class Collision {
+class CollisionCalc {
 
 public:
-	Collision(){}
-	Collision(eCollisionType type) : m_type(type) {}
-	virtual ~Collision();
+	CollisionCalc(){}
+	CollisionCalc(eCollisionType type) : m_type(type) {}
+	virtual ~CollisionCalc();
 
 private:
 	//-----ƒƒ“ƒo•Ï”-----//

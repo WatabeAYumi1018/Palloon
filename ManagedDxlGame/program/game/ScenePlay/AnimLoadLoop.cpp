@@ -1,18 +1,18 @@
-#include "AnimLoad.h"
+#include "AnimLoadLoop.h"
 #include <fstream>
 
-AnimLoad::AnimLoad(const char* pathName) :
+AnimLoadLoop::AnimLoadLoop(const char* pathName) :
     NumImgs(0), LoopFlag(true), currentFrame(0), elapsedTime(0.0f), frameDuration(0.2f)
 {
     loadAnimLoopFile(pathName);
 }
 
-AnimLoad::~AnimLoad() {
+AnimLoadLoop::~AnimLoadLoop() {
     for (int img : Imgs) {DeleteGraph(img);}
 }
 
 //画像ファイルをロードする
-void AnimLoad::loadAnimLoopFile(const char* path) {
+void AnimLoadLoop::loadAnimLoopFile(const char* path) {
     std::string folderPath = path;
     //WIN32_FIND_DATA構造体：Windowsでファイル検索を行う際に使用されるデータ構造体
     //Windows APIのファイル検索関数であるFindFirstFileやFindNextFileを使用する際
@@ -40,7 +40,7 @@ void AnimLoad::loadAnimLoopFile(const char* path) {
 }
 
 //画像をループ描画する
-void AnimLoad::drawAnimLoopFile(float delta_time,tnl::Vector3 pos,float angle, float scale) {
+void AnimLoadLoop::drawAnimLoopFile(float delta_time,tnl::Vector3 pos,float angle, float scale) {
     elapsedTime += delta_time;
     //経過時間がフレーム時間を超えた場合
     if (elapsedTime >= frameDuration) {
