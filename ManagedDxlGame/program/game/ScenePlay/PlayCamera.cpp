@@ -25,11 +25,9 @@ void PlayCamera::Update(float delta_time) {
 		//スクロールスピードを設定(背景とチップでのスクロールスピード調整のために使うかも)
 		m_scroll_x *= 0.1f;
 	}
-
-	Draw();
 	// マップチップの更新と描画
-	m_map_chip->Update(delta_time,m_scroll_x);
+	//m_map_chip->Update(delta_time,m_scroll_x);
 }
 
-//PlayCamera内でMapChipを生成するとエラーなるのは、MapChip内でもPlayCameraのコンストラクタを呼び出しているため
+//PlayCamera内でMapChipを生成するとエラーなったのは、MapChip内でもPlayCameraのコンストラクタを呼び出しているため
 //方向性をちゃんと定めること

@@ -15,7 +15,6 @@ private:
 	dxe::Mesh* m_mesh = nullptr;		//ƒƒbƒVƒ…
 	dxe::Camera* m_camera = nullptr;
 
-
 public:
 	//-----ƒƒ“ƒoŠÖ”-----//
 	void Initialize();

@@ -8,6 +8,7 @@
 #include "../engine/backGround.h"
 #include "../game/ScenePlay/Collision.h"
 #include "ScenePlay/PlayCamera.h"
+#include "../engine/UI.h"
 
 //`8ŒŽ’†{‚Ü‚Å`
 //‡@ƒ}ƒbƒvA”wŒi•`‰æ OK
@@ -33,11 +34,10 @@
 // `ŠúŒÀ‚Ü‚Å`
 //‡OÅIŠm”F
 
-
-Player* player;
-//MapChip* mapChip;
-PlayCamera* camera;
-backGround* back;
+UI* ui=nullptr;
+Player* player=nullptr;
+PlayCamera* camera=nullptr;
+backGround* back=nullptr;
 
 //Collision* collision = nullptr;
 
@@ -48,6 +48,7 @@ void gameStart() {
 
 	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^ì¬
 	back = new backGround();
+	ui = new UI({10,0,50});
 	player = new Player();
 	//collision = new Collision({0,0,0}, 16);	
 	camera = new PlayCamera({0,0,0}, player);
@@ -59,6 +60,7 @@ void gameMain(float delta_time) {
 
 	////¶¬‚µ‚½ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÅUpdate‰ñ‚·
 	back->Update(delta_time);
+	ui->Update(delta_time);
 	player->Update(delta_time);
 	camera->Update(delta_time);
 

@@ -16,7 +16,7 @@ void MapChip::Initialize() {
 	LoadDivGraph("graphics/Sprites32.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 	//当たり判定の読み込み
 	LoadMapChipInfo();
-	LoadMapChipCollision();
+	//LoadMapChipCollision();
 }
 
 void MapChip::Update(float delta_time,float scroll_x) {
@@ -38,7 +38,7 @@ void MapChip::Draw(float scroll_x) {
 void MapChip::LoadMapChipInfo() {
 	// 読み取った情報をvectorに格納
 	for (int i = MAP_CHIP_ID_ROW_START; i < MAP_CHIP_ID_ROW_END; ++i) {
-		//行（外ベクトル）の情報格納
+		//構造体変数型のvectorを定義
 		std::vector<IDCollision> row;
 		//2つずつ読み取る（密接に関係しているため）
 		for (int j = MAP_CHIP_ID_COL_START; j <= MAP_CHIP_ID_COL_END; j += 2) {
@@ -51,7 +51,7 @@ void MapChip::LoadMapChipInfo() {
 			// 1:ブロック 2:線 3:判定なし
 			id_collision.collision = collisionType == 1 ? eCollisionType::eCollision_Block :
 				collisionType == 2 ? eCollisionType::eCollision_Line : eCollisionType::eCollision_None;
-			//当たり判定を格納
+			//当たり判定格納
 			row.emplace_back(id_collision);
 		}
 		//全て格納
@@ -59,7 +59,7 @@ void MapChip::LoadMapChipInfo() {
 	}
 }
 
-//読み取った情報を基に、チップが自分自身の判定を持つようにする
+//LoadMapChipInfo()関数で読み取った情報を基に、チップが自分自身の判定を持つようにしたい
 void MapChip::LoadMapChipCollision() {
 	// 当たり判定情報を格納するためにサイズを設定
 	m_map_chip_collision.resize(m_map_tile.size(), std::vector<Collision>(m_map_tile[0].size()));
@@ -68,7 +68,9 @@ void MapChip::LoadMapChipCollision() {
 		for (int j = 0; j < m_map_tile[i].size(); ++j) {
 			//マップチップのIDを取得
 			int chipID = m_map_tile[i][j];
+
 			//そのIDに対応する当たり判定タイプを取得
+			//★以降の処理を実行するとベクトルの範囲外のインデックスにアクセス（chipIDが原因ぽい）
 			//eCollisionType type = map_id_collision[chipID][1].collision; //1列目に当たり判定のため
 			//対応する位置に当たり判定情報を格納
 			//m_map_chip_collision[i][j] = Collision(type);

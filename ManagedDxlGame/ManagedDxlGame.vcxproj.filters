@@ -185,7 +185,7 @@
     <ClCompile Include="program\engine\backGround.cpp">
       <Filter>program\[003]engine</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\Anim.cpp">
+    <ClCompile Include="program\game\ScenePlay\AnimLoad.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\wta_library\wta_Animation.cpp">
@@ -335,7 +335,7 @@
     <ClInclude Include="program\engine\backGround.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\Aniｍ.h">
+    <ClInclude Include="program\game\ScenePlay\AnimLoad.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\wta_library\wta_Animation.h">

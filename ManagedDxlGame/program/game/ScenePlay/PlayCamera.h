@@ -46,3 +46,5 @@ public:
 
 	float GetScrollX() const {return m_scroll_x;}
 };
+
+//

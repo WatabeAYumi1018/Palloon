@@ -15,12 +15,17 @@ void Player::Initialize()
 	//m_collision = new Collision(m_pos, 50);
 	m_mapchip = new MapChip();
 
-	//★画像の読み込み(animLoopクラスを使用して読み込む)（非効率のため修正必須）
-	animLoop = new Anim("graphics/player/walk_right");
-	animLoop2 = new Anim("graphics/player/walk_left");
-	animLoop3 = new Anim("graphics/player/jump_right");
-	animLoop4 = new Anim("graphics/player/jump_left");
-	animLoop5 = new Anim("graphics/player/idle_right");
+	//★画像の読み込み(animLoopクラスを使用して読み込む)（非効率のため修正必須ぽい）
+	animLoop = new AnimLoad("graphics/player/walk_right");
+	animLoop2 = new AnimLoad("graphics/player/walk_left");
+	animLoop3 = new AnimLoad("graphics/player/jump_right");
+	animLoop4 = new AnimLoad("graphics/player/jump_left");
+	animLoop5 = new AnimLoad("graphics/player/idle_right");
+	animLoop6 = new AnimLoad("graphics/player/idle_left");
+	animLoop7 = new AnimLoad("graphics/player/run_right");
+	animLoop8 = new AnimLoad("graphics/player/run_left");
+	animLoop9 = new AnimLoad("graphics/player/touchdown_right");
+	animLoop10 = new AnimLoad("graphics/player/touchdown_left");
 }
 void Player::Update(float delta_time) 
 {
@@ -36,27 +41,23 @@ void Player::Draw(float delta_time) {
 	//歩きアニメーション
 	if(m_is_Ground){
 		if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
-			animLoop->drawAnimLoopFile(delta_time, m_pos, "graphics/player/walk_right");
+			animLoop->drawAnimLoopFile(delta_time, m_pos);
 		}
 		else if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
-			animLoop2->drawAnimLoopFile(delta_time, m_pos, "graphics/player/walk_left");
+			animLoop2->drawAnimLoopFile(delta_time, m_pos);
 		}
 		//アニメーション画像描画
-		else{ 
-			animLoop5->drawAnimLoopFile(delta_time, m_pos, "graphics/player/idle_right");
-		}
+		else{ animLoop5->drawAnimLoopFile(delta_time, m_pos);}
 	}
-	//ジャンプアニメーション
+	//ジャンプアニメーション(要検討)
 	else {
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
-			animLoop3->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_right");
+			//animLoop3->drawAnimLoopFile(delta_time, m_pos);
 		}
 		else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
-			animLoop4->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_left");
+			animLoop4->drawAnimLoopFile(delta_time, m_pos);
 		}
-		else {
-			animLoop3->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_right");
-		}
+		else {animLoop3->drawAnimLoopFile(delta_time, m_pos);}
 	}
 }
 
