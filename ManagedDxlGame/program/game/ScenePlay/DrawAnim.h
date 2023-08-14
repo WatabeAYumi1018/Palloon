@@ -15,8 +15,6 @@ private:
 	//IDとフォルダパスの情報開始～終了(行列)
 	const int ANIM_LOOP_ROW_START = 1;			//1行目
 	const int ANIM_LOOP_ROW_END = 20;			//20行目
-	const int ANIM_LOOP_COL_START = 0;			//0列目
-	const int ANIM_LOOP_COL_END = 1;			//1列目
 	//②単発アニメーション
 	//IDとフォルダパスの情報開始～終了(行列)
 	const int ANIM_NOTLOOP_ROW_START = 1;			//1行目
@@ -27,14 +25,16 @@ private:
 private:
 	//-----csvファイルパス関連の変数-----//
 	//IDとファイルパスの読み取り
-	std::string csv_anim= "csv/PlayerAnimLoop.csv";
-	//
-	std::vector<std::vector<int>> m_csv_anim;		
+	std::string csv_anim= "csv/AnimPath.csv";
+	//string型で格納
+	std::vector<std::vector<std::string>> m_anim_path;
+
 
 public:
 	//-----メンバ関数-----//
 	void Initialize();
-	void LoadFilePath();
+	void LoadPathLoop();
+	void LoadPathNotLoop();
 	void Finalize();
 };
 

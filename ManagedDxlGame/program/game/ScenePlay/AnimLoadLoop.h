@@ -5,11 +5,11 @@
 class AnimLoadLoop {
 
 public:
-    AnimLoadLoop(const char* pathName);
+    AnimLoadLoop(const std::string pathName);
     ~AnimLoadLoop();
 
     //ファイルを読み込む関数
-    void loadAnimLoopFile(const char* path);                                                    
+    void loadAnimLoopFile(const std::string folderPath);
     //アニメーションを描画する関数
     void drawAnimLoopFile(float delta_time, tnl::Vector3 pos, float angle=0, float scale=1.0f);
 
@@ -23,3 +23,10 @@ private:
 };
 
 //アニメーションループ画像の読み取りを行うクラス
+
+//char*からstd::stringへの変換(何かあった時のため保持)
+//AnimLoadLoop(const char* pathName);
+//~AnimLoadLoop();
+//
+////ファイルを読み込む関数
+//void loadAnimLoopFile(const char* path);

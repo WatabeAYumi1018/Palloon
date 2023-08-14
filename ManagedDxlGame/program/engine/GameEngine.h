@@ -18,5 +18,7 @@ enum class eCollisionType {
 enum class eCharacterType {
 	eCharacter_Player,
 	eCharacter_Slim,
+	eCharacter_plant,
+	eCharacter_bird,
 	eCharacter_Max
 };

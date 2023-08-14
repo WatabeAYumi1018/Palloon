@@ -3,9 +3,9 @@
 
 MapChip::MapChip() :Object(m_pos) {
 	//csvファイルのマップタイル描画情報を読み込む
-	m_map_tile=tnl::LoadCsv<int>(csv_map_tile_data);
+	m_csv_map_tile=tnl::LoadCsv<int>(csv_map_tile_data);
 	//csvファイルからマップチップの情報を読み込む(一時的な格納)
-	m_csv_info = tnl::LoadCsv<int>(csv_map_tile_ID);
+	m_csv_collision = tnl::LoadCsv<int>(csv_map_tile_ID);
 	Initialize();
 }
 
@@ -22,11 +22,11 @@ void MapChip::Update(float delta_time,float scroll_x) {Draw(scroll_x);}
 
 void MapChip::Draw(float scroll_x) {
 	//マップ画像の描画
-	for (int i = 0; i < m_map_tile.size(); ++i) {			//行数はm_map_tileのサイズに基づく
-		for (int j = 0; j < m_map_tile[i].size(); ++j) {	//列数はm_map_tile[i]のサイズに基づく
+	for (int i = 0; i < m_csv_map_tile.size(); ++i) {			//行数はm_map_tileのサイズに基づく
+		for (int j = 0; j < m_csv_map_tile[i].size(); ++j) {	//列数はm_map_tile[i]のサイズに基づく
 			int posX = j * MAP_CHIP_SIZE - scroll_x;		//スクロールの値を考慮
 			int posY = i * MAP_CHIP_SIZE ;			
-			DrawGraph(posX, posY, m_map_hdl[m_map_tile[i][j]], TRUE);
+			DrawGraph(posX, posY, m_map_hdl[m_csv_map_tile[i][j]], TRUE);
 		}
 	}
 }
@@ -37,13 +37,13 @@ void MapChip::LoadMapChipCollisionType() {
 		//当たり判定の情報のみ格納
 		std::vector<eCollisionType> collisionType;
 		//int型をeCollisionType型にキャスト
-		collisionType.emplace_back(static_cast<eCollisionType>(m_csv_info[i][1]));
+		collisionType.emplace_back(static_cast<eCollisionType>(m_csv_collision[i][1]));
 	}
 }
 
 void MapChip::Finalize() {
-	m_map_tile.clear();
-	m_csv_info.clear();
+	m_csv_map_tile.clear();
+	m_csv_collision.clear();
 }
 
 //イベントチップを上書きして追加イベントとかもあり
