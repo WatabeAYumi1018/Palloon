@@ -8,3 +8,16 @@ enum class eAttackType {
 	eAttack_Beam,
 	eAttack_Max
 };
+
+enum class eCollisionType {
+	eCollision_None,
+	eCollision_Block,
+	eCollision_Line,
+	eCollision_Max
+};
+
+// ID‚Æ“–‚½‚è”»’è‚Ìî•ñ‚ğ•Û‚·‚é\‘¢‘Ì
+struct IDCollision {
+	int id;
+	eCollisionType collision;
+};

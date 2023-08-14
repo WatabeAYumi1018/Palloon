@@ -48,10 +48,10 @@ void Player::Draw(float delta_time) {
 	}
 	//ジャンプアニメーション
 	else {
-		if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) {
 			animLoop3->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_right");
 		}
-		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
+		else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
 			animLoop4->drawAnimLoopFile(delta_time, m_pos, "graphics/player/jump_left");
 		}
 		else {

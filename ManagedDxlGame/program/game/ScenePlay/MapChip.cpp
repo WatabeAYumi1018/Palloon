@@ -30,20 +30,31 @@ void MapChip::Draw(float scroll_x) {
 			int posX = j * MAP_CHIP_SIZE - scroll_x;		//スクロールの値を考慮
 			int posY = i * MAP_CHIP_SIZE ;			
 			DrawGraph(posX, posY, m_map_hdl[m_map_tile[i][j]], TRUE);
-			// デバッグ描画
-			DrawFormatString(0, 0, -1, "+");
 		}
 	}
 }
 
 //IDとCollision情報のみを一時格納
 void MapChip::LoadMapChipInfo() {
-	//読み取った情報をvectorに格納
+	// 読み取った情報をvectorに格納
 	for (int i = MAP_CHIP_ID_ROW_START; i < MAP_CHIP_ID_ROW_END; ++i) {
-		std::vector<int> row;
-		for (int j = MAP_CHIP_ID_COL_START; j < MAP_CHIP_ID_COL_END; ++j) {
-			row.emplace_back(m_csv_info[i][j]);
+		//行（外ベクトル）の情報格納
+		std::vector<IDCollision> row;
+		//2つずつ読み取る（密接に関係しているため）
+		for (int j = MAP_CHIP_ID_COL_START; j <= MAP_CHIP_ID_COL_END; j += 2) {
+			//IDとCollision情報を格納する構造体変数
+			IDCollision id_collision;
+			//ID情報定義
+			id_collision.id = m_csv_info[i][j];
+			//Collision情報定義
+			int collisionType = m_csv_info[i][j + 1];
+			// 1:ブロック 2:線 3:判定なし
+			id_collision.collision = collisionType == 1 ? eCollisionType::eCollision_Block :
+				collisionType == 2 ? eCollisionType::eCollision_Line : eCollisionType::eCollision_None;
+			//当たり判定を格納
+			row.emplace_back(id_collision);
 		}
+		//全て格納
 		map_id_collision.emplace_back(row);
 	}
 }
@@ -51,17 +62,16 @@ void MapChip::LoadMapChipInfo() {
 //読み取った情報を基に、チップが自分自身の判定を持つようにする
 void MapChip::LoadMapChipCollision() {
 	// 当たり判定情報を格納するためにサイズを設定
-	m_map_chip_collision.resize(m_map_tile.size(),
-								std::vector<Collision>(m_map_tile[0].size()));
-	for (int i = 0; i < map_id_collision.size(); ++i) {
-		for (int j = 0; j < map_id_collision[i].size(); ++j) {
-			eCollisionType type = eCollisionType::eCollision_Block;
-			//Collisionが1のIDはBox
-			if (map_id_collision[i][1] == 1) {type = eCollisionType::eCollision_Block;}
-			//Collisionが2のIDはLine
-			else if (map_id_collision[i][1] == 2) {type = eCollisionType::eCollision_Line;}
-			//マップタイルのIDとCollisionの情報を格納
-			m_map_chip_collision[i][j] = Collision(type);
+	m_map_chip_collision.resize(m_map_tile.size(), std::vector<Collision>(m_map_tile[0].size()));
+	//描画しているチップIDに対応するCollision情報を格納（当たり判定情報を独自で管理するため）
+	for (int i = 0; i < m_map_tile.size(); ++i) {
+		for (int j = 0; j < m_map_tile[i].size(); ++j) {
+			//マップチップのIDを取得
+			int chipID = m_map_tile[i][j];
+			//そのIDに対応する当たり判定タイプを取得
+			//eCollisionType type = map_id_collision[chipID][1].collision; //1列目に当たり判定のため
+			//対応する位置に当たり判定情報を格納
+			//m_map_chip_collision[i][j] = Collision(type);
 		}
 	}
 }

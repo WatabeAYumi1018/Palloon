@@ -5,17 +5,11 @@
 class Object;
 class Player;
 
-enum class eCollisionType {
-	eCollision_Block,
-	eCollision_Line,
-	eCollision_Max
-};
-
 class Collision {
 
 public:
-	Collision(tnl::Vector3 pos,int radius);
-	Collision(eCollisionType type);		//マップ当たり判定
+	Collision(){}
+	Collision(eCollisionType type) : m_type(type) {}
 	virtual ~Collision();
 
 private:
@@ -33,12 +27,12 @@ private:
 
 public:
 	//-----メンバ関数-----//
-	//キャラクター同士、エフェクトとの当たり判定（円同士）
-	bool HitCheck(const tnl::Vector3& circle01, const Object* circle02) {}
-	//キャラクターと床の当たり判定（円と矩形）
-	bool HitCheckFloor(const tnl::Vector3& circle, const Object* box) {}
-	//キャラクターと線分の当たり判定（円と線分）
-	bool HitCircleLine(const tnl::Vector3& circle, const Object& line);
+	////キャラクター同士、エフェクトとの当たり判定（円同士）
+	//bool HitCheck(const tnl::Vector3& circle01, const Object* circle02) {}
+	////キャラクターと床の当たり判定（円と矩形）
+	//bool HitCheckFloor(const tnl::Vector3& circle, const Object* box) {}
+	////キャラクターと線分の当たり判定（円と線分）
+	//bool HitCircleLine(const tnl::Vector3& circle, const Object& line);
 	
 	//キャラクターと地形との当たり判定（円と矩形）
 	//csvマップチップデータIDが1,2は当たり判定あり、0はなし

@@ -1,11 +1,11 @@
 #include "Collision.h"
 
 
-Collision::Collision(tnl::Vector3 pos,int radius):m_pos(pos),m_radius(radius){}
+//Collision::Collision(tnl::Vector3 pos,int radius):m_pos(pos),m_radius(radius){}
 
-Collision::Collision(eCollisionType type):m_type(type){}
+//Collision::Collision(eCollisionType type):m_type(type){}
 
-Collision::~Collision() { delete this; }
+Collision::~Collision() { }
 
 bool Collision::HitCheckMap(const tnl::Vector3& circle, const Object* box) {
 	return 0;

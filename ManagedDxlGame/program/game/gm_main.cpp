@@ -35,11 +35,11 @@
 
 
 Player* player;
-MapChip* mapChip;
+//MapChip* mapChip;
 PlayCamera* camera;
 backGround* back;
 
-Collision* collision = nullptr;
+//Collision* collision = nullptr;
 
 //------------------------------------------------------------------------------------------------------------
 // ゲーム起動時に１度だけ実行されます
@@ -49,7 +49,7 @@ void gameStart() {
 	//コンストラクタ作成
 	back = new backGround();
 	player = new Player();
-	collision = new Collision({0,0,0}, 16);	
+	//collision = new Collision({0,0,0}, 16);	
 	camera = new PlayCamera({0,0,0}, player);
 }
 
