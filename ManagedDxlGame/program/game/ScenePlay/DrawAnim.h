@@ -12,15 +12,11 @@ public:
 private:
 	//-----定数-----//
 	//①ループアニメーション
-	//IDとフォルダパスの情報開始～終了(行列)
 	const int ANIM_LOOP_ROW_START = 1;			//1行目
 	const int ANIM_LOOP_ROW_END = 20;			//20行目
 	//②単発アニメーション
-	//IDとフォルダパスの情報開始～終了(行列)
-	const int ANIM_NOTLOOP_ROW_START = 1;			//1行目
-	const int ANIM_NOTLOOP_ROW_END = 16;			//16行目
-	const int ANIM_NOTLOOP_COL_START = 3;			//3列目
-	const int ANIM_NOTLOOP_COL_END = 4;				//4列目
+	const int ANIM_NOTLOOP_ROW_START = 1;		//1行目
+	const int ANIM_NOTLOOP_ROW_END = 16;		//16行目
 
 private:
 	//-----csvファイルパス関連の変数-----//
@@ -29,12 +25,11 @@ private:
 	//string型で格納
 	std::vector<std::vector<std::string>> m_anim_path;
 
-
 public:
 	//-----メンバ関数-----//
 	void Initialize();
-	void LoadPathLoop();
-	void LoadPathNotLoop();
+	void LoadPathLoop();		//ループアニメーションの読み取り
+	void LoadPathNotLoop();		//単発アニメーションの読み取り
 	void Finalize();
 };
 
