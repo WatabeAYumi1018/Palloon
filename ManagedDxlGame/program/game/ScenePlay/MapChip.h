@@ -43,6 +43,24 @@ public:
 	void Draw(float m_scroll_x);
 	void LoadMapChipCollisionType();
 	void Finalize();
+
+	//-----ゲッター-----//
+	int GetTileRows() { return m_csv_map_tile.size(); }
+	int GetTileCols(int row) {
+		if (row < 0 || row >= m_csv_map_tile.size()) return 0;
+		return m_csv_map_tile[row].size();
+	}
+	tnl::Vector3 GetTilePositionAt(int row, int col) {
+		return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);
+	}
+	float GetTileSize() {return MAP_CHIP_SIZE;}
+	eCollisionType GetCollisionTypeAt(int row, int col) {
+		if (row < 0 || row >= m_csv_collision.size() || col < 0 || col >= m_csv_collision[row].size()) {
+			// 範囲外の場合、何らかのデフォルト値を返す
+			return eCollisionType::eCollision_None; // eCollision_Noneは当たり判定がないことを示す値と仮定
+		}
+		return static_cast<eCollisionType>(m_csv_collision[row][col]);
+	}
 };
 
 

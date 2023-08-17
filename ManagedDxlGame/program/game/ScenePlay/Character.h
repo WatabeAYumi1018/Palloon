@@ -20,10 +20,9 @@ protected:
 	tnl::Vector3 m_jump_velocity;			//ジャンプ速度
 	tnl::Vector3 m_pos;						//座標(Object反映するまでの仮)
 	tnl::Vector3 m_gravity = {0,100,0};		//重力
-	tnl::Quaternion m_rotation;				//回転
 
-	//Vector3 velocity;						//速度(エフェクトや遠距離の速さの時に使用するかも)
-	//Vector3 m_size;						//サイズ
+	tnl::Vector3 velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
+	int m_size;						//サイズ
 
 	bool m_is_Exit=false;					//存在フラグ
 	bool m_is_Ground=true;					//接地中
@@ -33,10 +32,15 @@ protected:
 	Collision* m_collision = nullptr;		//当たり判定
 	//Effect* effect = nullptr;
 
-	//-----メンバ関数-----//
 public:
+	//-----メンバ関数-----//
 	virtual void Initialize() ;
 	virtual void Update(float delta_time) ;
 	virtual void Draw(float delta_time) ;
 	virtual void Finalize() ;
+
+	//-----Setter,Getter-----//
+	tnl::Vector3 GetPos() const { return m_pos; }
+	tnl::Vector3 GetVelocity() const { return velocity; }
+	int GetSize() const { return m_size; }
 };

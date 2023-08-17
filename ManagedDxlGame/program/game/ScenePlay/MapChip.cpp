@@ -1,5 +1,4 @@
 #include "MapChip.h"
-#include "CollisionCalc.h"
 
 MapChip::MapChip() :Object(m_pos) {
 	//csvファイルのマップタイル描画情報を読み込む
