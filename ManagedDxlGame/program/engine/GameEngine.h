@@ -10,7 +10,7 @@ enum class eAttackType {
 
 enum class eCollisionType {
 	eCollision_None,
-	eCollision_Block,
+	eCollision_Box,
 	eCollision_Line,
 	eCollision_Max
 };

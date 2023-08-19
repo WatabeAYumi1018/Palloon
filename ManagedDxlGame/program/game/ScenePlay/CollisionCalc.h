@@ -15,17 +15,22 @@ private:
 	//-----メンバ変数-----//
 	eCollisionType m_type = eCollisionType::eCollision_None;
 
-public:
-	static tnl::Vector3 HandlePlayerMapCollision(Character* player, MapChip* mapChip);
+//public:
+	//static tnl::Vector3 HandlePlayerMapCollision(Character* player, MapChip* mapChip);
 
 private:
-	static void CheckCollisionByType(const tnl::Vector3& playerPos, float playerRadius, MapChip* mapChip, int i, int j);
+	//static void CheckCollisionByType(const tnl::Vector3& playerPos, float playerRadius, MapChip* mapChip, int i, int j);
+
+	static eCollisionType GetCollisionTypeMap(Character& character, MapChip& mapChip);
 
 	static void CheckBoxCollision(const tnl::Vector3& playerPos, float playerRadius, MapChip* mapChip, int i, int j);
 
 	static void CheckLineCollision(const tnl::Vector3& playerPos, float playerRadius, MapChip* mapChip, int i, int j);
 
-	
+public:
+
+	static void Calculate(Character& character, MapChip& mapChip);
+
 
 	//-----メンバ関数-----//
 	////キャラクターと地形(eCollisionType)との当たり判定（円と矩形）

@@ -10,59 +10,63 @@ CollisionCalc::CollisionCalc(eCollisionType type):m_type(type){}
 
 CollisionCalc::~CollisionCalc() { }
 
-tnl::Vector3 CollisionCalc::HandlePlayerMapCollision(Character* chara, MapChip* mapChip) {
-    tnl::Vector3 playerPos = chara->GetPos();
-    float playerRadius = chara->GetSize();
+//キャラクター位置を取得し、マップIDから当たり判定のタイプを取得
+eCollisionType CollisionCalc::GetCollisionTypeMap(Character& character, MapChip& mapChip) {
+    // キャラクターのワールド座標をマップのグリッド座標に変換
+    int row = character.GetPos().y / MapChip::MAP_CHIP_SIZE;
+    int col = character.GetPos().x / MapChip::MAP_CHIP_SIZE;
 
-    for (int i = 0; i < mapChip->GetTileRows(); ++i) {
-        for (int j = 0; j < mapChip->GetTileCols(i); ++j) {
-            CheckCollisionByType(playerPos, playerRadius, mapChip, i, j);
-        }
-    }
-    return playerPos;
+    // 当該位置のIDを取得
+    int cellId = mapChip.GetIdAt(row, col);
+
+    // IDを使用して当たり判定のタイプを確認
+    return mapChip.GetCollisionTypeById(cellId);
 }
 
-void CollisionCalc::CheckCollisionByType(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
-    eCollisionType collisionType = mapChip->GetCollisionTypeAt(i, j);
+//void CollisionCalc::CheckBoxCollision(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
+//    tnl::Vector3 blockPos = mapChip->GetTilePositionAt(i, j);
+//    float blockSize = mapChip->GetTileSize();
+//
+//    if (wta::IsIntersectCircleBox(charaPos, charaRadius, blockPos, blockSize)) {
+//        // 衝突応答処理
+//        DrawStringEx(0, 50, -1, "hit");
+//    }
+//}
+//
+//void CollisionCalc::CheckLineCollision(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
+//    tnl::Vector3 boxPos = mapChip->GetTilePositionAt(i, j);
+//    float boxSize = mapChip->GetTileSize();
+//
+//    if (wta::IsIntersectCircleBox(charaPos, charaRadius, boxPos, boxSize)) {
+//        tnl::Vector3 lineStart, lineEnd;
+//        //mapChip->GetTileLineSegment(i, j, lineStart, lineEnd);
+//
+//        if (wta::IsIntersectCircleLine(charaPos, charaRadius, lineStart, lineEnd)) {
+//            // 衝突応答処理
+//            DrawStringEx(0, 50, -1, "hit");
+//        }
+//    }
+//}
 
+//当たり判定に応じて分岐処理
+void CollisionCalc::Calculate(Character& character, MapChip& mapChip) {
+    // キャラクターと地形との当たり判定のタイプを取得
+    eCollisionType collisionType= GetCollisionTypeMap(character, mapChip);
+    
+    // 当たり判定のタイプに基づいて処理
     switch (collisionType) {
-    case eCollisionType::eCollision_Block:
-        CheckBoxCollision(charaPos, charaRadius, mapChip, i, j);
+    case eCollisionType::eCollision_Box:
+        //CheckBoxCollision();
         break;
+
     case eCollisionType::eCollision_Line:
-        CheckLineCollision(charaPos, charaRadius, mapChip, i, j);
+        //CheckLineCollision();
         break;
+
     default:
         break;
     }
 }
-
-void CollisionCalc::CheckBoxCollision(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
-    tnl::Vector3 blockPos = mapChip->GetTilePositionAt(i, j);
-    float blockSize = mapChip->GetTileSize();
-
-    if (wta::IsIntersectCircleBox(charaPos, charaRadius, blockPos, blockSize)) {
-        // 衝突応答処理
-        DrawStringEx(0, 50, -1, "hit");
-    }
-}
-
-void CollisionCalc::CheckLineCollision(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
-    tnl::Vector3 boxPos = mapChip->GetTilePositionAt(i, j);
-    float boxSize = mapChip->GetTileSize();
-
-    if (wta::IsIntersectCircleBox(charaPos, charaRadius, boxPos, boxSize)) {
-        tnl::Vector3 lineStart, lineEnd;
-        //mapChip->GetTileLineSegment(i, j, lineStart, lineEnd);
-
-        if (wta::IsIntersectCircleLine(charaPos, charaRadius, lineStart, lineEnd)) {
-            // 衝突応答処理
-            DrawStringEx(0, 50, -1, "hit");
-        }
-    }
-}
-
-
 
 ////キャラクターと地形(eCollisionType)との当たり判定（円と矩形）
 //tnl::Vector3 CollisionCalc::HitMapBoxCheck(eCollisionType type, Character *chara) {
@@ -164,4 +168,31 @@ void CollisionCalc::CheckLineCollision(const tnl::Vector3& charaPos, float chara
 //	if (distance_squared <= radius_sum * radius_sum) {return true;}
 //	
 //	return false;
+//}
+
+//tnl::Vector3 CollisionCalc::HandlePlayerMapCollision(Character* chara, MapChip* mapChip) {
+//    tnl::Vector3 playerPos = chara->GetPos();
+//    float playerRadius = chara->GetSize();
+//
+//    for (int i = 0; i < mapChip->GetTileRows(); ++i) {
+//        for (int j = 0; j < mapChip->GetTileCols(i); ++j) {
+//            CheckCollisionByType(playerPos, playerRadius, mapChip, i, j);
+//        }
+//    }
+//    return playerPos;
+//}
+//
+//void CollisionCalc::CheckCollisionByType(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
+//    eCollisionType collisionType = mapChip->GetCollisionTypeAt(i, j);
+//
+//    switch (collisionType) {
+//    case eCollisionType::eCollision_Block:
+//        CheckBoxCollision(charaPos, charaRadius, mapChip, i, j);
+//        break;
+//    case eCollisionType::eCollision_Line:
+//        CheckLineCollision(charaPos, charaRadius, mapChip, i, j);
+//        break;
+//    default:
+//        break;
+//    }
 //}

@@ -36,31 +36,37 @@ private:
 	//int型で描画
 	std::vector<std::vector<int>> m_csv_collision;		//マップタイル当たり判定情報
 
+	//-----当たり判定関連付けのためのmap配列-----//
+	std::unordered_map<int, eCollisionType> m_id_map_collision_type;
+
 public:
 	//-----メンバ関数-----//
 	void Initialize();
 	void Update(float delta_time,float m_scroll_x);
 	void Draw(float m_scroll_x);
-	void LoadMapChipCollisionType();
 	void Finalize();
+	//-----当たり判定実装において必要な個別変数-----//
+	eCollisionType GetCollisionTypeById(int id);
+	void LoadMapChipCollisionType();
 
 	//-----ゲッター-----//
-	int GetTileRows() { return m_csv_map_tile.size(); }
-	int GetTileCols(int row) {
-		if (row < 0 || row >= m_csv_map_tile.size()) return 0;
-		return m_csv_map_tile[row].size();
-	}
-	tnl::Vector3 GetTilePositionAt(int row, int col) {
-		return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);
-	}
-	float GetTileSize() {return MAP_CHIP_SIZE;}
-	eCollisionType GetCollisionTypeAt(int row, int col) {
-		if (row < 0 || row >= m_csv_collision.size() || col < 0 || col >= m_csv_collision[row].size()) {
-			// 範囲外の場合、何らかのデフォルト値を返す
-			return eCollisionType::eCollision_None; // eCollision_Noneは当たり判定がないことを示す値と仮定
-		}
-		return static_cast<eCollisionType>(m_csv_collision[row][col]);
-	}
+	//int GetTileRows() { return m_csv_map_tile.size(); }
+	//int GetTileCols(int row) {
+	//	if (row < 0 || row >= m_csv_map_tile.size()) return 0;
+	//	return m_csv_map_tile[row].size();
+	//}
+	//tnl::Vector3 GetTilePositionAt(int row, int col) {
+	//	return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);
+	//}
+	//float GetTileSize() {return MAP_CHIP_SIZE;}
+	//eCollisionType GetCollisionTypeAt(int row, int col) {
+	//	if (row < 0 || row >= m_csv_collision.size() || col < 0 || col >= m_csv_collision[row].size()) {
+	//		// 範囲外の場合、何らかのデフォルト値を返す
+	//		return eCollisionType::eCollision_None; // eCollision_Noneは当たり判定がないことを示す値と仮定
+	//	}
+	//	return static_cast<eCollisionType>(m_csv_collision[row][col]);
+	//}
+	int GetIdAt(int row, int col);
 };
 
 

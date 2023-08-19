@@ -30,14 +30,31 @@ void MapChip::Draw(float scroll_x) {
 	}
 }
 
-//ID‚ÆCollisionî•ñ‚Ì‚İ‚ğˆêŠi”[
+//ID‚ğæ“¾‚µA‰Šú’l‚ğ•Ô‚·
+eCollisionType MapChip::GetCollisionTypeById(int id) {
+	if (m_id_map_collision_type.find(id) != m_id_map_collision_type.end()) {
+		return m_id_map_collision_type[id];
+	}
+	return eCollisionType::eCollision_None;
+}
+
+//ID‚ÆCollision‚ğŠÖ˜A•t‚¯‚é
 void MapChip::LoadMapChipCollisionType() {
 	for (int i = MAP_CHIP_ID_ROW_START; i < MAP_CHIP_ID_ROW_END; ++i) {
-		//“–‚½‚è”»’è‚Ìî•ñ‚Ì‚İŠi”[
-		std::vector<eCollisionType> collisionType;
-		//intŒ^‚ğeCollisionTypeŒ^‚ÉƒLƒƒƒXƒg
-		collisionType.emplace_back(static_cast<eCollisionType>(m_csv_collision[i][1]));
+		//csv‚É‚ÄID‚Í0—ñ–Ú‚ÉŠi”[
+		int id = m_csv_collision[i][0];
+		//csv‚É‚ÄCollisionType‚Í1—ñ–Ú‚ÉŠi”[
+		eCollisionType type = static_cast<eCollisionType>(m_csv_collision[i][1]);
+		m_id_map_collision_type[id] = type;
 	}
+}
+
+int MapChip::GetIdAt(int row, int col) {
+	if (row < 0 || row >= m_csv_map_tile.size() || col < 0 || col >= m_csv_map_tile[row].size())
+	{
+		return -1;  //–³Œø‚ÈÀ•W‚ğw’è‚³‚ê‚½ê‡‚Í-1‚ğ•Ô‚·
+	}
+	return m_csv_map_tile[row][col];
 }
 
 void MapChip::Finalize() {
