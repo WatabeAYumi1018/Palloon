@@ -11,47 +11,48 @@ CollisionCalc::CollisionCalc(eCollisionType type):m_type(type){}
 CollisionCalc::~CollisionCalc() { }
 
 //キャラクター位置を取得し、マップIDから当たり判定のタイプを取得
-eCollisionType CollisionCalc::GetCollisionTypeMap(Character& character, MapChip& mapChip) {
+eCollisionType CollisionCalc::GetCollisionTypeMap(Character& chara, MapChip& mapChip) {
     // キャラクターのワールド座標をマップのグリッド座標に変換
-    int row = character.GetPos().y / MapChip::MAP_CHIP_SIZE;
-    int col = character.GetPos().x / MapChip::MAP_CHIP_SIZE;
+    int charaRow = chara.GetPos().y / MapChip::MAP_CHIP_SIZE;
+    int charaCol = chara.GetPos().x / MapChip::MAP_CHIP_SIZE;
 
     // 当該位置のIDを取得
-    int cellId = mapChip.GetIdAt(row, col);
+    int cellId = mapChip.GetIdAt(charaRow, charaCol);
 
     // IDを使用して当たり判定のタイプを確認
     return mapChip.GetCollisionTypeById(cellId);
 }
 
-//void CollisionCalc::CheckBoxCollision(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
-//    tnl::Vector3 blockPos = mapChip->GetTilePositionAt(i, j);
-//    float blockSize = mapChip->GetTileSize();
-//
-//    if (wta::IsIntersectCircleBox(charaPos, charaRadius, blockPos, blockSize)) {
-//        // 衝突応答処理
-//        DrawStringEx(0, 50, -1, "hit");
-//    }
-//}
-//
-//void CollisionCalc::CheckLineCollision(const tnl::Vector3& charaPos, float charaRadius, MapChip* mapChip, int i, int j) {
-//    tnl::Vector3 boxPos = mapChip->GetTilePositionAt(i, j);
-//    float boxSize = mapChip->GetTileSize();
-//
-//    if (wta::IsIntersectCircleBox(charaPos, charaRadius, boxPos, boxSize)) {
-//        tnl::Vector3 lineStart, lineEnd;
-//        //mapChip->GetTileLineSegment(i, j, lineStart, lineEnd);
-//
-//        if (wta::IsIntersectCircleLine(charaPos, charaRadius, lineStart, lineEnd)) {
-//            // 衝突応答処理
-//            DrawStringEx(0, 50, -1, "hit");
-//        }
-//    }
-//}
+void CollisionCalc::CheckBoxCollision(Character& chara, MapChip& mapChip) {
+
+    if (wta::IsIntersectCircleBox
+            (chara.GetPos(), chara.GetSize(), mapChip.GetTilePos(0,0),mapChip.MAP_CHIP_SIZE))
+    {
+        //衝突応答処理
+        DrawStringEx(0, 50, -1, "boxhit");
+    }
+}
+
+void CollisionCalc::CheckLineCollision(Character& chara, MapChip& mapChip) {
+
+    if (wta::IsIntersectCircleBox
+            (chara.GetPos(), chara.GetSize(), mapChip.GetTilePos(0, 0), mapChip.MAP_CHIP_SIZE))
+    {
+        tnl::Vector3 lineStart, lineEnd;
+//        mapChip.GetTileLineSegment(i, j, lineStart, lineEnd);
+
+        if (wta::IsIntersectCircleLine(chara.GetPos(), chara.GetSize(), lineStart, lineEnd))
+        {
+            // 衝突応答処理
+            DrawStringEx(0, 50, -1, "linehit");
+        }
+    }
+}
 
 //当たり判定に応じて分岐処理
-void CollisionCalc::Calculate(Character& character, MapChip& mapChip) {
+void CollisionCalc::Calculate(Character& chara, MapChip& mapChip) {
     // キャラクターと地形との当たり判定のタイプを取得
-    eCollisionType collisionType= GetCollisionTypeMap(character, mapChip);
+    eCollisionType collisionType= GetCollisionTypeMap(chara, mapChip);
     
     // 当たり判定のタイプに基づいて処理
     switch (collisionType) {
@@ -196,3 +197,12 @@ void CollisionCalc::Calculate(Character& character, MapChip& mapChip) {
 //        break;
 //    }
 //}
+
+//現状の目的→当たり判定のためにMapChipの座標情報が必要
+//どう引用すべきかが不透明
+//引用のためにも、MapChipの座標を制限した方が実装しやすいのでは？
+//当たり判定実装にあたって、プレイヤーの座標から評価すべきマップチップを限定する
+//評価すべきチップの座標を取得し、vectorへ格納
+//その間にて判定を行う
+
+//後々のためにも、今のうちにやっておいた方がいいかもと

@@ -23,9 +23,9 @@ private:
 
 	static eCollisionType GetCollisionTypeMap(Character& character, MapChip& mapChip);
 
-	static void CheckBoxCollision(const tnl::Vector3& playerPos, float playerRadius, MapChip* mapChip, int i, int j);
+	static void CheckBoxCollision(Character& character, MapChip& mapChip);
 
-	static void CheckLineCollision(const tnl::Vector3& playerPos, float playerRadius, MapChip* mapChip, int i, int j);
+	static void CheckLineCollision(Character& character, MapChip& mapChip);
 
 public:
 

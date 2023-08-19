@@ -45,6 +45,7 @@ public:
 	void Update(float delta_time,float m_scroll_x);
 	void Draw(float m_scroll_x);
 	void Finalize();
+
 	//-----ìñÇΩÇËîªíËé¿ëïÇ…Ç®Ç¢ÇƒïKóvÇ»å¬ï ïœêî-----//
 	eCollisionType GetCollisionTypeById(int id);
 	void LoadMapChipCollisionType();
@@ -55,9 +56,10 @@ public:
 	//	if (row < 0 || row >= m_csv_map_tile.size()) return 0;
 	//	return m_csv_map_tile[row].size();
 	//}
-	//tnl::Vector3 GetTilePositionAt(int row, int col) {
-	//	return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);
-	//}
+	tnl::Vector3 GetTilePos(int row, int col) 
+	{
+		return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);
+	}
 	//float GetTileSize() {return MAP_CHIP_SIZE;}
 	//eCollisionType GetCollisionTypeAt(int row, int col) {
 	//	if (row < 0 || row >= m_csv_collision.size() || col < 0 || col >= m_csv_collision[row].size()) {
