@@ -1,25 +1,31 @@
 #pragma once
 #include "../../engine/GameEngine.h"
 
-//別々のpngファイルを読み込んで、それぞれの画像をループ表示してアニメーションを再生するクラス
+//別々のpngファイルを読み込んで、それぞれの画像を順に表示してアニメーションを再生するクラス
 class AnimLoad {
 
 public:
-    AnimLoad(const std::string pathName,bool isLoop);
+    AnimLoad(const std::string pathName);
     ~AnimLoad();
 
 private:
     //-----メンバ変数-----//
     std::vector<int> Imgs;      //読み込んだpng画像のハンドルを格納する配列
     int numImgs;				//読み込んだpng画像の数  
-    bool loopFlag; 			    //ループするかどうか
+    //bool loopFlag; 			    //ループするかどうか
     bool animFinished;			//アニメーションが終了したかどうか
     int currentFrame;			//現在のフレーム
     float elapsedTime;			//経過時間
     float frameDuration;		//1フレームの時間（アニメーション描画のスピード調整）
 
+    //-----csvファイルに関する変数-----//
+    std::vector<std::vector<tnl::CsvCell>> m_anim_grap_info;		//csvアニメーション画像情報
 public:
+
     //-----メンバ関数-----//
+    // csvファイルの読み込み
+    void LoadAnimGrapInfo(const std::string path);
+     
     //ファイルを読み込む関数
     void loadAnimFile(const std::string folderPath);
     //アニメーションを描画する関数
@@ -31,7 +37,6 @@ public:
 };
 
 //アニメーションループ画像の読み取りを行うクラス
-
 //char*からstd::stringへの変換(何かあった時のため保持)
 //AnimLoadLoop(const char* pathName);
 //~AnimLoadLoop();

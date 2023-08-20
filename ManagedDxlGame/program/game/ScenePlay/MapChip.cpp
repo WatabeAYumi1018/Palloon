@@ -1,17 +1,15 @@
 #include "MapChip.h"
 #include "Character.h"
 
-MapChip::MapChip() :Object(m_pos) {
-	//csvファイルのマップタイル描画情報を読み込む
-	m_csv_map_tile=tnl::LoadCsv<int>(csv_map_tile_data);
-	//csvファイルからマップチップの情報を読み込む(一時的な格納)
-	m_csv_collision = tnl::LoadCsv<int>(csv_map_tile_ID);
-	Initialize();
-}
+MapChip::MapChip() :Object(m_pos) {Initialize();}
 
 MapChip::~MapChip() {Finalize();}
 
 void MapChip::Initialize() {
+	//csvファイルのマップタイル描画情報を読み込む
+	m_csv_map_tile = tnl::LoadCsv<int>("csv/TileStage_1-1re32.csv");
+	//csvファイルからマップチップの情報を読み込む(一時的な格納)
+	m_csv_collision = tnl::LoadCsv<int>("csv/tileStageID_1-1.csv");
 	//画像の読み込み
 	LoadDivGraph("graphics/Sprites32.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 	//当たり判定の読み込み

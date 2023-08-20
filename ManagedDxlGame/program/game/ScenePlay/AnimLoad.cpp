@@ -1,15 +1,19 @@
 #include "AnimLoad.h"
 #include <fstream>
 
-AnimLoad::AnimLoad(const std::string pathName,bool isLoop) :
-    numImgs(0),loopFlag(isLoop), currentFrame(0), elapsedTime(0.0f), frameDuration(0.2f)
+AnimLoad::AnimLoad(const std::string pathName) :
+    numImgs(0),currentFrame(0), elapsedTime(0.0f), frameDuration(0.2f)
 {
+    m_anim_grap_info = tnl::LoadCsv("csv/AnimLoad.csv");
     loadAnimFile(pathName);
 }
 
 AnimLoad::~AnimLoad() {
     for (int img : Imgs) {DeleteGraph(img);}
 }
+
+//csvファイルから情報を読み込む
+
 
 //画像ファイルをロードする
 void AnimLoad::loadAnimFile(const std::string folderPath) {
