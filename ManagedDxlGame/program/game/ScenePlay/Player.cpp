@@ -2,7 +2,7 @@
 #include "MapChip.h"
 
 //キャラクターの初期化子
-Player::Player() :Character({ 100,0,0 }, 5, 1,5.0f, {0,500,0})
+Player::Player() :Character({ 100,0,0 },5, 5, 1,5.0f, {0,500,0})
 {
 	Initialize();
 }
@@ -11,10 +11,6 @@ Player::~Player() { Finalize(); }
 
 void Player::Initialize() 
 {
-	//円形の当たり判定をもつ
-	//m_collision = new Collision(m_pos, 50);
-	m_mapchip = new MapChip();
-
 	//★画像の読み込み(animLoopクラスを使用して読み込む)（冗長気味のため修正必須かなと）
 	//csvファイルでまとめる
 	animLoop  = new AnimLoad("graphics/player/walk_right",true);
@@ -64,7 +60,7 @@ void Player::Draw(float delta_time) {
 			animLoop4->drawAnimFile(delta_time, m_pos);
 		}
 		else { animLoop3->drawAnimFile(delta_time, m_pos); }
-		if (m_pos.y == 300) { animLoop9->drawAnimFile(delta_time, m_pos); }
+		if (m_pos.y == 500) { animLoop9->drawAnimFile(delta_time, m_pos); }
 	}
 }
 
@@ -102,8 +98,8 @@ void Player::Move(float delta_time) {
 		}
 	}
 	// グラウンドに着地したらy座標を修正
-	if (m_pos.y >= 300) {
-		m_pos.y = 300;
+	if (m_pos.y >= 500) {
+		m_pos.y = 500;
 		m_is_Ground = true;					// 地面に接しているフラグをtrueにする
 		m_was_Ground = true;				// 地面に接しているフラグをfalseにする
 		m_jump_velocity.y = 0;				// ジャンプ速度を0にリセット

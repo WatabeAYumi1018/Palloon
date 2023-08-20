@@ -1,4 +1,5 @@
 #include "MapChip.h"
+#include "Character.h"
 
 MapChip::MapChip() :Object(m_pos) {
 	//csvファイルのマップタイル描画情報を読み込む
@@ -30,6 +31,15 @@ void MapChip::Draw(float scroll_x) {
 	}
 }
 
+//マップチップのIDを取得
+int MapChip::GetChipId(int row, int col) {
+	if (row < 0 || row >= m_csv_map_tile.size() || col < 0 || col >= m_csv_map_tile[row].size())
+	{
+		return -1;  //空白なら-1
+	}
+	return m_csv_map_tile[row][col];
+}
+
 //IDを取得し、初期値を返す
 eCollisionType MapChip::GetCollisionTypeById(int id) {
 	if (m_id_map_collision_type.find(id) != m_id_map_collision_type.end()) {
@@ -49,12 +59,14 @@ void MapChip::LoadMapChipCollisionType() {
 	}
 }
 
-int MapChip::GetIdAt(int row, int col) {
-	if (row < 0 || row >= m_csv_map_tile.size() || col < 0 || col >= m_csv_map_tile[row].size())
-	{
-		return -1;  //無効な座標を指定された場合は-1を返す
-	}
-	return m_csv_map_tile[row][col];
+//斜線との当たり判定のため、マップチップの左下と右上の座標を取得
+void MapChip::GetTileLineSegment(int row, int col, tnl::Vector3& start, tnl::Vector3& end) {
+	// マップチップの左下の座標を取得
+	start.x = col * MAP_CHIP_SIZE;
+	start.y = row * MAP_CHIP_SIZE;
+	// マップチップの右上の座標を取得
+	end.x = start.x + MAP_CHIP_SIZE;
+	end.y = start.y + MAP_CHIP_SIZE;
 }
 
 void MapChip::Finalize() {
@@ -62,7 +74,8 @@ void MapChip::Finalize() {
 	m_csv_collision.clear();
 }
 
-//イベントチップを上書きして追加イベントとかもあり
+//メモ書き
+// イベントチップを上書きして追加イベントとかもあり
 ////LoadMapChipInfo()関数で読み取った情報を基に、チップが自分自身の判定を持つようにしたい
 //void MapChip::LoadMapChipCollision() {
 //	// 当たり判定情報を格納するためにサイズを設定

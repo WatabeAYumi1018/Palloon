@@ -2,11 +2,10 @@
 #include "../../engine/GameEngine.h"
 #include "Object.h"
 
-class Collision;
+class Character;
 
 class MapChip :public Object{
 public:
-	//int型でコンストラクタ
 	MapChip();
 	~MapChip();
 
@@ -36,7 +35,7 @@ private:
 	//int型で描画
 	std::vector<std::vector<int>> m_csv_collision;		//マップタイル当たり判定情報
 
-	//-----当たり判定関連付けのためのmap配列-----//
+	//-----当たり判定関連付けのためのmap配列の変数-----//
 	std::unordered_map<int, eCollisionType> m_id_map_collision_type;
 
 public:
@@ -47,35 +46,19 @@ public:
 	void Finalize();
 
 	//-----当たり判定実装において必要な個別変数-----//
+	//ID取得
+	int GetChipId(int row, int col);
+	//IDから当たり判定の種類取得
 	eCollisionType GetCollisionTypeById(int id);
+	//IDとCollisionを関連付ける
 	void LoadMapChipCollisionType();
-
-	//-----ゲッター-----//
-	//int GetTileRows() { return m_csv_map_tile.size(); }
-	//int GetTileCols(int row) {
-	//	if (row < 0 || row >= m_csv_map_tile.size()) return 0;
-	//	return m_csv_map_tile[row].size();
-	//}
-	tnl::Vector3 GetTilePos(int row, int col) 
-	{
-		return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);
-	}
-	//float GetTileSize() {return MAP_CHIP_SIZE;}
-	//eCollisionType GetCollisionTypeAt(int row, int col) {
-	//	if (row < 0 || row >= m_csv_collision.size() || col < 0 || col >= m_csv_collision[row].size()) {
-	//		// 範囲外の場合、何らかのデフォルト値を返す
-	//		return eCollisionType::eCollision_None; // eCollision_Noneは当たり判定がないことを示す値と仮定
-	//	}
-	//	return static_cast<eCollisionType>(m_csv_collision[row][col]);
-	//}
-	int GetIdAt(int row, int col);
+	//斜線チップの線分座標取得
+	void GetTileLineSegment(int row, int col, tnl::Vector3& start, tnl::Vector3& end);
+	
+	//-----Getter-----//
+	tnl::Vector3 GetChipPos(int row, int col) {return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);}
+	//戻り値としてのconst、関数としてのconst（値の変更を不可にし、オブジェクトの状態変更も阻止）
+	const std::vector<std::vector<int>>& getMapChip() const {return m_csv_map_tile;}
 };
 
-
-//std::vector<IDCollision> map_id_collision;		//必要情報のみ一時格納用
-//当たり判定格納用
-//std::vector<eCollisionType> m_map_chip_collision;	//当たり判定
-
-//読み取りと描画（定義付け）のみ定義
-//Collisionクラスで当たり判定の計算処理を行う
-//※MapChipクラスで当たり判定の情報を読み取り、Collisionクラスで当たり判定の計算処理を行う
+//読み取りと描画、当たり判定のために必要な情報取得と概念を定義

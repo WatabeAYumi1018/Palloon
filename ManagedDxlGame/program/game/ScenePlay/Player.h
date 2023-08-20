@@ -21,8 +21,7 @@ private:
 	int ye = 0;
 	int animFileHdl=0;					//画像のハンドル
 	bool m_was_Ground=false;			//前フレームの接地判定
-	//dxe::Camera* m_camera = nullptr;	//カメラ
-	MapChip* m_mapchip = nullptr;		//マップチップ
+
 	//-----アニメーション-----//
 	//後日、アニメーションクラスを作成し、そこに移動
 	AnimLoad* animLoop = nullptr;			//walk_right
@@ -45,11 +44,7 @@ public:
 	void Finalize() override;
 	
 	float overCenterX();
-
 };
-	////-----Setter,Getter-----//
-	//void SetPos(tnl::Vector3 pos) { m_pos = pos; }
-	//tnl::Vector3 GetPos() const { return m_pos; }
 
 //Playerのボタン操作の挙動処理を行うクラス
 //アニメーションの再生については別クラスを定義した方が分かりやすいかも

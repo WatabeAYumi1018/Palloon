@@ -32,6 +32,5 @@ void PlayCamera::Scroll() {
 	}
 }
 
-
 //PlayCamera内でMapChipを生成するとエラーなったのは、MapChip内でもPlayCameraのコンストラクタを呼び出しているため
 //方向性をちゃんと定めること

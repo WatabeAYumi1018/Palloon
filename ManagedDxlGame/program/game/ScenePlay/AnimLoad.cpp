@@ -13,7 +13,6 @@ AnimLoad::~AnimLoad() {
 
 //画像ファイルをロードする
 void AnimLoad::loadAnimFile(const std::string folderPath) {
-
     //WIN32_FIND_DATA構造体：Windowsでファイル検索を行う際に使用されるデータ構造体
     //Windows APIのファイル検索関数であるFindFirstFileやFindNextFileを使用する際
     //検索結果のファイル情報を格納するために使われる

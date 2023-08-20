@@ -34,24 +34,26 @@
 // ～期限まで～
 //⑯最終確認
 
+MapChip * mapChip = nullptr;
 UI* ui=nullptr;
 Player* player=nullptr;
 PlayCamera* camera=nullptr;
 backGround* back=nullptr;
+CollisionCalc* m_collision = nullptr;	//当たり判定
 
-//Collision* collision = nullptr;
 
 //------------------------------------------------------------------------------------------------------------
 // ゲーム起動時に１度だけ実行されます
 void gameStart() {
 	srand(time(0));
 
-	//コンストラクタ作成
+	//コンストラクタ作成(後に多態性でまとめて管理)
 	back = new backGround();
 	ui = new UI({10,0,50});
 	player = new Player();
-	//collision = new Collision({0,0,0}, 16);	
 	camera = new PlayCamera({0,0,0}, player);
+	m_collision = new CollisionCalc();
+	mapChip = new MapChip();
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -63,32 +65,7 @@ void gameMain(float delta_time) {
 	ui->Update(delta_time);
 	player->Update(delta_time);
 	camera->Update(delta_time);
-
-	//DrawLine(line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y, -1, 1);
-	//DrawCircle(circle_pos.x, circle_pos.y, radius, -1, 1);
-
-	////キー移動
-	//if (Input::IsKeyDown(eKeys::KB_LEFT)) {
-	//	circle_pos.x -= 10;
-	//}
-	//if (Input::IsKeyDown(eKeys::KB_RIGHT)) {
-	//	circle_pos.x += 10;
-	//}
-	//if (Input::IsKeyDown(eKeys::KB_UP)) {
-	//	circle_pos.y -= 10;
-	//}
-	//if (Input::IsKeyDown(eKeys::KB_DOWN)) {
-	//	circle_pos.y += 10;
-	//}
-
-	////円と線の当たり判定
-	//if (collision->CircleLine(circle_pos, radius, line_pos_start_x, line_pos_start_y, line_pos_end_x, line_pos_end_y)) {
-	//	DrawFormatString(0, 0, -1, "当たってる");
-	//}
-	//else {
-	//	DrawFormatString(0, 0, -1, "当たってない");
-	//}
-	//	
+	m_collision->CollisionCalculate(player, mapChip, 3);
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -96,4 +73,6 @@ void gameMain(float delta_time) {
 void gameEnd() {
 	camera = nullptr;
 	delete camera;
+	m_collision = nullptr;
+	delete m_collision;
 }
