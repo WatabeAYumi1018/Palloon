@@ -1,7 +1,7 @@
 #pragma once
 #include "../../engine/GameEngine.h"
 #include "Character.h"
-#include "AnimLoad.h"
+#include "../../wta_library/wta_DrawAnim.h"
 
 class MapChip;
 
@@ -23,7 +23,7 @@ private:
 	bool m_was_Ground=false;			//前フレームの接地判定
 
 	//-----アニメーション-----//
-	wta::AnimLoad *animLoader = nullptr;
+	wta::DrawAnim *animLoader = nullptr;
 	
 public:
 	//-----メンバ関数-----//

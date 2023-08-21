@@ -13,7 +13,7 @@ Player::~Player() { Finalize(); }
 void Player::Initialize() 
 {
 	// CSVからアニメーションデータをロード
-	animLoader =new wta::AnimLoad("csv/AnimLoad.csv","graphics/animation");
+	animLoader =new wta::DrawAnim("csv/AnimLoad.csv","graphics/animation");
 }
 void Player::Update(float delta_time) 
 {

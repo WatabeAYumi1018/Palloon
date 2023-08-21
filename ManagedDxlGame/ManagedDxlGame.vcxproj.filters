@@ -185,19 +185,16 @@
     <ClCompile Include="program\engine\backGround.cpp">
       <Filter>program\[003]engine</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\AnimLoad.cpp">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClCompile>
     <ClCompile Include="program\wta_library\wta_IsIntersectCalc.cpp">
       <Filter>program\[002]wta_library</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\DrawAnim.cpp">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
+    <ClCompile Include="program\wta_library\wta_LoadAnim.cpp">
+      <Filter>program\[002]wta_library</Filter>
     </ClCompile>
-    <ClCompile Include="program\wta_library\wta_LoadAnimation.cpp">
+    <ClCompile Include="program\wta_library\wta_DrawAnim.cpp">
       <Filter>program\[002]wta_library</Filter>
     </ClCompile>
   </ItemGroup>
@@ -341,19 +338,16 @@
     <ClInclude Include="program\engine\backGround.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\AnimLoad.h">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClInclude>
     <ClInclude Include="program\wta_library\wta_IsIntersectCalc.h">
       <Filter>program\[002]wta_library</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\PlayCamera.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\DrawAnim.h">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
+    <ClInclude Include="program\wta_library\wta_LoadAnim.h">
+      <Filter>program\[002]wta_library</Filter>
     </ClInclude>
-    <ClInclude Include="program\wta_library\wta_LoadAnimation.h">
+    <ClInclude Include="program\wta_library\wta_DrawAnim.h">
       <Filter>program\[002]wta_library</Filter>
     </ClInclude>
   </ItemGroup>

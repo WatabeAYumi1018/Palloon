@@ -1,14 +1,14 @@
-#include "AnimLoad.h"
+#include "wta_DrawAnim.h"
 
 namespace wta {
 
-    AnimLoad::AnimLoad(const std::string& csvPath, const std::string& basePath):
-       currentFrame(0), elapsedTime(0.0f), frameDuration(0.2f)
+    DrawAnim::DrawAnim(const std::string& csvPath, const std::string& basePath) :
+        currentFrame(0), elapsedTime(0.0f), frameDuration(0.2f)
     {
         animations = LoadAnimationData(csvPath, basePath);
     }
-    
-    void AnimLoad::SetAnimation(int id) {
+
+    void DrawAnim::SetAnimation(int id) {
         for (const auto& anim : animations) {
             if (anim.id == id) {
                 //アニメーションの種類が変わった場合は初期化
@@ -24,7 +24,7 @@ namespace wta {
     }
 
     // アニメーションを描画
-    void AnimLoad::Draw(float delta_time, tnl::Vector3 pos, float scale, float angle) {
+    void DrawAnim::Draw(float delta_time, tnl::Vector3 pos, float scale, float angle) {
         if (!currentAnim || currentAnim->animImage.empty()) return; //現在のアニメーションがない、空の場合何もしない
         elapsedTime += delta_time;
         if (elapsedTime >= frameDuration) {

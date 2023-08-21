@@ -4,12 +4,6 @@
 
 namespace wta {
 
-	////ファイルを読み込む関数
-	//int loadAnimLoopFile(const char* path);
-
-	////アニメーションを描画する関数
-	//int drawAnimLoopFile(float delta_time, tnl::Vector3 pos, int path_hdl, float angle = 0, float scale = 1.0f);
-
 	//円と矩形の当たり判定計算
 	bool IsIntersectCircleBox(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& box, const int boxSize);
 

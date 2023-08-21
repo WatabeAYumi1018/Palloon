@@ -5,56 +5,7 @@
 #include "../dxlib_ext/dxlib_ext.h"
 
 namespace wta {
-
-	//    //画像ファイルをロードする
-	//    int loadAnimLoopFile(const char* path) {
-	//        std::string folderPath = path;
-	//        //WIN32_FIND_DATA構造体：Windowsでファイル検索を行う際に使用されるデータ構造体
-	//        //Windows APIのファイル検索関数であるFindFirstFileやFindNextFileを使用する際
-	//        //検索結果のファイル情報を格納するために使われる
-	//        WIN32_FIND_DATA findData;
-	//        //ファイル検索を開始する
-	//        HANDLE hFind = FindFirstFile((folderPath + "/*").c_str(), &findData);
-	//        //ファイルが見つからなかった場合は終了する
-	//        if (hFind == INVALID_HANDLE_VALUE) { return 1; }
-	//        do {
-	//            //ファイルのみを取得(ライブラリでなければ)
-	//            if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-	//                //ファイル名を取得
-	//                std::string fileName = findData.cFileName;
-	//                //ファイルのフルパスを取得
-	//                std::string fullPath = folderPath + "/" + fileName;
-	//                //画像をロード
-	//                Imgs.emplace_back(LoadGraph(fullPath.c_str()));
-	//            }
-	//        } while (FindNextFile(hFind, &findData) != 0);
-	//        //ファイル検索を終了する
-	//        FindClose(hFind);
-	//        //画像の枚数を取得
-	//        NumImgs = static_cast<int>(Imgs.size());
-	//
-	//        return 0;
-	//    }
-	//
-	//    //画像をループ描画する
-	//    int drawAnimLoopFile(float delta_time, tnl::Vector3 pos, int path_hdl, float angle, float scale) {
-	//        elapsedTime += delta_time;
-	//        //経過時間がフレーム時間を超えた場合
-	//        if (elapsedTime >= frameDuration) {
-	//            elapsedTime -= frameDuration;
-	//            ++currentFrame;
-	//            //ループする(余りの数でループ)
-	//            if (LoopFlag) { currentFrame %= NumImgs; }
-	//            //ループしない
-	//            else if (currentFrame >= NumImgs) { currentFrame = NumImgs - 1; }
-	//        }
-	//        DrawRotaGraph(static_cast<int>(pos.x), static_cast<int>(pos.y), 1.0f, tnl::ToRadian(-45), Imgs[currentFrame], TRUE);
-	//
-	//        return 0;
-	//    }
-	//}
 	
-	//---------------------------------------------------------------------------------------------
 	//円と矩形の当たり判定計算
 	bool IsIntersectCircleBox(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& box, const int boxSize) {
 		int boxSize_half = boxSize >> 1;					//矩形のサイズの半分（ビットシフト操作)
@@ -92,6 +43,7 @@ namespace wta {
 		}
 		return false;
 	}
+	
 	//---------------------------------------------------------------------------------------------
 	//円と線分の当たり判定計算
 	bool IsIntersectCircleLine(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd) {
@@ -132,6 +84,7 @@ namespace wta {
 		}
 		return false;
 	}
+	
 	//---------------------------------------------------------------------------------------------
 	//円同士の当たり判定計算
 	bool IsIntersectCircleCircle(const tnl::Vector3& circle01, const int CircleSize01, const tnl::Vector3& circle02, const int CircleSize02) {
