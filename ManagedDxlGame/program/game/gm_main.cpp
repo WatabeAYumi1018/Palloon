@@ -64,7 +64,7 @@ void gameMain(float delta_time) {
 	back->Update(delta_time);
 	ui->Update(delta_time);
 	player->Update(delta_time);
-	camera->Update(delta_time);
+	//camera->Update(delta_time);
 	m_collision->CollisionCalculate(player, mapChip, 3);
 }
 

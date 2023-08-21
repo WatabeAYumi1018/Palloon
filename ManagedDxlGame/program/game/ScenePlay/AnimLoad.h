@@ -1,40 +1,29 @@
 #pragma once
-#include "../../engine/GameEngine.h"
+#include "../../wta_library/wta_LoadAnimation.h"
 
-//別々のpngファイルを読み込んで、それぞれの画像を順に表示してアニメーションを再生するクラス
-class AnimLoad {
+namespace wta {
 
-public:
-    AnimLoad(const std::string pathName);
-    ~AnimLoad();
+    class AnimLoad {
+    public:
+        // コンストラクタでCSVからアニメーションデータをロード
+        AnimLoad(const std::string& csvPath, const std::string& basePath);
 
-private:
-    //-----メンバ変数-----//
-    std::vector<int> Imgs;      //読み込んだpng画像のハンドルを格納する配列
-    int numImgs;				//読み込んだpng画像の数  
-    //bool loopFlag; 			    //ループするかどうか
-    bool animFinished;			//アニメーションが終了したかどうか
-    int currentFrame;			//現在のフレーム
-    float elapsedTime;			//経過時間
-    float frameDuration;		//1フレームの時間（アニメーション描画のスピード調整）
+    private:
+        std::vector<CsvAnimData> animations;    // すべてのアニメーションデータ
+        const CsvAnimData* currentAnim = nullptr;    // 現在のアニメーション
+        float elapsedTime;
+        int currentFrame;
+        float frameDuration;		                 //1フレームの時間（アニメーション描画のスピード調整）
 
-    //-----csvファイルに関する変数-----//
-    std::vector<std::vector<tnl::CsvCell>> m_anim_grap_info;		//csvアニメーション画像情報
-public:
+	public:
+        // 指定IDのアニメーションをセット
+        void SetAnimation(int id);
 
-    //-----メンバ関数-----//
-    // csvファイルの読み込み
-    void LoadAnimGrapInfo(const std::string path);
-     
-    //ファイルを読み込む関数
-    void loadAnimFile(const std::string folderPath);
-    //アニメーションを描画する関数
-    void drawAnimFile(float delta_time, tnl::Vector3 pos, float angle=0, float scale=1.0f);
-    //アニメーションが終了したかどうかを返す関数
-    bool isAnimFinished() const { return animFinished; }
-    //アニメーションをリセットする関数
-    void resetAnim();
-};
+        // アニメーションを描画
+        void Draw(float delta_time, tnl::Vector3 pos, float scale = 1.0f, float angle = 0.0f);
+        
+    };
+}
 
 //アニメーションループ画像の読み取りを行うクラス
 //char*からstd::stringへの変換(何かあった時のため保持)

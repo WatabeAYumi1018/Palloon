@@ -12,10 +12,11 @@ namespace tnl {
 			float_ = (float)std::atof(s.c_str());
 			bool_ = (s == "TRUE") ? true : false;
 		}
-		std::string& getString() { return str_; }
-		int getInt() { return int_; }
-		float getFloat() { return float_; }
-		bool getBool() { return bool_; }
+		//constをつけることで、constなオブジェクトからも呼び出せるようになる
+		const std::string& getString() const { return str_; }	//関数前const:参照型のため、参照先から値を変更できないようにするため
+		int getInt() const{ return int_; }						//以下は値型でコピーされるため、constをつけなくてもよい
+		float getFloat() const{ return float_; }
+		bool getBool() const{ return bool_; }
 	private:
 		std::string str_ = "";
 		int int_ = 0;

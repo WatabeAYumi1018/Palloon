@@ -1,4 +1,4 @@
-#include "../../wta_library/wta_Animation.h"
+#include "../../wta_library/wta_IsIntersectCalc.h"
 #include "CollisionCalc.h"
 #include "../ScenePlay/Character.h"
 #include "../ScenePlay/MapChip.h"
