@@ -8,8 +8,8 @@
 //eCollisionType CollisionCalc::GetCollisionTypeMap(Character* chara, MapChip* mapChip) {
 eCollisionType CollisionCalc::GetCollisionTypeMap(int px, int py, MapChip* mapChip) {
     // キャラクターのワールド座標をマップのグリッド座標に変換
-    int chara_x = px / MapChip::MAP_CHIP_SIZE;
-    int chara_y = py / MapChip::MAP_CHIP_SIZE;
+    int chara_x = px / mapChip->MAP_CHIP_SIZE;
+    int chara_y = py / mapChip->MAP_CHIP_SIZE;
 
     int mx[3] = { chara_x - 1, chara_x, chara_x + 1 };
     int my[3] = { chara_y - 1, chara_y, chara_y + 1 };
@@ -17,9 +17,9 @@ eCollisionType CollisionCalc::GetCollisionTypeMap(int px, int py, MapChip* mapCh
     for (int i = 0; i < 3; ++i) {
         for (int k = 0; k < 3; ++k) {
             if (mx[k] < 0) continue;
-            if (mx[k] >= MapChip::MAP_CHIP_SIZE) continue;
+            if (mx[k] >= mapChip->MAP_CHIP_SIZE) continue;
             if (mx[i] < 0) continue;
-            if (mx[i] >= MapChip::MAP_CHIP_SIZE) continue;
+            if (mx[i] >= mapChip->MAP_CHIP_SIZE) continue;
 
             int cellId = mapChip->GetChipId(mx[k], my[i]);
             if (-1 != cellId) {
