@@ -27,15 +27,16 @@ void MapChip::Draw(float scroll_x) {
 			DrawGraph(posX, posY, m_map_hdl[m_csv_map_tile[i][j]], TRUE);
 		}
 	}
+
 }
 
 //マップチップのIDを取得
-int MapChip::GetChipId(int row, int col) {
-	if (row < 0 || row >= m_csv_map_tile.size() || col < 0 || col >= m_csv_map_tile[row].size())
+int MapChip::GetChipId(int y, int x) {
+	if (y < 0 || y >= m_csv_map_tile.size() || x < 0 || x >= m_csv_map_tile[y].size())
 	{
 		return -1;  //空白なら-1
 	}
-	return m_csv_map_tile[row][col];
+	return m_csv_map_tile[y][x];
 }
 
 //IDを取得し、初期値を返す
@@ -58,10 +59,10 @@ void MapChip::LoadMapChipCollisionType() {
 }
 
 //斜線との当たり判定のため、マップチップの左下と右上の座標を取得
-void MapChip::GetTileLineSegment(int row, int col, tnl::Vector3& start, tnl::Vector3& end) {
+void MapChip::GetTileLineSegment(int y, int x, tnl::Vector3& start, tnl::Vector3& end) {
 	// マップチップの左下の座標を取得
-	start.x = col * MAP_CHIP_SIZE;
-	start.y = row * MAP_CHIP_SIZE;
+	start.x = x * MAP_CHIP_SIZE;
+	start.y = y * MAP_CHIP_SIZE;
 	// マップチップの右上の座標を取得
 	end.x = start.x + MAP_CHIP_SIZE;
 	end.y = start.y + MAP_CHIP_SIZE;

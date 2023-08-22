@@ -10,15 +10,18 @@ public:
 	CollisionCalc() {}
 	~CollisionCalc() {}
 
+	static std::vector<tnl::Vector3> GetSurroundingChips(Character* chara, MapChip* mapChip, int range);
+
 private:
 	//-----ƒƒ“ƒo•Ï”-----//
 	eCollisionType m_type = eCollisionType::eCollision_None;
 
 private:
 
-	static std::vector<tnl::Vector3> GetSurroundingChips(Character* chara, MapChip* mapChip, int range);
+	//static std::vector<tnl::Vector3> GetSurroundingChips(Character* chara, MapChip* mapChip, int range);
 
-	static eCollisionType GetCollisionTypeMap(Character* character, MapChip* mapChip);
+	static eCollisionType GetCollisionTypeMap(int px, int py, MapChip* mapChip);
+
 
 	static void CheckBoxCollision(Character* character, MapChip* mapChip,int range);
 

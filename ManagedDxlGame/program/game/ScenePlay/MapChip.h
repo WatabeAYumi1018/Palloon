@@ -34,13 +34,13 @@ public:
 	void Finalize();
 
 	//当たり判定実装において必要な個別関数
-	int GetChipId(int row, int col);													//ID取得
+	int GetChipId(int y, int x);
 	eCollisionType GetCollisionTypeById(int id);										//IDから当たり判定の種類取得
 	void LoadMapChipCollisionType();													//当たり判定の種類を読み込む	
-	void GetTileLineSegment(int row, int col, tnl::Vector3& start, tnl::Vector3& end);	//斜線チップの線分座標取得
+	void GetTileLineSegment(int y, int x, tnl::Vector3& start, tnl::Vector3& end);	//斜線チップの線分座標取得
 	
 	//-----Getter-----//
-	tnl::Vector3 GetChipPos(int row, int col) {return tnl::Vector3(col * MAP_CHIP_SIZE, row * MAP_CHIP_SIZE, 0);}
+	tnl::Vector3 GetChipPos(int x ,int y) {return tnl::Vector3(x * MAP_CHIP_SIZE, y * MAP_CHIP_SIZE, 0);}
 	//戻り値としてのconst、関数としてのconst（値の変更を不可にし、オブジェクトの状態変更も阻止）
 	const std::vector<std::vector<int>>& getMapChip() const {return m_csv_map_tile;}
 };

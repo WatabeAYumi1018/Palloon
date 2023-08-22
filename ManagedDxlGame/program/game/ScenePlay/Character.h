@@ -40,6 +40,7 @@ public:
 
 	//-----Setter,Getter-----//
 	tnl::Vector3 GetPos() const { return m_pos; }
+	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
 	tnl::Vector3 GetVelocity() const { return velocity; }
 	int GetSize() const { return m_size; }
 };

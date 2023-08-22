@@ -5,14 +5,31 @@
 
 
 //キャラクター位置を取得し、マップIDから当たり判定のタイプを取得
-eCollisionType CollisionCalc::GetCollisionTypeMap(Character* chara, MapChip* mapChip) {
+//eCollisionType CollisionCalc::GetCollisionTypeMap(Character* chara, MapChip* mapChip) {
+eCollisionType CollisionCalc::GetCollisionTypeMap(int px, int py, MapChip* mapChip) {
     // キャラクターのワールド座標をマップのグリッド座標に変換
-    int charaRow = chara->GetPos().y / MapChip::MAP_CHIP_SIZE;
-    int charaCol = chara->GetPos().x / MapChip::MAP_CHIP_SIZE;
-    // 当該位置のIDを取得
-    int cellId = mapChip->GetChipId(charaRow, charaCol);
-    // IDを使用して当たり判定のタイプを確認
-    return mapChip->GetCollisionTypeById(cellId);
+    int chara_x = px / MapChip::MAP_CHIP_SIZE;
+    int chara_y = py / MapChip::MAP_CHIP_SIZE;
+
+    int mx[3] = { chara_x - 1, chara_x, chara_x + 1 };
+    int my[3] = { chara_y - 1, chara_y, chara_y + 1 };
+
+    for (int i = 0; i < 3; ++i) {
+        for (int k = 0; k < 3; ++k) {
+            if (mx[k] < 0) continue;
+            if (mx[k] >= MapChip::MAP_CHIP_SIZE) continue;
+            if (mx[i] < 0) continue;
+            if (mx[i] >= MapChip::MAP_CHIP_SIZE) continue;
+
+            int cellId = mapChip->GetChipId(mx[k], my[i]);
+            if (-1 != cellId) {
+                DrawStringEx(10, 10, -1, "m = %d", cellId);
+                return mapChip->GetCollisionTypeById(cellId);
+            }
+        }
+    }
+    return eCollisionType::eCollision_None;
+
 }
 
 //キャラクターの周囲のマップチップを取得する(当たり判定処理軽減のため)
@@ -21,11 +38,11 @@ std::vector<tnl::Vector3> CollisionCalc::GetSurroundingChips(Character* chara, M
     std::vector<tnl::Vector3> chips;
     tnl::Vector3 pos = chara->GetPos();
     //グリッド座標に変換
-    int row = pos.y / mapChip->MAP_CHIP_SIZE;
-    int col = pos.x / mapChip->MAP_CHIP_SIZE;
+    int chip_x = pos.x / mapChip->MAP_CHIP_SIZE;
+    int chip_y = pos.y / mapChip->MAP_CHIP_SIZE;
     //キャラ座標を中心に5*5の範囲のマップチップを取得
-    for (int i = row - range; i <= row + range; ++i) {
-        for (int j = col - range; j <= col + range; ++j) {
+    for (int i = chip_y - range; i <= chip_y + range; ++i) {
+        for (int j = chip_x - range; j <= chip_x + range; ++j) {
             //範囲外はスキップ
             if (i < 0 || i >= mapChip->getMapChip().size() || j < 0 || j >= mapChip->getMapChip()[i].size())
             {
@@ -43,14 +60,22 @@ void CollisionCalc::CheckBoxCollision(Character* chara, MapChip* mapChip, int ra
     auto tiles = GetSurroundingChips(chara, mapChip, range);
     for (const auto& tile : tiles) {
         //Vector3→int型に変換
-        int row = static_cast<int>(tile.x);
-        int col = static_cast<int>(tile.y);
-        if (wta::IsIntersectCircleBox(chara->GetPos(), chara->GetSize(), mapChip->GetChipPos(row, col), mapChip->MAP_CHIP_SIZE))
+        int x = static_cast<int>(tile.x);
+        int y = static_cast<int>(tile.y);
+        //tnl::Vector3 character_y= chara->GetPos() + tnl::Vector3(0, 15, 0);
+        //当たり判定と補正座標取得
+        tnl::Vector3 nearly_point = tnl::GetNearestRectPoint(mapChip->GetChipPos(x, y), mapChip->MAP_CHIP_SIZE, mapChip->MAP_CHIP_SIZE, chara->GetPos());
+        if ((nearly_point - chara->GetPos()).length() < chara->GetSize())
         {
-            // 衝突応答処理
+            tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
+            chara->SetPos( nearly_point + normalize * chara->GetSize() );
+            //衝突応答処理
             DrawStringEx(0, 50, -1, "boxhit");
         }
     }
+   
+
+
 }
 
 //線分との当たり判定
@@ -58,11 +83,11 @@ void CollisionCalc::CheckBoxCollision(Character* chara, MapChip* mapChip, int ra
 void CollisionCalc::CheckLineCollision(Character* chara, MapChip* mapChip, int range) {
     auto tiles = GetSurroundingChips(chara, mapChip, range);
     for (const auto& tile : tiles) {
-        int row = static_cast<int>(tile.x);
-        int col = static_cast<int>(tile.y);
+        int x = static_cast<int>(tile.x);
+        int y = static_cast<int>(tile.y);
         //線分の始点と終点を取得
         tnl::Vector3 lineStart, lineEnd;
-        mapChip->GetTileLineSegment(row, col, lineStart, lineEnd);
+        mapChip->GetTileLineSegment(y, x, lineStart, lineEnd);
         if (wta::IsIntersectCircleLine(chara->GetPos(), chara->GetSize(), lineStart, lineEnd))
         {
             // 衝突応答処理
@@ -74,7 +99,7 @@ void CollisionCalc::CheckLineCollision(Character* chara, MapChip* mapChip, int r
 //当たり判定に応じて分岐処理
 void CollisionCalc::CollisionCalculate(Character *chara, MapChip *mapChip,int range) {
     // キャラクターと地形との当たり判定のタイプを取得
-    eCollisionType collisionType= GetCollisionTypeMap(chara, mapChip);
+    eCollisionType collisionType= GetCollisionTypeMap(chara->GetPos().x, chara->GetPos().y, mapChip);
     // 当たり判定のタイプに基づいて処理
     switch (collisionType) {
     case eCollisionType::eCollision_Box:
@@ -86,6 +111,10 @@ void CollisionCalc::CollisionCalculate(Character *chara, MapChip *mapChip,int ra
         CheckLineCollision(chara, mapChip, range);
         break;
     default:
+    {
+        int a = 0;
+        a++;
+    }
         break;
     }
 }

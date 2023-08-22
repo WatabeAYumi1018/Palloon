@@ -15,7 +15,7 @@ namespace tnl {
 		//constをつけることで、constなオブジェクトからも呼び出せるようになる
 		const std::string& getString() const { return str_; }	//関数前const:参照型のため、参照先から値を変更できないようにするため
 		int getInt() const{ return int_; }						//以下は値型でコピーされるため、constをつけなくてもよい
-		float getFloat() const{ return float_; }
+		float getFloat() const{ return float_; }				//コンパイル時にconstがあるとちょっぴり早くなる
 		bool getBool() const{ return bool_; }
 	private:
 		std::string str_ = "";

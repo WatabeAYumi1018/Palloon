@@ -21,7 +21,6 @@ namespace wta {
 
         // アニメーションを描画
         void Draw(float delta_time, tnl::Vector3 pos, float scale = 1.0f, float angle = 0.0f);
-
     };
 }
 
