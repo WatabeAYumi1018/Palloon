@@ -22,3 +22,9 @@ enum class eCharacterType {
 	eCharacter_bird,
 	eCharacter_Max
 };
+
+struct CollisionInfo {
+	tnl::Vector3 pos;
+	int size;
+	eCollisionType type;
+};

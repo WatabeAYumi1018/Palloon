@@ -66,6 +66,7 @@ void gameMain(float delta_time) {
 	player->Update(delta_time);
 	camera->Update(delta_time);
 	m_collision->CollisionCalculate(player, mapChip, 2);
+	//m_collision->CheckBoxCollision(player, mapChip, mapChip->GetCollisionInfo());
 }
 
 //------------------------------------------------------------------------------------------------------------
