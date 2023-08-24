@@ -50,8 +50,10 @@ void gameStart() {
 	//コンストラクタ作成(後に多態性でまとめて管理)
 	back = new backGround();
 	ui = new UI({10,0,50});
-	player = new Player();
-	camera = new PlayCamera({0,0,0},player);
+	player = new Player(nullptr);
+	camera = new PlayCamera(player);
+	player = new Player(camera);
+	//player->SetCamera(camera);
 	m_collision = new CollisionCalc();
 	mapChip = new MapChip();
 }
@@ -61,8 +63,9 @@ void gameStart() {
 void gameMain(float delta_time) {
 
 	////生成したコンストラクタでUpdate回す
-	//back->Update(delta_time);
+	back->Update(delta_time);
 	ui->Update(delta_time);
+	camera->Update(delta_time);
 	player->Update(delta_time);
 	mapChip->Update(delta_time, camera);
 	m_collision->CollisionCalculate(player, mapChip, 2);
@@ -72,16 +75,16 @@ void gameMain(float delta_time) {
 //------------------------------------------------------------------------------------------------------------
 // ゲーム終了時に１度だけ実行されます
 void gameEnd() {
-	player = nullptr;
 	delete player;
-	mapChip = nullptr;
+	player = nullptr;
 	delete mapChip;
-	back = nullptr;
+	mapChip = nullptr;
 	delete back;
-	ui = nullptr;
+	back = nullptr;
 	delete ui; 
-	camera = nullptr;
+	ui = nullptr;
 	delete camera;
-	m_collision = nullptr;
+	camera = nullptr;
 	delete m_collision;
+	m_collision = nullptr;
 }

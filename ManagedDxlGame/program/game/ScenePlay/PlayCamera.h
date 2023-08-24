@@ -1,14 +1,13 @@
 #pragma once
 #include "../../engine/GameEngine.h"
 
-class Object;
 class Character;
 class MapChip;
 
 //プレイヤー追従カメラ
-class PlayCamera:public Object{
+class PlayCamera{
 public:
-	PlayCamera(tnl::Vector3 pos,Character *player);
+	PlayCamera(Character *player);
 	~PlayCamera();
 
 private:
@@ -17,7 +16,6 @@ private:
 
 	//-----クラスポインタ変数-----//
 	Character *m_player=nullptr;	//プレイヤー
-	MapChip* m_map_chip = nullptr;	//マップチップ
 
 public:
 	//-----メンバ関数-----//
@@ -26,4 +24,5 @@ public:
 
 	//-----Getter-----//
 	float GetScrollX() const { return m_scroll_x; }
+
 };

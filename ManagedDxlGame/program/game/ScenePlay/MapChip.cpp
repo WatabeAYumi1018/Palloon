@@ -16,12 +16,12 @@ void MapChip::Initialize() {
 	//当たり判定の読み込み
 	//LoadMapChipCollisionType();
 	//当たり判定の情報を読み込み
-	LoadMapCollision();
+	//LoadMapCollision();
 }
 
 void MapChip::Update(float delta_time, const PlayCamera *camera) {
 	Draw(camera);
-	//LoadMapCollision();//当たり判定の地形確認用
+	LoadMapCollision();//当たり判定の地形確認用
 }
 
 void MapChip::Draw(const PlayCamera *camera) {

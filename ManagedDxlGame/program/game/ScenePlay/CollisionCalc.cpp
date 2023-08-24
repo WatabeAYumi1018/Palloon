@@ -66,7 +66,7 @@ void CollisionCalc::CheckBoxCollision(Character *chara, MapChip *mapChip, const 
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
                 chara->SetPos(nearly_point + normalize * chara->GetSize());
                 //Õ“Ë‰“šˆ—
-                DrawStringEx(0, 50, -1, "boxhit");
+                DrawStringEx(0, 70, -1, "boxhit");
             }
         }
     }

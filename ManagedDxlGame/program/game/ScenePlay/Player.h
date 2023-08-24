@@ -3,12 +3,12 @@
 #include "Character.h"
 #include "../../wta_library/wta_DrawAnim.h"
 
-class MapChip;
+class PlayCamera;
 
 class Player :public Character {
 
 public:
-	Player();
+	Player(PlayCamera *camera);
 	~Player();
 
 private:
@@ -22,6 +22,7 @@ private:
 
 	//-----アニメーション-----//
 	wta::DrawAnim *animLoader = nullptr;
+	PlayCamera *m_camera = nullptr;
 	
 public:
 	//-----メンバ関数-----//
