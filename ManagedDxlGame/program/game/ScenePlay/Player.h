@@ -18,9 +18,7 @@ private:
 	const int PLAYER_HP = 5;				//プレイヤーのHP
 
 	//-----メンバ変数-----//
-	int ye = 0;
-	int animFileHdl=0;					//画像のハンドル
-	bool m_was_Ground=false;			//前フレームの接地判定
+	bool m_was_Ground=false;				//前フレームの接地判定
 
 	//-----アニメーション-----//
 	wta::DrawAnim *animLoader = nullptr;

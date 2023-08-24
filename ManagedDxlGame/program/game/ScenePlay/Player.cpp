@@ -3,7 +3,7 @@
 
 
 //キャラクターの初期化子
-Player::Player() :Character({ 100,0,0 },30, 5, 1,5.0f, {0,500,0})
+Player::Player() :Character({ 0,-100,0 },30, 5,5.0f, {0,500,0})
 {
 	Initialize();
 }

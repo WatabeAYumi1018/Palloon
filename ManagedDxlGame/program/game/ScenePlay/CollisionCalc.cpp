@@ -34,7 +34,7 @@
 
 //キャラクターの周囲のマップチップを取得する(当たり判定処理軽減のため)
 //一般的にキャラを中心に(2*range+1)*(2*range+1)の範囲のマップチップを取得する
-std::vector<std::vector<CollisionInfo>> CollisionCalc::GetSurroundingChips(Character* chara, MapChip* mapChip, int range) {
+std::vector<std::vector<CollisionInfo>> CollisionCalc::GetSurroundingChips(Character *chara, MapChip *mapChip, int range) {
     std::vector<std::vector<CollisionInfo>> chips;
     tnl::Vector3 pos = chara->GetPos();
     //グリッド座標に変換
@@ -47,17 +47,17 @@ std::vector<std::vector<CollisionInfo>> CollisionCalc::GetSurroundingChips(Chara
             //範囲外はスキップ
             if (i < 0 || i >= mapChip->GetCollisionInfo().size() || j < 0 || j >= mapChip->GetCollisionInfo()[i].size())
             {
-                rowChips.emplace_back(CollisionInfo{});  // None typeのCollisionInfoを追加
+                rowChips.emplace_back(CollisionInfo());  // None typeのCollisionInfoを追加
                  continue;
             }
-            rowChips.emplace_back(mapChip->GetCollisionInfo ()[i][j  ]);
+            rowChips.emplace_back(mapChip->GetCollisionInfo()[i][j]);
         }
         chips.emplace_back(rowChips);        
     }
     return chips;
 }
 //矩形との当たり判定計算
-void CollisionCalc::CheckBoxCollision(Character* chara, MapChip* mapChip, const std::vector<std::vector<CollisionInfo>>& surroundingChips) {
+void CollisionCalc::CheckBoxCollision(Character *chara, MapChip *mapChip, const std::vector<std::vector<CollisionInfo>>& surroundingChips) {
     for (const auto& row : surroundingChips) {
         for (const auto& info : row) {
             if (info.type == eCollisionType::eCollision_None) { continue; }

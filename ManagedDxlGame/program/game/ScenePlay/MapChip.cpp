@@ -1,5 +1,6 @@
 #include "MapChip.h"
 #include "Character.h"
+#include "PlayCamera.h"
 
 MapChip::MapChip() :Object(m_pos) {Initialize();}
 
@@ -18,16 +19,17 @@ void MapChip::Initialize() {
 	LoadMapCollision();
 }
 
-void MapChip::Update(float delta_time, float scroll_x) {
-	Draw(scroll_x);// LoadMapCollision();
+void MapChip::Update(float delta_time, const PlayCamera *camera) {
+	Draw(camera);
+	//LoadMapCollision();//当たり判定の地形確認用
 }
 
-void MapChip::Draw(float scroll_x) {
+void MapChip::Draw(const PlayCamera *camera) {
 	//マップ画像の描画
 	for (int i = 0; i < m_csv_map_tile.size(); ++i) {			//行数はm_map_tileのサイズに基づく
 		for (int j = 0; j < m_csv_map_tile[i].size(); ++j) {	//列数はm_map_tile[i]のサイズに基づく
-			int posX = j * MAP_CHIP_SIZE - scroll_x;		//スクロールの値を考慮
-			int posY = i * MAP_CHIP_SIZE ;			
+			int posX = j * MAP_CHIP_SIZE - static_cast<int>(camera->GetScrollX());
+			int posY = i * MAP_CHIP_SIZE;
 			DrawGraph(posX, posY, m_map_hdl[m_csv_map_tile[i][j]], TRUE);
 		}
 	}
@@ -58,6 +60,10 @@ void MapChip::LoadMapCollision() {
 	}
 }
 
+void MapChip::Finalize() {
+	m_csv_map_tile.clear();
+	m_csv_collision.clear();
+}
 
 ////マップチップのIDを取得
 //int MapChip::GetChipId(int y, int x) {
@@ -97,10 +103,6 @@ void MapChip::LoadMapCollision() {
 //	end.y = start.y + MAP_CHIP_SIZE;
 //}
 
-void MapChip::Finalize() {
-	m_csv_map_tile.clear();
-	m_csv_collision.clear();
-}
 
 //メモ書き
 // イベントチップを上書きして追加イベントとかもあり
