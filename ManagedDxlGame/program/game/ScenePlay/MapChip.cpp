@@ -21,7 +21,7 @@ void MapChip::Initialize() {
 
 void MapChip::Update(float delta_time, const PlayCamera *camera) {
 	Draw(camera);
-	LoadMapCollision();//当たり判定の地形確認用
+	LoadMapCollision(camera);//当たり判定の地形確認用
 }
 
 void MapChip::Draw(const PlayCamera *camera) {
@@ -36,13 +36,13 @@ void MapChip::Draw(const PlayCamera *camera) {
 }
 
 //当たり判定の読み込み
-void MapChip::LoadMapCollision() {
+void MapChip::LoadMapCollision(const PlayCamera* camera) {
 	// サイズ初期化（m_csv_collision.size()で最初の0列目のサイズを読み取り、それがsizeの列分だけある）
 	m_collision_info.resize(m_csv_collision.size(), std::vector<CollisionInfo>(m_csv_collision[0].size()));
 	//ファイル上の数値を全て読み込む
 	for (int i = 0; i < m_csv_collision.size(); ++i) {
 		for (int j = 0; j < m_csv_collision[i].size(); ++j) {
-			int posX = j * MAP_CHIP_SIZE;
+			int posX = j * MAP_CHIP_SIZE - static_cast<int>(camera->GetScrollX());
 			int posY = i * MAP_CHIP_SIZE;
 			//eCollisionTypeと読み取った数字を関連付ける（同じ数字で連動しやすいように）
 			eCollisionType type = static_cast<eCollisionType>(m_csv_collision[i][j]);

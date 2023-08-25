@@ -2,7 +2,7 @@
 #include "PlayCamera.h"
 
 //キャラクターの初期化子
-Player::Player(PlayCamera *camera) :Character({ 0,-100,0 },30, 5,5.0f, {0,500,0})
+Player::Player() :Character({ 0,-100,0 },30, 5,5.0f, {0,500,0})
 {
 	Initialize();
 }
@@ -21,17 +21,11 @@ void Player::Update(float delta_time)
 }
 
 void Player::Draw(float delta_time) {
-	//カメラのスクロール量を取得
-	float cameraScroll_x=m_camera->GetScrollX();
-	//プレイヤーの描画位置をカメラのスクロール量に合わせる
-	tnl::Vector3 renderPos = m_pos;
-	renderPos.x -= cameraScroll_x;
 	//アニメーションの描画
-	animLoader->Draw(delta_time, renderPos);
+	animLoader->Draw(delta_time, m_pos);
 	//★デバッグ用
-	DrawCircle(renderPos.x, renderPos.y, m_size, -1, TRUE);
-	DrawFormatString(10, 50, 1, "Player_x: %.2f", m_pos.x);
-	DrawFormatString(10, 30, 1, "renderPos_x: %.2f", m_pos.x);
+	DrawFormatString(10, 30, 1, "Player_x: %.2f", m_pos.x);
+	DrawCircle(m_pos.x, m_pos.y, m_size, -1, TRUE);
 }
 
 void Player::Move(float delta_time) {

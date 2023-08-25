@@ -31,7 +31,7 @@ public:
 	void Finalize();
 
 	//当たり判定専用のマップ関数
-	void LoadMapCollision();
+	void LoadMapCollision(const PlayCamera* camera);
 	
 	//-----Getter-----//
 	const std::vector<std::vector<CollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }

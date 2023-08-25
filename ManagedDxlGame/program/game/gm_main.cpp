@@ -50,10 +50,8 @@ void gameStart() {
 	//コンストラクタ作成(後に多態性でまとめて管理)
 	back = new backGround();
 	ui = new UI({10,0,50});
-	player = new Player(nullptr);
+	player = new Player();
 	camera = new PlayCamera(player);
-	player = new Player(camera);
-	//player->SetCamera(camera);
 	m_collision = new CollisionCalc();
 	mapChip = new MapChip();
 }

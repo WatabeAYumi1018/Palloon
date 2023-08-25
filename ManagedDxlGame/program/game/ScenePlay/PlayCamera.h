@@ -12,10 +12,8 @@ public:
 
 private:
 	//-----メンバ変数-----//
-	float m_scroll_x;			//スクロールのX座標
-
-	//-----クラスポインタ変数-----//
-	Character *m_player=nullptr;	//プレイヤー
+	float m_scroll_x;				//スクロールのX座標
+	Character *m_player=nullptr;	//プレイヤー追従用
 
 public:
 	//-----メンバ関数-----//
@@ -24,5 +22,4 @@ public:
 
 	//-----Getter-----//
 	float GetScrollX() const { return m_scroll_x; }
-
 };

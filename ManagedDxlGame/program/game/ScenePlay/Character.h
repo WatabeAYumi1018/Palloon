@@ -1,8 +1,6 @@
 #pragma once
 #include "Object.h"
 
-class PlayCamera;
-
 class Character {
 public:
 	Character(tnl::Vector3 pos, int size, int hp, float jump_time, tnl::Vector3 jump_velocity) :
@@ -27,9 +25,6 @@ protected:
 	bool m_is_Jump=false;					//ƒWƒƒƒ“ƒv’†
 	bool m_is_Attack=false;					//UŒ‚’†
 
-private:
-	PlayCamera *m_camera = nullptr;
-
 public:
 	//-----ƒƒ“ƒoŠÖ”-----//
 	virtual void Initialize() = 0;
@@ -42,7 +37,6 @@ public:
 	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
 	tnl::Vector3 GetVelocity() const { return velocity; }
 	int GetSize() const { return m_size; }
-	void SetCamera(PlayCamera *camera) { m_camera = camera; }
 };
 
 //Effect* effect = nullptr;

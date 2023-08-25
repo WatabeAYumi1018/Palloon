@@ -23,9 +23,13 @@ void PlayCamera::Scroll() {
 	// プレイヤーが画面の中央に到達したか
 	if (center_x >= DXE_WINDOW_WIDTH / 2) {
 		m_scroll_x = center_x - DXE_WINDOW_WIDTH / 2;
+		DrawFormatString(290, 30, 1, "true");
+
 	}
 	else {
 		m_scroll_x = 0;
+		DrawFormatString(290, 30, 1, "false");
+
 	}
 	DrawFormatString(190, 30, 1, "centerX:%f", center_x);
 	DrawFormatString(190,50,1,"m_scroll_x:%f", m_scroll_x);
