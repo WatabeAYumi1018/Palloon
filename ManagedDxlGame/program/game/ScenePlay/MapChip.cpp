@@ -13,8 +13,6 @@ void MapChip::Initialize() {
 	m_csv_collision = tnl::LoadCsv<int>("csv/TileStage_1-1re32Collision.csv");
 	//画像の読み込み
 	LoadDivGraph("graphics/Sprites32.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
-	//当たり判定の読み込み
-	//LoadMapChipCollisionType();
 	//当たり判定の情報を読み込み
 	//LoadMapCollision();
 }
@@ -28,21 +26,21 @@ void MapChip::Draw(const PlayCamera *camera) {
 	//マップ画像の描画
 	for (int i = 0; i < m_csv_map_tile.size(); ++i) {			//行数はm_map_tileのサイズに基づく
 		for (int j = 0; j < m_csv_map_tile[i].size(); ++j) {	//列数はm_map_tile[i]のサイズに基づく
-			int posX = j * MAP_CHIP_SIZE - static_cast<int>(camera->GetScrollX());
+			int posX = j * MAP_CHIP_SIZE -static_cast<int>(camera->GetScrollX());
 			int posY = i * MAP_CHIP_SIZE;
 			DrawGraph(posX, posY, m_map_hdl[m_csv_map_tile[i][j]], TRUE);
 		}
 	}
 }
 
-//当たり判定の読み込み
+//当たり判定の読み込み(現状毎フレーム読み取る必要があり、なんか嫌…)
 void MapChip::LoadMapCollision(const PlayCamera* camera) {
 	// サイズ初期化（m_csv_collision.size()で最初の0列目のサイズを読み取り、それがsizeの列分だけある）
 	m_collision_info.resize(m_csv_collision.size(), std::vector<CollisionInfo>(m_csv_collision[0].size()));
 	//ファイル上の数値を全て読み込む
 	for (int i = 0; i < m_csv_collision.size(); ++i) {
 		for (int j = 0; j < m_csv_collision[i].size(); ++j) {
-			int posX = j * MAP_CHIP_SIZE - static_cast<int>(camera->GetScrollX());
+			int posX = j * MAP_CHIP_SIZE-static_cast<int>(camera->GetScrollX());
 			int posY = i * MAP_CHIP_SIZE;
 			//eCollisionTypeと読み取った数字を関連付ける（同じ数字で連動しやすいように）
 			eCollisionType type = static_cast<eCollisionType>(m_csv_collision[i][j]);

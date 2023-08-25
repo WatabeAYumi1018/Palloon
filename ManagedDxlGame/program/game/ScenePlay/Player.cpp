@@ -24,7 +24,8 @@ void Player::Draw(float delta_time) {
 	//アニメーションの描画
 	animLoader->Draw(delta_time, m_pos);
 	//★デバッグ用
-	DrawFormatString(10, 30, 1, "Player_x: %.2f", m_pos.x);
+	DrawFormatString(0, 30, 1, "Player_x: %.2f", m_pos.x);
+	DrawFormatString(0, 50, 1, "Player_y: %.2f", m_pos.y);
 	DrawCircle(m_pos.x, m_pos.y, m_size, -1, TRUE);
 }
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
 
+//Player,Enemyの基底クラス（抽象クラス）
+
 class Character {
 public:
 	Character(tnl::Vector3 pos, int size, int hp, float jump_time, tnl::Vector3 jump_velocity) :

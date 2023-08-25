@@ -5,6 +5,8 @@ class Character;
 class MapChip;
 
 //プレイヤー追従カメラ
+//座標取得から補正まで全て管理
+
 class PlayCamera{
 public:
 	PlayCamera(Character *player);
@@ -17,8 +19,9 @@ private:
 
 public:
 	//-----メンバ関数-----//
-	void Update(float delta_time);	//座標更新
-	void Scroll();	//スクロール
+	void Update(float delta_time);	//更新
+	void Scroll();					//スクロール
+	void PosRevise();				//座標補正
 
 	//-----Getter-----//
 	float GetScrollX() const { return m_scroll_x; }

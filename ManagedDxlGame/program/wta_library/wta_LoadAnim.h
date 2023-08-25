@@ -2,6 +2,7 @@
 #include <string>
 #include "../dxlib_ext/dxlib_ext.h"
 
+//csvファイルからアニメーションデータを読み込み、ファイル操作にて画像ロードを行う
 
 namespace wta {
     //csv記入のデータを格納する構造体

@@ -2,6 +2,10 @@
 #include "../../engine/GameEngine.h"
 #include "Object.h"
 
+//csvからのマップチップ、当たり判定の読み取り
+//カメラスクロールに合わせた描画更新が必要
+//現状若干のズレあり（多分、チップサイズを変えたことによる弊害と思われる。現状スルーでOK）
+
 class PlayCamera;
 class Character;
 
@@ -36,6 +40,9 @@ public:
 	//-----Getter-----//
 	const std::vector<std::vector<CollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }
 };
+
+
+//----------------------------------------------------------------念のため残しておくだけ
 	//IDと当たり判定の情報開始～終了(行)
 	//const int MAP_CHIP_ID_ROW_START = 10;
 	//const int MAP_CHIP_ID_ROW_END = 58;
