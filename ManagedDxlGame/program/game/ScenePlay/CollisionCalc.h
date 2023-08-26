@@ -11,8 +11,7 @@ class CollisionCalc {
 
 public:
 	CollisionCalc() {}
-	~CollisionCalc() {}
-
+	virtual ~CollisionCalc() {}
 
 private:
 	//-----ÉÅÉìÉoïœêî-----//
@@ -20,16 +19,14 @@ private:
 
 private:
 
-	static std::vector<std::vector<CollisionInfo>> GetSurroundingChips(Character *chara, MapChip *mapChip, int range);
+	static std::vector<std::vector<sCollisionInfo>> GetSurroundingChips(Character *chara, MapChip *mapChip, int range);
 
 	//static eCollisionType GetCollisionTypeMap(int px, int py, MapChip* mapChip);
-
-
 
 	static void CheckLineCollision(Character *character, MapChip *mapChip, int range);
 
 public:
-	static void CheckBoxCollision(Character *chara, MapChip *mapChip, const std::vector<std::vector<CollisionInfo>>& surroundingChips);
+	static void CheckBoxCollision(Character *chara, MapChip *mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
 
 	static void CollisionCalculate(Character *character, MapChip *mapChip,int range);
 };

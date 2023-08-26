@@ -155,9 +155,6 @@
     <ClCompile Include="program\game\ScenePlay\Object .cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\Character.cpp">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>

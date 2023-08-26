@@ -1,6 +1,8 @@
 #pragma once
 #include "GameEngine.h"
 
+//¡A‚¾‚¢‚Ôr‚ê‚Ä‚Ü‚·
+
 class UI{
 
 public:

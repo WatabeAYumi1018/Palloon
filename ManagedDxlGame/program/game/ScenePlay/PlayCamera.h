@@ -8,9 +8,10 @@ class MapChip;
 //À•Wæ“¾‚©‚ç•â³‚Ü‚Å‘S‚ÄŠÇ—
 
 class PlayCamera{
+
 public:
 	PlayCamera(Character *player);
-	~PlayCamera();
+	virtual ~PlayCamera();
 
 private:
 	//-----ƒƒ“ƒo•Ï”-----//

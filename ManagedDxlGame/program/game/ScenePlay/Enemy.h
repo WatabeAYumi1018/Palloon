@@ -2,12 +2,13 @@
 #include "../../engine/GameEngine.h"
 #include "Character.h"
 
+//å‚É“G‚ÌAI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 
 class Enemy :public Character {
 
 public:
 	Enemy();
-	~Enemy();
+	virtual ~Enemy();
 
 private:
 	//-----ƒƒ“ƒo•Ï”-----//
@@ -20,4 +21,3 @@ public:
 	void Draw(float delta_time) override;
 	void Finalize() override;
 };
-

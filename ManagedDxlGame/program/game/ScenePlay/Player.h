@@ -11,7 +11,7 @@ class Player :public Character {
 
 public:
 	Player();
-	~Player();
+	virtual ~Player();
 
 private:
 	//-----’è”-----//

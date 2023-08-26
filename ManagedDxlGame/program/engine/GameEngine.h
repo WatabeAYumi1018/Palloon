@@ -23,7 +23,7 @@ enum class eCharacterType {
 	eCharacter_Max
 };
 
-struct CollisionInfo {
+struct sCollisionInfo {
 	tnl::Vector3 pos;
 	int size;
 	eCollisionType type;

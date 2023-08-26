@@ -12,7 +12,7 @@ class Character;
 class MapChip :public Object{
 public:
 	MapChip();
-	~MapChip();
+	virtual ~MapChip();
 
 	//-----定数-----//
 	//マップチップの基本情報
@@ -25,7 +25,7 @@ private:
 	int m_map_hdl[MAP_ALL_NUM];											//マップチップのタイルハンドル
 	std::vector<std::vector<int>> m_csv_map_tile;						//描画ファイル
 	std::vector<std::vector<int>> m_csv_collision;						//チップ情報ファイル
-	std::vector<std::vector<CollisionInfo>> m_collision_info;			//当たり判定の情報格納用
+	std::vector<std::vector<sCollisionInfo>> m_collision_info;			//当たり判定の情報格納用
 
 public:
 	//-----メンバ関数-----//
@@ -38,7 +38,7 @@ public:
 	void LoadMapCollision(const PlayCamera* camera);
 	
 	//-----Getter-----//
-	const std::vector<std::vector<CollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }
+	const std::vector<std::vector<sCollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }
 };
 
 

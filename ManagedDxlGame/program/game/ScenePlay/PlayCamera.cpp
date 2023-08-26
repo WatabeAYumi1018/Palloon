@@ -7,15 +7,13 @@
 
 
 //プレイヤー追従カメラ
-//コンストラクタ（Objectのコンストラクタで初期化子）
 PlayCamera::PlayCamera(Character *player) :m_player(player) , m_scroll_x(0){}
-//デストラクタ
 PlayCamera::~PlayCamera(){ }
 
 //毎フレーム更新
 void PlayCamera::Update(float delta_time) {
 	Scroll();
-	PosRevise();
+	//PosRevise();
 }
 
 //カメラのスクロール
@@ -35,7 +33,7 @@ void PlayCamera::Scroll() {
 	DrawFormatString(150,50,1,"  scroll_x:%.2f", m_scroll_x);
 }
 
-//★プレイヤーの表示位置を調整
+//★プレイヤーの表示位置を調整？
 void PlayCamera::PosRevise() {
 	tnl::Vector3 pos = m_player->GetPos();
 	tnl::Vector3 screenPos;

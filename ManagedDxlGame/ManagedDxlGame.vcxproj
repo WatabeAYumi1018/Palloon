@@ -170,7 +170,6 @@
     <ClCompile Include="program\engine\Effect.cpp" />
     <ClCompile Include="program\engine\UI.cpp" />
     <ClCompile Include="program\game\gm_main.cpp" />
-    <ClCompile Include="program\game\ScenePlay\Character.cpp" />
     <ClCompile Include="program\game\ScenePlay\CollisionCalc.cpp" />
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp" />
     <ClCompile Include="program\game\ScenePlay\Item.cpp" />

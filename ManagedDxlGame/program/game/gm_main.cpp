@@ -10,16 +10,14 @@
 #include "ScenePlay/PlayCamera.h"
 #include "../engine/UI.h"
 
-//～8月中旬まで～
+
 //①マップ、背景描画 OK
-//②キャラクターの動向と当たり判定の実装
-//③カメラ移動の実装　ひとまずOK
+//②キャラクターの動向と当たり判定の実装　多分OK
+//③カメラ移動の実装　ひとまず置いとく
 //④攻撃の当たり判定
 //⑤敵キャラのAI
 //⑥UIやパラメータなどとの紐づけ
 //⑦アクションの動向とアニメーションなどの確認とひと通りのプレイ実現
-
-//～８月中まで～
 //⑧ステージセレクト画面作成
 //⑨ひと通りゲームとして完成
 //⑩ボス戦
@@ -73,14 +71,6 @@ void gameMain(float delta_time) {
 //------------------------------------------------------------------------------------------------------------
 // ゲーム終了時に１度だけ実行されます
 void gameEnd() {
-	delete player;
-	player = nullptr;
-	delete mapChip;
-	mapChip = nullptr;
-	delete back;
-	back = nullptr;
-	delete ui; 
-	ui = nullptr;
 	delete camera;
 	camera = nullptr;
 	delete m_collision;

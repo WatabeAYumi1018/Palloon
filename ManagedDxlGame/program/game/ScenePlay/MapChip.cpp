@@ -22,6 +22,8 @@ void MapChip::Update(float delta_time, const PlayCamera *camera) {
 	LoadMapCollision(camera);//当たり判定の地形確認用
 }
 
+//★描画(現状毎フレーム読み取るようになってしまった…)
+//読み取りとDrawを分けるべきだったので、vectorに情報を入れて。カメラに合わせて描画するのがbestかな？と考え中
 void MapChip::Draw(const PlayCamera *camera) {
 	//マップ画像の描画
 	for (int i = 0; i < m_csv_map_tile.size(); ++i) {			//行数はm_map_tileのサイズに基づく
@@ -33,10 +35,10 @@ void MapChip::Draw(const PlayCamera *camera) {
 	}
 }
 
-//当たり判定の読み込み(現状毎フレーム読み取る必要があり、なんか嫌…)
+//★当たり判定の読み込み(現状毎フレーム読み取るようになってしまったので…上に同じかな)
 void MapChip::LoadMapCollision(const PlayCamera* camera) {
 	// サイズ初期化（m_csv_collision.size()で最初の0列目のサイズを読み取り、それがsizeの列分だけある）
-	m_collision_info.resize(m_csv_collision.size(), std::vector<CollisionInfo>(m_csv_collision[0].size()));
+	m_collision_info.resize(m_csv_collision.size(), std::vector<sCollisionInfo>(m_csv_collision[0].size()));
 	//ファイル上の数値を全て読み込む
 	for (int i = 0; i < m_csv_collision.size(); ++i) {
 		for (int j = 0; j < m_csv_collision[i].size(); ++j) {
@@ -45,7 +47,7 @@ void MapChip::LoadMapCollision(const PlayCamera* camera) {
 			//eCollisionTypeと読み取った数字を関連付ける（同じ数字で連動しやすいように）
 			eCollisionType type = static_cast<eCollisionType>(m_csv_collision[i][j]);
 			//構造体型に各情報を代入
-			CollisionInfo info;
+			sCollisionInfo info;
 			info.pos = tnl::Vector3(posX, posY,0);
 			info.size = MAP_CHIP_SIZE;
 			info.type= type;

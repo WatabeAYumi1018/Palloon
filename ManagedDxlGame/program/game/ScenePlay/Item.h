@@ -5,7 +5,7 @@ class Item :public Object {
 
 public:
 	Item(tnl::Vector3 m_pos, tnl::Vector3 m_velocity);
-	~Item();
+	virtual ~Item();
 
 	//-----ƒƒ“ƒo•Ï”-----//
 private:
