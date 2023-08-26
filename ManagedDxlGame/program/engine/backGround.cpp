@@ -12,7 +12,7 @@ void backGround::Initialize() {
 	m_camera = new dxe::Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
 	
 	//{0,0,0}→エラー
-	// x：値大→左へスライド、値小→右へスライド
+	//x：値大→左へスライド、値小→右へスライド
 	//y：値大→上へスライド（俯瞰して見る感じ）、値小→下へスライド（見上げる感じ）
 	//z：値大→奥　※正、負どちらも値が大きくなるほど奥に行く
 	m_camera->pos_ = { 0,0,-100 };

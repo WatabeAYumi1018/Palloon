@@ -176,7 +176,7 @@
     <ClCompile Include="program\engine\Effect.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\MapChip.cpp">
+    <ClCompile Include="program\game\ScenePlay\MapManager.h.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\engine\backGround.cpp">
@@ -193,6 +193,12 @@
     </ClCompile>
     <ClCompile Include="program\wta_library\wta_DrawAnim.cpp">
       <Filter>program\[002]wta_library</Filter>
+    </ClCompile>
+    <ClCompile Include="program\engine\SceneManager.cpp">
+      <Filter>program\[003]engine</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\SceneTitle\SceneTitle.cpp">
+      <Filter>program\[004] game\[001]sceneTitle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,7 +335,7 @@
     <ClInclude Include="program\engine\sceneBase.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\MapChip.h">
+    <ClInclude Include="program\game\ScenePlay\MapManager.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\backGround.h">
@@ -346,6 +352,18 @@
     </ClInclude>
     <ClInclude Include="program\wta_library\wta_DrawAnim.h">
       <Filter>program\[002]wta_library</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\GameObject.h">
+      <Filter>program\[003]engine</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\MapChip.h">
+      <Filter>program\[004] game\[003]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\SceneManager.h">
+      <Filter>program\[003]engine</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneTitle\SceneTitle.h">
+      <Filter>program\[004] game\[001]sceneTitle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

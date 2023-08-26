@@ -1,11 +1,11 @@
 #include "../../wta_library/wta_IsIntersectCalc.h"
 #include "CollisionCalc.h"
 #include "../ScenePlay/Character.h"
-#include "../ScenePlay/MapChip.h"
+#include "../ScenePlay/MapManager.h"
 
 //キャラクターの周囲のマップチップを取得する(当たり判定処理軽減のため)
 //一般的にキャラを中心に(2*range+1)*(2*range+1)の範囲のマップチップを取得する
-std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Character *chara, MapChip *mapChip, int range) {
+std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Character *chara, MapManager*mapChip, int range) {
     std::vector<std::vector<sCollisionInfo>> chips;
     tnl::Vector3 pos = chara->GetPos();
     //グリッド座標に変換
@@ -28,10 +28,10 @@ std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Char
     return chips;
 }
 //矩形との当たり判定計算
-void CollisionCalc::CheckBoxCollision(Character *chara, MapChip *mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) {
+void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) {
     for (const auto& row : surroundingChips) {
         for (const auto& info : row) {
-            if (info.type == eCollisionType::eCollision_None) { continue; }
+            if (info.type == eCollisionType::None) { continue; }
             tnl::Vector3 nearly_point = tnl::GetNearestRectPoint(info.pos, info.size, info.size, chara->GetPos());
             if ((nearly_point - chara->GetPos()).length() < chara->GetSize()) {
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
@@ -44,17 +44,17 @@ void CollisionCalc::CheckBoxCollision(Character *chara, MapChip *mapChip, const 
 }
 
 ////当たり判定に応じて分岐処理
-void CollisionCalc::CollisionCalculate(Character *chara, MapChip *mapChip,int range) {
+void CollisionCalc::CollisionCalculate(Character *chara, MapManager*mapChip,int range) {
     //判定範囲内のマップチップを取得
     auto surroundingChips = GetSurroundingChips(chara, mapChip, range);
     for (const auto& row : surroundingChips) {
         for (const auto& info : row) {
             // 当たり判定のタイプに基づいて処理
             switch (info.type) {
-            case eCollisionType::eCollision_Box:
+            case eCollisionType::Box:
                 CheckBoxCollision(chara, mapChip, surroundingChips);
                 break;
-            case eCollisionType::eCollision_Line:
+            case eCollisionType::Line:
                 //矩形の判定をした上で、線分の判定も行う
                 CheckBoxCollision(chara, mapChip, surroundingChips);
                 //CheckLineCollision(chara, mapChip, range);

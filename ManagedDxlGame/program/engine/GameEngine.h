@@ -9,18 +9,21 @@ enum class eAttackType {
 };
 
 enum class eCollisionType {
-	eCollision_None,
-	eCollision_Box,
-	eCollision_Line,
-	eCollision_Max
+	None,
+	Box,
+	Line,
+	Max
 };
 
-enum class eCharacterType {
-	eCharacter_Player,
-	eCharacter_Slim,
-	eCharacter_plant,
-	eCharacter_bird,
-	eCharacter_Max
+enum class eCharaType {
+	Player,
+	Slim,
+	Plant,
+	Bird,
+	Masician,
+	Fairy,
+	Boss,
+	Max
 };
 
 struct sCollisionInfo {

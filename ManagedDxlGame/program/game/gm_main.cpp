@@ -4,11 +4,15 @@
 #include "gm_main.h"
 #include "../game/ScenePlay/Character.h"
 #include "../game/ScenePlay/Player.h"
-#include "../game/ScenePlay/MapChip.h"
+#include "../game/ScenePlay/MapManager.h"
 #include "../engine/backGround.h"
 #include "../game/ScenePlay/CollisionCalc.h"
 #include "ScenePlay/PlayCamera.h"
 #include "../engine/UI.h"
+#include "../game/ScenePlay/Enemy.h"
+#include "../game/ScenePlay/ScenePlay.h"
+#include "../game/SceneTitle/SceneTitle.h"
+#include "../engine/SceneManager.h"
 
 
 //①マップ、背景描画 OK
@@ -32,26 +36,27 @@
 // ～期限まで～
 //⑯最終確認
 
-MapChip * mapChip = nullptr;
-UI* ui=nullptr;
-Character *player=nullptr;
-PlayCamera* camera=nullptr;
-backGround* back=nullptr;
-CollisionCalc* m_collision = nullptr;	//当たり判定
+//MapManager* mapChip = nullptr;
+//UI* ui=nullptr;
+//Character *player=nullptr;
+//PlayCamera* camera=nullptr;
+//backGround* back=nullptr;
+//CollisionCalc* m_collision = nullptr;	//当たり判定
 
 
 //------------------------------------------------------------------------------------------------------------
 // ゲーム起動時に１度だけ実行されます
 void gameStart() {
 	srand(time(0));
-
+	SetWindowText("Title");
 	//コンストラクタ作成(後に多態性でまとめて管理)
-	back = new backGround();
-	ui = new UI({10,0,50});
-	player = new Player();
-	camera = new PlayCamera(player);
-	m_collision = new CollisionCalc();
-	mapChip = new MapChip();
+	//back = new backGround();
+	//ui = new UI({10,0,50});
+	//player = new Player();
+	//camera = new PlayCamera(player);
+	//m_collision = new CollisionCalc();
+	//mapChip = new MapManager();
+	SceneManager::GetInstance( new SceneTitle() );
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -59,20 +64,23 @@ void gameStart() {
 void gameMain(float delta_time) {
 
 	////生成したコンストラクタでUpdate回す
-	back->Update(delta_time);
-	ui->Update(delta_time);
-	camera->Update(delta_time);
-	player->Update(delta_time);
-	mapChip->Update(delta_time, camera);
-	m_collision->CollisionCalculate(player, mapChip, 2);
-	m_collision->CheckBoxCollision(player, mapChip, mapChip->GetCollisionInfo());
+	//back->Update(delta_time);
+	//ui->Update(delta_time);
+	//camera->Update(delta_time);
+	//player->Update(delta_time);
+	//mapChip->Update(delta_time);//, camera);
+	//m_collision->CollisionCalculate(player, mapChip, 2);
+	//m_collision->CheckBoxCollision(player, mapChip, mapChip->GetCollisionInfo());
+
+	//使用方法
+	SceneManager::GetInstance()->Update(delta_time);
 }
 
 //------------------------------------------------------------------------------------------------------------
 // ゲーム終了時に１度だけ実行されます
 void gameEnd() {
-	delete camera;
-	camera = nullptr;
-	delete m_collision;
-	m_collision = nullptr;
+	//delete camera;
+	//camera = nullptr;
+	//delete m_collision;
+	//m_collision = nullptr;
 }

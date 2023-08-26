@@ -2,7 +2,7 @@
 #include "../../engine/GameEngine.h"
 
 class Character;
-class MapChip;
+class MapManager;
 
 //プレイヤー追従カメラ
 //座標取得から補正まで全て管理

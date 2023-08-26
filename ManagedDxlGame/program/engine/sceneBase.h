@@ -1,8 +1,10 @@
 #pragma once
+#include "../library/tnl_sequence.h"
 
+class SceneBase {
 
-class SceneBase 
-	//:gameManager
-{
-
+public:
+	virtual void Update(float delta_time) {};
+	virtual void Draw() = 0;
 };
+

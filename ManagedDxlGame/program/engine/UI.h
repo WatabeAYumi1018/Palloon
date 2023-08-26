@@ -1,9 +1,10 @@
 #pragma once
 #include "GameEngine.h"
+#include "GameObject.h"
 
 //¡A‚¾‚¢‚Ôr‚ê‚Ä‚Ü‚·
 
-class UI{
+class UI:public GameObject{
 
 public:
 	UI(tnl::Vector3 m_pos);

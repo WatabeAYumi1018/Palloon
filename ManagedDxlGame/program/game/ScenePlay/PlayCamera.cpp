@@ -3,7 +3,7 @@
 #include "Object.h"
 #include "PlayCamera.h"
 #include "Character.h"
-#include "MapChip.h"
+#include "MapManager.h"
 
 
 //プレイヤー追従カメラ
