@@ -1,6 +1,5 @@
 #pragma once
 #include "../../engine/GameEngine.h"
-#include "Object.h"
 
 //csvからのマップチップ、当たり判定の読み取り
 //カメラスクロールに合わせた描画更新が必要
@@ -9,7 +8,7 @@
 class PlayCamera;
 class Character;
 
-class MapManager :public Object{
+class MapManager{
 public:
 	MapManager();
 	virtual ~MapManager();

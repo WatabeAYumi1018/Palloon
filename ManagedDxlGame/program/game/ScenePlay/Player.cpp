@@ -1,8 +1,9 @@
 #include "Player.h"
 #include "PlayCamera.h"
 
+
 //キャラクターの初期化子
-Player::Player() :Character({ 0,-100,0 },30, 5,5.0f, {0,500,0})
+Player::Player() :Character(PLAYER_POS, PLAYER_SIZE, PLAYER_HP, PLAYER_VELOCITY)
 {
 	Initialize();
 }
@@ -33,8 +34,8 @@ void Player::Move(float delta_time) {
 	//状況によってセットするアニメーションIDを変える(ID番号はcsvにて確認)
 	animLoader->SetAnimation(0); //idle_right
 	//キャラクターの移動
-	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) { m_pos.x += PLAYER_SPEED_WALK * delta_time; }
-	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_SPEED_WALK * delta_time; }
+	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) { m_pos.x += PLAYER_VELOCITY.x * delta_time; }
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_VELOCITY.x * delta_time; }
 
 	//重力で下に落ちる
 	m_pos.y += m_gravity.y * delta_time;
@@ -44,29 +45,29 @@ void Player::Move(float delta_time) {
 	//if (m_is_Ground) {
 		//スペースボタンでジャンプ
 		if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) {
- 			m_is_Jump = true;
-			m_is_Ground = false;
-			m_was_Ground = false;
+ 			m_is_jump = true;
+			m_is_ground = false;
+			m_was_ground = false;
 			m_jump_velocity.y = 1000.0f;
 			m_jump_time = 10.0f;
 		}
 	//}
 	//ジャンプ中
-	if (m_is_Jump) {
+	if (m_is_jump) {
 		m_pos.y -= m_jump_velocity.y * delta_time;			//ジャンプ速度分y座標を上げる
 		m_jump_velocity.y -= m_gravity.y * delta_time;		//ジャンプしたら重力適応
 		m_jump_time -= delta_time;							//ジャンプ滞空時間を減らす
 		//0になったらジャンプ終了
 		if (m_jump_time <= 0) {
-			m_is_Jump = false;
-			m_was_Ground = false;
+			m_is_jump = false;
+			m_was_ground = false;
 			m_jump_time = 0;
 		}
 	}
 	// グラウンドに着地したらy座標を修正
 	else{
-		m_is_Ground = true;					// 地面に接しているフラグをtrueにする
-		m_was_Ground = true;				// 地面に接しているフラグをfalseにする
+		m_is_ground = true;					// 地面に接しているフラグをtrueにする
+		m_was_ground = true;				// 地面に接しているフラグをfalseにする
 		m_jump_velocity.y = 0;				// ジャンプ速度を0にリセット
 		m_jump_time = 0;					// ジャンプ時間を0にリセット
 	}

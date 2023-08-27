@@ -1,20 +1,19 @@
 #pragma once
-#include "Object.h"
+#include "../../engine/GameObject.h"
 
-class Item :public Object {
+class Item :public GameObject {
 
 public:
-	Item(tnl::Vector3 m_pos, tnl::Vector3 m_velocity);
+	Item(tnl::Vector3 m_pos);
 	virtual ~Item();
 
-	//-----メンバ変数-----//
 private:
+	//-----メンバ変数-----//
 	int m_item_type;			//アイテムタイプ
 
 	//-----メンバ関数-----//
-public:
-	void Initialize();
-	void Update(float delta_time);
-	void Draw();
-	void Finalize();
+	void Initialize() override;
+	void Update(float delta_time) override;
+	void Draw(float delta_time) override;
+	void Finalize() override;
 };

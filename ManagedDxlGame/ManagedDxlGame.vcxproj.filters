@@ -152,9 +152,6 @@
     <ClCompile Include="program\library\tnl_instance.cpp">
       <Filter>program\[000] library</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\Object .cpp">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
@@ -302,9 +299,6 @@
     <ClInclude Include="program\library\tnl_instance.h">
       <Filter>program\[000] library</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\Object.h">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClInclude>
     <ClInclude Include="program\engine\GameEngine.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
@@ -338,7 +332,7 @@
     <ClInclude Include="program\game\ScenePlay\MapManager.h">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
-    <ClInclude Include="program\engine\backGround.h">
+    <ClInclude Include="program\engine\BackGround.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
     <ClInclude Include="program\wta_library\wta_IsIntersectCalc.h">

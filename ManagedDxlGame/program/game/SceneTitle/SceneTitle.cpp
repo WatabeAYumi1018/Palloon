@@ -7,7 +7,7 @@ void SceneTitle::Update(float delta_time) {
 	sequence_.update(delta_time);
 }
 
-void SceneTitle::Draw() {
+void SceneTitle::Draw(float delta_time) {
 	title_back_gif = LoadGraph("gif/clearCracker.mp4");
 }
 

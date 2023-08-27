@@ -7,7 +7,7 @@ class SceneTitle : public SceneBase {
 
 public:
 	void Update(float delta_time) override;
-	void Draw() override;
+	void Draw(float delta_time) override;
 
 private:
 	tnl::Sequence<SceneTitle> sequence_ = tnl::Sequence<SceneTitle>(this, &SceneTitle::SeqIdle);

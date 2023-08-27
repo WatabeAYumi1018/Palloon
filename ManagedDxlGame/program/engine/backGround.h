@@ -1,23 +1,16 @@
 #pragma once
 #include "GameEngine.h"
 
-class backGround 
-	//:gameManager
-{
-public:
-	backGround();
-	~backGround();
-	
-private:
-	//-----メンバ変数-----//
-	int back_hdl=0;						//背景画像ハンドル
-	tnl::Vector3 m_pos = {0,0,500};		//座標（後々多態性で削除。とりあえず）
-	dxe::Mesh* m_mesh = nullptr;		//メッシュ
-	dxe::Camera* m_camera = nullptr;
+//背景を描画する
+//シーンごとに別々の背景をロード、描画するのみ。
+//構造体として扱い、アクセスを容易にする
 
-public:
+struct BackGround{
+	//-----メンバ変数-----//
+	int s_back_hdl = 0;
+	tnl::Vector3 s_pos = { 0,0,0 };
+	
 	//-----メンバ関数-----//
-	void Initialize();
-	void Update(float delta_time);
-	void Finalize();
+	void Initialize() {s_back_hdl = LoadGraph("image/backGround.png");}
+	void Draw() {DrawGraph(s_pos.x, s_pos.y, s_back_hdl, TRUE);}
 };

@@ -18,7 +18,7 @@ SceneManager* SceneManager::GetInstance(SceneBase* start_scene) {
 //現在のシーンの更新と描画
 void SceneManager::Update(float delta_time) {
 	if (now_scene_) now_scene_->Update(delta_time);
-	if (now_scene_) now_scene_->Draw();
+	if (now_scene_) now_scene_->Draw(delta_time);
 	sequence_.update(delta_time);
 }
 

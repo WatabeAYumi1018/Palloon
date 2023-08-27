@@ -7,15 +7,13 @@
 class UI:public GameObject{
 
 public:
-	UI(tnl::Vector3 m_pos);
+	UI();
 	virtual ~UI();
-
-	//-----メンバ変数-----//
-	tnl::Vector3 m_pos;				//座標
 	
 	//-----メッシュ-----//
 	dxe::Mesh* m_mesh_hp = nullptr;				//体力バー
 	dxe::Mesh* m_mesh_face = nullptr;			//フェイスバー
+	
 	//能力バー
 	dxe::Mesh* m_mesh_ability_normal = nullptr;	//①ノーマル
 	dxe::Mesh* m_mesh_ability_fire = nullptr;		//②炎
@@ -25,9 +23,10 @@ public:
 
 public:
 	//-----メンバ関数-----//
-	void Initialize();
-	void Update(float delta_time);
-	void Finalize();
+	void Initialize() override;
+	void Update(float delta_time) override;
+	void Draw(float delta_time) override;
+	void Finalize() override;
 };
 
 //UIの処理一括を行うクラス

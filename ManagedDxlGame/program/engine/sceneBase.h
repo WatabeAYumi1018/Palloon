@@ -4,7 +4,9 @@
 class SceneBase {
 
 public:
-	virtual void Update(float delta_time) {};
-	virtual void Draw() = 0;
+	virtual void Initialize() {}
+	virtual void Update(float delta_time) {}
+	virtual void Draw(float delta_time) {}
+	virtual void Finalize() {}
 };
 

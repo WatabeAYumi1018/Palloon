@@ -1,44 +1,37 @@
 #pragma once
-#include "Object.h"
+#include "../../engine/GameObject.h"
 
 //Player,Enemyの基底クラス（抽象クラス）
 
-class Character {
+class Character :public GameObject{
 public:
-	Character(tnl::Vector3 pos, int size, int hp, float jump_time, tnl::Vector3 jump_velocity) :
-		m_pos(pos), m_size(size), m_hp(hp), m_jump_time(jump_time), m_jump_velocity(jump_velocity)
-	{
-	}
+	Character(tnl::Vector3 m_pos, int size, int hp, tnl::Vector3 velocity) :GameObject(m_pos), m_size(size), m_hp(hp), m_velocity(velocity){}
 	virtual ~Character() {}
 
 	//-----メンバ変数-----//
 protected:
-	int m_size;								//サイズ
-	int m_hp;								//HP
-	int m_jump_time;						//ジャンプ時間
-	
-	tnl::Vector3 m_jump_velocity;			//ジャンプ速度
-	tnl::Vector3 m_pos;						//座標(Object反映するまでの仮)
-	tnl::Vector3 m_gravity = {0,100,0};		//重力
-	tnl::Vector3 velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
+	std::string m_name;							//名前
+	int m_size;									//当たり判定用サイズ
+	int m_hp;									//HP
 
-	bool m_is_Exit=false;					//存在フラグ
-	bool m_is_Ground=true;					//接地中
-	bool m_is_Jump=false;					//ジャンプ中
-	bool m_is_Attack=false;					//攻撃中
+	tnl::Vector3 m_gravity = {0,100,0};			//重力
+	tnl::Vector3 m_velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
+
+	eCharaType e_chara_type = eCharaType::Max;	//キャラタイプ判定用
+
+	bool m_is_ground=true;						//接地中
+	bool m_is_attack=false;						//攻撃中
 
 public:
-	//-----メンバ関数-----//
-	virtual void Initialize() = 0;
-	virtual void Update(float delta_time) = 0;
-	virtual void Draw(float delta_time) = 0;
-	virtual void Finalize() = 0;
-
 	//-----Setter,Getter-----//
-	tnl::Vector3 GetPos() const { return m_pos; }
-	void SetPos(tnl::Vector3 pos) { m_pos = pos; }
-	tnl::Vector3 GetVelocity() const { return velocity; }
+	std::string GetName() const { return m_name; }
 	int GetSize() const { return m_size; }
+	int GetHp() const { return m_hp; }
+
+	eCharaType GetTag() const { return e_chara_type; }
+	void SetTag(eCharaType charaType) { e_chara_type = charaType; }
+
+	tnl::Vector3 GetVelocity() const { return m_velocity; }
 };
 
 //Effect* effect = nullptr;

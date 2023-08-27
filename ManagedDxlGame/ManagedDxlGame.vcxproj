@@ -175,7 +175,6 @@
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp" />
     <ClCompile Include="program\game\ScenePlay\Item.cpp" />
     <ClCompile Include="program\game\ScenePlay\MapManager.h.cpp" />
-    <ClCompile Include="program\game\ScenePlay\Object .cpp" />
     <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp" />
     <ClCompile Include="program\game\ScenePlay\Player.cpp" />
     <ClCompile Include="program\game\ScenePlay\scenePlay.cpp" />
@@ -212,7 +211,7 @@
     <ClInclude Include="program\dxlib_ext\dxlib_ext_render_param.h" />
     <ClInclude Include="program\dxlib_ext\dxlib_ext_texture.h" />
     <ClInclude Include="program\dxlib_ext\OBJLoader.h" />
-    <ClInclude Include="program\engine\backGround.h" />
+    <ClInclude Include="program\engine\BackGround.h" />
     <ClInclude Include="program\engine\Effect.h" />
     <ClInclude Include="program\engine\GameEngine.h" />
     <ClInclude Include="program\engine\GameObject.h" />
@@ -226,7 +225,6 @@
     <ClInclude Include="program\game\ScenePlay\Item.h" />
     <ClInclude Include="program\game\ScenePlay\MapChip.h" />
     <ClInclude Include="program\game\ScenePlay\MapManager.h" />
-    <ClInclude Include="program\game\ScenePlay\Object.h" />
     <ClInclude Include="program\game\ScenePlay\PlayCamera.h" />
     <ClInclude Include="program\game\ScenePlay\Player.h" />
     <ClInclude Include="program\game\ScenePlay\scenePlay.h" />

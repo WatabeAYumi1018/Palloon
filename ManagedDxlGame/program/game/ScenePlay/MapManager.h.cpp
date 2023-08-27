@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "PlayCamera.h"
 
-MapManager::MapManager() :Object(m_pos) {Initialize();}
+MapManager::MapManager() {Initialize();}
 
 MapManager::~MapManager() {Finalize();}
 
@@ -24,7 +24,7 @@ void MapManager::Initialize() {
 
 	//x,y:基本０でOK
 	//Z：奥行（正の値大→手前、負の値大→奥）
-	m_mesh->pos_ = { 0,0,100 };
+	//m_mesh->pos_ = { 0,0,100 };
 }
 
 void MapManager::Update(float delta_time) {

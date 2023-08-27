@@ -1,11 +1,14 @@
 #pragma once
-#include "../game/ScenePlay/Object.h"
+#include "../engine/GameObject.h"
 
-class Effect : public Object {
+class Effect : public GameObject {
 
 public:
 	Effect(tnl::Vector3 m_pos);
 	virtual ~Effect();
 
-	//-----ƒƒ“ƒo•Ï”-----//
+	//-----ƒƒ“ƒoŠÖ”-----//
+private:
+	void Update(float delta_time) override;
+	void Draw(float delta_time) override;
 };

@@ -1,6 +1,6 @@
 #include "UI.h"
 
-UI::UI(tnl::Vector3 m_pos) : m_pos(m_pos) {Initialize();}
+UI::UI() : GameObject(m_pos) {Initialize();}
 
 UI::~UI() { Finalize(); }
 

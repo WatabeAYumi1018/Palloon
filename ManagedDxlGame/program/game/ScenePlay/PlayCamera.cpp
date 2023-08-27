@@ -1,6 +1,5 @@
 #pragma once
 #include "../../engine/GameEngine.h"
-#include "Object.h"
 #include "PlayCamera.h"
 #include "Character.h"
 #include "MapManager.h"
