@@ -176,7 +176,7 @@
     <ClCompile Include="program\game\ScenePlay\MapManager.h.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
-    <ClCompile Include="program\engine\backGround.cpp">
+    <ClCompile Include="program\engine\BackGround.cpp">
       <Filter>program\[003]engine</Filter>
     </ClCompile>
     <ClCompile Include="program\wta_library\wta_IsIntersectCalc.cpp">
@@ -349,9 +349,6 @@
     </ClInclude>
     <ClInclude Include="program\engine\GameObject.h">
       <Filter>program\[003]engine</Filter>
-    </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\MapChip.h">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\engine\SceneManager.h">
       <Filter>program\[003]engine</Filter>

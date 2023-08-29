@@ -12,6 +12,8 @@ std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Char
     int chip_x = static_cast<int>(pos.x / mapChip->MAP_CHIP_SIZE);
     int chip_y = static_cast<int>(pos.y / mapChip->MAP_CHIP_SIZE);
     //キャラ座標を中心に5*5の範囲のマップチップを取得
+   
+
     for (int i = chip_y - range; i <= chip_y + range; ++i) {
         std::vector<sCollisionInfo> rowChips;
         for (int j = chip_x - range; j <= chip_x + range; ++j) {
@@ -23,10 +25,11 @@ std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Char
             }
             rowChips.emplace_back(mapChip->GetCollisionInfo()[i][j]);
         }
-        chips.emplace_back(rowChips);        
+        chips.emplace_back(rowChips);
     }
     return chips;
 }
+
 //矩形との当たり判定計算
 void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) {
     for (const auto& row : surroundingChips) {

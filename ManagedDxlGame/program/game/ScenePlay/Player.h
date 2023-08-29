@@ -7,6 +7,7 @@
 //主にボタン操作の挙動処理を行う
 //描画についての主な定義はwta_LoadAnim, wta_DrawAnimにて
 
+
 class Player :public Character {
 
 public:
@@ -15,10 +16,14 @@ public:
 
 private:
 	//-----定数-----//
-	const tnl::Vector3 PLAYER_POS = { 0,-100,0 };		//プレイヤーの初期位置
-	const int PLAYER_SIZE = 50;							//プレイヤーのサイズ
-	const int PLAYER_HP = 5;							//プレイヤーのHP
-	const tnl::Vector3 PLAYER_VELOCITY = { 100,100,0 };	//移動速度（pix/fps）
+	static constexpr float PLAYER_POS_X = 0;			//プレイヤーの初期位置
+	static constexpr float PLAYER_POS_Y = -200;
+	
+	static constexpr int PLAYER_SIZE = 30;				//プレイヤーのサイズ
+	static constexpr int PLAYER_HP = 5;					//プレイヤーのHP
+	
+	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）
+	static constexpr float PLAYER_VELOCITY_Y = 100;
 
 	//-----メンバ変数-----//
 	int m_jump_time;						//ジャンプ時間
@@ -33,7 +38,7 @@ public:
 	//-----メンバ関数-----//
 	void Initialize() override;
 	void Update(float delta_time) override;
-	void Draw(float delta_time) override;
+	void Draw(float delta_time, const PlayCamera* camera) override;
 	void Move(float delta_time);
 	void Finalize() override;
 };

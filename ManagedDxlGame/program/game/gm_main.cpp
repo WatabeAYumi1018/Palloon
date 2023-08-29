@@ -39,10 +39,9 @@
 //MapManager* mapChip = nullptr;
 //UI* ui=nullptr;
 //Character *player=nullptr;
-//PlayCamera* camera=nullptr;
-//backGround* back=nullptr;
+//const PlayCamera& camera;
 //CollisionCalc* m_collision = nullptr;	//当たり判定
-
+//
 
 //------------------------------------------------------------------------------------------------------------
 // ゲーム起動時に１度だけ実行されます
@@ -50,13 +49,13 @@ void gameStart() {
 	srand(time(0));
 	SetWindowText("Title");
 	//コンストラクタ作成(後に多態性でまとめて管理)
-	//back = new backGround();
 	//ui = new UI({10,0,50});
 	//player = new Player();
-	//camera = new PlayCamera(player);
+	//const PlayCamera& camera=PlayCamera();
 	//m_collision = new CollisionCalc();
 	//mapChip = new MapManager();
-	SceneManager::GetInstance( new SceneTitle() );
+	
+	SceneManager::GetInstance(new ScenePlay());
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -73,6 +72,7 @@ void gameMain(float delta_time) {
 	//m_collision->CheckBoxCollision(player, mapChip, mapChip->GetCollisionInfo());
 
 	//使用方法
+	
 	SceneManager::GetInstance()->Update(delta_time);
 }
 

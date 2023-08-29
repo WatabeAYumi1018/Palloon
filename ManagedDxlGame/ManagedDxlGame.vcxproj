@@ -166,7 +166,7 @@
     <ClCompile Include="program\dxlib_ext\dxlib_ext_mesh.cpp" />
     <ClCompile Include="program\dxlib_ext\dxlib_ext_texture.cpp" />
     <ClCompile Include="program\dxlib_ext\OBJLoader.cpp" />
-    <ClCompile Include="program\engine\backGround.cpp" />
+    <ClCompile Include="program\engine\BackGround.cpp" />
     <ClCompile Include="program\engine\Effect.cpp" />
     <ClCompile Include="program\engine\SceneManager.cpp" />
     <ClCompile Include="program\engine\UI.cpp" />
@@ -223,7 +223,6 @@
     <ClInclude Include="program\game\ScenePlay\CollisionCalc.h" />
     <ClInclude Include="program\game\ScenePlay\Enemy.h" />
     <ClInclude Include="program\game\ScenePlay\Item.h" />
-    <ClInclude Include="program\game\ScenePlay\MapChip.h" />
     <ClInclude Include="program\game\ScenePlay\MapManager.h" />
     <ClInclude Include="program\game\ScenePlay\PlayCamera.h" />
     <ClInclude Include="program\game\ScenePlay\Player.h" />

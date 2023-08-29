@@ -5,7 +5,8 @@
 
 class Character :public GameObject{
 public:
-	Character(tnl::Vector3 m_pos, int size, int hp, tnl::Vector3 velocity) :GameObject(m_pos), m_size(size), m_hp(hp), m_velocity(velocity){}
+	Character(const tnl::Vector3 pos, int size, int hp,const tnl::Vector3 velocity) :
+		GameObject(pos), m_size(size), m_hp(hp), m_velocity(velocity){}
 	virtual ~Character() {}
 
 	//-----メンバ変数-----//
@@ -15,7 +16,7 @@ protected:
 	int m_hp;									//HP
 
 	tnl::Vector3 m_gravity = {0,100,0};			//重力
-	tnl::Vector3 m_velocity;					//速度(エフェクトや遠距離の速さの時に使用するかも)
+	tnl::Vector3 m_velocity = { 100,0,0 };				//速度(エフェクトや遠距離の速さの時に使用するかも)
 
 	eCharaType e_chara_type = eCharaType::Max;	//キャラタイプ判定用
 
@@ -30,8 +31,9 @@ public:
 
 	eCharaType GetTag() const { return e_chara_type; }
 	void SetTag(eCharaType charaType) { e_chara_type = charaType; }
-
+	
 	tnl::Vector3 GetVelocity() const { return m_velocity; }
+	void SetVelocity(tnl::Vector3 velocity) { m_velocity = velocity; }
 };
 
 //Effect* effect = nullptr;

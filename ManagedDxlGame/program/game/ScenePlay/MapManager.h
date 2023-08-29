@@ -4,6 +4,7 @@
 //csvからのマップチップ、当たり判定の読み取り
 //カメラスクロールに合わせた描画更新が必要
 //現状若干のズレあり（多分、チップサイズを変えたことによる弊害と思われる。現状スルーでOK）
+//cppでは相互インクルードとりあえずOK
 
 class PlayCamera;
 class Character;
@@ -21,6 +22,7 @@ public:
 
 private:
 	//-----メンバ変数-----//
+	tnl::Vector3 m_pos;													//マップの座標
 	int m_map_hdl[MAP_ALL_NUM];											//マップチップのタイルハンドル
 	std::vector<std::vector<int>> m_csv_map_tile;						//描画ファイル
 	std::vector<std::vector<int>> m_csv_collision;						//チップ情報ファイル
@@ -28,13 +30,13 @@ private:
 
 public:
 	//-----メンバ関数-----//
-	void Initialize();
-	void Update(float delta_time);//, const PlayCamera* camera);
-	void Draw();//const PlayCamera *camera);
+	void Initialize ();
+	void Update(float delta_time, const PlayCamera* camera);
+	void Draw(const PlayCamera* camera);
 	void Finalize();
 
 	//当たり判定専用のマップ関数
-	void LoadMapCollision();// const PlayCamera* camera);
+	void LoadMapCollision(const PlayCamera* camera);
 	
 	//-----Getter-----//
 	const std::vector<std::vector<sCollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }

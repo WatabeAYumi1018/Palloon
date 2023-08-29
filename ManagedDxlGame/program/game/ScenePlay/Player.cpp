@@ -3,7 +3,7 @@
 
 
 //キャラクターの初期化子
-Player::Player() :Character(PLAYER_POS, PLAYER_SIZE, PLAYER_HP, PLAYER_VELOCITY)
+Player::Player() : Character({ PLAYER_POS_X, PLAYER_POS_Y, 0 }, PLAYER_SIZE, PLAYER_HP, { PLAYER_VELOCITY_X, PLAYER_VELOCITY_Y,0 })
 {
 	Initialize();
 }
@@ -15,27 +15,28 @@ void Player::Initialize()
 	// CSVからアニメーションデータをロード
 	animLoader =new wta::DrawAnim("csv/AnimLoad.csv","graphics/animation");
 }
-void Player::Update(float delta_time) 
+
+void Player::Update(float delta_time)
 {
-	Draw(delta_time);
 	Move(delta_time);
 }
 
-void Player::Draw(float delta_time) {
+void Player::Draw(float delta_time, const PlayCamera* camera) {
+	tnl::Vector3 draw_pos = m_pos - camera->target + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 	//アニメーションの描画
-	animLoader->Draw(delta_time, m_pos);
+	animLoader->Draw(delta_time, draw_pos);
 	//★デバッグ用
-	DrawFormatString(0, 30, 1, "Player_x: %.2f", m_pos.x);
-	DrawFormatString(0, 50, 1, "Player_y: %.2f", m_pos.y);
-	DrawCircle(m_pos.x, m_pos.y, m_size, -1, TRUE);
+	DrawFormatString(0, 30, 1, "Player_x: %.2f", draw_pos.x);
+	DrawFormatString(0, 50, 1, "Player_y: %.2f", draw_pos.y);
+	DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
 }
 
 void Player::Move(float delta_time) {
 	//状況によってセットするアニメーションIDを変える(ID番号はcsvにて確認)
 	animLoader->SetAnimation(0); //idle_right
 	//キャラクターの移動
-	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) { m_pos.x += PLAYER_VELOCITY.x * delta_time; }
-	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_VELOCITY.x * delta_time; }
+	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT)) { m_pos.x += PLAYER_VELOCITY_X * delta_time; }
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_VELOCITY_X * delta_time; }
 
 	//重力で下に落ちる
 	m_pos.y += m_gravity.y * delta_time;

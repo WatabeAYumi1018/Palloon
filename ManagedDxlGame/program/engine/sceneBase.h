@@ -1,8 +1,9 @@
 #pragma once
 #include "../library/tnl_sequence.h"
 
-class SceneBase {
+class PlayCamera;
 
+class SceneBase {
 public:
 	virtual void Initialize() {}
 	virtual void Update(float delta_time) {}

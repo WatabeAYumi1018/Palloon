@@ -2,39 +2,55 @@
 #include "ScenePlay.h"
 #include "../SceneTitle/SceneTitle.h"
 #include "../../engine/SceneManager.h"
+#include "../../engine/BackGround.h"
+#include "MapManager.h"
+#include "CollisionCalc.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "../../engine/UI.h"
+#include "PlayCamera.h"
 
-ScenePlay::ScenePlay() {
-	//”wŒi‚Ì‰Šú‰»‚Æ•`‰æ
-	back_ground.Initialize();
-	back_ground.Draw();
-	Initialize();
+ScenePlay::ScenePlay(){
+	Initialize();}
+
+ScenePlay::~ScenePlay() {
+	Finalize();
 }
 
 void ScenePlay::Initialize() {
+	//”wŒi‚Ì‰Šú‰»‚Æ•`‰æ
+	camera=new PlayCamera();
+	back_ground = new BackGround();
+	map_chip_manager = new MapManager();
+	collision_calc = new CollisionCalc();
+	player = new Player();
+
 	//ƒvƒŒƒCƒV[ƒ“‚É•K—v‚ÈObject‚ð“Ç‚Ýž‚ÝA‰Šú‰»‚·‚é
-	gameObjects.emplace_back(new Player());
+	gameObjects.emplace_back(player);
 	gameObjects.emplace_back(new Enemy());
 	gameObjects.emplace_back(new UI());
-
 }
 
 void ScenePlay::Update(float delta_time) {
+	collision_calc->CollisionCalculate(player, map_chip_manager,3);	
+	map_chip_manager->LoadMapCollision(camera);
+	camera->target += (player->GetPos() - camera->target) * 0.05f;
+	
 	for (auto obj : gameObjects) {obj->Update(delta_time);}
+	
 	sequence_.update(delta_time);
 }
 
 void ScenePlay::Draw(float delta_time) {
-	for (auto obj : gameObjects) {obj->Draw(delta_time);}
-	DrawRotaGraph(DXE_WINDOW_WIDTH / 2, DXE_WINDOW_HEIGHT / 2, 1.0f, 0, test_back_ground_gfx_, true);
+	back_ground->Draw(camera);
+	map_chip_manager->Draw(camera);
+	for (auto obj : gameObjects) {obj->Draw(delta_time, camera);}
 }
 
 bool ScenePlay::SeqIdle(float delta_time) {
-	if (sequence_.isStart()) {
-		test_back_ground_gfx_ = LoadGraph("graphics/back_ground.jpg");
-	}
+	//if (sequence_.isStart()) {
+	//	graph_hdl = LoadGraph("graphics/PT_Skybox_Texture_01.png");
+	//}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		auto scene = SceneManager::GetInstance();
 		scene->ChangeScene(new SceneTitle());
