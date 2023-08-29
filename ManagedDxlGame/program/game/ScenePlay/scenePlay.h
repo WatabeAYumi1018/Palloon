@@ -4,6 +4,7 @@
 class PlayCamera;
 class BackGround;
 class MapManager;
+class UI;
 class CollisionCalc;
 class GameObject;
 class Character;
@@ -22,9 +23,9 @@ public:
 
 	//-----ƒƒ“ƒo•Ï”-----//
 	PlayCamera *camera=nullptr;
-
 	BackGround *back_ground=nullptr;
 	MapManager *map_chip_manager=nullptr;
+	UI *ui=nullptr;
 	CollisionCalc *collision_calc=nullptr;
 	Character *player =nullptr;
 

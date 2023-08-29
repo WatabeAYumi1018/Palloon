@@ -39,7 +39,7 @@ void Player::Move(float delta_time) {
 	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) { m_pos.x -= PLAYER_VELOCITY_X * delta_time; }
 
 	//重力で下に落ちる
-	m_pos.y += m_gravity.y * delta_time;
+	m_pos.y += m_gravity.y * delta_time *2;
 
 	//着地中
 	
@@ -50,7 +50,7 @@ void Player::Move(float delta_time) {
 			m_is_ground = false;
 			m_was_ground = false;
 			m_jump_velocity.y = 1000.0f;
-			m_jump_time = 10.0f;
+			m_jump_time = 5.0f;
 		}
 	//}
 	//ジャンプ中

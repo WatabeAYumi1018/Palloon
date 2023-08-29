@@ -2,21 +2,21 @@
 #include "GameEngine.h"
 #include "GameObject.h"
 
-//今、だいぶ荒れてます
 
-class UI:public GameObject{
+class UI{
 
 public:
-	UI();
-	virtual ~UI();
+	UI() { Initialize(); }
+	virtual ~UI() {}
 	
+private:
+	tnl::Vector3 m_pos = { 10,500,0 };
+	int m_ui_hdl = 0;
 
 public:
 	//-----メンバ関数-----//
-	void Initialize() override;
-	void Update(float delta_time) override;
-	void Draw(float delta_time, const PlayCamera* camera) override;
-	void Finalize() override;
+	void Initialize();
+	void Draw(float delta_time) ;
 };
 
 //UIの処理一括を行うクラス

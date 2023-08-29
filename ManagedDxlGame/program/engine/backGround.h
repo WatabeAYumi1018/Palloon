@@ -16,11 +16,10 @@ public:
 private:
 	//-----ƒƒ“ƒo•Ï”-----//
 	tnl::Vector3 m_pos = { 0,0,0 };
-	int s_back_hdl = 0;
+	int m_back_hdl = 0;
 
 public:
 	//-----ƒƒ“ƒoŠÖ”-----//
 	void Initialize();
-	
 	void Draw(const PlayCamera* camera);
 };

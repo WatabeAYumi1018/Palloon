@@ -28,7 +28,7 @@ void MapManager::Draw(const PlayCamera* camera) {
 			//tnl::Vector3 draw_pos;
 			m_pos.x = j * MAP_CHIP_SIZE;
 			m_pos.y = i * MAP_CHIP_SIZE;
-			//カメラの位置に合わせて
+			//カメラの位置に合わせて描画位置をずらす
 			tnl::Vector3 draw_pos = m_pos - camera->target +
 				tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
