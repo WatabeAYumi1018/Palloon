@@ -7,14 +7,11 @@ class GameObject
 {
 public:
 	GameObject(const tnl::Vector3& pos) : m_pos(pos) {}
-
 	virtual ~GameObject() {}
 
 protected:
 	// ---- メンバ変数 ---- //
 	tnl::Vector3 m_pos;
-	//float m_pos_x = 0;			//座標
-	//float m_pos_y = 0;
 	
 	int m_draw_order = 0;						//描画順番
 	bool m_is_exist = true;						//存在フラグ
@@ -29,7 +26,6 @@ public:
 	virtual void Finalize() {}
 
 	//-----Setter&Getter-----//
-
 	const tnl::Vector3 GetPos() const { return m_pos; }
 	void SetPos(const tnl::Vector3 pos) { m_pos = pos; }
 

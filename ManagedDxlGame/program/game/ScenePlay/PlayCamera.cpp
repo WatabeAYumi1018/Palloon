@@ -41,5 +41,4 @@ void PlayCamera::Scroll(Character* chara, MapManager* mapChip)
 			is_active = false; 
 		}
 	}
-
 }

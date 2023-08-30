@@ -4,7 +4,13 @@
 
 //キャラクターの初期化子
 Player::Player() :
-	Character({ PLAYER_POS_X, PLAYER_POS_Y, 0 }, PLAYER_SIZE, PLAYER_HP, { PLAYER_VELOCITY_X, PLAYER_VELOCITY_Y,0 })
+	Character
+	(
+		{ PLAYER_POS_X, PLAYER_POS_Y, 0 },
+		PLAYER_SIZE,
+		PLAYER_HP,
+		{ PLAYER_VELOCITY_X, PLAYER_VELOCITY_Y,0 }
+	)
 {
 	Initialize();
 }
@@ -56,7 +62,7 @@ void Player::MoveHandle(float delta_time)
 			m_pos.x += PLAYER_VELOCITY_X * delta_time;
 		}
 	}
-	else if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
 	{
 		m_is_dirction_right = false;
 
@@ -75,6 +81,11 @@ void Player::MoveHandle(float delta_time)
 		m_is_ground = false;
 		m_jump_velocity.y = 1000.0f;
 		m_jump_time = 7.0f;
+	}
+	//zキーで攻撃
+	if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+	{
+		//攻撃処理
 	}
 	//ジャンプ中
 	if (m_is_jump) 
@@ -141,6 +152,19 @@ void Player::AnimHandle(float delta_time)
 		else
 		{
 			animLoader->SetAnimation(7);	 /*jump_left*/
+		}
+	}
+	else if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+	{
+		if (m_is_dirction_right)
+		{
+			animLoader->SetAnimation(16);	 /*roll_right*/
+			animLoader->SetAnimation(0);	 /*idle_right*/
+		}
+		else
+		{
+			animLoader->SetAnimation(8);	 /*roll_left*/
+			animLoader->SetAnimation(1);	 /*idle_left*/
 		}
 	}
 	else 

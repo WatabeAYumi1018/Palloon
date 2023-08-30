@@ -42,46 +42,48 @@ void Enemy::CreateEnemy()
 
 bool Enemy::SeqBaseAction(const float delta_time) 
 { 
-    float chance = distribution(generator);
+    if (m_player) {
+        float chance = distribution(generator);
 
-    //move→idleの確率
-    if (chance < 0.001f)
-    {
-        tnl_sequence_.change(&Enemy::SeqNextAction);
-    }
-
-    //プレイヤーとの距離計算
-    if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
-    {
-        tnl_sequence_.change(&Enemy::SeqAttack);
-    }
-    DrawStringEx(0, 0, -1, "move");
-
-    //経過時間をカウント
-    m_moveTimeCounter += delta_time;
-
-    if (m_moveTimeCounter <= 2.0f)
-    {
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        //move→idleの確率
+        if (chance < 0.001f)
         {
-            DrawStringEx(0, 50, -1, "right");
-            m_pos.x += m_velocity.x * delta_time;
-        });
-    }
-    else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
-    {
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+            tnl_sequence_.change(&Enemy::SeqNextAction);
+        }
+
+        //プレイヤーとの距離計算
+        if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
         {
-            DrawStringEx(0, 50, -1, "left");
-            m_pos.x -= m_velocity.x * delta_time;
-        });
+            tnl_sequence_.change(&Enemy::SeqAttack);
+        }
+        DrawStringEx(0, 0, -1, "move");
+
+        //経過時間をカウント
+        m_moveTimeCounter += delta_time;
+
+        if (m_moveTimeCounter <= 2.0f)
+        {
+            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+                {
+                    DrawStringEx(0, 50, -1, "right");
+                    m_pos.x += m_velocity.x * delta_time;
+                });
+        }
+        else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
+        {
+            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+                {
+                    DrawStringEx(0, 50, -1, "left");
+                    m_pos.x -= m_velocity.x * delta_time;
+                });
+        }
+        else if (m_moveTimeCounter > 4.0f)
+        {
+            m_moveTimeCounter = 0.0f;
+        }
+        tnl_sequence_.change(&Enemy::SeqBaseAction);
+        TNL_SEQ_CO_END;
     }
-    else if (m_moveTimeCounter > 4.0f)
-    {
-        m_moveTimeCounter = 0.0f;
-    }
-    tnl_sequence_.change(&Enemy::SeqBaseAction);
-    TNL_SEQ_CO_END;
 }
 
 bool Enemy::SeqNextAction(const float delta_time)
@@ -104,11 +106,11 @@ bool Enemy::SeqAttack(const float delta_time)
     {
         //攻撃アニメーション再生
     });
+
     tnl_sequence_.change(&Enemy::SeqBaseAction);
     TNL_SEQ_CO_END;
 }
 
-void Enemy::Finalize()
-{
+void Enemy::Finalize() {
 
 }

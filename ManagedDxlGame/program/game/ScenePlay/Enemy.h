@@ -22,7 +22,7 @@ private:
 	std::uniform_real_distribution<float> distribution{ 0.0f, 1.0f};	//乱数の分布（特定の範囲内で生成）
 	TNL_CO_SEQUENCE(Enemy,&Enemy::SeqBaseAction);						//コルーチンシーケンス
 
-	Character* m_player = nullptr;
+	Character* m_player = nullptr;		//審議
 
 public:
 	//-----メンバ関数-----//

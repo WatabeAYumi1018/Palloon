@@ -13,7 +13,6 @@ std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Char
     int chip_x = static_cast<int>(pos.x / mapChip->MAP_CHIP_SIZE);
     int chip_y = static_cast<int>(pos.y / mapChip->MAP_CHIP_SIZE);
     //キャラ座標を中心に5*5の範囲のマップチップを取得
-   
 
     for (int i = chip_y - range; i <= chip_y + range; ++i)
     {
