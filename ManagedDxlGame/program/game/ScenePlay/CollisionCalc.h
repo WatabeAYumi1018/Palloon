@@ -21,11 +21,11 @@ private:
 
 	static std::vector<std::vector<sCollisionInfo>> GetSurroundingChips(Character *chara, MapManager*mapChip, int range);
 
-	static void CheckLineCollision(Character *character, MapManager*mapChip, int range);
-
 public:
 	static void CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
 
+	static void CheckLineCollision(Character *character, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
+	
 	static void CollisionCalculate(Character *character, MapManager*mapChip,int range);
 };
 

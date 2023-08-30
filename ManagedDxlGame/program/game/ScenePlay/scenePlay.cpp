@@ -33,8 +33,11 @@ void ScenePlay::Update(float delta_time) {
 	collision_calc->CollisionCalculate(player, map_chip_manager,3);	
 	map_chip_manager->LoadMapCollision(camera);
 	//camera->Update(delta_time);
-	camera->target += (player->GetPos() - camera->target) * 0.05f;
+	//プレイヤーが画面の半分を超えたらカメラを動かす
+	if (player->GetPos().x > DXE_WINDOW_WIDTH / 2) {
 
+		camera->target += (player->GetPos() - camera->target) * 0.05f;
+	}
 	
 	for (auto obj : gameObjects) {obj->Update(delta_time);}
 	
@@ -42,7 +45,7 @@ void ScenePlay::Update(float delta_time) {
 }
 
 void ScenePlay::Draw(float delta_time) {
-	back_ground->Draw(camera);
+	//back_ground->Draw(camera);
 	map_chip_manager->Draw(camera);
 	for (auto obj : gameObjects) {obj->Draw(delta_time, camera);}
 	ui->Draw(delta_time);

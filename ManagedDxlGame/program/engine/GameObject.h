@@ -30,8 +30,8 @@ public:
 
 	//-----Setter&Getter-----//
 
-	const tnl::Vector3& GetPos() { return m_pos; }
-	void SetPos(const tnl::Vector3& pos) { m_pos = pos; }
+	const tnl::Vector3 GetPos() const { return m_pos; }
+	void SetPos(const tnl::Vector3 pos) { m_pos = pos; }
 
 	int GetDrawOrder() const { return m_draw_order; }
 	

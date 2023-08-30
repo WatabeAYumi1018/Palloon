@@ -46,6 +46,27 @@ void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, cons
     }
 }
 
+//線分との当たり判定
+//矩形と同じ処理を行うために、処理が二重になってしまうが、可読性と保守性を考慮にしている
+//void CollisionCalc::CheckLineCollision(Character* chara, MapManager* mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) {
+//    for (const auto& row : surroundingChips) {
+//        for (const auto& info : row) {
+//          if (info.type == eCollisionType::None) { continue; }
+//            int x = static_cast<int>(tile.x);
+//            int y = static_cast<int>(tile.y);
+//            //線分の始点と終点を取得
+//            tnl::Vector3 lineStart, lineEnd;
+//            mapChip->GetTileLineSegment(y, x, lineStart, lineEnd);
+//            if (wta::IsIntersectCircleLine(chara->GetPos(), chara->GetSize(), lineStart, lineEnd))
+//            {
+//                // 衝突応答処理
+//                DrawStringEx(0, 70, -1, "linehit");
+//            }
+//        }
+//    }
+//}
+
+
 ////当たり判定に応じて分岐処理
 void CollisionCalc::CollisionCalculate(Character *chara, MapManager*mapChip,int range) {
     //判定範囲内のマップチップを取得
@@ -60,7 +81,7 @@ void CollisionCalc::CollisionCalculate(Character *chara, MapManager*mapChip,int 
             case eCollisionType::Line:
                 //矩形の判定をした上で、線分の判定も行う
                 CheckBoxCollision(chara, mapChip, surroundingChips);
-                //CheckLineCollision(chara, mapChip, range);
+                //CheckLineCollision(chara, mapChip, surroundingChips);
                 break;
             default:
                 break;
@@ -97,23 +118,4 @@ void CollisionCalc::CollisionCalculate(Character *chara, MapManager*mapChip,int 
 //    }
 //    return eCollisionType::eCollision_None;
 //
-//}
-
-
-//線分との当たり判定
-//矩形と同じ処理を行うために、処理が二重になってしまうが、可読性と保守性を考慮にしている
-//void CollisionCalc::CheckLineCollision(Character* chara, MapChip* mapChip, int range) {
-//    auto tiles = GetSurroundingChips(chara, mapChip, range);
-//    for (const auto& tile : tiles) {
-//        int x = static_cast<int>(tile.x);
-//        int y = static_cast<int>(tile.y);
-//        //線分の始点と終点を取得
-//        tnl::Vector3 lineStart, lineEnd;
-//        mapChip->GetTileLineSegment(y, x, lineStart, lineEnd);
-//        if (wta::IsIntersectCircleLine(chara->GetPos(), chara->GetSize(), lineStart, lineEnd))
-//        {
-//            // 衝突応答処理
-//            DrawStringEx(0, 70, -1, "linehit");
-//        }
-//    }
 //}

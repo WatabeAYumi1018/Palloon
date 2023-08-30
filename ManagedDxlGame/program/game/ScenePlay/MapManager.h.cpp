@@ -8,11 +8,11 @@ MapManager::~MapManager() {Finalize();}
 
 void MapManager::Initialize() {
 	//csvファイルのマップタイル描画情報を読み込む
-	m_csv_map_tile = tnl::LoadCsv<int>("csv/TileStage_1-1re32.csv");
+	m_csv_map_tile = tnl::LoadCsv<int>("csv/TileStage_1-1.csv");
 	//csvファイルからマップチップの情報を読み込む(一時的な格納)
-	m_csv_collision = tnl::LoadCsv<int>("csv/TileStage_1-1re32Collision.csv");
+	m_csv_collision = tnl::LoadCsv<int>("csv/TileStageCollision_1-1.csv");
 	//画像の読み込み
-	LoadDivGraph("graphics/Sprites32.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
+	LoadDivGraph("graphics/Stage1-1.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 }
 
 void MapManager::Update(float delta_time, const PlayCamera* camera) {
@@ -37,9 +37,6 @@ void MapManager::Draw(const PlayCamera* camera) {
 	}
 }
 
-//現状だとプレイヤーを中心に描画することしかできていない。
-//ゲーム画面上で、プレイヤーがマップ中央に進むまでは追従しないようにして、ゴールに近づいたときも追従を解除
-
 //★当たり判定の読み込み(現状毎フレーム読み取るようになってしまったので…上に同じかな)
 void MapManager::LoadMapCollision(const PlayCamera* camera) {
 	// サイズ初期化（m_csv_collision.size()で最初の0列目のサイズを読み取り、それがsizeの列分だけある）
@@ -47,8 +44,9 @@ void MapManager::LoadMapCollision(const PlayCamera* camera) {
 	//ファイル上の数値を全て読み込む
 	for (int i = 0; i < m_csv_collision.size(); ++i) {
 		for (int j = 0; j < m_csv_collision[i].size(); ++j) {
-			int posX = j * MAP_CHIP_SIZE;
-			int posY = i * MAP_CHIP_SIZE;
+			//当たり判定の中心座標を計算
+			int posX = j * MAP_CHIP_SIZE +(MAP_CHIP_SIZE>>1);
+			int posY = i * MAP_CHIP_SIZE +(MAP_CHIP_SIZE>>1);
 			//eCollisionTypeと読み取った数字を関連付ける（同じ数字で連動しやすいように）
 			eCollisionType type = static_cast<eCollisionType>(m_csv_collision[i][j]);
 			//構造体型に各情報を代入
@@ -59,7 +57,10 @@ void MapManager::LoadMapCollision(const PlayCamera* camera) {
 			//当たり判定の情報を各マップチップに格納
 			m_collision_info[i][j]=info;
 			if (type != eCollisionType::None) {
-				DrawBoxEx(info.pos, info.size, info.size);
+				//カメラの位置に合わせて描画位置をずらす
+				tnl::Vector3 draw_pos = info.pos - camera->target +
+					tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+				//DrawBoxEx(draw_pos, info.size, info.size);
 			}
 		}
 	}

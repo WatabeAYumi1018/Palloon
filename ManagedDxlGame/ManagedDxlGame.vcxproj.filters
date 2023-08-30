@@ -182,9 +182,6 @@
     <ClCompile Include="program\wta_library\wta_IsIntersectCalc.cpp">
       <Filter>program\[002]wta_library</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp">
-      <Filter>program\[004] game\[003]scenePlay</Filter>
-    </ClCompile>
     <ClCompile Include="program\wta_library\wta_LoadAnim.cpp">
       <Filter>program\[002]wta_library</Filter>
     </ClCompile>
@@ -196,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="program\game\SceneTitle\SceneTitle.cpp">
       <Filter>program\[004] game\[001]sceneTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp">
+      <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,8 @@ public:
 	void Finalize() override;
 
 private:
+	float DistanceCalc();						//プレイヤーとの距離計算
+	void CreateEnemy();							//敵キャラ生成
 	bool SeqBaseAction(const float delta_time);	//基本行動01（通常）
 	bool SeqNextAction(const float delta_time);	//基本行動02（通常～遷移がある場合のみ使用）
 	bool SeqAttack(const float delta_time);		//攻撃処理(プレイヤーが一定以上近づくと攻撃)

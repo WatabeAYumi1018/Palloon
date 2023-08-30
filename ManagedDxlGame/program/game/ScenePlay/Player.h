@@ -28,8 +28,10 @@ private:
 	//-----メンバ変数-----//
 	int m_jump_time;						//ジャンプ時間
 	tnl::Vector3 m_jump_velocity;			//ジャンプ速度
+	
 	bool m_is_jump = false;					//ジャンプ中
 	bool m_was_ground=false;				//前フレームの接地判定
+	bool m_is_dirction_right = true;					//右向きかどうか
 
 	//-----アニメーション-----//
 	wta::DrawAnim *animLoader = nullptr;
@@ -39,8 +41,12 @@ public:
 	void Initialize() override;
 	void Update(float delta_time) override;
 	void Draw(float delta_time, const PlayCamera* camera) override;
-	void Move(float delta_time);
 	void Finalize() override;
+
+private:
+	void MoveHandle(float delta_time);		//移動による座標変化
+	void AnimHandle(float delta_time);		//アニメーションの再生
+	void isFlag(float delta_time);
 };
 
 //Playerのボタン操作の挙動処理を行うクラス
