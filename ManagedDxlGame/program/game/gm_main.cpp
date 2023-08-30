@@ -52,6 +52,8 @@ void gameMain(float delta_time) {
 
 
 	SceneManager::GetInstance()->Update(delta_time);
+	//DrawGraph(1000, 50, LoadGraph("graphics/color-yellow001.PNG"), true);
+	//DrawGraph(1100, 50, LoadGraph("graphics/color-yellow002.PNG"), true);
 }
 
 //------------------------------------------------------------------------------------------------------------

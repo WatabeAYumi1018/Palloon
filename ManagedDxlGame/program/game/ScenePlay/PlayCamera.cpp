@@ -20,6 +20,7 @@ void PlayCamera::MoveRange(Character* chara, MapManager* mapChip)
 	m_target.y = std::clamp(m_target.y, halfHeight, maxY);
 }
 
+//★背景とチップのスクロール値調節すること
 void PlayCamera::Scroll(Character* chara, MapManager* mapChip)
 {
 	if (!is_active)

@@ -53,7 +53,7 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	//back_ground->Draw(camera);
+	m_back_ground->Draw(m_camera);
 	m_map_chip_manager->Draw(m_camera);
 	
 	for (auto obj : gameObjects) 

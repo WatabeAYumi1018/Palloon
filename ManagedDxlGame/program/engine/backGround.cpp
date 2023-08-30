@@ -4,68 +4,39 @@
 
 void BackGround::Initialize()
 {
-	m_back_hdl = LoadGraph("graphics/PT_Skybox_Texture_01.png");
+	m_back_hdl = LoadGraph("graphics/1-1_backMovie.mp4");
 }
 
 void BackGround::Draw(const PlayCamera* camera) 
 {
-	tnl::Vector3 draw_pos =
-		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-	DrawRotaGraph(draw_pos.x, draw_pos.y, 1.0f, 0, m_back_hdl, true);
+	Movie(camera);
 }
 
+void BackGround::Movie(const PlayCamera* camera){
 
+	tnl::Vector3 draw_pos =
+		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-//#include "backGround.h"
-//
-//backGround::backGround() :GameObject(m_pos) {
-//	Initialize();
-//}
-//
-//backGround::~backGround() { Finalize(); }
-//
-//void backGround::Initialize() {
-//
-//	//カメラ設定
-//	m_camera = new dxe::Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
-//	
-//	//{0,0,0}→エラー
-//	//x：値大→左へスライド、値小→右へスライド
-//	//y：値大→上へスライド（俯瞰して見る感じ）、値小→下へスライド（見上げる感じ）
-//	//z：値大→奥　※正、負どちらも値が大きくなるほど奥に行く
-//	m_camera->pos_ = { 0,0,-100 };
-//	 
-//	//メッシュの周りを回転しながら映すようなカメラ
-//	//{0,0,0}→二次元での正面
-//	//x:右周りの回転移動？（左から画像を覗き見るような感じ）
-//	//ｙ:上周りの回転移動？（1000だと下から見上げるような感じ）
-//	//z:謎（変化なさそうだけど、-1000だと描画みえなくなる）
-//	m_camera->target_ = { 0,0,0 };
-//
-//	//メッシュに背景画像を設定
-//	 
-//	//x:横幅,y:縦幅,z:奥行き(プレーンだと無効？よく分からん)
-//	m_mesh = dxe::Mesh::CreatePlaneMV({1000,1000,0});
-//	m_mesh->setTexture(dxe::Texture::CreateFromFile("graphics/PT_Skybox_Texture_01.png"));
-//	
-//	//x,y:基本０でOK
-//	//Z：奥行（正の値大→手前、負の値大→奥）
-//	m_mesh->pos_= { 0,0,100 };
-//}
-//
-//void backGround::Update(float delta_time) {
-//	m_mesh->render(m_camera);
-//	m_camera->update();
-//}
-//
-//
-//void backGround::Finalize() {
-//	if (m_mesh) {
-//		delete m_mesh;
-//		m_mesh = nullptr;
-//	}
-//	if (m_camera) {
-//		delete m_camera;
-//		m_camera = nullptr;
-//	}
-//}
+	//動画の画像サイズを取得
+	int size_x = 0;
+	int size_y = 0;
+
+	GetGraphSize(m_back_hdl, &size_x, &size_y);
+
+	//動画と同サイズのスクリーンを作成(透明なピクセルを扱うため三つ目の引数はTRUE)
+	m_screen_handle = MakeScreen(size_x, size_y, TRUE);
+
+	//動画の再生開始
+	PlayMovieToGraph(m_back_hdl, DX_PLAYTYPE_LOOP);
+
+	//透過する方法として明るさクリップフィルターがある
+	//「一定以上/以下の明るさの色をすべて塗りつぶす」という力強い処理ができる
+	//FilterType以降の引数...比較方法（LESS/GREATER),比較する値,該当する色を塗りつぶすか,
+	//塗りつぶした後の色,塗りつぶした後の色の不透明度(透明にしたいので0)
+	GraphFilterBlt(m_back_hdl, m_screen_handle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, m_bright_border, true, GetColor(0, 0, 0), 0);
+
+	//透過処理された画像を画面いっぱいに描画
+	DrawExtendGraph(draw_pos.x, draw_pos.y, draw_pos.x+DXE_WINDOW_WIDTH, draw_pos.y+DXE_WINDOW_WIDTH, m_screen_handle, TRUE);
+	//DrawRotaGraph(draw_pos.x, draw_pos.y, 1.0f, 0, m_screen_handle, true);
+}
+

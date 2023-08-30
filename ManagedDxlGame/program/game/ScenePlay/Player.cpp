@@ -159,12 +159,13 @@ void Player::AnimHandle(float delta_time)
 		if (m_is_dirction_right)
 		{
 			animLoader->SetAnimation(16);	 /*roll_right*/
-			animLoader->SetAnimation(0);	 /*idle_right*/
+			//再生後、フラグを立ててアイドルに戻す
+			//animLoader->SetAnimation(0);	 /*idle_right*/
 		}
 		else
 		{
 			animLoader->SetAnimation(8);	 /*roll_left*/
-			animLoader->SetAnimation(1);	 /*idle_left*/
+			//animLoader->SetAnimation(1);	 /*idle_left*/
 		}
 	}
 	else 
