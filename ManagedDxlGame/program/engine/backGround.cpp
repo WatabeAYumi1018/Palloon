@@ -2,13 +2,15 @@
 #include "../game/ScenePlay/PlayCamera.h"
 
 
-void BackGround::Initialize() {
+void BackGround::Initialize()
+{
 	m_back_hdl = LoadGraph("graphics/PT_Skybox_Texture_01.png");
 }
 
-void BackGround::Draw(const PlayCamera* camera) {
+void BackGround::Draw(const PlayCamera* camera) 
+{
 	tnl::Vector3 draw_pos =
-		m_pos - camera->target + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 	DrawRotaGraph(draw_pos.x, draw_pos.y, 1.0f, 0, m_back_hdl, true);
 }
 

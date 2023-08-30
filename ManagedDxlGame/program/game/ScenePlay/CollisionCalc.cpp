@@ -5,7 +5,8 @@
 
 //キャラクターの周囲のマップチップを取得する(当たり判定処理軽減のため)
 //一般的にキャラを中心に(2*range+1)*(2*range+1)の範囲のマップチップを取得する
-std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Character *chara, MapManager*mapChip, int range) {
+std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Character *chara, MapManager*mapChip, int range)
+{
     std::vector<std::vector<sCollisionInfo>> chips;
     tnl::Vector3 pos = chara->GetPos();
     //グリッド座標に変換
@@ -14,9 +15,11 @@ std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Char
     //キャラ座標を中心に5*5の範囲のマップチップを取得
    
 
-    for (int i = chip_y - range; i <= chip_y + range; ++i) {
+    for (int i = chip_y - range; i <= chip_y + range; ++i)
+    {
         std::vector<sCollisionInfo> rowChips;
-        for (int j = chip_x - range; j <= chip_x + range; ++j) {
+        for (int j = chip_x - range; j <= chip_x + range; ++j)
+        {
             //範囲外はスキップ
             if (i < 0 || i >= mapChip->GetCollisionInfo().size() || j < 0 || j >= mapChip->GetCollisionInfo()[i].size())
             {
@@ -31,12 +34,19 @@ std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Char
 }
 
 //矩形との当たり判定計算
-void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) {
-    for (const auto& row : surroundingChips) {
-        for (const auto& info : row) {
-            if (info.type == eCollisionType::None) { continue; }
+void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
+{
+    for (const auto& row : surroundingChips)
+    {
+        for (const auto& info : row)
+        {
+            if (info.type == eCollisionType::None)
+            { 
+                continue;
+            }
             tnl::Vector3 nearly_point = tnl::GetNearestRectPoint(info.pos, info.size, info.size, chara->GetPos());
-            if ((nearly_point - chara->GetPos()).length() < chara->GetSize()) {
+            if ((nearly_point - chara->GetPos()).length() < chara->GetSize())
+            {
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
                 chara->SetPos(nearly_point + normalize * chara->GetSize());
                 //衝突応答処理

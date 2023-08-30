@@ -1,8 +1,8 @@
 #pragma once
 #include "../../engine/GameObject.h"
 
-class Item :public GameObject {
-
+class Item :public GameObject
+{
 public:
 	Item(tnl::Vector3 m_pos);
 	virtual ~Item();

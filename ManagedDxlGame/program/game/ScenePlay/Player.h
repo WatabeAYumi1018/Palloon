@@ -8,8 +8,8 @@
 //•`‰æ‚É‚Â‚¢‚Ä‚ÌŽå‚È’è‹`‚Íwta_LoadAnim, wta_DrawAnim‚É‚Ä
 
 
-class Player :public Character {
-
+class Player :public Character 
+{
 public:
 	Player();
 	virtual ~Player();

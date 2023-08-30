@@ -7,12 +7,8 @@ class Character;
 //当たり判定の識別と具体的処理を行うクラス
 //実際の計算式についてはwta_IsIntersectCalcにて定義
 
-class CollisionCalc {
-
-public:
-	CollisionCalc() {}
-	virtual ~CollisionCalc() {}
-
+class CollisionCalc
+{
 private:
 	//-----メンバ変数-----//
 	eCollisionType m_type = eCollisionType::None;

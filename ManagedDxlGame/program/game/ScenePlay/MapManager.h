@@ -9,7 +9,8 @@
 class PlayCamera;
 class Character;
 
-class MapManager{
+class MapManager
+{
 public:
 	MapManager();
 	virtual ~MapManager();
@@ -31,7 +32,6 @@ private:
 public:
 	//-----ÉÅÉìÉoä÷êî-----//
 	void Initialize ();
-	void Update(float delta_time, const PlayCamera* camera);
 	void Draw(const PlayCamera* camera);
 	void Finalize();
 
@@ -39,7 +39,8 @@ public:
 	void LoadMapCollision(const PlayCamera* camera);
 	
 	//-----Getter-----//
-	const std::vector<std::vector<int>>& GetMapChip() const { return m_csv_map_tile; }
+	const size_t GetMapChipX() const { return m_csv_map_tile[0].size(); }
+	const size_t GetMapChipY() const { return m_csv_map_tile.size(); }
 	const std::vector<std::vector<sCollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }
 };
 

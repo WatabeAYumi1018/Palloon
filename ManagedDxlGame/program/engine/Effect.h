@@ -1,8 +1,8 @@
 #pragma once
 #include "../engine/GameObject.h"
 
-class Effect : public GameObject {
-
+class Effect : public GameObject
+{
 public:
 	Effect(tnl::Vector3 m_pos);
 	virtual ~Effect();

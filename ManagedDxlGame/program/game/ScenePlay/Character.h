@@ -3,7 +3,8 @@
 
 //Player,Enemyの基底クラス（抽象クラス）
 
-class Character :public GameObject{
+class Character :public GameObject
+{
 public:
 	Character(const tnl::Vector3 pos, int size, int hp,const tnl::Vector3 velocity) :
 		GameObject(pos), m_size(size), m_hp(hp), m_velocity(velocity){}

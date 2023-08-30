@@ -7,8 +7,8 @@
 
 class PlayCamera;
 
-class Enemy :public Character {
-
+class Enemy :public Character
+{
 public:
 	Enemy();
 	virtual ~Enemy();
@@ -16,7 +16,6 @@ public:
 private:
 	//-----メンバ変数-----//
 	int m_size = 30;
-
 	float m_moveTimeCounter = 0.0f;
 	
 	std::default_random_engine generator;								//ジェネレーター（乱数分布と組み合わせて生成）

@@ -1,21 +1,24 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
 
-enum class eAttackType {
+enum class eAttackType
+{
 	eAttack_Push,
 	eAttack_Fire,
 	eAttack_Beam,
 	eAttack_Max
 };
 
-enum class eCollisionType {
+enum class eCollisionType
+{
 	None,
 	Box,
 	Line,
 	Max
 };
 
-enum class eCharaType {
+enum class eCharaType
+{
 	Player,
 	Slim,
 	Plant,
@@ -26,7 +29,8 @@ enum class eCharaType {
 	Max
 };
 
-struct sCollisionInfo {
+struct sCollisionInfo
+{
 	tnl::Vector3 pos;
 	int size;
 	eCollisionType type;

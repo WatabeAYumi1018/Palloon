@@ -2,7 +2,8 @@
 
 class SceneBase;
 
-class SceneManager {
+class SceneManager 
+{
 public:
 	//-----staticŠÖ”-----//
 	static SceneManager* GetInstance(SceneBase* start_scene = nullptr);

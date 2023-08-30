@@ -3,7 +3,8 @@
 
 class PlayCamera;
 
-class SceneBase {
+class SceneBase 
+{
 public:
 	virtual void Initialize() {}
 	virtual void Update(float delta_time) {}

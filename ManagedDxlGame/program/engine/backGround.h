@@ -7,8 +7,8 @@ class PlayCamera;
 //シーンごとに別々の背景をロード、描画するのみ。
 //構造体として扱い、アクセスを容易にする
 
-class BackGround{
-
+class BackGround
+{
 public:
 	BackGround() { Initialize();}
 	virtual ~BackGround() {}

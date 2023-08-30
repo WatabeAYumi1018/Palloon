@@ -1,7 +1,7 @@
 #include "Item.h"
 
 
-Item::Item(tnl::Vector3 m_pos) :GameObject(m_pos) {}
+Item::Item(tnl::Vector3 m_pos) :GameObject(m_pos){}
 
 Item::~Item() { Finalize(); }
 

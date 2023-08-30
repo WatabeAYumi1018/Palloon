@@ -4,9 +4,11 @@
 
 //csvファイルからアニメーションデータを読み込み、ファイル操作にて画像ロードを行う
 
-namespace wta {
+namespace wta 
+{
     //csv記入のデータを格納する構造体
-    struct CsvAnimData {
+    struct CsvAnimData 
+    {
 
         //-----変数-----//
         int id;

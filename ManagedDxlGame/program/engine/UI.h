@@ -3,8 +3,8 @@
 #include "GameObject.h"
 
 
-class UI{
-
+class UI
+{
 public:
 	UI() { Initialize(); }
 	virtual ~UI() {}

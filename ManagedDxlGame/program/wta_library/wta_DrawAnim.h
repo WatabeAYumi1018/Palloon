@@ -3,8 +3,10 @@
 
 //LoadAnimクラスを基に、アニメーションの描画を行うクラス
 
-namespace wta {
-    class DrawAnim {
+namespace wta
+{
+    class DrawAnim 
+    {
     public:
         // コンストラクタでCSVからアニメーションデータをロード
         DrawAnim(const std::string& csvPath, const std::string& basePath);

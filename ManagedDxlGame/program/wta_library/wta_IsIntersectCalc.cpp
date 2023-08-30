@@ -4,11 +4,12 @@
 #include <string>
 #include "../dxlib_ext/dxlib_ext.h"
 
-namespace wta {
-	
+namespace wta 
+{
 	//---------------------------------------------------------------------------------------------
 	//‰~‚Æü•ª‚Ì“–‚½‚è”»’èŒvŽZ
-	bool IsIntersectCircleLine(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd) {
+	bool IsIntersectCircleLine(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd)
+	{
 		int circle_squared = CircleSize * CircleSize;		//‰~‚Ì”¼Œa‚Ì2æ
 		//‡@ü•ª‚ÌŽn“_‚ÆI“_‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
 		tnl::Vector3 lineVec = lineEnd - lineStart;
@@ -21,7 +22,8 @@ namespace wta {
 		//‡Dü•ªã‚ÌŒð“_‚ðŒvŽZ
 		float t = dotProduct / lineLengthPow;
 		//‡Et‚ª0~1‚ÌŠÔ‚É‚ ‚éê‡Fü•ªã‚ÉŒð“_‚ª‘¶Ý‚·‚é
-		if (t >= 0 && t <= 1.0f) {
+		if (t >= 0 && t <= 1.0f)
+		{
 			//‡E-1Œð“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ðŒvŽZ
 			tnl::Vector3 intersectionPoint;
 			intersectionPoint.x = lineStart.x + t * lineVec.x;
@@ -30,10 +32,14 @@ namespace wta {
 			float distanceSquared = (intersectionPoint.x - circle.x) * (intersectionPoint.x - circle.x) +
 				(intersectionPoint.y - circle.y) * (intersectionPoint.y - circle.y);
 			//‡E-3‰~‚Ì”¼Œa‚Ì2æ‚æ‚è¬‚³‚¢ê‡F‰~‚Æü•ª‚Íd‚È‚é
-			if (distanceSquared <= circle_squared) { return true; }
+			if (distanceSquared <= circle_squared)
+			{
+				return true;
+			}
 		}
 		//‡Ft‚ªŠO‚É‚ ‚éê‡iü•ª—¼’[‚Ì“_‚Æ‰~‚Ì“–‚½‚è”»’è‚ðŒvŽZ‚·‚éj
-		else {
+		else 
+		{
 			//‡F-1ü•ª‚ÌŽn“_‚Æ‰~‚Ì’†S‚Ì‹——£‚ðŒvŽZ
 			tnl::Vector3 distance_start = lineStart - circle;
 			//‡F-2ü•ª‚ÌI“_‚Æ‰~‚Ì’†S‚Ì‹——£‚ðŒvŽZ
@@ -42,15 +48,20 @@ namespace wta {
 			float distance_start_squared = distance_start.x * distance_start.x + distance_start.y * distance_start.y;
 			float distance_end_squared = distance_end.x * distance_end.x + distance_end.y * distance_end.y;
 			//‡F-4‰~‚Ì”¼Œa‚Ì2æ‚æ‚è¬‚³‚¢ê‡A‰~‚Æü•ª‚Íd‚È‚é
-			if (distance_start_squared <= circle_squared || distance_end_squared <= circle_squared) { return true; }
+			if (distance_start_squared <= circle_squared || distance_end_squared <= circle_squared) 
+			{ 
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	//‰~‚Æü•ª‚ÌÀ•W•â³
 	tnl::Vector3 CorrectCircleLineCollision(const tnl::Vector3& circle, const int CircleSize,
-		const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd) {
-		if (!IsIntersectCircleLine(circle, CircleSize, lineStart, lineEnd)) {
+		const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd)
+	{
+		if (!IsIntersectCircleLine(circle, CircleSize, lineStart, lineEnd)) 
+		{
 			return circle; // Õ“Ë‚µ‚Ä‚¢‚È‚¢ê‡AŒ³‚ÌÀ•W‚ð‚»‚Ì‚Ü‚Ü•Ô‚·
 		}
 		//Œ»Ý‚ÌÀ•W‚ð•ÛŽ
@@ -83,7 +94,8 @@ namespace wta {
 
 	//---------------------------------------------------------------------------------------------
 	//‰~“¯Žm‚Ì“–‚½‚è”»’èŒvŽZ
-	bool IsIntersectCircleCircle(const tnl::Vector3& circle01, const int CircleSize01, const tnl::Vector3& circle02, const int CircleSize02) {
+	bool IsIntersectCircleCircle(const tnl::Vector3& circle01, const int CircleSize01, const tnl::Vector3& circle02, const int CircleSize02)
+	{
 		//‡@‰~‚Ì”¼Œa‚Ì˜a‚ðŒvŽZ
 		int radius_sum = CircleSize01 + CircleSize02;
 		//‡A‰~‚Ì’†S“¯Žm‚Ì‹——£‚ðŒvŽZ
@@ -91,19 +103,23 @@ namespace wta {
 		//‡B‰~‚Ì’†S“¯Žm‚Ì‹——£‚Ì2æ‚ðŒvŽZ
 		float distance_squared = distance.x * distance.x + distance.y * distance.y;
 		//‡C‰~‚Ì”¼Œa‚Ì˜a‚Ì2æ‚æ‚è¬‚³‚¢ê‡A‰~“¯Žm‚Íd‚È‚é
-		if (distance_squared <= radius_sum * radius_sum) { return true; }
-
+		if (distance_squared <= radius_sum * radius_sum) 
+		{ 
+			return true;
+		}
 		return false;
 	}
 
 	//‰~‚Æ‰~‚ÌÀ•W•â³
 	tnl::Vector3 CorrectCircleCircleOverlap(const tnl::Vector3& circle01, const int CircleSize01,
-		const tnl::Vector3& circle02, const int CircleSize02) {
+		const tnl::Vector3& circle02, const int CircleSize02) 
+	{
 		tnl::Vector3 diff = circle01 - circle02; // 2‚Â‚Ì‰~‚Ì’†SŠÔ‚ÌƒxƒNƒgƒ‹
 		float distanceSquared = diff.x * diff.x + diff.y * diff.y; // 2‚Â‚Ì‰~‚Ì’†SŠÔ‚Ì‹——£‚Ì2æ
 
 		float combinedRadii = CircleSize01 + CircleSize02;
-		if (distanceSquared < combinedRadii * combinedRadii) {
+		if (distanceSquared < combinedRadii * combinedRadii)
+		{
 			float overlap = combinedRadii - sqrt(distanceSquared); // d‚È‚Á‚Ä‚¢‚é‹——£
 			tnl::Vector3 normalizedDiff = tnl::Vector3::Normalize(diff); // 2‚Â‚Ì‰~‚Ì’†SŠÔ‚ÌƒxƒNƒgƒ‹‚ð³‹K‰»
 			return circle01 + normalizedDiff * (overlap * 0.5); // 1‚Â–Ú‚Ì‰~‚ð‰Ÿ‚µo‚µ‚½V‚µ‚¢ˆÊ’u‚ð•Ô‚·

@@ -3,20 +3,26 @@
 
 //プレイヤー追従カメラ
 
+class Character;
 class MapManager;
-class Player;
 
-
-class PlayCamera{
-public:
-	tnl::Vector3 target = { 0, 0, 0 };
-
+class PlayCamera
+{
 private:
+
+	//-----メンバ変数-----//
+	tnl::Vector3 m_target = { 0, 0, 0 };
 	bool is_active = false;
-	MapManager *m_map_manager=nullptr;
-	Player *m_player=nullptr;
 
 public:
-	void Update(float delta_time);
+	
+	//-----メンバ関数-----//
+	void Update(float delta_time, Character* chara, MapManager* mapChip);
+	void MoveRange(Character* chara, MapManager* mapChip);
+	void Scroll(Character* chara, MapManager* mapChip);
+
+	//-----Getter&Setter-----//
+	tnl::Vector3 GetTarget() const { return m_target; }
+	void SetTarget(tnl::Vector3 target) { m_target = target; }
 };
 

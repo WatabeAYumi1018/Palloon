@@ -9,8 +9,8 @@ class CollisionCalc;
 class GameObject;
 class Character;
 
-class ScenePlay : public SceneBase {
-
+class ScenePlay : public SceneBase 
+{
 public:
 	ScenePlay();
 	virtual ~ScenePlay();
@@ -22,12 +22,12 @@ public:
 	void Finalize() override;
 
 	//-----ÉÅÉìÉoïœêî-----//
-	PlayCamera *camera=nullptr;
-	BackGround *back_ground=nullptr;
-	MapManager *map_chip_manager=nullptr;
-	UI *ui=nullptr;
-	CollisionCalc *collision_calc=nullptr;
-	Character *player =nullptr;
+	PlayCamera *m_camera=nullptr;
+	BackGround *m_back_ground=nullptr;
+	MapManager *m_map_chip_manager=nullptr;
+	UI *m_ui=nullptr;
+	CollisionCalc *m_collision_calc=nullptr;
+	Character *m_player =nullptr;
 
 private:
 	std::vector<GameObject*> gameObjects;

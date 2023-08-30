@@ -2,7 +2,8 @@
 #include <vector>
 #include "tnl_math.h"
 
-namespace wta {
+namespace wta
+{
 
 	//‰~‚Æü•ª‚Ì“–‚½‚è”»’èŒvZ
 	bool IsIntersectCircleLine(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd);
