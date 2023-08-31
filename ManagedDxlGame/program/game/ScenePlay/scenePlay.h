@@ -28,6 +28,7 @@ public:
 	UI *m_ui=nullptr;
 	CollisionCalc *m_collision_calc=nullptr;
 	Character *m_player =nullptr;
+	Character *m_enemy = nullptr;
 
 private:
 	std::vector<GameObject*> gameObjects;

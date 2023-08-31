@@ -30,21 +30,25 @@ void ScenePlay::Initialize()
 	m_ui = new UI();
 	m_collision_calc = new CollisionCalc();
 	m_player = new Player();
+	m_enemy = new Enemy();
 
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	gameObjects.emplace_back(m_player);
-	gameObjects.emplace_back(new Enemy());
+	gameObjects.emplace_back(m_enemy);
 	//gameObjects.emplace_back(new UI());
 }
 
 void ScenePlay::Update(float delta_time) 
-{
-	m_collision_calc->CollisionCalculate(m_player, m_map_chip_manager,3);	
+{	
 	m_map_chip_manager->LoadMapCollision(m_camera);
 	m_camera->Update(delta_time, m_player, m_map_chip_manager);
 
 	for (auto obj : gameObjects)
 	{
+		if (Character* chara = dynamic_cast<Character*>(obj))
+		{
+			m_collision_calc->CollisionCalculate(chara, m_map_chip_manager, 3);
+		}
 		obj->Update(delta_time);
 	}
 	

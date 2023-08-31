@@ -39,11 +39,11 @@ void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, cons
     {
         for (const auto& info : row)
         {
-            if (info.type == eCollisionType::None)
+            if (info.s_type == eCollisionType::None)
             { 
                 continue;
             }
-            tnl::Vector3 nearly_point = tnl::GetNearestRectPoint(info.pos, info.size, info.size, chara->GetPos());
+            tnl::Vector3 nearly_point = tnl::GetNearestRectPoint(info.s_pos, info.s_size, info.s_size, chara->GetPos());
             if ((nearly_point - chara->GetPos()).length() < chara->GetSize())
             {
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
@@ -83,7 +83,7 @@ void CollisionCalc::CollisionCalculate(Character *chara, MapManager*mapChip,int 
     for (const auto& row : surroundingChips) {
         for (const auto& info : row) {
             // “–‚½‚è”»’è‚Ìƒ^ƒCƒv‚ÉŠî‚Ã‚¢‚Äˆ—
-            switch (info.type) {
+            switch (info.s_type) {
             case eCollisionType::Box:
                 CheckBoxCollision(chara, mapChip, surroundingChips);
                 break;

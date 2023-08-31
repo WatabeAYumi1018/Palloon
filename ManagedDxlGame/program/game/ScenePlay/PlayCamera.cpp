@@ -4,8 +4,8 @@
 
 void PlayCamera::Update(float delta_time, Character* chara, MapManager* mapChip)
 {
-	MoveRange(chara, mapChip);
 	Scroll(chara, mapChip);
+	MoveRange(chara, mapChip);
 }
 
 void PlayCamera::MoveRange(Character* chara, MapManager* mapChip)

@@ -17,7 +17,7 @@ protected:
 	int m_hp;									//HP
 
 	tnl::Vector3 m_gravity = {0,100,0};			//重力
-	tnl::Vector3 m_velocity = { 100,0,0 };				//速度(エフェクトや遠距離の速さの時に使用するかも)
+	tnl::Vector3 m_velocity = { 100,0,0 };		//速度(エフェクトや遠距離の速さの時に使用するかも)
 
 	eCharaType e_chara_type = eCharaType::Max;	//キャラタイプ判定用
 

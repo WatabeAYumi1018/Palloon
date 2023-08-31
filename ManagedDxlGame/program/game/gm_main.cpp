@@ -36,7 +36,7 @@
 // ～期限まで～
 //⑯最終確認
 
-
+tnl::Vector3 characterPos = { 50,50,0 };
 //------------------------------------------------------------------------------------------------------------
 // ゲーム起動時に１度だけ実行されます
 void gameStart() {
@@ -52,6 +52,23 @@ void gameMain(float delta_time) {
 
 
 	SceneManager::GetInstance()->Update(delta_time);
+
+	//ゲームパッド振動テスト
+	//StartJoypadVibration(DX_INPUT_PAD1, 1000, 3000, -1);
+	//StopJoypadVibration(DX_INPUT_PAD1);
+
+	//ゲームスティックでの移動テスト
+	int xInput, yInput;
+	if(GetJoypadAnalogInput(&xInput, &yInput, DX_INPUT_PAD1));
+
+
+	// あるスピード定数に入力値を掛けてキャラクターの移動量を得る
+	float speed = 0.05; // この値は調整が必要
+	characterPos.x += xInput * speed;
+	characterPos.y += yInput * speed;  // 上方向が正である場合
+
+	DrawCircle(characterPos.x, characterPos.y, 10, -1, true);
+
 	//DrawGraph(1000, 50, LoadGraph("graphics/color-yellow001.PNG"), true);
 	//DrawGraph(1100, 50, LoadGraph("graphics/color-yellow002.PNG"), true);
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "tnl_math.h"
+#include "../library/tnl_math.h"
 
 namespace wta
 {
