@@ -11,6 +11,7 @@
 #include "Enemy.h"
 #include "../SceneAll/UI.h"
 #include "Camera.h"
+#include "EnemyManager.h"
 
 ScenePlay::ScenePlay()
 {
@@ -28,14 +29,15 @@ void ScenePlay::Initialize()
 	m_camera=new Camera();
 	m_collision = new Collision();
 	m_player = new Player();
-	m_enemy = new Enemy();
+	//m_enemy = new Enemy();
 	m_map_chip_manager = new MapManager();
+	m_enemy_manager=new EnemyManager();
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	gameObjects.emplace_back(new BackGround());
 	gameObjects.emplace_back(new Balloon());
 	gameObjects.emplace_back(m_player);
-	gameObjects.emplace_back(m_enemy);
+	//gameObjects.emplace_back(m_enemy);
 	gameObjects.emplace_back(new UI());
 }
 
@@ -64,7 +66,7 @@ void ScenePlay::Draw(float delta_time)
 	}
 
 	m_map_chip_manager->Draw(m_camera);
-
+	m_enemy_manager->Draw(delta_time, m_camera);
 }
 
 bool ScenePlay::SeqIdle(float delta_time)

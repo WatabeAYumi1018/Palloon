@@ -200,6 +200,9 @@
     <ClCompile Include="program\engine\BackGround.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\EnemyManager.cpp">
+      <Filter>program\[004] game\[004]scenePlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">

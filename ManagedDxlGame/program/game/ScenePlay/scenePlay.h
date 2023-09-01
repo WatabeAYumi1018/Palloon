@@ -6,6 +6,7 @@ class Camera;
 class MapManager;
 class Collision;
 class Character;
+class EnemyManager;
 
 class ScenePlay : public SceneBase 
 {
@@ -24,7 +25,8 @@ public:
 	MapManager *m_map_chip_manager=nullptr;
 	Collision *m_collision=nullptr;
 	Character *m_player =nullptr;
-	Character *m_enemy = nullptr;
+	//Character *m_enemy = nullptr;
+	EnemyManager *m_enemy_manager = nullptr;
 
 private:
 	std::vector<GameObject*> gameObjects;

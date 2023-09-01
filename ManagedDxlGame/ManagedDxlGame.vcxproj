@@ -176,6 +176,7 @@
     <ClCompile Include="program\game\gm_main.cpp" />
     <ClCompile Include="program\game\ScenePlay\Collision.cpp" />
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp" />
+    <ClCompile Include="program\game\ScenePlay\EnemyManager.cpp" />
     <ClCompile Include="program\game\ScenePlay\Item.cpp" />
     <ClCompile Include="program\game\ScenePlay\MapManager.h.cpp" />
     <ClCompile Include="program\game\ScenePlay\Camera.cpp" />
