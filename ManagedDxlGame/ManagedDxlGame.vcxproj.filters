@@ -197,6 +197,9 @@
     <ClCompile Include="program\game\ScenePlay\PlayCamera.cpp">
       <Filter>program\[004] game\[003]scenePlay</Filter>
     </ClCompile>
+    <ClCompile Include="program\engine\Balloon.cpp">
+      <Filter>program\[003]engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="program\game\SceneTitle\SceneTitle.h">
       <Filter>program\[004] game\[001]sceneTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="program\engine\Balloon.h">
+      <Filter>program\[003]engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

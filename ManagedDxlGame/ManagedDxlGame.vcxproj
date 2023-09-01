@@ -170,6 +170,7 @@
     <ClCompile Include="program\dxlib_ext\dxlib_ext_texture.cpp" />
     <ClCompile Include="program\dxlib_ext\OBJLoader.cpp" />
     <ClCompile Include="program\engine\BackGround.cpp" />
+    <ClCompile Include="program\engine\Balloon.cpp" />
     <ClCompile Include="program\engine\Effect.cpp" />
     <ClCompile Include="program\engine\SceneManager.cpp" />
     <ClCompile Include="program\engine\UI.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="program\dxlib_ext\dxlib_ext_texture.h" />
     <ClInclude Include="program\dxlib_ext\OBJLoader.h" />
     <ClInclude Include="program\engine\BackGround.h" />
+    <ClInclude Include="program\engine\Balloon.h" />
     <ClInclude Include="program\engine\Effect.h" />
     <ClInclude Include="program\engine\GameEngine.h" />
     <ClInclude Include="program\engine\GameObject.h" />

@@ -3,6 +3,7 @@
 #include "../SceneTitle/SceneTitle.h"
 #include "../../engine/SceneManager.h"
 #include "../../engine/BackGround.h"
+#include "../../engine/Balloon.h"
 #include "MapManager.h"
 #include "CollisionCalc.h"
 #include "Character.h"
@@ -26,13 +27,14 @@ void ScenePlay::Initialize()
 	//背景の初期化と描画
 	m_camera=new PlayCamera();
 	m_back_ground = new BackGround();
-	m_map_chip_manager = new MapManager();
-	m_ui = new UI();
 	m_collision_calc = new CollisionCalc();
 	m_player = new Player();
 	m_enemy = new Enemy();
+	m_map_chip_manager = new MapManager();
+	m_ui = new UI();
 
 	//プレイシーンに必要なObjectを読み込み、初期化する
+	gameObjects.emplace_back(new Balloon());
 	gameObjects.emplace_back(m_player);
 	gameObjects.emplace_back(m_enemy);
 	//gameObjects.emplace_back(new UI());
@@ -40,8 +42,8 @@ void ScenePlay::Initialize()
 
 void ScenePlay::Update(float delta_time) 
 {	
-	m_map_chip_manager->LoadMapCollision(m_camera);
 	m_camera->Update(delta_time, m_player, m_map_chip_manager);
+	m_map_chip_manager->LoadMapCollision(m_camera);
 
 	for (auto obj : gameObjects)
 	{
@@ -58,13 +60,13 @@ void ScenePlay::Update(float delta_time)
 void ScenePlay::Draw(float delta_time)
 {
 	m_back_ground->Draw(m_camera);
-	m_map_chip_manager->Draw(m_camera);
 	
 	for (auto obj : gameObjects) 
 	{
 		obj->Draw(delta_time, m_camera);
 	}
 	
+	m_map_chip_manager->Draw(m_camera);
 	m_ui->Draw(delta_time);
 }
 

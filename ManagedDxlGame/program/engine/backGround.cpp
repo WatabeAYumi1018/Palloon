@@ -9,7 +9,7 @@ void BackGround::Initialize()
 
 void BackGround::Draw(const PlayCamera* camera) 
 {
-	Movie(camera);
+	//Movie(camera);
 }
 
 void BackGround::Movie(const PlayCamera* camera){
