@@ -16,7 +16,7 @@ public:
 
 private:
 	//-----定数-----//
-	static constexpr float PLAYER_POS_X = 50;			//プレイヤーの初期位置
+	static constexpr float PLAYER_POS_X = 100;			//プレイヤーの初期位置
 	static constexpr float PLAYER_POS_Y = 250;
 	
 	static constexpr int PLAYER_SIZE = 30;				//プレイヤーのサイズ

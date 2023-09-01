@@ -362,5 +362,8 @@
     <ClInclude Include="program\engine\Balloon.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
+    <ClInclude Include="program\engine\GameObjectManager.h">
+      <Filter>program\[003]engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

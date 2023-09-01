@@ -18,8 +18,13 @@ public:
 	
 	//-----ƒƒ“ƒoŠÖ”-----//
 	void Update(float delta_time, Character* chara, MapManager* mapChip);
+
+private:
+	
 	void MoveRange(Character* chara, MapManager* mapChip);
 	void Scroll(Character* chara, MapManager* mapChip);
+
+public:
 
 	//-----Getter&Setter-----//
 	tnl::Vector3 GetTarget() const { return m_target; }

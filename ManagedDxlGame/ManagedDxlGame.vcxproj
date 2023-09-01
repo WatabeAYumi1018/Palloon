@@ -220,6 +220,7 @@
     <ClInclude Include="program\engine\Effect.h" />
     <ClInclude Include="program\engine\GameEngine.h" />
     <ClInclude Include="program\engine\GameObject.h" />
+    <ClInclude Include="program\engine\GameObjectManager.h" />
     <ClInclude Include="program\engine\sceneBase.h" />
     <ClInclude Include="program\engine\SceneManager.h" />
     <ClInclude Include="program\engine\UI.h" />

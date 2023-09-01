@@ -13,20 +13,17 @@ public:
 	CollisionCalc() {}
 	virtual ~CollisionCalc() {}
 
-private:
-	//-----メンバ変数-----//
-	eCollisionType m_type = eCollisionType::None;
+	//-----メンバ関数-----//
+	 static void CollisionCalculate(Character *chara, MapManager*mapChip,int range);
 
 private:
 
 	static std::vector<std::vector<sCollisionInfo>> GetSurroundingChips(Character *chara, MapManager*mapChip, int range);
 
-public:
 	static void CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
 
 	static void CheckLineCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
 	
-	static void CollisionCalculate(Character *chara, MapManager*mapChip,int range);
 };
 
 //当たり判定の処理を行うクラス（計算式はnamespaceにて定義）

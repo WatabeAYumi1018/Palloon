@@ -36,7 +36,7 @@ public:
 	void Draw(float delta_time, const PlayCamera* camera) override;
 	void Finalize() override;
 
-
+private:
 	void LoadEnemy();							//敵キャラ生成
 	float DistanceCalc();						//プレイヤーとの距離計算
 	bool SeqBaseAction(const float delta_time);	//基本行動01（通常）
