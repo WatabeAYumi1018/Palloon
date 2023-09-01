@@ -6,7 +6,7 @@
 //現状若干のズレあり（多分、チップサイズを変えたことによる弊害と思われる。現状スルーでOK）
 //cppでは相互インクルードとりあえずOK
 
-class PlayCamera;
+class Camera;
 class Character;
 
 class MapManager
@@ -32,11 +32,11 @@ private:
 public:
 	//-----メンバ関数-----//
 	void Initialize ();
-	void Draw(const PlayCamera* camera);
+	void Draw(const Camera* camera);
 	void Finalize();
 
 	//当たり判定専用のマップ関数
-	void LoadMapCollision(const PlayCamera* camera);
+	void LoadMapCollision(const Camera* camera);
 	
 	//-----Getter-----//
 	const size_t GetMapChipX() const { return m_csv_map_tile[0].size(); }

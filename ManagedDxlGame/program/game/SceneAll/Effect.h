@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../engine/GameObject.h"
 
 class Effect : public GameObject
@@ -9,6 +10,6 @@ public:
 
 	//-----ƒƒ“ƒoŠÖ”-----//
 
-	void Update(float delta_time) override;
-	void Draw(float delta_time, const PlayCamera* camera) override;
+	void Update(float delta_time);
+	void Draw(float delta_time, const Camera* camera);
 };

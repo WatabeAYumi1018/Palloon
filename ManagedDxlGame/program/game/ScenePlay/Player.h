@@ -3,10 +3,11 @@
 #include "Character.h"
 #include "../../wta_library/wta_DrawAnim.h"
 
+class Camera;
+
 //プレイヤーのクラス
 //主にボタン操作の挙動処理を行う
 //描画についての主な定義はwta_LoadAnim, wta_DrawAnimにて
-
 
 class Player :public Character 
 {
@@ -40,7 +41,7 @@ public:
 	//-----メンバ関数-----//
 	void Initialize() override;
 	void Update(float delta_time) override;
-	void Draw(float delta_time, const PlayCamera* camera) override;
+	void Draw(float delta_time, const Camera* camera) override;
 	void Finalize() override;
 
 private:

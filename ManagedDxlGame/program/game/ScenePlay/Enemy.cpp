@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "MapManager.h"
-#include "PlayCamera.h"
+#include "Camera.h"
 
 Enemy::Enemy() : Character(m_pos,m_size,m_hp,m_velocity)
 {
@@ -26,7 +26,7 @@ void Enemy::Update(float delta_time)
     m_pos.y += 100 * delta_time;
 }
 
-void Enemy::Draw(float delta_time, const PlayCamera* camera) 
+void Enemy::Draw(float delta_time, const Camera* camera)
 {
     for (auto& enemy : m_enemy_info)
     {

@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "PlayCamera.h"
+#include "Camera.h"
 
 
 //キャラクターの初期化子
@@ -32,7 +32,7 @@ void Player::Update(float delta_time)
 	AnimHandle(delta_time);
 }
 
-void Player::Draw(float delta_time, const PlayCamera* camera) 
+void Player::Draw(float delta_time, const Camera* camera)
 {
 	tnl::Vector3 draw_pos = 
 		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);

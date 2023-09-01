@@ -6,7 +6,7 @@
 //å‚É“G‚ÌAI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 
 class MapManager;
-class PlayCamera;
+class Camera;
 
 class Enemy :public Character
 {
@@ -33,7 +33,7 @@ public:
 	//-----ƒƒ“ƒoŠÖ”-----//
 	void Initialize() override;
 	void Update(float delta_time) override;
-	void Draw(float delta_time, const PlayCamera* camera) override;
+	void Draw(float delta_time, const Camera* camera) override;
 	void Finalize() override;
 
 private:

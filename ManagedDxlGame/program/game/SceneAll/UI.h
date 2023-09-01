@@ -1,5 +1,5 @@
 #pragma once
-#include "../engine/GameEngine.h"
+#include "../../engine/GameEngine.h"
 #include "GameObject.h"
 
 class Camera;

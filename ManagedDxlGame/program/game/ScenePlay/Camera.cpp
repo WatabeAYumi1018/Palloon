@@ -1,14 +1,14 @@
-#include "PlayCamera.h"
+#include "Camera.h"
 #include "Character.h"
 #include "MapManager.h"
 
-void PlayCamera::Update(float delta_time, Character* chara, MapManager* mapChip)
+void Camera::Update(float delta_time, Character* chara, MapManager* mapChip)
 {
 	Scroll(chara, mapChip);
 	MoveRange(chara, mapChip);
 }
 
-void PlayCamera::MoveRange(Character* chara, MapManager* mapChip)
+void Camera::MoveRange(Character* chara, MapManager* mapChip)
 {
 	const float halfWidth = DXE_WINDOW_WIDTH >> 1;
 	const float halfHeight = DXE_WINDOW_HEIGHT >> 1;
@@ -21,7 +21,7 @@ void PlayCamera::MoveRange(Character* chara, MapManager* mapChip)
 }
 
 //★背景とチップのスクロール値調節すること
-void PlayCamera::Scroll(Character* chara, MapManager* mapChip)
+void Camera::Scroll(Character* chara, MapManager* mapChip)
 {
 	if (!is_active)
 	{

@@ -1,4 +1,4 @@
-#include "../game/SceneAll/UI.h"
+#include "UI.h"
 
 UI::UI() : GameObject(tnl::Vector3{ 10,500,0 })
 {

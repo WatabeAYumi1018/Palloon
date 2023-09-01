@@ -1,12 +1,10 @@
 #pragma once
 #include "../../engine/sceneBase.h"
+#include "../SceneAll/GameObject.h"
 
-class PlayCamera;
-class BackGround;
+class Camera;
 class MapManager;
-class UI;
-class CollisionCalc;
-class GameObject;
+class Collision;
 class Character;
 
 class ScenePlay : public SceneBase 
@@ -22,11 +20,9 @@ public:
 	void Finalize() override;
 
 	//-----ÉÅÉìÉoïœêî-----//
-	PlayCamera *m_camera=nullptr;
-	BackGround *m_back_ground=nullptr;
+	Camera*m_camera=nullptr;
 	MapManager *m_map_chip_manager=nullptr;
-	UI *m_ui=nullptr;
-	CollisionCalc *m_collision_calc=nullptr;
+	Collision *m_collision=nullptr;
 	Character *m_player =nullptr;
 	Character *m_enemy = nullptr;
 

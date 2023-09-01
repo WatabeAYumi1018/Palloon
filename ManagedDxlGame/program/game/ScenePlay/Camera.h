@@ -6,7 +6,7 @@
 class Character;
 class MapManager;
 
-class PlayCamera
+class Camera
 {
 private:
 

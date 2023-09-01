@@ -1,4 +1,4 @@
-#include "../game/SceneAll/Balloon.h"
+#include "Balloon.h"
 #include "../game/ScenePlay/Camera.h"
 
 Balloon::Balloon() : GameObject(tnl::Vector3(0, 0, 0))

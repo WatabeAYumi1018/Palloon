@@ -2,15 +2,15 @@
 #include "ScenePlay.h"
 #include "../SceneTitle/SceneTitle.h"
 #include "../../engine/SceneManager.h"
-#include "../../engine/BackGround.h"
-#include "../../engine/Balloon.h"
+#include "../SceneAll/BackGround.h"
+#include "../SceneAll/Balloon.h"
 #include "MapManager.h"
-#include "CollisionCalc.h"
+#include "Collision.h"
 #include "Character.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "../../engine/UI.h"
-#include "PlayCamera.h"
+#include "../SceneAll/UI.h"
+#include "Camera.h"
 
 ScenePlay::ScenePlay()
 {
@@ -25,19 +25,18 @@ ScenePlay::~ScenePlay()
 void ScenePlay::Initialize() 
 {
 	//背景の初期化と描画
-	m_camera=new PlayCamera();
-	m_back_ground = new BackGround();
-	m_collision_calc = new CollisionCalc();
+	m_camera=new Camera();
+	m_collision = new Collision();
 	m_player = new Player();
 	m_enemy = new Enemy();
 	m_map_chip_manager = new MapManager();
-	m_ui = new UI();
-
+	
 	//プレイシーンに必要なObjectを読み込み、初期化する
+	gameObjects.emplace_back(new BackGround());
 	gameObjects.emplace_back(new Balloon());
 	gameObjects.emplace_back(m_player);
 	gameObjects.emplace_back(m_enemy);
-	//gameObjects.emplace_back(new UI());
+	gameObjects.emplace_back(new UI());
 }
 
 void ScenePlay::Update(float delta_time) 
@@ -49,7 +48,7 @@ void ScenePlay::Update(float delta_time)
 	{
 		if (Character* chara = dynamic_cast<Character*>(obj))
 		{
-			m_collision_calc->CollisionCalculate(chara, m_map_chip_manager, 3);
+			m_collision->CollisionCalculate(chara, m_map_chip_manager, 3);
 		}
 		obj->Update(delta_time);
 	}
@@ -59,15 +58,13 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	m_back_ground->Draw(m_camera);
-	
 	for (auto obj : gameObjects) 
 	{
 		obj->Draw(delta_time, m_camera);
 	}
-	
+
 	m_map_chip_manager->Draw(m_camera);
-	m_ui->Draw(delta_time);
+
 }
 
 bool ScenePlay::SeqIdle(float delta_time)

@@ -7,11 +7,11 @@ class Character;
 //当たり判定の識別と具体的処理を行うクラス
 //実際の計算式についてはwta_IsIntersectCalcにて定義
 
-class CollisionCalc
+class Collision
 {
 public:
-	CollisionCalc() {}
-	virtual ~CollisionCalc() {}
+	Collision() {}
+	virtual ~Collision() {}
 
 	//-----メンバ関数-----//
 	 static void CollisionCalculate(Character *chara, MapManager*mapChip,int range);

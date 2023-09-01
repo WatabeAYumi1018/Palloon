@@ -1,11 +1,11 @@
 #include "../../wta_library/wta_IsIntersectCalc.h"
-#include "CollisionCalc.h"
+#include "Collision.h"
 #include "../ScenePlay/Character.h"
 #include "../ScenePlay/MapManager.h"
 
 //キャラクターの周囲のマップチップを取得する(当たり判定処理軽減のため)
 //一般的にキャラを中心に(2*range+1)*(2*range+1)の範囲のマップチップを取得する
-std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Character* chara, MapManager* mapChip, int range)
+std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Character* chara, MapManager* mapChip, int range)
 {
     std::vector<std::vector<sCollisionInfo>> chips;
     tnl::Vector3 pos = chara->GetPos();
@@ -46,7 +46,7 @@ std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Char
 }
 
 //矩形との当たり判定計算
-void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
+void Collision::CheckBoxCollision(Character *chara, MapManager*mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
 {
     for (const auto& row : surroundingChips)
     {
@@ -69,7 +69,7 @@ void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, cons
 }
 
 //線分との当たり判定
-void CollisionCalc::CheckLineCollision(Character* chara, MapManager* mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) 
+void Collision::CheckLineCollision(Character* chara, MapManager* mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
 {
     for (const auto& row : surroundingChips) 
     {
@@ -97,7 +97,7 @@ void CollisionCalc::CheckLineCollision(Character* chara, MapManager* mapChip, co
 }
 
 ////当たり判定に応じて分岐処理
-void CollisionCalc::CollisionCalculate(Character *chara, MapManager*mapChip,int range) {
+void Collision::CollisionCalculate(Character *chara, MapManager*mapChip,int range) {
     //判定範囲内のマップチップを取得
     auto surroundingChips = GetSurroundingChips(chara, mapChip, range);
     for (const auto& row : surroundingChips)
