@@ -5,29 +5,42 @@
 
 //キャラクターの周囲のマップチップを取得する(当たり判定処理軽減のため)
 //一般的にキャラを中心に(2*range+1)*(2*range+1)の範囲のマップチップを取得する
-std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Character *chara, MapManager*mapChip, int range)
+std::vector<std::vector<sCollisionInfo>> CollisionCalc::GetSurroundingChips(Character* chara, MapManager* mapChip, int range)
 {
     std::vector<std::vector<sCollisionInfo>> chips;
     tnl::Vector3 pos = chara->GetPos();
-    //グリッド座標に変換
+    //キャラの位置からマップチップの座標を取得
     int chip_x = static_cast<int>(pos.x / mapChip->MAP_CHIP_SIZE);
     int chip_y = static_cast<int>(pos.y / mapChip->MAP_CHIP_SIZE);
-    //キャラ座標を中心に5*5の範囲のマップチップを取得
 
     for (int i = chip_y - range; i <= chip_y + range; ++i)
     {
+        //範囲外の行はスキップ
+        if (i < 0 || i >= mapChip->GetCollisionInfo().size())
+        {
+            continue;
+        }
+        //行の当たり判定を取得
         std::vector<sCollisionInfo> rowChips;
         for (int j = chip_x - range; j <= chip_x + range; ++j)
         {
-            //範囲外はスキップ
-            if (i < 0 || i >= mapChip->GetCollisionInfo().size() || j < 0 || j >= mapChip->GetCollisionInfo()[i].size())
+            //範囲外の列はスキップ
+            if (j < 0 || j >= mapChip->GetCollisionInfo()[i].size())
             {
-                rowChips.emplace_back(sCollisionInfo());  // None typeのCollisionInfoを追加
-                 continue;
+                continue;
             }
-            rowChips.emplace_back(mapChip->GetCollisionInfo()[i][j]);
+
+            sCollisionInfo info = mapChip->GetCollisionInfo()[i][j];
+            if (info.s_type != eCollisionType::None)
+            {
+                rowChips.emplace_back(info);
+            }
         }
-        chips.emplace_back(rowChips);
+        //行に当たり判定がある場合のみ二次元に追加
+        if (!rowChips.empty())
+        {
+            chips.emplace_back(rowChips);
+        }
     }
     return chips;
 }
@@ -56,42 +69,56 @@ void CollisionCalc::CheckBoxCollision(Character *chara, MapManager*mapChip, cons
 }
 
 //線分との当たり判定
-//矩形と同じ処理を行うために、処理が二重になってしまうが、可読性と保守性を考慮にしている
-//void CollisionCalc::CheckLineCollision(Character* chara, MapManager* mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) {
-//    for (const auto& row : surroundingChips) {
-//        for (const auto& info : row) {
-//          if (info.type == eCollisionType::None) { continue; }
-//            int x = static_cast<int>(tile.x);
-//            int y = static_cast<int>(tile.y);
-//            //線分の始点と終点を取得
-//            tnl::Vector3 lineStart, lineEnd;
-//            mapChip->GetTileLineSegment(y, x, lineStart, lineEnd);
-//            if (wta::IsIntersectCircleLine(chara->GetPos(), chara->GetSize(), lineStart, lineEnd))
-//            {
-//                // 衝突応答処理
-//                DrawStringEx(0, 70, -1, "linehit");
-//            }
-//        }
-//    }
-//}
-
+void CollisionCalc::CheckLineCollision(Character* chara, MapManager* mapChip, const std::vector<std::vector<sCollisionInfo>>& surroundingChips) 
+{
+    for (const auto& row : surroundingChips) 
+    {
+        for (const auto& info : row) 
+        {
+          if (info.s_type == eCollisionType::None || info.s_type == eCollisionType::Box)
+          {
+              continue; 
+          }
+          tnl::Vector3 nearly_point = 
+              tnl::GetNearestPointLine(
+                  chara->GetPos() ,
+                  { info.s_pos.x - (info.s_size >> 1),info.s_pos.y + (info.s_size>> 1 ),0 },
+                  { info.s_pos.x + (info.s_size >> 1),info.s_pos.y - (info.s_size >> 1),0 }
+                );
+           if ((nearly_point - chara->GetPos()).length() < chara->GetSize())
+           {
+              tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
+              chara->SetPos(nearly_point + normalize * chara->GetSize());
+              //衝突応答処理
+              DrawStringEx(0, 90, -1, "linehit");
+          }
+        }
+    }
+}
 
 ////当たり判定に応じて分岐処理
 void CollisionCalc::CollisionCalculate(Character *chara, MapManager*mapChip,int range) {
     //判定範囲内のマップチップを取得
     auto surroundingChips = GetSurroundingChips(chara, mapChip, range);
-    for (const auto& row : surroundingChips) {
-        for (const auto& info : row) {
+    for (const auto& row : surroundingChips)
+    {
+        for (const auto& info : row)
+        {
             // 当たり判定のタイプに基づいて処理
-            switch (info.s_type) {
+            switch (info.s_type)
+            {
             case eCollisionType::Box:
+               
                 CheckBoxCollision(chara, mapChip, surroundingChips);
+               
                 break;
+            
             case eCollisionType::Line:
-                //矩形の判定をした上で、線分の判定も行う
-                CheckBoxCollision(chara, mapChip, surroundingChips);
-                //CheckLineCollision(chara, mapChip, surroundingChips);
+
+                CheckLineCollision(chara, mapChip, surroundingChips);
+               
                 break;
+            
             default:
                 break;
             }

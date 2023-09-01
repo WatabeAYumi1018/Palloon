@@ -23,7 +23,7 @@ private:
 	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f};	//乱数の分布（特定の範囲内で生成）
 	TNL_CO_SEQUENCE(Enemy,&Enemy::SeqBaseAction);						//コルーチンシーケンス
 
-	std::vector<std::vector<int>> m_enemy_csv;							//敵場所の読み取り用
+	std::vector<std::vector<int>> m_enemy_csv;						//敵場所の読み取り用
 	std::vector<sEnemyData> m_enemy_info;							//敵場所の情報格納用
 
 	Character* m_player = nullptr;		//審議

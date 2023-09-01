@@ -9,9 +9,9 @@ enum class eAttackType
 	eAttack_Max
 };
 
-enum class eEnemyType
+enum class eCharaType
 {
-	None,
+	Player,
 	Slim,
 	Plant,
 	Bird,
@@ -36,9 +36,9 @@ struct sCollisionInfo
 	eCollisionType s_type;
 };
 
-enum class eCharaType
+enum class eEnemyType
 {
-	Player,
+	None,
 	Slim,
 	Plant,
 	Bird,
@@ -48,7 +48,8 @@ enum class eCharaType
 	Max
 };
 
-struct sEnemyData {
+struct sEnemyData 
+{
 	tnl::Vector3 s_pos;
 	eEnemyType s_type;
 };

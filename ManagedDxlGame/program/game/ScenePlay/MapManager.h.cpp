@@ -15,9 +15,9 @@ MapManager::~MapManager()
 void MapManager::Initialize()
 {
 	//csvファイルのマップタイル描画情報を読み込む
-	m_csv_map_tile = tnl::LoadCsv<int>("csv/TileStage_1-1.csv");
+	m_csv_map_tile = tnl::LoadCsv<int>("csv/stage1-1.csv");
 	//csvファイルから当たり判定の情報を読み込む
-	m_csv_collision = tnl::LoadCsv<int>("csv/TileStageCollision_1-1.csv");
+	m_csv_collision = tnl::LoadCsv<int>("csv/stage1-1collision.csv");
 	//画像の読み込み
 	LoadDivGraph("graphics/Stage1-1.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 }
@@ -65,13 +65,17 @@ void MapManager::LoadMapCollision(const PlayCamera* camera)
 			info.s_type= type;
 			//当たり判定の情報を各マップチップに格納
 			m_collision_info[i][j]=info;
-			if (type != eCollisionType::None)
-			{
-				//カメラの位置に合わせて描画位置をずらす
-				tnl::Vector3 draw_pos = info.s_pos - camera->GetTarget() +
-					tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-				//DrawBoxEx(draw_pos, info.size, info.size);
-			}
+			//if (type != eCollisionType::None)
+			//{
+				////カメラの位置に合わせて描画位置をずらす
+				//tnl::Vector3 draw_pos = info.s_pos - camera->GetTarget() +
+				//	tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+
+			//	if(type == eCollisionType::Box)
+			//		DrawBoxEx(draw_pos, info.s_size, info.s_size);
+				//if (type == eCollisionType::Line)
+				//	DrawLine(draw_pos.x- (info.s_size>>1),draw_pos.y + (info.s_size >> 1),draw_pos.x+ (info.s_size >> 1), draw_pos.y - (info.s_size >> 1),-1);
+			//}
 		}
 	}
 }
