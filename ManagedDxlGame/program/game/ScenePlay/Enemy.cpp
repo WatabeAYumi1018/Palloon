@@ -4,11 +4,11 @@
 #include "MapManager.h"
 #include "Camera.h"
 
-Enemy::Enemy(const sEnemyData& data) : Character(m_pos, m_size, m_hp, m_velocity)
+Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info)
+     : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
+        m_type_id(info.s_id),m_type(info.s_name),m_color(info.s_color)
 {
-    //csv‚Å“Ç‚ÝŽæ‚Á‚½ƒf[ƒ^‚ð‘ã“ü
-    this->m_pos = data.s_pos;
-    this->m_type = data.s_type;
+
 }
 
 void Enemy::Update(float delta_time) 
@@ -22,15 +22,17 @@ void Enemy::Draw(float delta_time, const Camera* camera)
     tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
         tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
    
-    switch (m_type)
+    switch (m_type_id)
     {
-    case eEnemyType::None:
+    case 0:
+
+        DrawCircle(draw_pos.x, draw_pos.y, m_size,-1);
 
         break;
     
-    case eEnemyType::Slim:
+    case 1:
            
-        DrawCircle(draw_pos.x, draw_pos.y, 30, -1);
+       // DrawCircle(draw_pos.x, draw_pos.y, m_size, -1);
            
         break;
     

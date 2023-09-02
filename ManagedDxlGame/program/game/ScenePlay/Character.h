@@ -17,8 +17,8 @@ protected:
 	int m_size;									/*当たり判定用サイズ*/
 	int m_hp;									/*HP*/
 
-	tnl::Vector3 m_gravity = {0,100,0};			/*重力*/
 	tnl::Vector3 m_velocity = { 100,0,0 };		/*速度*/
+	tnl::Vector3 m_gravity = {0,100,0};			/*重力*/
 
 	bool m_is_ground=true;						/*接地中*/
 	bool m_is_jump=false;						/*ジャンプ中*/

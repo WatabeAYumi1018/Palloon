@@ -43,11 +43,12 @@ enum class eEnemyType
 
 struct sEnemyData 
 {
+	int s_type_id;
 	tnl::Vector3 s_pos;
-	eEnemyType s_type;
 };
 
 struct sEnemyInfo {
+	int s_id;
 	std::string s_name;
 	std::string s_color;
 	int s_hp;

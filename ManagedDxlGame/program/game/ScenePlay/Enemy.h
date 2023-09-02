@@ -13,14 +13,19 @@ class Enemy :public Character
 
 public:
 
-	Enemy(const sEnemyData& data);
+	Enemy(const sEnemyData& data, const sEnemyInfo& info);
 	~Enemy() {}
 
 private:
 
 	//-----メンバ変数-----//
+	int m_type_id;											/*敵のタイプID*/
+	std::string m_type;										/*敵のタイプ*/
+	std::string m_color;									/*敵の色*/
+
+
 	float m_moveTimeCounter = 0.0f;
-	eEnemyType m_type = eEnemyType::None;					/*敵のタイプ*/
+	//eEnemyType m_type = eEnemyType::None;					/*敵のタイプ*/
 
 	std::default_random_engine m_generator;								//ジェネレーター（乱数分布と組み合わせて生成）
 	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f};	//乱数調節（idle→move）

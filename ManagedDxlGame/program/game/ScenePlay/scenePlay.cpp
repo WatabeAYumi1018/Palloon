@@ -32,7 +32,7 @@ void ScenePlay::Initialize()
 	//m_enemy = new Enemy();
 	m_map_chip_manager = new MapManager();
 	//m_enemy_manager=new EnemyLoad();
-	m_enemy_manager = new EnemyManager(m_map_chip_manager);
+	m_enemy_manager = new EnemyManager();
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	gameObjects.emplace_back(new BackGround());
