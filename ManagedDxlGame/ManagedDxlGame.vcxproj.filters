@@ -200,6 +200,9 @@
     <ClCompile Include="program\engine\BackGround.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\EnemyLoad.cpp">
+      <Filter>program\[004] game\[004]scenePlay</Filter>
+    </ClCompile>
     <ClCompile Include="program\game\ScenePlay\EnemyManager.cpp">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClCompile>
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="program\game\SceneAll\GameObjectManager.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\EnemyLoad.h">
+      <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\EnemyManager.h">
       <Filter>program\[004] game\[004]scenePlay</Filter>

@@ -1,32 +1,63 @@
 #pragma once
-#include "../../engine/GameEngine.h"
 #include "../SceneAll/GameObjectManager.h"
+#include "Enemy.h"
 
 class MapManager;
-class Camera;
-class Enemy;
+class EnemyLoad;
 
-//敵の読み取りを管理するクラス
-class EnemyManager : public GameObjectManager
+//Enemyを基にスポーン、更新など
+
+class EnemyManager : public GameObjectManager 
 {
 
 public:
-	EnemyManager();
+    EnemyManager(MapManager* mapManager);
 	~EnemyManager();
 
 private:
-	std::vector<std::vector<int>> m_enemy_csv;						//敵場所の読み取り用
-	std::vector<sEnemyData> m_enemy_info;							//敵場所の情報格納用
-	
-	MapManager* m_mapmanager = nullptr;		//マップマネージャー
-	Enemy* m_enemy = nullptr;				//敵キャラ
+    std::vector<Enemy*> m_enemies;
+    EnemyLoad *m_enemy_load=nullptr;
 
 public:
 
-	//-----メンバ関数-----//
-	void Initialize() override;
-	void Update(float delta_time) override {}
-	void Draw(float delta_time, const Camera* camera) override;
-	
-	void LoadEnemy();							//敵キャラ生成
+    void Update(float delta_time) override;
+    void Draw(float delta_time, const Camera* camera) override;
+    void Finalize() override;
+    
+    void CreateEnemies(const EnemyLoad *m_enemy_load);
 };
+
+
+//class EnemyManager {
+//private:
+//    std::vector<Enemy*> enemies;
+//
+//public:
+//    void loadEnemies(const std::string& dataFile) {
+//        EnemyDataReader reader;
+//        std::vector<EnemyInfo> enemyData = reader.readDataFromCSV(dataFile);
+//
+//        for (const EnemyInfo& info : enemyData) {
+//            enemies.push_back(new Enemy(info));
+//        }
+//    }
+//
+//    void updateAllEnemies() {
+//        for (Enemy* enemy : enemies) {
+//            enemy->update();
+//        }
+//    }
+//
+//    void drawAllEnemies() {
+//        for (Enemy* enemy : enemies) {
+//            enemy->draw();
+//        }
+//    }
+//
+//    ~EnemyManager() {
+//        for (Enemy* enemy : enemies) {
+//            delete enemy;
+//        }
+//        enemies.clear();
+//    }
+//};

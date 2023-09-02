@@ -8,6 +8,7 @@ class MapManager;
 
 class Camera
 {
+
 private:
 
 	//-----ƒƒ“ƒo•Ï”-----//

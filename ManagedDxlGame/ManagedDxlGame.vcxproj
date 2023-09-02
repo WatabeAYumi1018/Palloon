@@ -176,6 +176,7 @@
     <ClCompile Include="program\game\gm_main.cpp" />
     <ClCompile Include="program\game\ScenePlay\Collision.cpp" />
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp" />
+    <ClCompile Include="program\game\ScenePlay\EnemyLoad.cpp" />
     <ClCompile Include="program\game\ScenePlay\EnemyManager.cpp" />
     <ClCompile Include="program\game\ScenePlay\Item.cpp" />
     <ClCompile Include="program\game\ScenePlay\MapManager.h.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="program\game\ScenePlay\Character.h" />
     <ClInclude Include="program\game\ScenePlay\Collision.h" />
     <ClInclude Include="program\game\ScenePlay\Enemy.h" />
+    <ClInclude Include="program\game\ScenePlay\EnemyLoad.h" />
     <ClInclude Include="program\game\ScenePlay\EnemyManager.h" />
     <ClInclude Include="program\game\ScenePlay\Item.h" />
     <ClInclude Include="program\game\ScenePlay\MapManager.h" />

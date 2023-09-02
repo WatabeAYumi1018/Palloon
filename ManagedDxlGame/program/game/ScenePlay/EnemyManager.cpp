@@ -1,66 +1,49 @@
 #include "EnemyManager.h"
-#include "Camera.h"
+#include "EnemyLoad.h"
 #include "MapManager.h"
-#include "Enemy.h"
 
-EnemyManager::EnemyManager() 
+EnemyManager::EnemyManager(MapManager* mapManager)
 {
-     Initialize();
+    m_enemy_load = new EnemyLoad(mapManager);
+    CreateEnemies(m_enemy_load);
 }
 
 EnemyManager::~EnemyManager()
 {
-	delete m_enemy;
+    Finalize();
+    delete m_enemy_load;
 }
 
-void EnemyManager::Initialize()
+void EnemyManager::CreateEnemies(const EnemyLoad* m_enemy_load)
 {
-    //敵のスポーン位置をcsvから読み込む
-    m_enemy_csv = tnl::LoadCsv<int>("csv/TileStageEnemy1-1.csv");
-    LoadEnemy();
+    //EnemyLoadクラスで読み込んだデータを基にEnemyクラスを生成
+    for (int i = 0; i < m_enemy_load->GetEnemyInfo().size(); i++)
+    {
+		m_enemies.emplace_back(new Enemy(m_enemy_load->GetEnemyInfo()[i]));
+	}
+}
+
+void EnemyManager::Update(float delta_time)
+{
+    for (Enemy* enemy : m_enemies)
+    {
+        enemy->Update(delta_time);
+    }
 }
 
 void EnemyManager::Draw(float delta_time, const Camera* camera)
 {
-    for (auto& enemy : m_enemy_info)
+    for (Enemy* enemy : m_enemies)
     {
-        //カメラの位置に合わせて描画位置をずらす
-        tnl::Vector3 draw_pos = enemy.s_pos - camera->GetTarget() +
-            tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
-        switch (enemy.s_type)
-        {
-        case eEnemyType::None:
-            break;
-        case eEnemyType::Slim:
-        
-            //DrawCircle(draw_pos.x, draw_pos.y, m_enemy->GetSize(), -1);
-        
-            break;
-    defalut:
-        break;
-        }
+        enemy->Draw(delta_time, camera);
     }
 }
 
-//カメラに映っている間敵を生成する
-void EnemyManager::LoadEnemy()
+void EnemyManager::Finalize() 
 {
-    //ファイル上の数値を全て読み込む
-    for (int i = 0; i < m_enemy_csv.size(); ++i)
+    for (Enemy* enemy : m_enemies)
     {
-        for (int j = 0; j < m_enemy_csv[i].size(); ++j)
-        {
-            //当たり判定の中心座標を計算
-            int posX = j * m_mapmanager->MAP_CHIP_SIZE + (m_mapmanager->MAP_CHIP_SIZE >> 1);
-            int posY = i * m_mapmanager->MAP_CHIP_SIZE + (m_mapmanager->MAP_CHIP_SIZE >> 1);
-            //eEnemyTypeTypeと読み取った数字を関連付ける（同じ数字で連動しやすいように）
-            eEnemyType type = static_cast<eEnemyType>(m_enemy_csv[i][j]);
-            //当たり判定の情報を各マップチップに格納
-            sEnemyData data;
-            data.s_pos = tnl::Vector3(posX, posY, 0);
-            data.s_type = type;
-            m_enemy_info.emplace_back(data);
-        }
+        delete enemy;
     }
+    m_enemies.clear();
 }

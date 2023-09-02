@@ -31,7 +31,8 @@ void ScenePlay::Initialize()
 	m_player = new Player();
 	//m_enemy = new Enemy();
 	m_map_chip_manager = new MapManager();
-	m_enemy_manager=new EnemyManager();
+	//m_enemy_manager=new EnemyLoad();
+	m_enemy_manager = new EnemyManager(m_map_chip_manager);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	gameObjects.emplace_back(new BackGround());
@@ -45,6 +46,7 @@ void ScenePlay::Update(float delta_time)
 {	
 	m_camera->Update(delta_time, m_player, m_map_chip_manager);
 	m_map_chip_manager->LoadMapCollision(m_camera);
+	m_enemy_manager->Update(delta_time);
 
 	for (auto obj : gameObjects)
 	{
@@ -85,4 +87,7 @@ void ScenePlay::Finalize()
 	{
 		delete obj;
 	}
+	m_map_chip_manager->Finalize();
+	m_enemy_manager->Finalize();
+	
 }

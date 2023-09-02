@@ -1,13 +1,6 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
 
-enum class eAttackType
-{
-	eAttack_Push,
-	eAttack_Fire,
-	eAttack_Beam,
-	eAttack_Max
-};
 
 enum class eCharaType
 {
@@ -54,3 +47,9 @@ struct sEnemyData
 	eEnemyType s_type;
 };
 
+struct sEnemyInfo {
+	std::string s_name;
+	std::string s_color;
+	int s_hp;
+	int s_size;
+};

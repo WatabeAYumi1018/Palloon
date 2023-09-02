@@ -1,7 +1,8 @@
 #pragma once
 #include "../engine/GameEngine.h"
-#include "GameObject.h"
+#include "GameObject"
 
+class Camera;
 
 //背景を描画する
 //シーンごとに別々の背景をロード、描画するのみ。
