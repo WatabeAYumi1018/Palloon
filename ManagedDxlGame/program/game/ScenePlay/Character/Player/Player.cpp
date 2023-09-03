@@ -22,8 +22,7 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	// CSVからアニメーションデータをロード
-	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
+
 }
 
 void Player::Update(float delta_time)
@@ -101,10 +100,11 @@ void Player::MoveHandle(float delta_time)
 			//m_pos.y += (m_gravity.y * delta_time) * 5;	// ここの5は急速に落下する速度の倍率
 		}
 	}
+	//着地？
 	else
 	{
 		m_is_falling = false;
-		m_jump_count = 0;								//グラウンドに着地したらジャンプカウントをリセット
+		m_jump_count = 0;								//カウントリセット
 	}
 }
 

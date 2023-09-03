@@ -1,6 +1,5 @@
 #pragma once
 #include <random>
-#include "../../../../wta_library/wta_DrawAnim.h"
 #include "../../../../engine/GameEngine.h"
 #include "../Character.h"
 
@@ -24,8 +23,6 @@ protected:
 	std::string m_type;										/*敵のタイプ*/
 	std::string m_color;									/*敵の色*/
 	float m_moveTimeCounter = 0.0f;
-
-	wta::DrawAnim* animLoader = nullptr;					//アニメーションデータをロード
 
 	std::default_random_engine m_generator;								//ジェネレーター（乱数分布と組み合わせて生成）
 	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f };	//乱数調節（idle→move）

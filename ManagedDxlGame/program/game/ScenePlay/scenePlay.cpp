@@ -55,47 +55,45 @@ void ScenePlay::EnemyInit()
 
 	for (const auto& data : dataList)
 	{
-		for (const auto& data : dataList)
+		Enemy* enemy = nullptr;
+
+		switch (data.s_type_id)
 		{
-			Enemy* enemy = nullptr;
+		case 0:
+			enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id]);
+			break;
 
-			switch (data.s_type_id)
-			{
-			case 0:
-				enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id]);
-				break;
+		case 1:
+			enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id]);
+			break;
 
-			case 1:
-				enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id]);
-				break;
+		case 2:
+			enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id]);
+			break;
 
-			case 2:
-				enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id]);
-				break;
+		case 3:
+			enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id]);
+			break;
 
-			case 3:
-				enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id]);
-				break;
+		case 4:
+			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id]);
+			break;
 
-			case 4:
-				enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id]);
-				break;
+		case 5:
+			enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id]);
+			break;
 
-			case 5:
-				enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id]);
-				break;
+		case 6:
+			enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id]);
+			break;
 
-			case 6:
-				enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id]);
-				break;
-
-			default:
-				break;
-			}
-
-			m_enemies.emplace_back(enemy);
-			m_gameObjects.emplace_back(enemy);
+		default:
+			continue;	//無効なIDの場合はスキップ
 		}
+
+		m_enemies.emplace_back(enemy);
+		m_gameObjects.emplace_back(enemy);
+		
 	}
 }
 

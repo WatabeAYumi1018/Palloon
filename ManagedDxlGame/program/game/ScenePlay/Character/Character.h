@@ -1,5 +1,6 @@
 #pragma once
 #include "../../SceneAll/GameObject.h"
+#include "../../../wta_library/wta_DrawAnim.h"
 
 
 //Player,Enemyの基底クラス
@@ -9,8 +10,15 @@ class Character :public GameObject
 
 public:
 	Character(const tnl::Vector3 pos, int size, int hp, const tnl::Vector3 velocity) :
-		GameObject(pos), m_size(size), m_hp(hp), m_velocity(velocity) {}
-	virtual ~Character() {}
+		GameObject(pos), m_size(size), m_hp(hp), m_velocity(velocity) 
+	{
+		// CSVからアニメーションデータをロード
+		animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
+	}
+	virtual ~Character() 
+	{
+		delete animLoader;
+	}
 
 	//-----メンバ変数-----//
 protected:
@@ -24,6 +32,8 @@ protected:
 	bool m_is_jump = false;						/*ジャンプ中*/
 	bool m_is_attack = false;						/*攻撃中*/
 	bool m_is_die = false;						/*死亡*/
+
+	wta::DrawAnim* animLoader = nullptr;		//アニメーションデータをロード
 
 public:
 	//-----Setter,Getter-----//

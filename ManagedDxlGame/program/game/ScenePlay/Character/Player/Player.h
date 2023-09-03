@@ -1,5 +1,4 @@
 #pragma once
-#include "../../../../wta_library/wta_DrawAnim.h"
 #include "../../../../engine/GameEngine.h"
 #include "../Character.h"
 
@@ -38,10 +37,6 @@ private:
 	bool m_is_falling = false;							//落下中
 	bool m_was_ground = false;							//前フレームの接地判定
 	bool m_is_dirction_right = true;					//向き
-
-
-	//-----アニメーション-----//
-	wta::DrawAnim* animLoader = nullptr;
 
 public:
 	//-----メンバ関数-----//

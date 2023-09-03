@@ -10,8 +10,6 @@ Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info)
     : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
     m_type_id(info.s_id), m_type(info.s_name), m_color(info.s_color)
 {
-    // CSVからアニメーションデータをロード
-    animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
 }
 
 float Enemy::DistanceCalc()

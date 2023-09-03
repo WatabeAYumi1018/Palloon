@@ -16,13 +16,15 @@ EnemySlim::~EnemySlim()
 void EnemySlim::Update(float delta_time)
 {
 	//重力で下に落ちる
-	m_pos.y += m_gravity.y * delta_time;
+	//m_pos.y += m_gravity.y * delta_time;
 
 	tnl_sequence_.update(delta_time);
 }
 
 void EnemySlim::Draw(float delta_time, const Camera* camera)
 {
+    animLoader->SetAnimation(18);
+
 	//カメラの位置に合わせて描画位置をずらす
 	tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
 		tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
