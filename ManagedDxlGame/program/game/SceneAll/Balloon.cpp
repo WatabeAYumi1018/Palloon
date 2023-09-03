@@ -1,9 +1,9 @@
-#include "Balloon.h"
-#include "../game/ScenePlay/Camera.h"
+#include "../game/ScenePlay/Camera/Camera.h"
+#include "../game/SceneAll/Balloon.h"
 
 Balloon::Balloon() : GameObject(tnl::Vector3(0, 0, 0))
 {
-	Initialize();
+    Initialize();
 }
 
 void Balloon::Initialize()
@@ -11,11 +11,11 @@ void Balloon::Initialize()
     // バルーンの画像をロード
     m_balloon_hdl = LoadGraph("graphics/balloon.png");
     //画面の幅に基づいてランダムなX位置を設定
-    m_pos.x = rand() % 640;  
+    m_pos.x = rand() % 640;
     //画面の下部からランダムな位置で開始
-    m_pos.y = 480 + rand() % 100;  
+    m_pos.y = 480 + rand() % 100;
     //1から3の間でランダムな上向き速度
-    m_hover_velocity = -(rand() % 3 + 1); 
+    m_hover_velocity = -(rand() % 3 + 1);
 }
 
 void Balloon::Update(float delta_time)
@@ -29,11 +29,11 @@ void Balloon::Update(float delta_time)
 
 void Balloon::Draw(float delta_time, const Camera* camera)
 {
-	//カメラの位置に合わせて描画位置をずらす
-	tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
-		tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+    //カメラの位置に合わせて描画位置をずらす
+    tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
+        tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-	DrawExtendGraph(draw_pos.x, draw_pos.y, draw_pos.x+m_size, draw_pos.y+m_size, m_balloon_hdl, TRUE);
+    DrawExtendGraph(draw_pos.x, draw_pos.y, draw_pos.x + m_size, draw_pos.y + m_size, m_balloon_hdl, TRUE);
 }
 
 void Balloon::Spawn()

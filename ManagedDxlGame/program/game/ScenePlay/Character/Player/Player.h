@@ -16,11 +16,11 @@ public:
 
 private:
 	//-----定数-----//
-	static constexpr float PLAYER_POS_X = 100;			//プレイヤーの初期位置
+	static constexpr float PLAYER_POS_X = 100;			//初期位置
 	static constexpr float PLAYER_POS_Y = 100;
 
-	static constexpr int PLAYER_SIZE = 35;				//プレイヤーのサイズ
-	static constexpr int PLAYER_HP = 5;					//プレイヤーのHP
+	static constexpr int PLAYER_SIZE = 35;				//サイズ
+	static constexpr int PLAYER_MAX_HP = 5;				//HP
 
 	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）
 	static constexpr float PLAYER_VELOCITY_Y = 100;
@@ -28,6 +28,7 @@ private:
 	static constexpr int PLAYER_JUMP_MAX_COUNT = 3;		//最大ジャンプ回数
 
 	//-----メンバ変数-----//
+	int m_hp_hdl = 0;									//HP画像
 	int m_jump_count = 0;								//ジャンプ回数
 	float m_jump_time = 10;								//ジャンプ時間
 	tnl::Vector3 m_jump_height = { 0,500,0 };			//ジャンプ高さ
@@ -45,7 +46,11 @@ public:
 	void Draw(float delta_time, const Camera* camera) override;
 	void Finalize() override;
 
+	//-----Getter-----//
+	int GetMaxHP() const { return PLAYER_MAX_HP; }
+
 private:
+	void HpHandle();						//HPの挙動処理
 	void MoveHandle(float delta_time);		//移動による座標変化
 	void AnimHandle(float delta_time);		//アニメーションの再生
 	void isFlag(float delta_time);

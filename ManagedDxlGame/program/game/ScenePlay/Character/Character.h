@@ -31,7 +31,7 @@ protected:
 	bool m_is_ground = true;						/*接地中*/
 	bool m_is_jump = false;						/*ジャンプ中*/
 	bool m_is_attack = false;						/*攻撃中*/
-	bool m_is_die = false;						/*死亡*/
+	bool m_is_dead = false;						/*死亡*/
 
 	wta::DrawAnim* animLoader = nullptr;		//アニメーションデータをロード
 

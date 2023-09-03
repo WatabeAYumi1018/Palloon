@@ -1,14 +1,13 @@
 #include "Player.h"
 #include "../../Camera/Camera.h"
 
-
 //キャラクターの初期化子
 Player::Player() :
 	Character
 	(
 		{ PLAYER_POS_X, PLAYER_POS_Y, 0 },
 		PLAYER_SIZE,
-		PLAYER_HP,
+		PLAYER_MAX_HP,
 		{ PLAYER_VELOCITY_X, PLAYER_VELOCITY_Y,0 }
 	)
 {

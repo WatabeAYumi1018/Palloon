@@ -194,12 +194,6 @@
     <ClCompile Include="program\game\SceneTitle\SceneTitle.cpp">
       <Filter>program\[004] game\[002]sceneTitle</Filter>
     </ClCompile>
-    <ClCompile Include="program\engine\UI.cpp">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClCompile>
-    <ClCompile Include="program\engine\Balloon.cpp">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClCompile>
     <ClCompile Include="program\game\SceneAll\BackGround.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
@@ -244,6 +238,12 @@
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyKobold.cpp">
       <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\SceneAll\Balloon.cpp">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\SceneAll\UI.cpp">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,12 +368,6 @@
     <ClInclude Include="program\game\SceneTitle\SceneTitle.h">
       <Filter>program\[004] game\[002]sceneTitle</Filter>
     </ClInclude>
-    <ClInclude Include="program\engine\UI.h">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClInclude>
-    <ClInclude Include="program\engine\Balloon.h">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClInclude>
     <ClInclude Include="program\game\SceneAll\Effect.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
@@ -433,6 +427,12 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyKobold.h">
       <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\Balloon.h">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\UI.h">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
