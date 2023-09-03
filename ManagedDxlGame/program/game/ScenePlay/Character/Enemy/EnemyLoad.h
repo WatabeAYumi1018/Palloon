@@ -1,15 +1,13 @@
 #pragma once
-#include "../../engine/GameEngine.h"
-#include "../SceneAll/GameObjectManager.h"
-#include "EnemyManager.h"
-#include "Map.h"
+#include "../../../../engine/GameEngine.h"
+#include "../../Map/Map.h"
 
 class EnemyLoad
 {
 
 private:
 
-   Map *m_map=nullptr;
+    Map* m_map = nullptr;
 
 public:
 

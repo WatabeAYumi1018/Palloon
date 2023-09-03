@@ -1,6 +1,6 @@
 #include "Camera.h"
-#include "Player.h"
-#include "Map.h"
+#include "../Character/Player/Player.h"
+#include "../Map/Map.h"
 
 void Camera::Update(float delta_time, Player* player, Map* map)
 {
@@ -25,8 +25,8 @@ void Camera::Scroll(Player* player, Map* map)
 {
 	if (!is_active)
 	{
-		if (player->GetPos().x > DXE_WINDOW_WIDTH >> 1 || 
-				player->GetPos().y > DXE_WINDOW_HEIGHT >> 1)
+		if (player->GetPos().x > DXE_WINDOW_WIDTH >> 1 ||
+			player->GetPos().y > DXE_WINDOW_HEIGHT >> 1)
 		{
 			m_target = player->GetPos();
 			is_active = true;
@@ -35,11 +35,11 @@ void Camera::Scroll(Player* player, Map* map)
 	else
 	{
 		m_target += (player->GetPos() - m_target) * 0.1f;
-		
+
 		if ((player->GetPos().x <= DXE_WINDOW_WIDTH >> 1 &&
-				player->GetPos().y <= DXE_WINDOW_HEIGHT >> 1))
+			player->GetPos().y <= DXE_WINDOW_HEIGHT >> 1))
 		{
-			is_active = false; 
+			is_active = false;
 		}
 	}
 }

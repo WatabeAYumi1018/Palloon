@@ -4,14 +4,13 @@
 #include "../../engine/SceneManager.h"
 #include "../SceneAll/BackGround.h"
 #include "../SceneAll/Balloon.h"
-#include "Map.h"
-#include "Collision.h"
-#include "Character.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "EnemyLoad.h"
+#include "../ScenePlay/Map/Map.h"
 #include "../SceneAll/UI.h"
-#include "Camera.h"
+#include "../ScenePlay/Character/Enemy/EnemyLoad.h"
+#include "../ScenePlay/Collision/Collision.h"
+#include "../ScenePlay/Character/Player/Player.h"
+#include "../ScenePlay/Character/Enemy/Enemy.h"
+#include "../ScenePlay/Camera/Camera.h"
 
 
 ScenePlay::ScenePlay()

@@ -1,5 +1,5 @@
 #include "../game/SceneAll/BackGround.h"
-#include "../game/ScenePlay/Camera.h"
+#include "../ScenePlay/Camera/Camera.h"
 
 
 BackGround::BackGround()

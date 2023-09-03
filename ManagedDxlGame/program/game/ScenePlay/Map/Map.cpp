@@ -1,6 +1,6 @@
 #include "Map.h"
-#include "Character.h"
-#include "Camera.h"
+#include "../Character/Character.h"
+#include "../Camera/Camera.h"
 
 Map::Map()
 {
@@ -19,7 +19,7 @@ void Map::Initialize()
 	//csvファイルから当たり判定の情報を読み込む
 	m_csv_collision = tnl::LoadCsv<int>("csv/stage1-1collision.csv");
 	//画像の読み込み
-	LoadDivGraph("graphics/Stage1-1.png", MAP_ALL_NUM, MAP_ROW_COL,MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
+	LoadDivGraph("graphics/Stage1-1.png", MAP_ALL_NUM, MAP_ROW_COL, MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 }
 
 //★描画(現状毎フレーム読み取るようになってしまった…)
@@ -28,9 +28,9 @@ void Map::Draw(const Camera* camera)
 {
 	//マップ画像の描画
 	for (int i = 0; i < m_csv_map_tile.size(); ++i) //行数はm_map_tileのサイズに基づく
-	{			
+	{
 		for (int j = 0; j < m_csv_map_tile[i].size(); ++j) //列数はm_map_tile[i]のサイズに基づく
-		{	
+		{
 			//tnl::Vector3 draw_pos;
 			m_pos.x = j * MAP_CHIP_SIZE;
 			m_pos.y = i * MAP_CHIP_SIZE;
@@ -54,17 +54,17 @@ void Map::LoadMapCollision(const Camera* camera)
 		for (int j = 0; j < m_csv_collision[i].size(); ++j)
 		{
 			//当たり判定の中心座標を計算
-			int posX = j * MAP_CHIP_SIZE +(MAP_CHIP_SIZE>>1);
-			int posY = i * MAP_CHIP_SIZE +(MAP_CHIP_SIZE>>1);
+			int posX = j * MAP_CHIP_SIZE + (MAP_CHIP_SIZE >> 1);
+			int posY = i * MAP_CHIP_SIZE + (MAP_CHIP_SIZE >> 1);
 			//eCollisionTypeと読み取った数字を関連付ける（同じ数字で連動しやすいように）
 			eCollisionType type = static_cast<eCollisionType>(m_csv_collision[i][j]);
 			//構造体型に各情報を代入
 			sCollisionInfo info;
-			info.s_pos = tnl::Vector3(posX, posY,0);
+			info.s_pos = tnl::Vector3(posX, posY, 0);
 			info.s_size = MAP_CHIP_SIZE;
-			info.s_type= type;
+			info.s_type = type;
 			//当たり判定の情報を各マップチップに格納
-			m_collision_info[i][j]=info;
+			m_collision_info[i][j] = info;
 			//if (type != eCollisionType::None)
 			//{
 				////カメラの位置に合わせて描画位置をずらす

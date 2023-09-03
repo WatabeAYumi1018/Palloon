@@ -1,5 +1,5 @@
 #pragma once
-#include "../SceneAll/GameObject.h"
+#include "../../SceneAll/GameObject.h"
 
 class Item :public GameObject
 {

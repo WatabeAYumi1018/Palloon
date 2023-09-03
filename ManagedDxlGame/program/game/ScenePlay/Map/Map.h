@@ -1,5 +1,5 @@
 #pragma once
-#include "../../engine/GameEngine.h"
+#include "../../../engine/GameEngine.h"
 
 //csvからのマップチップ、当たり判定の読み取り
 //カメラスクロールに合わせた描画更新が必要
@@ -17,8 +17,8 @@ public:
 
 	//-----定数-----//
 	//マップチップの基本情報
-	static const int MAP_ROW_COL=7;				//マップチップの横幅
-	static const int MAP_ALL_NUM=49;			//マップチップの縦幅
+	static const int MAP_ROW_COL = 7;				//マップチップの横幅
+	static const int MAP_ALL_NUM = 49;			//マップチップの縦幅
 	static const int MAP_CHIP_SIZE = 32;		//マップチップのサイズ
 
 private:
@@ -31,13 +31,13 @@ private:
 
 public:
 	//-----メンバ関数-----//
-	void Initialize ();
+	void Initialize();
 	void Draw(const Camera* camera);
 	void Finalize();
 
 	//当たり判定専用のマップ関数
 	void LoadMapCollision(const Camera* camera);
-	
+
 	//-----Getter-----//
 	const size_t GetMapChipX() const { return m_csv_map_tile[0].size(); }
 	const size_t GetMapChipY() const { return m_csv_map_tile.size(); }

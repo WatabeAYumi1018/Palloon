@@ -1,5 +1,5 @@
 #pragma once
-#include "../../engine/GameEngine.h"
+#include "../../../engine/GameEngine.h"
 
 //プレイヤー追従カメラ
 
@@ -16,12 +16,12 @@ private:
 	bool is_active = false;
 
 public:
-	
+
 	//-----メンバ関数-----//
 	void Update(float delta_time, Player* player, Map* map);
 
 private:
-	
+
 	void MoveRange(Player* player, Map* map);
 	void Scroll(Player* player, Map* map);
 

@@ -1,7 +1,8 @@
 #pragma once
 #include <random>
-#include "../../engine/GameEngine.h"
-#include "Character.h"
+#include "../../../../wta_library/wta_DrawAnim.h"
+#include "../../../../engine/GameEngine.h"
+#include "../Character.h"
 
 //主に敵のAIを管理するクラス
 
@@ -28,11 +29,11 @@ private:
 	wta::DrawAnim* animLoader = nullptr;					//アニメーションデータをロード
 
 	std::default_random_engine m_generator;								//ジェネレーター（乱数分布と組み合わせて生成）
-	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f};	//乱数調節（idle→move）
-	TNL_CO_SEQUENCE(Enemy,&Enemy::SeqBaseAction);						//コルーチンシーケンス
+	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f };	//乱数調節（idle→move）
+	TNL_CO_SEQUENCE(Enemy, &Enemy::SeqBaseAction);						//コルーチンシーケンス
 
 	Player* m_player = nullptr;		//審議
-	EnemyLoad *m_enemyLoad = nullptr;	//敵読み取り
+	EnemyLoad* m_enemyLoad = nullptr;	//敵読み取り
 
 public:
 	//-----メンバ関数-----//
@@ -44,4 +45,3 @@ public:
 	bool SeqNextAction(const float delta_time);	//基本行動02（通常～遷移がある場合のみ使用）
 	bool SeqAttack(const float delta_time);		//攻撃処理(プレイヤーが一定以上近づくと攻撃)
 };
-	

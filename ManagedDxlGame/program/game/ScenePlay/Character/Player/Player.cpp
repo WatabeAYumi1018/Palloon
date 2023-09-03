@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Camera.h"
+#include "../../Camera/Camera.h"
 
 
 //キャラクターの初期化子
@@ -16,14 +16,14 @@ Player::Player() :
 }
 
 Player::~Player()
-{ 
-	Finalize(); 
+{
+	Finalize();
 }
 
 void Player::Initialize()
 {
 	// CSVからアニメーションデータをロード
-	animLoader =new wta::DrawAnim("csv/AnimLoad.csv","graphics/animation");
+	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
 }
 
 void Player::Update(float delta_time)
@@ -34,7 +34,7 @@ void Player::Update(float delta_time)
 
 void Player::Draw(float delta_time, const Camera* camera)
 {
-	tnl::Vector3 draw_pos = 
+	tnl::Vector3 draw_pos =
 		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 	//アニメーションの描画
 	animLoader->Draw(delta_time, draw_pos);
@@ -47,12 +47,12 @@ void Player::Draw(float delta_time, const Camera* camera)
 void Player::MoveHandle(float delta_time)
 {
 	//重力で下に落ちる
-	m_pos.y += (m_gravity.y * delta_time) * 3;
+	m_pos.y += m_gravity.y * delta_time ;
 
 	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT))
 	{
 		m_is_dirction_right = true;
-		
+
 		if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
 		{
 			m_pos.x += PLAYER_VELOCITY_X * delta_time * 2;
@@ -72,7 +72,7 @@ void Player::MoveHandle(float delta_time)
 		}
 		else
 		{
-			m_pos.x -= PLAYER_VELOCITY_X * delta_time; 
+			m_pos.x -= PLAYER_VELOCITY_X * delta_time;
 		}
 	}
 	//zキーで攻撃
@@ -87,7 +87,7 @@ void Player::MoveHandle(float delta_time)
 		m_jump_count++;
 	}
 	//ジャンプ中
-	if (m_is_jump) 
+	if (m_is_jump)
 	{
 		if (m_jump_time > 0)
 		{
@@ -117,7 +117,7 @@ void Player::AnimHandle(float delta_time)
 		{
 			animLoader->SetAnimation(4);	 /*dash_right*/
 		}
-		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) 
+		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
 		{
 			animLoader->SetAnimation(6);	 /*jump_right*/
 		}
@@ -128,15 +128,15 @@ void Player::AnimHandle(float delta_time)
 	}
 	else if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
 	{
-		if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT)) 
+		if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
 		{
 			animLoader->SetAnimation(5);	 /*dash_right*/
 		}
-		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) 
+		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
 		{
 			animLoader->SetAnimation(7);	 /*jump_left*/
 		}
-		else 
+		else
 		{
 			animLoader->SetAnimation(3);	 /*walk_left*/
 		}
@@ -166,7 +166,7 @@ void Player::AnimHandle(float delta_time)
 			//animLoader->SetAnimation(1);	 /*idle_left*/
 		}
 	}
-	else 
+	else
 	{
 		if (m_is_dirction_right)
 		{
@@ -176,7 +176,7 @@ void Player::AnimHandle(float delta_time)
 		{
 			animLoader->SetAnimation(1);	 /*idle_left*/
 		}
-	}	
+	}
 }
 
 void Player::Finalize()

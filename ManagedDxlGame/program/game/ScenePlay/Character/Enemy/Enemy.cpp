@@ -1,21 +1,20 @@
 #include <random>
 #include "Enemy.h"
-#include "Character.h"
-#include "Map.h"
-#include "Collision.h"
-#include "Camera.h"
-#include "Player.h"
+#include "../../Map/Map.h"
+#include "../../Collision/Collision.h"
+#include "../../Camera/Camera.h"
+#include "../Player/Player.h"
 
 
 Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info)
-     : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
-        m_type_id(info.s_id),m_type(info.s_name),m_color(info.s_color)
+    : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
+    m_type_id(info.s_id), m_type(info.s_name), m_color(info.s_color)
 {
     // CSVからアニメーションデータをロード
     animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
 }
 
-void Enemy::Update(float delta_time) 
+void Enemy::Update(float delta_time)
 {
     //重力で下に落ちる
     m_pos.y += m_gravity.y * delta_time;
@@ -28,20 +27,20 @@ void Enemy::Draw(float delta_time, const Camera* camera)
     //カメラの位置に合わせて描画位置をずらす
     tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
         tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-   
+
     switch (m_type_id)
     {
     case 0:
-        
+
 
         break;
-    
+
     case 1:
-       //これがコルーチンで動き、当たり判定にも認定されるようにする！！    
+        //これがコルーチンで動き、当たり判定にも認定されるようにする！！    
         DrawCircle(draw_pos.x, draw_pos.y, m_size, -1);
-           
+
         break;
-    
+
     defalut:
         break;
     }
@@ -58,8 +57,8 @@ float Enemy::DistanceCalc()
     return distance;
 }
 
-bool Enemy::SeqBaseAction(const float delta_time) 
-{ 
+bool Enemy::SeqBaseAction(const float delta_time)
+{
     if (m_player) {
         float chance = m_distribution(m_generator);
 
@@ -105,25 +104,25 @@ bool Enemy::SeqBaseAction(const float delta_time)
 }
 
 bool Enemy::SeqNextAction(const float delta_time)
-{ 
-	DrawStringEx(0, 0, -1, "idle");
+{
+    DrawStringEx(0, 0, -1, "idle");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-    {
-        //アニメーション画像再生表示とか
-    });
+        {
+            //アニメーション画像再生表示とか
+        });
     tnl_sequence_.change(&Enemy::SeqBaseAction);
     TNL_SEQ_CO_END;
 }
 
 bool Enemy::SeqAttack(const float delta_time)
-{ 
+{
     DrawStringEx(0, 0, -1, "attack");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
-    {
-        //攻撃アニメーション再生
-    });
+        {
+            //攻撃アニメーション再生
+        });
 
     tnl_sequence_.change(&Enemy::SeqBaseAction);
     TNL_SEQ_CO_END;
