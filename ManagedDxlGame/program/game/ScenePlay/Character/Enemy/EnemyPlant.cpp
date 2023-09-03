@@ -30,61 +30,24 @@ void EnemyPlant::Draw(float delta_time, const Camera* camera)
     animLoader->Draw(delta_time, draw_pos);
 }
 
-bool EnemyPlant::SeqMove(float delta_time)
+bool EnemyPlant::SeqIdle(float delta_time)
 {
+    DrawStringEx(0, 0, -1, "idle");
+
     if (m_player) {
-        float chance = m_distribution(m_generator);
-
-        //move→idleの確率
-        if (chance < 0.001f)
-        {
-            tnl_sequence_.change(&Enemy::SeqIdle);
-        }
-
+     
         //プレイヤーとの距離計算
         if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
         {
             tnl_sequence_.change(&Enemy::SeqAttack);
         }
-        DrawStringEx(0, 0, -1, "move");
-
-        //経過時間をカウント
-        m_moveTimeCounter += delta_time;
-
-        if (m_moveTimeCounter <= 2.0f)
-        {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
-                    DrawStringEx(0, 50, -1, "right");
-                    m_pos.x += m_velocity.x * delta_time;
-                });
-        }
-        else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
-        {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
-                    DrawStringEx(0, 50, -1, "left");
-                    m_pos.x -= m_velocity.x * delta_time;
-                });
-        }
-        else if (m_moveTimeCounter > 4.0f)
-        {
-            m_moveTimeCounter = 0.0f;
-        }
-        tnl_sequence_.change(&Enemy::SeqMove);
-        TNL_SEQ_CO_END;
     }
-}
-
-bool EnemyPlant::SeqIdle(float delta_time)
-{
-    DrawStringEx(0, 0, -1, "idle");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
             animLoader->SetAnimation(18);   /*こんな感じで*/
         });
-    tnl_sequence_.change(&Enemy::SeqMove);
+    tnl_sequence_.change(&Enemy::SeqIdle);
     TNL_SEQ_CO_END;
 }
 

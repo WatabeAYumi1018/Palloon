@@ -30,57 +30,22 @@ void EnemyBird::Draw(float delta_time, const Camera* camera)
 bool EnemyBird::SeqMove(float delta_time)
 {
     if (m_player) {
-        float chance = m_distribution(m_generator);
-
-        //move→idleの確率
-        if (chance < 0.001f)
-        {
-            tnl_sequence_.change(&Enemy::SeqIdle);
-        }
 
         //プレイヤーとの距離計算
         if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
         {
             tnl_sequence_.change(&Enemy::SeqAttack);
         }
-        DrawStringEx(0, 0, -1, "move");
-
-        //経過時間をカウント
-        m_moveTimeCounter += delta_time;
-
-        if (m_moveTimeCounter <= 2.0f)
-        {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
-                    DrawStringEx(0, 50, -1, "right");
-                    m_pos.x += m_velocity.x * delta_time;
-                });
-        }
-        else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
-        {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
-                    DrawStringEx(0, 50, -1, "left");
-                    m_pos.x -= m_velocity.x * delta_time;
-                });
-        }
-        else if (m_moveTimeCounter > 4.0f)
-        {
-            m_moveTimeCounter = 0.0f;
-        }
-        tnl_sequence_.change(&Enemy::SeqMove);
-        TNL_SEQ_CO_END;
     }
-}
-
-bool EnemyBird::SeqIdle(float delta_time)
-{
-    DrawStringEx(0, 0, -1, "idle");
+    DrawStringEx(0, 0, -1, "move");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            animLoader->SetAnimation(18);   /*こんな感じで*/
-        });
+    {
+            DrawStringEx(0, 50, -1, "left");
+            m_pos.x -= m_velocity.x * delta_time;
+    });
+    
+        
     tnl_sequence_.change(&Enemy::SeqMove);
     TNL_SEQ_CO_END;
 }
@@ -90,9 +55,9 @@ bool EnemyBird::SeqAttack(float delta_time)
     DrawStringEx(0, 0, -1, "attack");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
-        {
+    {
             //攻撃アニメーション再生
-        });
+    });
 
     tnl_sequence_.change(&Enemy::SeqMove);
     TNL_SEQ_CO_END;

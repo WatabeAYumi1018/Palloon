@@ -9,6 +9,7 @@ class Camera;
 class EnemyMasician :public Enemy
 {
 public:
+
 	EnemyMasician(const sEnemyData& data, const sEnemyInfo& info);
 	~EnemyMasician();
 
@@ -17,8 +18,11 @@ private:
 	TNL_CO_SEQUENCE(Enemy, &Enemy::SeqMove);						//コルーチンシーケンス
 
 public:
+
 	void Update(const float delta_time) override;	//更新処理
 	void Draw(const float delta_time, const Camera* camera) override;		//描画処理
+
+private:
 
 	bool SeqMove(const float delta_time) override;	//基本行動01（通常）
 	bool SeqIdle(const float delta_time) override;	//基本行動02（通常～遷移がある場合のみ使用）

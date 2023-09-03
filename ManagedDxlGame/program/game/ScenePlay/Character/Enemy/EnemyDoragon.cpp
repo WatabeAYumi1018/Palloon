@@ -54,18 +54,18 @@ bool EnemyDoragon::SeqMove(float delta_time)
         if (m_moveTimeCounter <= 2.0f)
         {
             TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
-                    DrawStringEx(0, 50, -1, "right");
-                    m_pos.x += m_velocity.x * delta_time;
-                });
+            {
+                   DrawStringEx(0, 50, -1, "right");
+                   m_pos.x += m_velocity.x * delta_time;
+            });
         }
         else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
         {
             TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
+            {
                     DrawStringEx(0, 50, -1, "left");
                     m_pos.x -= m_velocity.x * delta_time;
-                });
+            });
         }
         else if (m_moveTimeCounter > 4.0f)
         {
@@ -81,9 +81,10 @@ bool EnemyDoragon::SeqIdle(float delta_time)
     DrawStringEx(0, 0, -1, "idle");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
+    {
             animLoader->SetAnimation(18);   /*こんな感じで*/
-        });
+    });
+
     tnl_sequence_.change(&Enemy::SeqMove);
     TNL_SEQ_CO_END;
 }
@@ -93,9 +94,9 @@ bool EnemyDoragon::SeqAttack(float delta_time)
     DrawStringEx(0, 0, -1, "attack");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
-        {
+    {
             //攻撃アニメーション再生
-        });
+    });
 
     tnl_sequence_.change(&Enemy::SeqMove);
     TNL_SEQ_CO_END;
