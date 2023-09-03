@@ -94,38 +94,31 @@ namespace wta
 
 	//---------------------------------------------------------------------------------------------
 	//円同士の当たり判定計算
-	bool IsIntersectCircleCircle(const tnl::Vector3& circle01, const int CircleSize01, const tnl::Vector3& circle02, const int CircleSize02)
-	{
-		//①円の半径の和を計算
-		int radius_sum = CircleSize01 + CircleSize02;
-		//②円の中心同士の距離を計算
-		tnl::Vector3 distance = circle01 - circle02;
-		//③円の中心同士の距離の2乗を計算
-		float distance_squared = distance.x * distance.x + distance.y * distance.y;
-		//④円の半径の和の2乗より小さい場合、円同士は重なる
-		if (distance_squared <= radius_sum * radius_sum) 
-		{ 
-			return true;
-		}
-		return false;
+	bool IsIntersectCircleCircle(const tnl::Vector3& pos1, float radius1, const tnl::Vector3& pos2, float radius2)
+	{	
+		// 2つの位置ベクトルの差の長さを計算
+		float distance = (pos1 - pos2).length();
+
+		// 2つの円の半径の和との比較
+		return distance < (radius1 + radius2);
 	}
 
 	//円と円の座標補正
-	tnl::Vector3 CorrectCircleCircleOverlap(const tnl::Vector3& circle01, const int CircleSize01,
-		const tnl::Vector3& circle02, const int CircleSize02) 
-	{
-		tnl::Vector3 diff = circle01 - circle02; // 2つの円の中心間のベクトル
-		float distanceSquared = diff.x * diff.x + diff.y * diff.y; // 2つの円の中心間の距離の2乗
+	//tnl::Vector3 CorrectCircleCircleOverlap(const tnl::Vector3& circle01, const int CircleSize01,
+	//	const tnl::Vector3& circle02, const int CircleSize02) 
+	//{
+	//	tnl::Vector3 diff = circle01 - circle02; // 2つの円の中心間のベクトル
+	//	float distanceSquared = diff.x * diff.x + diff.y * diff.y; // 2つの円の中心間の距離の2乗
 
-		float combinedRadii = CircleSize01 + CircleSize02;
-		if (distanceSquared < combinedRadii * combinedRadii)
-		{
-			float overlap = combinedRadii - sqrt(distanceSquared); // 重なっている距離
-			tnl::Vector3 normalizedDiff = tnl::Vector3::Normalize(diff); // 2つの円の中心間のベクトルを正規化
-			return circle01 + normalizedDiff * (overlap * 0.5); // 1つ目の円を押し出した新しい位置を返す
-		}
-		return circle01; // 重なりがない場合、元の位置を返す
-	}
+	//	float combinedRadii = CircleSize01 + CircleSize02;
+	//	if (distanceSquared < combinedRadii * combinedRadii)
+	//	{
+	//		float overlap = combinedRadii - sqrt(distanceSquared); // 重なっている距離
+	//		tnl::Vector3 normalizedDiff = tnl::Vector3::Normalize(diff); // 2つの円の中心間のベクトルを正規化
+	//		return circle01 + normalizedDiff * (overlap * 0.5); // 1つ目の円を押し出した新しい位置を返す
+	//	}
+	//	return circle01; // 重なりがない場合、元の位置を返す
+	//}
 	//---------------------------------------------------------------------------------------------
 }
 

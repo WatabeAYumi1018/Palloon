@@ -1,26 +1,28 @@
 #pragma once
-#include "../../engine/GameEngine.h"
-#include "GameObject.h"
+#include "../engine/GameEngine.h"
 
+class Camera;
 
 //背景を描画する
 //シーンごとに別々の背景をロード、描画するのみ。
 //構造体として扱い、アクセスを容易にする
 
-class BackGround : public GameObject
+class BackGround
 {
 
 public:
 	BackGround();
-	virtual ~BackGround() {}
+	virtual ~BackGround();
 
 private:
 	//-----メンバ変数-----//
+	tnl::Vector3 m_pos = { 0,0,0 };
 	float m_scroll_speed = 0.05f;
 	int m_back_hdl = 0;
 
 public:
 	//-----メンバ関数-----//
-	void Initialize() override;
-	void Draw(float delta_time, const Camera* camera) override;
+	void Initialize();
+	void Draw(float delta_time, const Camera* camera);
+	void Finalize();
 };

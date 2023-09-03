@@ -1,19 +1,19 @@
 #include "Camera.h"
-#include "Character.h"
-#include "MapManager.h"
+#include "Player.h"
+#include "Map.h"
 
-void Camera::Update(float delta_time, Character* chara, MapManager* mapChip)
+void Camera::Update(float delta_time, Player* player, Map* map)
 {
-	Scroll(chara, mapChip);
-	MoveRange(chara, mapChip);
+	Scroll(player, map);
+	MoveRange(player, map);
 }
 
-void Camera::MoveRange(Character* chara, MapManager* mapChip)
+void Camera::MoveRange(Player* player, Map* map)
 {
 	const float halfWidth = DXE_WINDOW_WIDTH >> 1;
 	const float halfHeight = DXE_WINDOW_HEIGHT >> 1;
-	const float maxX = mapChip->MAP_CHIP_SIZE * mapChip->GetMapChipX() - halfWidth;
-	const float maxY = mapChip->MAP_CHIP_SIZE * mapChip->GetMapChipY() - halfHeight;
+	const float maxX = map->MAP_CHIP_SIZE * map->GetMapChipX() - halfWidth;
+	const float maxY = map->MAP_CHIP_SIZE * map->GetMapChipY() - halfHeight;
 
 	//clamp関数で範囲内に収める。clamp(値, 最小値, 最大値)
 	m_target.x = std::clamp(m_target.x, halfWidth, maxX);
@@ -21,23 +21,23 @@ void Camera::MoveRange(Character* chara, MapManager* mapChip)
 }
 
 //★背景とチップのスクロール値調節すること
-void Camera::Scroll(Character* chara, MapManager* mapChip)
+void Camera::Scroll(Player* player, Map* map)
 {
 	if (!is_active)
 	{
-		if (chara->GetPos().x > DXE_WINDOW_WIDTH >> 1 || 
-				chara->GetPos().y > DXE_WINDOW_HEIGHT >> 1)
+		if (player->GetPos().x > DXE_WINDOW_WIDTH >> 1 || 
+				player->GetPos().y > DXE_WINDOW_HEIGHT >> 1)
 		{
-			m_target = chara->GetPos();
+			m_target = player->GetPos();
 			is_active = true;
 		}
 	}
 	else
 	{
-		m_target += (chara->GetPos() - m_target) * 0.1f;
+		m_target += (player->GetPos() - m_target) * 0.1f;
 		
-		if ((chara->GetPos().x <= DXE_WINDOW_WIDTH >> 1 &&
-				chara->GetPos().y <= DXE_WINDOW_HEIGHT >> 1))
+		if ((player->GetPos().x <= DXE_WINDOW_WIDTH >> 1 &&
+				player->GetPos().y <= DXE_WINDOW_HEIGHT >> 1))
 		{
 			is_active = false; 
 		}

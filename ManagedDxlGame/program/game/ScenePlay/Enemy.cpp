@@ -1,27 +1,22 @@
 #include <random>
 #include "Enemy.h"
-#include "Player.h"
-#include "MapManager.h"
+#include "Character.h"
+#include "Map.h"
 #include "Collision.h"
 #include "Camera.h"
+#include "Player.h"
 
 
 Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info)
      : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
         m_type_id(info.s_id),m_type(info.s_name),m_color(info.s_color)
 {
-    m_collision = new Collision();
-    m_camera = new Camera();
-    m_mapManager = new MapManager();
 }
 
 void Enemy::Update(float delta_time) 
 {
     //d—Í‚Å‰º‚É—Ž‚¿‚é
     m_pos.y += m_gravity.y * delta_time;
-
-    m_mapManager->LoadMapCollision(m_camera);
-    m_collision->CollisionCalculate(this, m_mapManager, 5);
 
     tnl_sequence_.update(delta_time);
 }

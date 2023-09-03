@@ -188,7 +188,7 @@
     <ClCompile Include="program\game\ScenePlay\scenePlay.cpp">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\MapManager.h.cpp">
+    <ClCompile Include="program\game\ScenePlay\Map.h.cpp">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\wta_library\wta_IsIntersectCalc.cpp">
@@ -215,14 +215,14 @@
     <ClCompile Include="program\engine\Balloon.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
-    <ClCompile Include="program\engine\BackGround.cpp">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClCompile>
     <ClCompile Include="program\game\ScenePlay\EnemyLoad.cpp">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\EnemyManager.cpp">
       <Filter>program\[004] game\[004]scenePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\SceneAll\BackGround.cpp">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,13 +344,10 @@
     <ClInclude Include="program\game\ScenePlay\Collision.h">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\scenePlay.h">
-      <Filter>program\[004] game\[004]scenePlay</Filter>
-    </ClInclude>
     <ClInclude Include="program\engine\sceneBase.h">
       <Filter>program\[003]engine</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\MapManager.h">
+    <ClInclude Include="program\game\ScenePlay\Map.h">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\wta_library\wta_IsIntersectCalc.h">
@@ -377,9 +374,6 @@
     <ClInclude Include="program\engine\Balloon.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
-    <ClInclude Include="program\engine\BackGround.h">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClInclude>
     <ClInclude Include="program\game\SceneAll\Effect.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
@@ -393,6 +387,12 @@
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\EnemyManager.h">
+      <Filter>program\[004] game\[004]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\BackGround.h">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\scenePlay.h">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "../../library/tnl_csv.h"
 #include "EnemyLoad.h"
 #include "Camera.h"
-#include "MapManager.h"
+#include "Map.h"
 #include "Enemy.h"
 
 
@@ -50,8 +50,8 @@ std::vector<sEnemyData> EnemyLoad::LoadEnemyData(const std::string& file_path)
                 sEnemyData data;
 
                 //“–‚½‚è”»’è‚Ì’†SÀ•W‚ğŒvZ
-                float posX = static_cast<int>(j * m_mapmanager->MAP_CHIP_SIZE);
-                float posY = static_cast<int>(i * m_mapmanager->MAP_CHIP_SIZE);
+                float posX = static_cast<int>(j * m_map->MAP_CHIP_SIZE);
+                float posY = static_cast<int>(i * m_map->MAP_CHIP_SIZE);
 
                 data.s_pos = tnl::Vector3(posX, posY,0); 
                 data.s_type_id = csvData[i][j].getInt();

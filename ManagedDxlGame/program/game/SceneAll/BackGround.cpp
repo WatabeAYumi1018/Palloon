@@ -1,10 +1,15 @@
-#include "../engine/BackGround.h"
+#include "../game/SceneAll/BackGround.h"
 #include "../game/ScenePlay/Camera.h"
 
 
-BackGround::BackGround() :GameObject(tnl::Vector3(0, 0, 0))
+BackGround::BackGround()
 {
 	Initialize();
+}
+
+BackGround::~BackGround()
+{
+	Finalize();
 }
 
 void BackGround::Initialize()
@@ -12,14 +17,21 @@ void BackGround::Initialize()
 	m_back_hdl = LoadGraph("graphics/backSky.jpg");
 }
 
-void BackGround::Draw(float delta_time,const Camera* camera)
+void BackGround::Draw(float delta_time, const Camera* camera)
 {
 	tnl::Vector3 draw_pos =
-		m_pos - (camera->GetTarget()*m_scroll_speed) + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-	
+		m_pos - (camera->GetTarget() * m_scroll_speed) + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+
 	DrawRotaGraph(draw_pos.x, draw_pos.y, 1.0f, 0, m_back_hdl, true);
 }
-	//Movie(camera);
+
+void BackGround::Finalize()
+{
+	DeleteGraph(m_back_hdl);
+}
+
+
+//Movie(camera);
 
 //void BackGround::Movie(const PlayCamera* camera){
 //

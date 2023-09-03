@@ -7,13 +7,13 @@
 //cppでは相互インクルードとりあえずOK
 
 class Camera;
-class Character;
+class Player;
 
-class MapManager
+class Map
 {
 public:
-	MapManager();
-	virtual ~MapManager();
+	Map();
+	virtual ~Map();
 
 	//-----定数-----//
 	//マップチップの基本情報

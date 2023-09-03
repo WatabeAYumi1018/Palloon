@@ -5,10 +5,9 @@
 
 //主に敵のAIを管理するクラス
 
-class MapManager;
 class EnemyLoad;
 class Camera;
-class Collision;
+class Player;
 
 class Enemy :public Character
 {
@@ -30,11 +29,8 @@ private:
 	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f};	//乱数調節（idle→move）
 	TNL_CO_SEQUENCE(Enemy,&Enemy::SeqBaseAction);						//コルーチンシーケンス
 
-	MapManager* m_mapManager = nullptr;	//マップ管理
-	Character* m_player = nullptr;		//審議
+	Player* m_player = nullptr;		//審議
 	EnemyLoad *m_enemyLoad = nullptr;	//敵読み取り
-	Camera* m_camera = nullptr;			//カメラ
-	Collision* m_collision = nullptr;	//当たり判定
 
 public:
 	//-----メンバ関数-----//

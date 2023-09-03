@@ -15,12 +15,12 @@ Player::Player() :
 	Initialize();
 }
 
-Player::~Player() 
+Player::~Player()
 { 
 	Finalize(); 
 }
 
-void Player::Initialize() 
+void Player::Initialize()
 {
 	// CSVからアニメーションデータをロード
 	animLoader =new wta::DrawAnim("csv/AnimLoad.csv","graphics/animation");
@@ -44,7 +44,7 @@ void Player::Draw(float delta_time, const Camera* camera)
 	//DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
 }
 
-void Player::MoveHandle(float delta_time) 
+void Player::MoveHandle(float delta_time)
 {
 	//重力で下に落ちる
 	m_pos.y += m_gravity.y * delta_time;

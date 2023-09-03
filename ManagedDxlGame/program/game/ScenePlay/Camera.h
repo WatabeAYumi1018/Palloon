@@ -3,8 +3,8 @@
 
 //プレイヤー追従カメラ
 
-class Character;
-class MapManager;
+class Player;
+class Map;
 
 class Camera
 {
@@ -18,12 +18,12 @@ private:
 public:
 	
 	//-----メンバ関数-----//
-	void Update(float delta_time, Character* chara, MapManager* mapChip);
+	void Update(float delta_time, Player* player, Map* map);
 
 private:
 	
-	void MoveRange(Character* chara, MapManager* mapChip);
-	void Scroll(Character* chara, MapManager* mapChip);
+	void MoveRange(Player* player, Map* map);
+	void Scroll(Player* player, Map* map);
 
 public:
 

@@ -12,10 +12,10 @@ namespace wta
 	tnl::Vector3 CorrectCircleLineCollision(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd);
 
 	//‰~“¯m‚Ì“–‚½‚è”»’èŒvZ
-	bool IsIntersectCircleCircle(const tnl::Vector3& circle01, const int CircleSize01, const tnl::Vector3& circle02, const int CircleSize02);
+	bool IsIntersectCircleCircle(const tnl::Vector3& pos1, float radius1, const tnl::Vector3& pos2, float radius2);
 
 	//‰~‚Æ‰~‚ÌÀ•W•â³
-	tnl::Vector3 CorrectCircleCircleOverlap(const tnl::Vector3& circle01, const int CircleSize01, const tnl::Vector3& circle02, const int CircleSize02); 
+	//tnl::Vector3 CorrectCircleCircleOverlap(const tnl::Vector3& circle01, const int CircleSize01, const tnl::Vector3& circle02, const int CircleSize02); 
 }
 
 	////š‰~‚Æ‹éŒ`‚Ì“–‚½‚è”»’èŒvZ(ŒvZƒ~ƒX‚Å–¢Š®¬‚Ì‚½‚ßA‰Û‘èI—¹Œã‚É‰ü•Ï‚ğ–Úw‚·)

@@ -2,14 +2,14 @@
 #include "../../engine/GameEngine.h"
 #include "../SceneAll/GameObjectManager.h"
 #include "EnemyManager.h"
-#include "MapManager.h"
+#include "Map.h"
 
 class EnemyLoad
 {
 
 private:
 
-   MapManager *m_mapmanager=nullptr;
+   Map *m_map=nullptr;
 
 public:
 

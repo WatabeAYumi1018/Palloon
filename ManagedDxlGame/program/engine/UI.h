@@ -1,6 +1,6 @@
 #pragma once
 #include "../engine/GameEngine.h"
-#include "GameObject.h"
+#include "../game/SceneAll/GameObject.h"
 
 class Camera;
 

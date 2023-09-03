@@ -20,7 +20,7 @@ private:
 	static constexpr float PLAYER_POS_X = 100;			//プレイヤーの初期位置
 	static constexpr float PLAYER_POS_Y = 250;
 	
-	static constexpr int PLAYER_SIZE = 30;				//プレイヤーのサイズ
+	static constexpr int PLAYER_SIZE = 35;				//プレイヤーのサイズ
 	static constexpr int PLAYER_HP = 5;					//プレイヤーのHP
 	
 	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）

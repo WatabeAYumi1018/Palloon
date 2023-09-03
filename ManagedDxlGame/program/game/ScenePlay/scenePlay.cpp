@@ -4,14 +4,15 @@
 #include "../../engine/SceneManager.h"
 #include "../SceneAll/BackGround.h"
 #include "../SceneAll/Balloon.h"
-#include "MapManager.h"
+#include "Map.h"
 #include "Collision.h"
 #include "Character.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemyLoad.h"
 #include "../SceneAll/UI.h"
 #include "Camera.h"
-#include "EnemyManager.h"
+
 
 ScenePlay::ScenePlay()
 {
@@ -25,49 +26,76 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Initialize() 
 {
-	//背景の初期化と描画
+	m_backGround = new BackGround();
 	m_camera=new Camera();
 	m_collision = new Collision();
+	m_map = new Map();
 	m_player = new Player();
-	//m_enemy = new Enemy();
-	m_map_chip_manager = new MapManager();
-	//m_enemy_manager=new EnemyLoad();
-	m_enemy_manager = new EnemyManager();
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
-	gameObjects.emplace_back(new BackGround());
-	gameObjects.emplace_back(new Balloon());
-	gameObjects.emplace_back(m_player);
-	//gameObjects.emplace_back(m_enemy);
-	gameObjects.emplace_back(new UI());
+	m_gameObjects.emplace_back(new Balloon());
+	m_gameObjects.emplace_back(m_player);
+
+	EnemyInit();
+
+	m_gameObjects.emplace_back(new UI());
 }
+
+void ScenePlay::EnemyInit()
+{
+	EnemyLoad enemyLoad;
+	m_enemyInfos = enemyLoad.LoadEnemyInfo("csv/EnemyLoad.csv");
+	auto dataList = enemyLoad.LoadEnemyData("csv/stage1-1enemy.csv");
+
+	for (const auto& data : dataList)
+	{
+		auto enemy = new Enemy(data, m_enemyInfos[data.s_type_id]);
+		m_enemies.emplace_back(enemy);
+		m_gameObjects.emplace_back(enemy); 
+	}
+}
+
 
 void ScenePlay::Update(float delta_time) 
 {	
-	m_camera->Update(delta_time, m_player, m_map_chip_manager);
-	m_map_chip_manager->LoadMapCollision(m_camera);
-	m_enemy_manager->Update(delta_time);
+	m_sequence.update(delta_time);
 
-	m_collision->CollisionCalculate(m_player, m_map_chip_manager, 10);
-	
-	for (auto obj : gameObjects)
+	m_camera->Update(delta_time, m_player, m_map);
+	m_collision->CollisionCalculate(m_player, m_map, 10);
+	m_map->LoadMapCollision(m_camera);
+
+	for (auto enemy : m_enemies)
 	{
-		
+		m_collision->CollisionCalculate(enemy, m_map, 10);
+		m_collision->CollisionCharacter(m_player, enemy);
+	}
+
+	for (auto obj : m_gameObjects)
+	{
 		obj->Update(delta_time);
 	}
-	
-	sequence_.update(delta_time);
 }
 
 void ScenePlay::Draw(float delta_time)
 {
-	for (auto obj : gameObjects) 
+	m_backGround->Draw(delta_time, m_camera);
+	m_map->Draw(m_camera);
+
+	for (auto obj : m_gameObjects) 
 	{
 		obj->Draw(delta_time, m_camera);
 	}
+}
 
-	m_map_chip_manager->Draw(m_camera);
-	m_enemy_manager->Draw(delta_time, m_camera);
+void ScenePlay::Finalize()
+{
+	for (auto obj : m_gameObjects)
+	{
+		delete obj;
+	}
+	m_backGround->Finalize();
+	m_map->Finalize();
+	m_enemies.clear();
 }
 
 bool ScenePlay::SeqIdle(float delta_time)
@@ -78,15 +106,4 @@ bool ScenePlay::SeqIdle(float delta_time)
 		scene->ChangeScene(new SceneTitle());
 	}
 	return true;
-}
-
-void ScenePlay::Finalize()
-{
-	for (auto obj : gameObjects)
-	{
-		delete obj;
-	}
-	m_map_chip_manager->Finalize();
-	m_enemy_manager->Finalize();
-	
 }

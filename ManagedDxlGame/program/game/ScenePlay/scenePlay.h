@@ -2,12 +2,13 @@
 #include "../../engine/sceneBase.h"
 #include "../SceneAll/GameObject.h"
 
-class GameObjectManager;
 class Camera;
-class MapManager;
+class BackGround;
+class Map;
 class Collision;
-class Character;
-//class EnemyLoad;
+class EnemyLoad;
+class Player;
+class Enemy;
 
 class ScenePlay : public SceneBase 
 {
@@ -22,20 +23,26 @@ public:
 	void Finalize() override;
 
 	//-----メンバ変数-----//
+	BackGround *m_backGround=nullptr;
 	Camera*m_camera=nullptr;
-	MapManager *m_map_chip_manager=nullptr;
+	Map *m_map=nullptr;
 	Collision *m_collision=nullptr;
-	Character *m_player =nullptr;
-	GameObjectManager *m_enemy_manager = nullptr;
-	//Character *m_enemy = nullptr;
-	//EnemyLoad *m_enemy_manager = nullptr;
+	EnemyLoad* m_enemyLoad = nullptr;
+	Player *m_player = nullptr;
 
 private:
-	std::vector<GameObject*> gameObjects;
-	tnl::Sequence<ScenePlay> sequence_ = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
+	
+	std::vector<GameObject*> m_gameObjects;
+	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
+	
+	std::vector<Enemy*> m_enemies;			 // 敵のリスト
+	std::map<int, sEnemyInfo> m_enemyInfos;  // 敵の情報リスト
+	
+	void EnemyInit();
 	bool SeqIdle(float delta_time);
+
 
 	//遷移後、back,Map,UI,Player,Enemyなどを描画する
 	//現在のシーンで描画するグラフィックを変える
-	int graph_hdl = 0;
+	int m_graph_hdl = 0;
 };
