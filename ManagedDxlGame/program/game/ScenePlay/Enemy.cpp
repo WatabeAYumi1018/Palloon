@@ -2,17 +2,27 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "MapManager.h"
+#include "Collision.h"
 #include "Camera.h"
+
 
 Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info)
      : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
         m_type_id(info.s_id),m_type(info.s_name),m_color(info.s_color)
 {
-
+    m_collision = new Collision();
+    m_camera = new Camera();
+    m_mapManager = new MapManager();
 }
 
 void Enemy::Update(float delta_time) 
 {
+    //重力で下に落ちる
+    m_pos.y += m_gravity.y * delta_time;
+
+    m_mapManager->LoadMapCollision(m_camera);
+    m_collision->CollisionCalculate(this, m_mapManager, 5);
+
     tnl_sequence_.update(delta_time);
 }
 
@@ -25,14 +35,14 @@ void Enemy::Draw(float delta_time, const Camera* camera)
     switch (m_type_id)
     {
     case 0:
-
-        DrawCircle(draw_pos.x, draw_pos.y, m_size,-1);
+        //EnemyLoadにて0を外しているため現状描画されない
+       // DrawCircle(draw_pos.x, draw_pos.y, m_size,-1);
 
         break;
     
     case 1:
-           
-       // DrawCircle(draw_pos.x, draw_pos.y, m_size, -1);
+       //これがコルーチンで動き、当たり判定にも認定されるようにする！！    
+        DrawCircle(draw_pos.x, draw_pos.y, m_size, -1);
            
         break;
     

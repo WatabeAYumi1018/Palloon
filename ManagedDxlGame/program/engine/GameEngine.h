@@ -1,19 +1,6 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
 
-
-enum class eCharaType
-{
-	Player,
-	Slim,
-	Plant,
-	Bird,
-	Masician,
-	Fairy,
-	Boss,
-	Max
-};
-
 enum class eCollisionType
 {
 	None,
@@ -29,25 +16,14 @@ struct sCollisionInfo
 	eCollisionType s_type;
 };
 
-enum class eEnemyType
-{
-	None,
-	Slim,
-	Plant,
-	Bird,
-	Masician,
-	Fairy,
-	Boss,
-	Max
-};
-
 struct sEnemyData 
 {
 	int s_type_id;
 	tnl::Vector3 s_pos;
 };
 
-struct sEnemyInfo {
+struct sEnemyInfo
+{
 	int s_id;
 	std::string s_name;
 	std::string s_color;

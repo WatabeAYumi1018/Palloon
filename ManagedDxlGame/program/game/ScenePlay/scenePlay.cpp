@@ -48,12 +48,11 @@ void ScenePlay::Update(float delta_time)
 	m_map_chip_manager->LoadMapCollision(m_camera);
 	m_enemy_manager->Update(delta_time);
 
+	m_collision->CollisionCalculate(m_player, m_map_chip_manager, 10);
+	
 	for (auto obj : gameObjects)
 	{
-		if (Character* chara = dynamic_cast<Character*>(obj))
-		{
-			m_collision->CollisionCalculate(chara, m_map_chip_manager, 3);
-		}
+		
 		obj->Update(delta_time);
 	}
 	

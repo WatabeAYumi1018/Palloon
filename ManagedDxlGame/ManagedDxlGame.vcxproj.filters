@@ -42,6 +42,24 @@
     <Filter Include="program\[004] game\[001]sceneAll">
       <UniqueIdentifier>{f07a8965-65c4-4930-a07b-6419e0424d14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[01]Character">
+      <UniqueIdentifier>{b8cd7a7e-9485-4b22-bbc5-72515a945a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[02]Map">
+      <UniqueIdentifier>{95ec1258-a64c-4174-b174-b820b2f1b6e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[03]Item">
+      <UniqueIdentifier>{ab7b45af-83c5-4cce-bce1-ab6f5d72fb8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[04]Effect">
+      <UniqueIdentifier>{052096e9-f141-41b5-88b6-4aa098a6c8c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[05]Camera">
+      <UniqueIdentifier>{670a3e80-199f-465f-99b6-036585d12551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[06]Collision">
+      <UniqueIdentifier>{68fc02bc-aecb-4727-bb11-6d8ea522244e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ManagedDxlGame.cpp">
