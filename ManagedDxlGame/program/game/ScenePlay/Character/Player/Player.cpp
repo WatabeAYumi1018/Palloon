@@ -80,7 +80,7 @@ void Player::MoveHandle(float delta_time)
 	{
 		//UŒ‚ˆ—
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && m_jump_count < PLAYER_JUMP_MAX_COUNT)
+	if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) && m_jump_count < PLAYER_JUMP_MAX_COUNT)
 	{
 		m_is_jump = true;
 		m_is_ground = false;

@@ -10,6 +10,13 @@
 #include "../ScenePlay/Collision/Collision.h"
 #include "../ScenePlay/Character/Player/Player.h"
 #include "../ScenePlay/Character/Enemy/Enemy.h"
+#include "../ScenePlay/Character/Enemy/EnemySlim.h"
+#include "../ScenePlay/Character/Enemy/EnemyPlant.h"
+#include "../ScenePlay/Character/Enemy/EnemyBird.h"
+#include "../ScenePlay/Character/Enemy/EnemyMasician.h"
+#include "../ScenePlay/Character/Enemy/EnemyKobold.h"
+#include "../ScenePlay/Character/Enemy/EnemyFairy.h"
+#include "../ScenePlay/Character/Enemy/EnemyDoragon.h"
 #include "../ScenePlay/Camera/Camera.h"
 
 
@@ -48,9 +55,47 @@ void ScenePlay::EnemyInit()
 
 	for (const auto& data : dataList)
 	{
-		auto enemy = new Enemy(data, m_enemyInfos[data.s_type_id]);
-		m_enemies.emplace_back(enemy);
-		m_gameObjects.emplace_back(enemy); 
+		for (const auto& data : dataList)
+		{
+			Enemy* enemy = nullptr;
+
+			switch (data.s_type_id)
+			{
+			case 0:
+				enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id]);
+				break;
+
+			case 1:
+				enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id]);
+				break;
+
+			case 2:
+				enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id]);
+				break;
+
+			case 3:
+				enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id]);
+				break;
+
+			case 4:
+				enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id]);
+				break;
+
+			case 5:
+				enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id]);
+				break;
+
+			case 6:
+				enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id]);
+				break;
+
+			default:
+				break;
+			}
+
+			m_enemies.emplace_back(enemy);
+			m_gameObjects.emplace_back(enemy);
+		}
 	}
 }
 
