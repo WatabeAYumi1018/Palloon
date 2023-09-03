@@ -11,6 +11,8 @@ Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info)
      : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
         m_type_id(info.s_id),m_type(info.s_name),m_color(info.s_color)
 {
+    // CSVからアニメーションデータをロード
+    animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
 }
 
 void Enemy::Update(float delta_time) 
@@ -30,8 +32,7 @@ void Enemy::Draw(float delta_time, const Camera* camera)
     switch (m_type_id)
     {
     case 0:
-        //EnemyLoadにて0を外しているため現状描画されない
-       // DrawCircle(draw_pos.x, draw_pos.y, m_size,-1);
+        
 
         break;
     

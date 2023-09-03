@@ -25,6 +25,8 @@ private:
 	std::string m_color;									/*敵の色*/
 	float m_moveTimeCounter = 0.0f;
 
+	wta::DrawAnim* animLoader = nullptr;					//アニメーションデータをロード
+
 	std::default_random_engine m_generator;								//ジェネレーター（乱数分布と組み合わせて生成）
 	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f};	//乱数調節（idle→move）
 	TNL_CO_SEQUENCE(Enemy,&Enemy::SeqBaseAction);						//コルーチンシーケンス

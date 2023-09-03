@@ -174,6 +174,13 @@
     <ClCompile Include="program\engine\UI.cpp" />
     <ClCompile Include="program\game\gm_main.cpp" />
     <ClCompile Include="program\game\SceneAll\BackGround.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyBird.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyDoragon.h.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyFairy.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyKobold.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyMagician.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyPlant.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\EnemySlim.cpp" />
     <ClCompile Include="program\game\ScenePlay\Collision.cpp" />
     <ClCompile Include="program\game\ScenePlay\Enemy.cpp" />
     <ClCompile Include="program\game\ScenePlay\EnemyLoad.cpp" />
@@ -227,6 +234,13 @@
     <ClInclude Include="program\game\SceneAll\GameObject.h" />
     <ClInclude Include="program\game\SceneAll\GameObjectManager.h" />
     <ClInclude Include="program\game\ScenePlay\Character.h" />
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyBird.h" />
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyDoragon.h" />
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyFairy.h" />
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyKobold.h" />
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyMagician.h" />
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyPlant.h" />
+    <ClInclude Include="program\game\ScenePlay\Character\EnemySlim.h" />
     <ClInclude Include="program\game\ScenePlay\Collision.h" />
     <ClInclude Include="program\game\ScenePlay\Enemy.h" />
     <ClInclude Include="program\game\ScenePlay\EnemyLoad.h" />

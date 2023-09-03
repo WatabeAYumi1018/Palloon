@@ -224,6 +224,27 @@
     <ClCompile Include="program\game\SceneAll\BackGround.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\EnemySlim.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyFairy.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyBird.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyKobold.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyMagician.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyPlant.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\EnemyDoragon.h.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -394,6 +415,27 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\scenePlay.h">
       <Filter>program\[004] game\[004]scenePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character\EnemySlim.h">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyFairy.h">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyBird.h">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyKobold.h">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyMagician.h">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyPlant.h">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Character\EnemyDoragon.h">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -26,13 +26,19 @@ private:
 	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）
 	static constexpr float PLAYER_VELOCITY_Y = 100;
 
+	static constexpr int PLAYER_JUMP_MAX_COUNT = 3;		//最大ジャンプ回数
+
 	//-----メンバ変数-----//
-	int m_jump_time;						//ジャンプ時間
-	tnl::Vector3 m_jump_velocity;			//ジャンプ速度
+	int m_jump_count = 0;								//ジャンプ回数
+	float m_jump_time=10;								//ジャンプ時間
+	tnl::Vector3 m_jump_height = {0,500,0};			//ジャンプ高さ
 	
-	bool m_is_jump = false;					//ジャンプ中
-	bool m_was_ground=false;				//前フレームの接地判定
-	bool m_is_dirction_right = true;					//右向きかどうか
+	//フラグ
+	bool m_is_jump = false;								//ジャンプ中
+	bool m_is_falling = false;							//落下中
+	bool m_was_ground=false;							//前フレームの接地判定
+	bool m_is_dirction_right = true;					//向き
+
 
 	//-----アニメーション-----//
 	wta::DrawAnim *animLoader = nullptr;

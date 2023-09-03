@@ -47,7 +47,7 @@ void Player::Draw(float delta_time, const Camera* camera)
 void Player::MoveHandle(float delta_time)
 {
 	//重力で下に落ちる
-	m_pos.y += m_gravity.y * delta_time;
+	m_pos.y += (m_gravity.y * delta_time) * 3;
 
 	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT))
 	{
@@ -75,38 +75,36 @@ void Player::MoveHandle(float delta_time)
 			m_pos.x -= PLAYER_VELOCITY_X * delta_time; 
 		}
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE))
-	{
-		m_is_jump = true;
-		m_is_ground = false;
-		m_jump_velocity.y = 1000.0f;
-		m_jump_time = 7.0f;
-	}
 	//zキーで攻撃
 	if (tnl::Input::IsKeyDown(eKeys::KB_Z))
 	{
 		//攻撃処理
 	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && m_jump_count < PLAYER_JUMP_MAX_COUNT)
+	{
+		m_is_jump = true;
+		m_is_ground = false;
+		m_jump_count++;
+	}
 	//ジャンプ中
 	if (m_is_jump) 
 	{
-		m_pos.y -= m_jump_velocity.y * delta_time;			/*ジャンプ速度分y座標を上げる*/
-		m_jump_velocity.y -= m_gravity.y * delta_time;		/*ジャンプしたら重力適応*/
-		m_jump_time -= delta_time;							/*ジャンプ滞空時間を減らす*/
-		
-		//0になったらジャンプ終了
-		if (m_jump_time <= 0) 
+		if (m_jump_time > 0)
 		{
-			m_is_jump = false;
-			m_jump_time = 0;
+			m_pos.y -= m_jump_height.y * delta_time;
+			m_jump_height.y -= m_gravity.y * delta_time;
+			m_jump_time -= delta_time;
+		}
+		else
+		{
+			m_is_falling = true;						// ジャンプ上昇終了後、急速に落下
+			//m_pos.y += (m_gravity.y * delta_time) * 5;	// ここの5は急速に落下する速度の倍率
 		}
 	}
-	// グラウンドに着地したらy座標を修正
 	else
 	{
-		m_is_ground = true;					// 地面に接しているフラグをtrueにする
-		m_jump_velocity.y = 0;				// ジャンプ速度を0にリセット
-		m_jump_time = 0;					// ジャンプ時間を0にリセット
+		m_is_falling = false;
+		m_jump_count = 0;								//グラウンドに着地したらジャンプカウントをリセット
 	}
 }
 
