@@ -3,6 +3,7 @@
 #include "Enemy.h"
 
 class Camera;
+class Player;
 
 //スライムクラス
 
@@ -10,7 +11,7 @@ class EnemySlim :public Enemy
 {
 public:
 
-	EnemySlim(const sEnemyData& data, const sEnemyInfo& info);
+	EnemySlim(const sEnemyData& data, const sEnemyInfo& info, Player* player);
 	~EnemySlim();
 
 private:

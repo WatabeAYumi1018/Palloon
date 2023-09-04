@@ -13,7 +13,7 @@ class Enemy :public Character
 
 public:
 
-	Enemy(const sEnemyData& data, const sEnemyInfo& info);
+	Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player);
 	virtual ~Enemy() {}
 
 protected:

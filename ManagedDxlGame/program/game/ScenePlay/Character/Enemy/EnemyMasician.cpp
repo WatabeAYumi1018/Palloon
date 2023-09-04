@@ -3,7 +3,7 @@
 #include "../Player/Player.h"
 
 EnemyMasician::EnemyMasician(const sEnemyData& data, const sEnemyInfo& info) :
-    Enemy(data, info)
+    Enemy(data, info, m_player)
 {
 
 }

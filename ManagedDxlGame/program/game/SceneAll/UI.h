@@ -1,9 +1,9 @@
 #pragma once
-#include "../../game/ScenePlay/Character/Player/Player.h"
 #include "../engine/GameEngine.h"
 #include "../game/SceneAll/GameObject.h"
 
 class Camera;
+class Player;
 class Balloon;
 
 //UI‚Ìˆ—ˆêŠ‡‚ğs‚¤ƒNƒ‰ƒX
@@ -19,7 +19,7 @@ private:
 	int m_extend_x = 500;
 	int m_extend_y = 200;
 
-	Player m_player;
+	Player* m_player = nullptr;
 	Balloon* m_balloon = nullptr;
 
 public:

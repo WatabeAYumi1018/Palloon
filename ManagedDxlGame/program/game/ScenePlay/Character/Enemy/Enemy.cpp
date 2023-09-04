@@ -6,9 +6,9 @@
 #include "../Player/Player.h"
 
 
-Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info)
+Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player)
     : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
-    m_type_id(info.s_id), m_type(info.s_name), m_color(info.s_color)
+    m_type_id(info.s_id), m_type(info.s_name), m_color(info.s_color), m_player(player)
 {
 }
 

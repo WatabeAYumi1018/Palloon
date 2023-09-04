@@ -3,7 +3,7 @@
 #include "../Player/Player.h"
 
 EnemyFairy::EnemyFairy(const sEnemyData& data, const sEnemyInfo& info) :
-    Enemy(data, info)
+    Enemy(data, info, m_player)
 {
 
 }

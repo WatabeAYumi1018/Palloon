@@ -2,8 +2,8 @@
 #include "EnemySlim.h"
 #include "../Player/Player.h"
 
-EnemySlim::EnemySlim(const sEnemyData& data, const sEnemyInfo& info) :
-    Enemy(data, info)
+EnemySlim::EnemySlim(const sEnemyData& data, const sEnemyInfo& info,Player* player) :
+    Enemy(data, info, player)
 {
     
 }
@@ -16,7 +16,7 @@ EnemySlim::~EnemySlim()
 void EnemySlim::Update(float delta_time)
 {
 	//d—Í‚Å‰º‚É—‚¿‚é
-	//m_pos.y += m_gravity.y * delta_time;
+	m_pos.y += (m_gravity.y * delta_time)*0.1f;
 
 	tnl_sequence_.update(delta_time);
 }

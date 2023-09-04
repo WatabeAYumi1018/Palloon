@@ -60,7 +60,7 @@ void ScenePlay::EnemyInit()
 		switch (data.s_type_id)
 		{
 		case 0:
-			enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id]);
+			enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id], m_player);
 			break;
 
 		case 1:
