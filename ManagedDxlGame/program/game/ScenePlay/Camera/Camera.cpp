@@ -23,13 +23,13 @@ void Camera::MoveRange(Player* player, Map* map)
 //★背景とチップのスクロール値調節すること
 void Camera::Scroll(Player* player, Map* map)
 {
-	if (!is_active)
+	if (!m_is_active)
 	{
 		if (player->GetPos().x > DXE_WINDOW_WIDTH >> 1 ||
 			player->GetPos().y > DXE_WINDOW_HEIGHT >> 1)
 		{
 			m_target = player->GetPos();
-			is_active = true;
+			m_is_active = true;
 		}
 	}
 	else
@@ -39,7 +39,7 @@ void Camera::Scroll(Player* player, Map* map)
 		if ((player->GetPos().x <= DXE_WINDOW_WIDTH >> 1 &&
 			player->GetPos().y <= DXE_WINDOW_HEIGHT >> 1))
 		{
-			is_active = false;
+			m_is_active = false;
 		}
 	}
 }

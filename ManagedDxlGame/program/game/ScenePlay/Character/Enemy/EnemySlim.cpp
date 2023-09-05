@@ -23,8 +23,6 @@ void EnemySlim::Update(float delta_time)
 
 void EnemySlim::Draw(float delta_time, const Camera* camera)
 {
-    animLoader->SetAnimation(18);
-
 	//カメラの位置に合わせて描画位置をずらす
 	tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
 		tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
@@ -44,7 +42,7 @@ bool EnemySlim::SeqMove(float delta_time)
         }
 
         //プレイヤーとの距離計算
-        if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
+        if (std::abs(m_pos.x - m_player->GetPos().x) < 100.0f)
         {
             tnl_sequence_.change(&Enemy::SeqAttack);
         }
@@ -57,16 +55,20 @@ bool EnemySlim::SeqMove(float delta_time)
         {
             TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
             {
-                    DrawStringEx(0, 50, -1, "right");
+                    animLoader->SetAnimation(20);
                     m_pos.x += m_velocity.x * delta_time;
+
+                    m_is_dirction_right = true;
             });
         }
         else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
         {
             TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
             {
-                    DrawStringEx(0, 50, -1, "left");
+                    animLoader->SetAnimation(21);
                     m_pos.x -= m_velocity.x * delta_time;
+
+                    m_is_dirction_right = false;
             });
         }
         else if (m_moveTimeCounter > 4.0f)
@@ -84,7 +86,14 @@ bool EnemySlim::SeqIdle(float delta_time)
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
-            animLoader->SetAnimation(18);   /*こんな感じで*/
+        if (m_is_dirction_right) 
+        {
+            animLoader->SetAnimation(20);
+        }
+        else
+        {
+			animLoader->SetAnimation(19);
+		}
     });
 
     tnl_sequence_.change(&Enemy::SeqMove);
@@ -97,7 +106,16 @@ bool EnemySlim::SeqAttack(float delta_time)
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-            //攻撃アニメーション再生
+        if (m_is_dirction_right)
+        {
+			animLoader->SetAnimation(22);
+            
+		}
+        else
+        {
+			animLoader->SetAnimation(23);
+            m_pos.x -= m_velocity.x * delta_time;
+		}
     });
 
     tnl_sequence_.change(&Enemy::SeqMove);

@@ -9,6 +9,7 @@ class Collision;
 class EnemyLoad;
 class Player;
 class Enemy;
+class EffectPlayer;
 
 class ScenePlay : public SceneBase 
 {
@@ -37,8 +38,10 @@ private:
 	
 	std::vector<Enemy*> m_enemies;			 // 敵のリスト
 	std::map<int, sEnemyInfo> m_enemyInfos;  // 敵の情報リスト
-	
+	std::vector<EffectPlayer*> m_effects;	 /*エフェクト*/
+
 	void EnemyInit();
+	void EffectInit();
 	bool SeqIdle(float delta_time);
 
 

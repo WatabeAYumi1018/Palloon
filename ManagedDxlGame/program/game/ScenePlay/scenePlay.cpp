@@ -17,6 +17,7 @@
 #include "../ScenePlay/Character/Enemy/EnemyKobold.h"
 #include "../ScenePlay/Character/Enemy/EnemyFairy.h"
 #include "../ScenePlay/Character/Enemy/EnemyDoragon.h"
+#include "../ScenePlay/Effect/EffectPlayer.h"
 #include "../ScenePlay/Camera/Camera.h"
 
 
@@ -43,7 +44,6 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(m_player);
 
 	EnemyInit();
-
 	m_gameObjects.emplace_back(new UI());
 }
 
@@ -64,27 +64,27 @@ void ScenePlay::EnemyInit()
 			break;
 
 		case 1:
-			enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id]);
+			enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id], m_player);
 			break;
 
 		case 2:
-			enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id]);
+			enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id], m_player);
 			break;
 
 		case 3:
-			enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id]);
+			enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id], m_player);
 			break;
 
 		case 4:
-			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id]);
+			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player);
 			break;
 
 		case 5:
-			enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id]);
+			enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id], m_player);
 			break;
 
 		case 6:
-			enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id]);
+			enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id], m_player);
 			break;
 
 		default:
@@ -97,14 +97,25 @@ void ScenePlay::EnemyInit()
 	}
 }
 
+void ScenePlay::EffectInit()
+{
+	if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+	{
+		EffectPlayer* effect = new EffectPlayer();
+		effect->SetPos(m_player->GetPos()); // プレイヤーの位置にセット
+		m_gameObjects.emplace_back(effect);
+	}
+}
 
 void ScenePlay::Update(float delta_time) 
 {	
 	m_sequence.update(delta_time);
 
-	m_camera->Update(delta_time, m_player, m_map);
 	m_collision->CollisionCalculate(m_player, m_map, 10);
+	m_camera->Update(delta_time, m_player, m_map);
 	m_map->LoadMapCollision(m_camera);
+
+	EffectInit();
 
 	for (auto enemy : m_enemies)
 	{

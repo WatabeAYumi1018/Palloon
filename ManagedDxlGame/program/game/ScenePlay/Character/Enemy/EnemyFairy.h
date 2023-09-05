@@ -3,6 +3,7 @@
 #include "Enemy.h"
 
 class Camera;
+class Player;
 
 //スライムクラス
 
@@ -10,7 +11,7 @@ class EnemyFairy :public Enemy
 {
 public:
 	
-	EnemyFairy(const sEnemyData& data, const sEnemyInfo& info);
+	EnemyFairy(const sEnemyData& data, const sEnemyInfo& info, Player* player);
 	~EnemyFairy();
 
 private:

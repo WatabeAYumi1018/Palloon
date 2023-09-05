@@ -94,7 +94,7 @@ void Collision::CheckBoxCollision(Character* chara, Map* map, const std::vector<
     {
         for (const auto& info : row)
         {
-            if (info.s_type == eCollisionType::None)
+            if (info.s_type == eCollisionType::None || info.s_type == eCollisionType::Line)
             {
                 continue;
             }
@@ -118,7 +118,7 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
     {
         for (const auto& info : row)
         {
-            if (info.s_type == eCollisionType::None || info.s_type == eCollisionType::Box)
+            if (info.s_type == eCollisionType::None)
             {
                 continue;
             }
@@ -157,12 +157,13 @@ void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
             case eCollisionType::Box:
 
                 CheckBoxCollision(chara, map, surroundingChips);
-
+                DrawStringEx(10, 10, -1, "box");
                 break;
 
             case eCollisionType::Line:
 
                 CheckLineCollision(chara, map, surroundingChips);
+                DrawStringEx(10, 20, -1, "line");
 
                 break;
 

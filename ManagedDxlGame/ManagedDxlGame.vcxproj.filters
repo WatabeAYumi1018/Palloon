@@ -51,17 +51,20 @@
     <Filter Include="program\[004] game\[004]scenePlay\[03]Item">
       <UniqueIdentifier>{ab7b45af-83c5-4cce-bce1-ab6f5d72fb8f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[004] game\[004]scenePlay\[06]Collision">
-      <UniqueIdentifier>{68fc02bc-aecb-4727-bb11-6d8ea522244e}</UniqueIdentifier>
+    <Filter Include="program\[004] game\[004]scenePlay\[05]Camera">
+      <UniqueIdentifier>{670a3e80-199f-465f-99b6-036585d12551}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[004] game\[004]scenePlay\[01]Character\[01]Player">
+    <Filter Include="program\[004] game\[004]scenePlay\[04]Effect">
+      <UniqueIdentifier>{c1de2104-0a03-4dff-b6d6-08545aa631a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[01]Character\[1]Player">
       <UniqueIdentifier>{38b0b192-781f-4cfe-8fb0-9b7018624286}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[004] game\[004]scenePlay\[01]Character\[02]Enemy">
+    <Filter Include="program\[004] game\[004]scenePlay\[01]Character\[2]Enemy">
       <UniqueIdentifier>{addde519-4600-468b-9cbf-ac3115fe111a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="program\[004] game\[004]scenePlay\[04]Camera">
-      <UniqueIdentifier>{670a3e80-199f-465f-99b6-036585d12551}</UniqueIdentifier>
+    <Filter Include="program\[004] game\[004]scenePlay\[06]Collision">
+      <UniqueIdentifier>{68fc02bc-aecb-4727-bb11-6d8ea522244e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -198,10 +201,10 @@
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Player\Player.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[01]Player</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[1]Player</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\Enemy.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Map\Map.cpp">
       <Filter>program\[004] game\[004]scenePlay\[02]Map</Filter>
@@ -210,40 +213,43 @@
       <Filter>program\[004] game\[004]scenePlay\[03]Item</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Camera\Camera.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[04]Camera</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[05]Camera</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Collision\Collision.cpp">
       <Filter>program\[004] game\[004]scenePlay\[06]Collision</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyLoad.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemySlim.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyDoragon.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyMasician.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyFairy.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyPlant.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyBird.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyKobold.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
     <ClCompile Include="program\game\SceneAll\Balloon.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
     <ClCompile Include="program\game\SceneAll\UI.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Effect\EffectPlayer.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -384,10 +390,10 @@
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Player\Player.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[01]Player</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[1]Player</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\Enemy.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Character.h">
       <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
@@ -399,40 +405,43 @@
       <Filter>program\[004] game\[004]scenePlay\[03]Item</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Camera\Camera.h">
-      <Filter>program\[004] game\[004]scenePlay\[04]Camera</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[05]Camera</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Collision\Collision.h">
       <Filter>program\[004] game\[004]scenePlay\[06]Collision</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyLoad.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemySlim.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyDoragon.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyMasician.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyFairy.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyPlant.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyBird.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyKobold.h">
-      <Filter>program\[004] game\[004]scenePlay\[01]Character\[02]Enemy</Filter>
+      <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
     <ClInclude Include="program\game\SceneAll\Balloon.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
     <ClInclude Include="program\game\SceneAll\UI.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Effect\EffectPlayer.h">
+      <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

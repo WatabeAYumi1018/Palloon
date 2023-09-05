@@ -44,6 +44,8 @@ namespace wta
                 currentFrame = currentAnim->animImage.size() - 1;
             }
         }
+        //ü•ª‚Æ‚Ì“–‚½‚è”»’è••â³”­¶’†‚Íangle‚ğ45“x‚ÉŒÅ’è
+        
         DrawRotaGraph(static_cast<int>(pos.x), static_cast<int>(pos.y), scale, tnl::ToRadian(angle), currentAnim->animImage[currentFrame], TRUE);
     }
 }

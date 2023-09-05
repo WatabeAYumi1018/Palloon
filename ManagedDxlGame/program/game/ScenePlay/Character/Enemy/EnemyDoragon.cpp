@@ -2,7 +2,7 @@
 #include "EnemyDoragon.h"
 #include "../Player/Player.h"
 
-EnemyDoragon::EnemyDoragon(const sEnemyData& data, const sEnemyInfo& info) :
+EnemyDoragon::EnemyDoragon(const sEnemyData& data, const sEnemyInfo& info, Player* player) :
     Enemy(data, info, m_player)
 {
 

@@ -59,6 +59,11 @@ void Player::MoveHandle(float delta_time)
 		{
 			m_pos.x += PLAYER_VELOCITY_X * delta_time;
 		}
+		//右と上を同時に押す＋Lineの当たり判定が発生している場合は斜め上へ移動
+		if (tnl::Input::IsKeyDown(eKeys::KB_UP)) 
+		{
+		
+		}
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
 	{
@@ -78,33 +83,41 @@ void Player::MoveHandle(float delta_time)
 	{
 		//攻撃処理
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) && m_jump_count < PLAYER_JUMP_MAX_COUNT)
+	if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))//&& m_jump_count < PLAYER_JUMP_MAX_COUNT
 	{
-		m_is_jump = true;
-		m_is_ground = false;
-		m_jump_count++;
+			m_pos.y -= PLAYER_VELOCITY_Y * delta_time*5;
 	}
-	//ジャンプ中
-	if (m_is_jump)
-	{
-		if (m_jump_time > 0)
-		{
-			m_pos.y -= m_jump_height.y * delta_time;
-			m_jump_height.y -= m_gravity.y * delta_time;
-			m_jump_time -= delta_time;
-		}
-		else
-		{
-			m_is_falling = true;						// ジャンプ上昇終了後、急速に落下
-			//m_pos.y += (m_gravity.y * delta_time) * 5;	// ここの5は急速に落下する速度の倍率
-		}
-	}
-	//着地？
-	else
-	{
-		m_is_falling = false;
-		m_jump_count = 0;								//カウントリセット
-	}
+	//あとで
+	//	m_is_jump = true;
+	//	m_is_ground = false;
+	//	m_jump_count++;
+	//}
+	////ジャンプ中
+	//if (m_is_jump)
+	//{
+	//	if (m_jump_time > 0)
+	//	{
+	//		m_pos.y -= m_jump_height.y * delta_time;
+	//		m_jump_height.y -= m_gravity.y  * delta_time;
+	//		m_jump_time -= delta_time;
+	//	}
+	//	else
+	//	{
+	//		//m_is_falling = true;						// ジャンプ上昇終了後、急速に落下
+	//		m_is_jump = true;
+	//		//m_pos.y += (m_gravity.y * delta_time) * 5;	// ここの5は急速に落下する速度の倍率
+	//	}
+	//}
+	////着地
+	//else
+	//{
+	//	m_is_jump = false;
+	//	m_is_falling = false;
+	//	m_is_ground = true;
+	//	m_jump_count = 0;								//カウントリセット
+	//	m_jump_height.y= 200;			//ジャンプの高さをリセット
+	//	m_jump_time = 10;					//ジャンプ時間をリセット
+	//}
 }
 
 //状況によってセットするアニメーションIDを変える(ID番号はcsvにて確認)

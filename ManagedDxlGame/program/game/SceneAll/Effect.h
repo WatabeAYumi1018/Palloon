@@ -1,16 +1,19 @@
 #pragma once
-
 #include "GameObject.h"
 
-class Effect : public GameObject
+class Player;
 
+class Effect : public GameObject
 {
 public:
-	Effect(tnl::Vector3 m_pos);
-	virtual ~Effect();
+	Effect(tnl::Vector3 m_pos,Player *player) :GameObject(m_pos){}
+	virtual ~Effect() {}
 
-	//-----メンバ関数-----//
+protected:
+	//-----メンバ変数-----//
+	int m_size = 20;						/*サイズ*/
+	tnl::Vector3 m_velocity = {1000,0,0};		/*速度*/
+	eEffectType m_type;				/*エフェクトの種類*/
 
-	void Update(float delta_time);
-	void Draw(float delta_time, const Camera* camera);
+	Player* m_player = nullptr;		/*プレイヤー*/
 };

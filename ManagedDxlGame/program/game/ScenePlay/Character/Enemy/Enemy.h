@@ -27,7 +27,7 @@ protected:
 	std::default_random_engine m_generator;								//ジェネレーター（乱数分布と組み合わせて生成）
 	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f };	//乱数調節（idle→move）
 
-	Player* m_player = nullptr;		//審議
+	Player* m_player = nullptr;		
 
 	//-----メンバ関数-----//
 	float DistanceCalc();						//プレイヤーとの距離計算

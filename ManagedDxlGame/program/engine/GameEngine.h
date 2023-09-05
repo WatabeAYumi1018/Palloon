@@ -30,3 +30,12 @@ struct sEnemyInfo
 	int s_hp;
 	int s_size;
 };
+
+enum class eEffectType
+{
+	None,
+	Box,
+	Circle,
+	Line,
+	Max
+};

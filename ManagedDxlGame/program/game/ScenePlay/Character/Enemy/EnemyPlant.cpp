@@ -2,7 +2,7 @@
 #include "EnemyPlant.h"
 #include "../Player/Player.h"
 
-EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info) :
+EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info, Player* player) :
     Enemy(data, info, m_player)
 {
 

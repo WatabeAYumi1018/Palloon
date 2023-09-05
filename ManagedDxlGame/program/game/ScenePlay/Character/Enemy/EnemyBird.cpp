@@ -2,7 +2,7 @@
 #include "EnemyBird.h"
 #include "../Player/Player.h"
 
-EnemyBird::EnemyBird(const sEnemyData& data, const sEnemyInfo& info) :
+EnemyBird::EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player) :
     Enemy(data, info, m_player)
 {
 

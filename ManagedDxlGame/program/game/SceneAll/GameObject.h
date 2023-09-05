@@ -11,7 +11,7 @@ class GameObject
 public:
 
 	GameObject(const tnl::Vector3& pos) : m_pos(pos) {}
-	virtual ~GameObject() {  }
+	virtual ~GameObject() {}
 
 protected:
 

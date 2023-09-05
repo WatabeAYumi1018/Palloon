@@ -4,6 +4,7 @@
 
 class Camera;
 
+
 //プレイヤーのクラス
 //主にボタン操作の挙動処理を行う
 //描画についての主な定義はwta_LoadAnim, wta_DrawAnimにて
@@ -31,13 +32,12 @@ private:
 	int m_hp_hdl = 0;									//HP画像
 	int m_jump_count = 0;								//ジャンプ回数
 	float m_jump_time = 10;								//ジャンプ時間
-	tnl::Vector3 m_jump_height = { 0,500,0 };			//ジャンプ高さ
+	tnl::Vector3 m_jump_height = { 0,200,0 };			//ジャンプ高さ
 
 	//フラグ
 	bool m_is_jump = false;								//ジャンプ中
 	bool m_is_falling = false;							//落下中
 	bool m_was_ground = false;							//前フレームの接地判定
-	bool m_is_dirction_right = true;					//向き
 
 public:
 	//-----メンバ関数-----//

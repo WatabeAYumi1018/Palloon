@@ -13,7 +13,7 @@ private:
 
 	//-----ƒƒ“ƒo•Ï”-----//
 	tnl::Vector3 m_target = { 0, 0, 0 };
-	bool is_active = false;
+	bool m_is_active = false;
 
 public:
 

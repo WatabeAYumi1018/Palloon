@@ -2,7 +2,7 @@
 #include "EnemyKobold.h"
 #include "../Player/Player.h"
 
-EnemyKobold::EnemyKobold(const sEnemyData& data, const sEnemyInfo& info) :
+EnemyKobold::EnemyKobold(const sEnemyData& data, const sEnemyInfo& info, Player* player) :
     Enemy(data, info,m_player)
 {
 
