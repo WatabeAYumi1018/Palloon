@@ -120,10 +120,8 @@ void ScenePlay::Update(float delta_time)
 
 	CreateEffect();
 
-	CollisionCheckEnemy();
+	CollisionCheck();
 	
-	CheckEffectDuration();
-
 	RemoveAndDelete();
 
 	for (auto obj : m_gameObjects)
@@ -167,18 +165,7 @@ bool ScenePlay::SeqIdle(float delta_time)
 	return true;
 }
 
-void ScenePlay::CheckEffectDuration()
-{
-	for (auto effect : m_effects)
-	{
-		if (effect->GetElapsedTime() > effect->GetDuration())
-		{
-			m_effectsRemoveList.emplace_back(effect);
-		}
-	}
-}
-
-void ScenePlay::CollisionCheckEnemy()
+void ScenePlay::CollisionCheck()
 {
     for (auto enemy : m_enemies)
     {
@@ -187,7 +174,13 @@ void ScenePlay::CollisionCheckEnemy()
 
         for (auto effect : m_effects)
         {
-            if (wta::IsIntersectCircleCircle(effect->GetPos(), effect->GetSize(), enemy->GetPos(), enemy->GetSize()))
+			if (!effect->GetIsMoved()) 
+			{
+				m_effectsRemoveList.emplace_back(effect);
+				continue;
+			}
+
+			if(wta::IsIntersectCircleCircle(effect->GetPos(), effect->GetSize(), enemy->GetPos(), enemy->GetSize()))
             {
                 enemy->SetIsDead(true);
                 effect->SetIsMoved(false);

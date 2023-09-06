@@ -6,93 +6,6 @@
 
 namespace wta 
 {
-	//---------------------------------------------------------------------------------------------
-	//‰~‚Æü•ª‚Ì“–‚½‚è”»’èŒvŽZ
-	bool IsIntersectCircleLine(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd)
-	{
-		int circle_squared = CircleSize * CircleSize;		//‰~‚Ì”¼Œa‚Ì2æ
-		//‡@ü•ª‚ÌŽn“_‚ÆI“_‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
-		tnl::Vector3 lineVec = lineEnd - lineStart;
-		//‡Aü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
-		tnl::Vector3 circleVec = circle - lineStart;
-		//‡Bü•ª‚Ì’·‚³‚Ì2æ‚ð‹‚ß‚é
-		float lineLengthPow = lineVec.x * lineVec.x + lineVec.y * lineVec.y;
-		//‡Cü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ð‹‚ß‚éi“àÏj
-		float dotProduct = lineVec.x * circleVec.x + lineVec.y * circleVec.y;
-		//‡Dü•ªã‚ÌŒð“_‚ðŒvŽZ
-		float t = dotProduct / lineLengthPow;
-		//‡Et‚ª0~1‚ÌŠÔ‚É‚ ‚éê‡Fü•ªã‚ÉŒð“_‚ª‘¶Ý‚·‚é
-		if (t >= 0 && t <= 1.0f)
-		{
-			//‡E-1Œð“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ðŒvŽZ
-			tnl::Vector3 intersectionPoint;
-			intersectionPoint.x = lineStart.x + t * lineVec.x;
-			intersectionPoint.y = lineStart.y + t * lineVec.y;
-			//‡E-2‹——£‚Ì2æ‚ðŒvŽZ
-			float distanceSquared = (intersectionPoint.x - circle.x) * (intersectionPoint.x - circle.x) +
-				(intersectionPoint.y - circle.y) * (intersectionPoint.y - circle.y);
-			//‡E-3‰~‚Ì”¼Œa‚Ì2æ‚æ‚è¬‚³‚¢ê‡F‰~‚Æü•ª‚Íd‚È‚é
-			if (distanceSquared <= circle_squared)
-			{
-				return true;
-			}
-		}
-		//‡Ft‚ªŠO‚É‚ ‚éê‡iü•ª—¼’[‚Ì“_‚Æ‰~‚Ì“–‚½‚è”»’è‚ðŒvŽZ‚·‚éj
-		else 
-		{
-			//‡F-1ü•ª‚ÌŽn“_‚Æ‰~‚Ì’†S‚Ì‹——£‚ðŒvŽZ
-			tnl::Vector3 distance_start = lineStart - circle;
-			//‡F-2ü•ª‚ÌI“_‚Æ‰~‚Ì’†S‚Ì‹——£‚ðŒvŽZ
-			tnl::Vector3 distance_end = lineEnd - circle;
-			//‡F-3‚»‚ê‚¼‚ê‚Ì’·‚³‚ðŒvŽZ
-			float distance_start_squared = distance_start.x * distance_start.x + distance_start.y * distance_start.y;
-			float distance_end_squared = distance_end.x * distance_end.x + distance_end.y * distance_end.y;
-			//‡F-4‰~‚Ì”¼Œa‚Ì2æ‚æ‚è¬‚³‚¢ê‡A‰~‚Æü•ª‚Íd‚È‚é
-			if (distance_start_squared <= circle_squared || distance_end_squared <= circle_squared) 
-			{ 
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	//‰~‚Æü•ª‚ÌÀ•W•â³
-	tnl::Vector3 CorrectCircleLineCollision(const tnl::Vector3& circle, const int CircleSize,
-		const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd)
-	{
-		if (!IsIntersectCircleLine(circle, CircleSize, lineStart, lineEnd)) 
-		{
-			return circle; // Õ“Ë‚µ‚Ä‚¢‚È‚¢ê‡AŒ³‚ÌÀ•W‚ð‚»‚Ì‚Ü‚Ü•Ô‚·
-		}
-		//Œ»Ý‚ÌÀ•W‚ð•ÛŽ
-		tnl::Vector3 correctedCirclePos = circle;
-		//ü•ª‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
-		tnl::Vector3 lineVec = lineEnd - lineStart;
-		//ü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
-		tnl::Vector3 circleVec = circle - lineStart;
-		//ü•ª‚Ì’·‚³‚Ì2æ‚ð‹‚ß‚é
-		float lineLength = lineVec.x * lineVec.x + lineVec.y * lineVec.y;
-		//ü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ð‹‚ß‚éi“àÏj
-		float dotProduct = lineVec.x * circleVec.x + lineVec.y * circleVec.y;
-		//ü•ªã‚ÌŒð“_‚ðŒvŽZ
-		float t = dotProduct / lineLength;
-		//Œð“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ðŒvŽZ
-		tnl::Vector3 intersectionPoint;
-		intersectionPoint.x = lineStart.x + t * lineVec.x;
-		intersectionPoint.y = lineStart.y + t * lineVec.y;
-
-		//ª‚±‚±‚Ü‚Å‚ÍboolŠÖ”‚Æ“¯‚¶‚¾‚©‚çAŠÖ”‰»‚µ‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à
-		//Œð“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
-		tnl::Vector3 fromIntersectionToCircle = circle - intersectionPoint;
-		//ƒxƒNƒgƒ‹‚Ì³‹K‰»
-		tnl::Vector3 normalizedDir = tnl::Vector3::Normalize(fromIntersectionToCircle);
-		//‰~‚Ì’†SÀ•W‚ðŒð“_‚©‚ç‰~‚Ì”¼Œa•ª—£‚·‚ê‚ÎAü•ª‚Æ‰~‚Íd‚È‚ç‚È‚¢
-		correctedCirclePos = intersectionPoint + normalizedDir * CircleSize;
-
-		return correctedCirclePos;
-	}
-
-	//---------------------------------------------------------------------------------------------
 	//‰~“¯Žm‚Ì“–‚½‚è”»’èŒvŽZ
 	bool IsIntersectCircleCircle(const tnl::Vector3& pos1, float radius1, const tnl::Vector3& pos2, float radius2)
 	{	
@@ -102,6 +15,96 @@ namespace wta
 		// 2‚Â‚Ì‰~‚Ì”¼Œa‚Ì˜a‚Æ‚Ì”äŠr
 		return distance < (radius1 + radius2);
 	}
+
+
+	//---------------------------------------------------------------------------------------------
+	// 
+	////‰~‚Æü•ª‚Ì“–‚½‚è”»’èŒvŽZ
+	//bool IsIntersectCircleLine(const tnl::Vector3& circle, const int CircleSize, const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd)
+	//{
+	//	int circle_squared = CircleSize * CircleSize;		//‰~‚Ì”¼Œa‚Ì2æ
+	//	//‡@ü•ª‚ÌŽn“_‚ÆI“_‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
+	//	tnl::Vector3 lineVec = lineEnd - lineStart;
+	//	//‡Aü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
+	//	tnl::Vector3 circleVec = circle - lineStart;
+	//	//‡Bü•ª‚Ì’·‚³‚Ì2æ‚ð‹‚ß‚é
+	//	float lineLengthPow = lineVec.x * lineVec.x + lineVec.y * lineVec.y;
+	//	//‡Cü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ð‹‚ß‚éi“àÏj
+	//	float dotProduct = lineVec.x * circleVec.x + lineVec.y * circleVec.y;
+	//	//‡Dü•ªã‚ÌŒð“_‚ðŒvŽZ
+	//	float t = dotProduct / lineLengthPow;
+	//	//‡Et‚ª0~1‚ÌŠÔ‚É‚ ‚éê‡Fü•ªã‚ÉŒð“_‚ª‘¶Ý‚·‚é
+	//	if (t >= 0 && t <= 1.0f)
+	//	{
+	//		//‡E-1Œð“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ðŒvŽZ
+	//		tnl::Vector3 intersectionPoint;
+	//		intersectionPoint.x = lineStart.x + t * lineVec.x;
+	//		intersectionPoint.y = lineStart.y + t * lineVec.y;
+	//		//‡E-2‹——£‚Ì2æ‚ðŒvŽZ
+	//		float distanceSquared = (intersectionPoint.x - circle.x) * (intersectionPoint.x - circle.x) +
+	//			(intersectionPoint.y - circle.y) * (intersectionPoint.y - circle.y);
+	//		//‡E-3‰~‚Ì”¼Œa‚Ì2æ‚æ‚è¬‚³‚¢ê‡F‰~‚Æü•ª‚Íd‚È‚é
+	//		if (distanceSquared <= circle_squared)
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	//‡Ft‚ªŠO‚É‚ ‚éê‡iü•ª—¼’[‚Ì“_‚Æ‰~‚Ì“–‚½‚è”»’è‚ðŒvŽZ‚·‚éj
+	//	else 
+	//	{
+	//		//‡F-1ü•ª‚ÌŽn“_‚Æ‰~‚Ì’†S‚Ì‹——£‚ðŒvŽZ
+	//		tnl::Vector3 distance_start = lineStart - circle;
+	//		//‡F-2ü•ª‚ÌI“_‚Æ‰~‚Ì’†S‚Ì‹——£‚ðŒvŽZ
+	//		tnl::Vector3 distance_end = lineEnd - circle;
+	//		//‡F-3‚»‚ê‚¼‚ê‚Ì’·‚³‚ðŒvŽZ
+	//		float distance_start_squared = distance_start.x * distance_start.x + distance_start.y * distance_start.y;
+	//		float distance_end_squared = distance_end.x * distance_end.x + distance_end.y * distance_end.y;
+	//		//‡F-4‰~‚Ì”¼Œa‚Ì2æ‚æ‚è¬‚³‚¢ê‡A‰~‚Æü•ª‚Íd‚È‚é
+	//		if (distance_start_squared <= circle_squared || distance_end_squared <= circle_squared) 
+	//		{ 
+	//			return true;
+	//		}
+	//	}
+	//	return false;
+	//}
+	//
+	////‰~‚Æü•ª‚ÌÀ•W•â³
+	//tnl::Vector3 CorrectCircleLineCollision(const tnl::Vector3& circle, const int CircleSize,
+	//	const tnl::Vector3& lineStart, const tnl::Vector3& lineEnd)
+	//{
+	//	if (!IsIntersectCircleLine(circle, CircleSize, lineStart, lineEnd)) 
+	//	{
+	//		return circle; // Õ“Ë‚µ‚Ä‚¢‚È‚¢ê‡AŒ³‚ÌÀ•W‚ð‚»‚Ì‚Ü‚Ü•Ô‚·
+	//	}
+	//	//Œ»Ý‚ÌÀ•W‚ð•ÛŽ
+	//	tnl::Vector3 correctedCirclePos = circle;
+	//	//ü•ª‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
+	//	tnl::Vector3 lineVec = lineEnd - lineStart;
+	//	//ü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
+	//	tnl::Vector3 circleVec = circle - lineStart;
+	//	//ü•ª‚Ì’·‚³‚Ì2æ‚ð‹‚ß‚é
+	//	float lineLength = lineVec.x * lineVec.x + lineVec.y * lineVec.y;
+	//	//ü•ª‚ÌŽn“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ð‹‚ß‚éi“àÏj
+	//	float dotProduct = lineVec.x * circleVec.x + lineVec.y * circleVec.y;
+	//	//ü•ªã‚ÌŒð“_‚ðŒvŽZ
+	//	float t = dotProduct / lineLength;
+	//	//Œð“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚Ì‹——£‚ðŒvŽZ
+	//	tnl::Vector3 intersectionPoint;
+	//	intersectionPoint.x = lineStart.x + t * lineVec.x;
+	//	intersectionPoint.y = lineStart.y + t * lineVec.y;
+
+	//	//ª‚±‚±‚Ü‚Å‚ÍboolŠÖ”‚Æ“¯‚¶‚¾‚©‚çAŠÖ”‰»‚µ‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à
+	//	//Œð“_‚©‚ç‰~‚Ì’†S‚Ü‚Å‚ÌƒxƒNƒgƒ‹‚ð‹‚ß‚é
+	//	tnl::Vector3 fromIntersectionToCircle = circle - intersectionPoint;
+	//	//ƒxƒNƒgƒ‹‚Ì³‹K‰»
+	//	tnl::Vector3 normalizedDir = tnl::Vector3::Normalize(fromIntersectionToCircle);
+	//	//‰~‚Ì’†SÀ•W‚ðŒð“_‚©‚ç‰~‚Ì”¼Œa•ª—£‚·‚ê‚ÎAü•ª‚Æ‰~‚Íd‚È‚ç‚È‚¢
+	//	correctedCirclePos = intersectionPoint + normalizedDir * CircleSize;
+
+	//	return correctedCirclePos;
+	//}
+
+	//---------------------------------------------------------------------------------------------
 
 	//‰~‚Æ‰~‚ÌÀ•W•â³
 	//tnl::Vector3 CorrectCircleCircleOverlap(const tnl::Vector3& circle01, const int CircleSize01,

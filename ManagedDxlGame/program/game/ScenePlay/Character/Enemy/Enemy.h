@@ -22,6 +22,8 @@ protected:
 	int m_type_id;											/*敵のタイプID*/
 	std::string m_type;										/*敵のタイプ*/
 	std::string m_color;									/*敵の色*/
+	bool m_is_dirction_right = true;						/*右向き*/
+
 	float m_moveTimeCounter = 0.0f;
 
 	std::default_random_engine m_generator;								//ジェネレーター（乱数分布と組み合わせて生成）

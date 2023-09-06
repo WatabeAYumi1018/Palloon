@@ -47,8 +47,7 @@ private:
 	void CreateEffect();
 	bool SeqIdle(float delta_time);
 
-	void CheckEffectDuration();
-	void CollisionCheckEnemy();
+	void CollisionCheck();
 	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);
 	void RemoveAndDeleteEnemy(Enemy *enemy);
 	void RemoveAndDelete();

@@ -24,7 +24,7 @@ private:
 	static constexpr int PLAYER_MAX_HP = 5;				//HP
 
 	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）
-	static constexpr float PLAYER_VELOCITY_Y = 100;
+	static constexpr float PLAYER_VELOCITY_Y = 500;
 
 	static constexpr int PLAYER_JUMP_MAX_COUNT = 3;		//最大ジャンプ回数
 
@@ -39,8 +39,12 @@ private:
 	bool m_is_falling = false;							//落下中
 	bool m_was_ground = false;							//前フレームの接地判定
 
+	bool m_pad_direction_right;							//パッドでの入力方向
+	bool m_key_direction_right;							//キーでの入力方向
+
 	//ゲームスティック用
-	int m_direction;									/*移動方向*/
+	float normalizedInputX;
+	const float DASH_THRESHOLD = 0.8f;					/*ダッシュのしきい値を定義*/
 	int m_input_x;
 	int m_input_y;
 
@@ -56,8 +60,11 @@ public:
 
 private:
 	void HpHandle();						//HPの挙動処理
-	void MoveHandle(float delta_time);		//移動による座標変化
-	void AnimHandle(float delta_time);		//アニメーションの再生
+	void MovePadHandle(float delta_time);	//ゲームパッドスティック操作
+	void MovePadBottonHandle(float delta_time);//ゲームボタン操作
+	void MoveKeyHandle(float delta_time);	//キーボード操作
+	void AnimPadHandle(float delta_time);		//パッド操作でのアニメーションの再生
+	void AnimKeyHandle(float delta_time);		//キーボード操作でのアニメーションの再生
 	void isFlag(float delta_time);
 };
 
