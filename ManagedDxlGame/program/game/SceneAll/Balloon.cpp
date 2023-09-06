@@ -51,3 +51,9 @@ void Balloon::Spawn()
     //);
     //
 }
+
+void Balloon::Finalize()
+{
+	// ƒoƒ‹[ƒ“‚Ì‰æ‘œ‚ğíœ
+	DeleteGraph(m_balloon_hdl);
+}

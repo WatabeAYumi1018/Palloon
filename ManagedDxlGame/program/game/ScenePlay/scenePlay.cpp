@@ -1,11 +1,5 @@
+#include "../../wta_library/wta_IsIntersectCalc.h"
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "ScenePlay.h"
-#include "../SceneTitle/SceneTitle.h"
-#include "../../engine/SceneManager.h"
-#include "../SceneAll/BackGround.h"
-#include "../SceneAll/Balloon.h"
-#include "../ScenePlay/Map/Map.h"
-#include "../SceneAll/UI.h"
 #include "../ScenePlay/Character/Enemy/EnemyLoad.h"
 #include "../ScenePlay/Collision/Collision.h"
 #include "../ScenePlay/Character/Player/Player.h"
@@ -19,6 +13,13 @@
 #include "../ScenePlay/Character/Enemy/EnemyDoragon.h"
 #include "../ScenePlay/Effect/EffectPlayer.h"
 #include "../ScenePlay/Camera/Camera.h"
+#include "../SceneTitle/SceneTitle.h"
+#include "../../engine/SceneManager.h"
+#include "../SceneAll/BackGround.h"
+#include "../SceneAll/Balloon.h"
+#include "../ScenePlay/Map/Map.h"
+#include "../SceneAll/UI.h"
+#include "ScenePlay.h"
 
 
 ScenePlay::ScenePlay()
@@ -102,8 +103,10 @@ void ScenePlay::EffectInit()
 	if (tnl::Input::IsKeyDown(eKeys::KB_Z))
 	{
 		EffectPlayer* effect = new EffectPlayer();
-		effect->SetPos(m_player->GetPos()); // プレイヤーの位置にセット
+		effect->SetPos(m_player->GetPos()); 
+		effect->SetIsFinished(true);
 		m_gameObjects.emplace_back(effect);
+		m_effects.emplace_back(effect);
 	}
 }
 
@@ -117,11 +120,11 @@ void ScenePlay::Update(float delta_time)
 
 	EffectInit();
 
-	for (auto enemy : m_enemies)
-	{
-		m_collision->CollisionCalculate(enemy, m_map, 10);
-		m_collision->CollisionCharacter(m_player, enemy);
-	}
+	CollisionCheckEnemy();
+
+	RemoveAndDelete();
+
+	m_enemiesRemoveList.clear();
 
 	for (auto obj : m_gameObjects)
 	{
@@ -132,6 +135,7 @@ void ScenePlay::Update(float delta_time)
 void ScenePlay::Draw(float delta_time)
 {
 	m_backGround->Draw(delta_time, m_camera);
+
 	m_map->Draw(m_camera);
 
 	for (auto obj : m_gameObjects) 
@@ -146,9 +150,11 @@ void ScenePlay::Finalize()
 	{
 		delete obj;
 	}
+
 	m_backGround->Finalize();
 	m_map->Finalize();
 	m_enemies.clear();
+	m_effects.clear();
 }
 
 bool ScenePlay::SeqIdle(float delta_time)
@@ -159,4 +165,53 @@ bool ScenePlay::SeqIdle(float delta_time)
 		scene->ChangeScene(new SceneTitle());
 	}
 	return true;
+}
+
+void ScenePlay::CollisionCheckEnemy()
+{
+	for (auto enemy : m_enemies)
+	{
+		m_collision->CollisionCalculate(enemy, m_map, 10);
+		m_collision->CollisionCharacter(m_player, enemy);
+
+		for (auto effect : m_effects)
+		{
+			if (!enemy->GetIsDead() && effect->GetIsFinished() &&
+				wta::IsIntersectCircleCircle(effect->GetPos(), effect->GetSize(), enemy->GetPos(), enemy->GetSize())
+				)				
+			{
+				enemy->SetIsDead(true);
+
+				m_enemiesRemoveList.emplace_back(enemy);
+				m_effectsRemoveList.emplace_back(effect);
+			}
+		}
+	}
+}
+
+void ScenePlay::RemoveAndDeleteEffect(EffectPlayer* effect)
+{
+	m_gameObjects.remove(effect);
+	m_effects.remove(effect);
+}
+
+void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
+{
+	m_gameObjects.remove(enemy);
+	m_enemies.remove(enemy);
+}
+
+void ScenePlay::RemoveAndDelete()
+{
+	for (auto effect : m_effectsRemoveList)
+	{
+		RemoveAndDeleteEffect(effect);
+	}
+
+	m_effectsRemoveList.clear();
+
+	for (auto enemy : m_enemiesRemoveList)
+	{
+		RemoveAndDeleteEnemy(enemy);
+	}
 }

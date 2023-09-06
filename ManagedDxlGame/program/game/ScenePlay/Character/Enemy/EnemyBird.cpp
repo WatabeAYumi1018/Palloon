@@ -10,7 +10,7 @@ EnemyBird::EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* pla
 
 EnemyBird::~EnemyBird()
 {
-    delete animLoader;
+ 
 }
 
 void EnemyBird::Update(float delta_time)

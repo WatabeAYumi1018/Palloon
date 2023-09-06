@@ -10,7 +10,7 @@ EnemyFairy::EnemyFairy(const sEnemyData& data, const sEnemyInfo& info, Player* p
 
 EnemyFairy::~EnemyFairy()
 {
-    delete animLoader;
+
 }
 
 void EnemyFairy::Update(float delta_time)

@@ -10,7 +10,7 @@ EnemyMasician::EnemyMasician(const sEnemyData& data, const sEnemyInfo& info, Pla
 
 EnemyMasician::~EnemyMasician()
 {
-    delete animLoader;
+
 }
 
 void EnemyMasician::Update(float delta_time)

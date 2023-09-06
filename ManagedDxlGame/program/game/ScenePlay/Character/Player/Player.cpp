@@ -193,7 +193,6 @@ void Player::AnimHandle(float delta_time)
 
 void Player::Finalize()
 {
-	delete animLoader;
-	animLoader = nullptr;
+
 }
 

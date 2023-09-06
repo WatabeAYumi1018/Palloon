@@ -7,6 +7,7 @@ class Player;
 class EffectPlayer : public Effect
 {
 public:
+
 	EffectPlayer();
 	~EffectPlayer();
 

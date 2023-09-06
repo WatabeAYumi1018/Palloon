@@ -26,6 +26,7 @@ public:
     void Initialize() override;
     void Update(float delta_time) override;
     void Draw(float delta_time, const Camera* camera) override;
+    void Finalize() override;
     void Spawn();
 
     //-----Getter&Setter-----//

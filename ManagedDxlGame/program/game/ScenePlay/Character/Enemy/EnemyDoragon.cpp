@@ -10,7 +10,7 @@ EnemyDoragon::EnemyDoragon(const sEnemyData& data, const sEnemyInfo& info, Playe
 
 EnemyDoragon::~EnemyDoragon()
 {
-    delete animLoader;
+
 }
 
 void EnemyDoragon::Update(float delta_time)

@@ -33,17 +33,23 @@ public:
 
 private:
 	
-	std::vector<GameObject*> m_gameObjects;
+	std::list<GameObject*> m_gameObjects;
 	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
 	
-	std::vector<Enemy*> m_enemies;			 // 敵のリスト
-	std::map<int, sEnemyInfo> m_enemyInfos;  // 敵の情報リスト
-	std::vector<EffectPlayer*> m_effects;	 /*エフェクト*/
+	std::list<Enemy*> m_enemies;					// 敵のリスト
+	std::map<int, sEnemyInfo> m_enemyInfos;			// 敵の情報リスト
+	std::list<EffectPlayer*> m_effects;				/*エフェクト*/
+
+	std::list<Enemy*> m_enemiesRemoveList;			/*削除予定の敵*/
+	std::list<EffectPlayer*> m_effectsRemoveList;	/*削除予定のエフェクト*/
 
 	void EnemyInit();
 	void EffectInit();
 	bool SeqIdle(float delta_time);
-
+	void CollisionCheckEnemy();
+	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);
+	void RemoveAndDeleteEnemy(Enemy *enemy);
+	void RemoveAndDelete();
 
 	//遷移後、back,Map,UI,Player,Enemyなどを描画する
 	//現在のシーンで描画するグラフィックを変える

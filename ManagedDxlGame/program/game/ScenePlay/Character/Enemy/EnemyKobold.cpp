@@ -10,7 +10,7 @@ EnemyKobold::EnemyKobold(const sEnemyData& data, const sEnemyInfo& info, Player*
 
 EnemyKobold::~EnemyKobold()
 {
-    delete animLoader;
+
 }
 
 void EnemyKobold::Update(float delta_time)

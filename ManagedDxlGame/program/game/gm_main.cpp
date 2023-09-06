@@ -52,8 +52,6 @@ void gameMain(float delta_time) {
 	////ゲームスティックでの移動テスト
 	//int xInput, yInput;
 	//if(GetJoypadAnalogInput(&xInput, &yInput, DX_INPUT_PAD1));
-
-
 	//// あるスピード定数に入力値を掛けてキャラクターの移動量を得る
 	//float speed = 0.05; // この値は調整が必要
 	//characterPos.x += xInput * speed;

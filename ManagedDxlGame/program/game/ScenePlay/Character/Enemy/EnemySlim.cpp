@@ -10,7 +10,7 @@ EnemySlim::EnemySlim(const sEnemyData& data, const sEnemyInfo& info,Player* play
 
 EnemySlim::~EnemySlim() 
 {
-    delete animLoader;
+
 }
 
 void EnemySlim::Update(float delta_time)
@@ -32,7 +32,8 @@ void EnemySlim::Draw(float delta_time, const Camera* camera)
 
 bool EnemySlim::SeqMove(float delta_time)
 {
-    if (m_player) {
+    if (m_player) 
+    {
         float chance = m_distribution(m_generator);
 
         //moveÅ®idleÇÃämó¶
@@ -75,6 +76,7 @@ bool EnemySlim::SeqMove(float delta_time)
         {
             m_moveTimeCounter = 0.0f;
         }
+
         tnl_sequence_.change(&Enemy::SeqMove);
         TNL_SEQ_CO_END;
     }

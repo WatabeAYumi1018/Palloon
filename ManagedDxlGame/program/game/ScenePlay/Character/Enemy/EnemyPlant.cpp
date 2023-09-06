@@ -10,7 +10,7 @@ EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info, Player* p
 
 EnemyPlant::~EnemyPlant()
 {
-    delete animLoader;
+
 }
 
 void EnemyPlant::Update(float delta_time)

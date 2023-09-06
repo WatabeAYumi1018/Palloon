@@ -18,6 +18,7 @@ public:
 	virtual ~Character() 
 	{
 		delete animLoader;
+		animLoader = nullptr;
 	}
 
 	//-----ƒƒ“ƒo•Ï”-----//
@@ -40,6 +41,9 @@ public:
 	//-----Setter,Getter-----//
 	int GetSize() const { return m_size; }
 	int GetHp() const { return m_hp; }
+
+	int GetIsDead() const { return m_is_dead; }
+	void SetIsDead(bool is_dead) { m_is_dead = is_dead; }
 
 	tnl::Vector3 GetVelocity() const { return m_velocity; }
 	void SetVelocity(tnl::Vector3 velocity) { m_velocity = velocity; }
