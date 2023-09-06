@@ -39,6 +39,11 @@ private:
 	bool m_is_falling = false;							//落下中
 	bool m_was_ground = false;							//前フレームの接地判定
 
+	//ゲームスティック用
+	int m_direction;									/*移動方向*/
+	int m_input_x;
+	int m_input_y;
+
 public:
 	//-----メンバ関数-----//
 	void Initialize() override;

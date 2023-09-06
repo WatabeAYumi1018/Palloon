@@ -45,48 +45,90 @@ void Player::Draw(float delta_time, const Camera* camera)
 void Player::MoveHandle(float delta_time)
 {
 	//重力で下に落ちる
-	m_pos.y += m_gravity.y * delta_time ;
+	m_pos.y += m_gravity.y * delta_time;
 
-	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT))
+	GetJoypadAnalogInput(&m_input_x, &m_input_y, DX_INPUT_PAD1);
+
+	// 入力を正規化 (0から1の範囲にする)
+	float normalizedInputX = m_input_x / 1000.0f; // -1.0から1.0の範囲
+
+	// ダッシュのしきい値を定義
+	const float DASH_THRESHOLD = 0.8f;
+
+	// 速度の倍率を設定
+	float speedMultiplier;
+
+	// 傾きの絶対値がしきい値以上であればダッシュ
+	if (abs(normalizedInputX) > DASH_THRESHOLD)
 	{
-		m_is_dirction_right = true;
+		speedMultiplier = 2.0f; // ダッシュ時の倍率
+	}
+	else
+	{
+		speedMultiplier = 1.0f; // 歩行時の倍率
+	}
 
-		if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
-		{
-			m_pos.x += PLAYER_VELOCITY_X * delta_time * 2;
-		}
+	// キャラクターの移動
+	m_pos.x += normalizedInputX * PLAYER_VELOCITY_X * delta_time * speedMultiplier;
+
+	// アニメーションの切り替え
+	if (normalizedInputX > 0) // 右向き
+	{
+		if (abs(normalizedInputX) > DASH_THRESHOLD)
+			animLoader->SetAnimation(4);  /*dash_right*/
 		else
-		{
-			m_pos.x += PLAYER_VELOCITY_X * delta_time;
-		}
-		//右と上を同時に押す＋Lineの当たり判定が発生している場合は斜め上へ移動
-		if (tnl::Input::IsKeyDown(eKeys::KB_UP)) 
-		{
-		
-		}
+			animLoader->SetAnimation(2);  /*walk_right*/
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
+	else if (normalizedInputX < 0) // 左向き
 	{
-		m_is_dirction_right = false;
-
-		if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
-		{
-			m_pos.x -= PLAYER_VELOCITY_X * delta_time * 2;
-		}
+		if (abs(normalizedInputX) > DASH_THRESHOLD)
+			animLoader->SetAnimation(5);  /*dash_left*/
 		else
-		{
-			m_pos.x -= PLAYER_VELOCITY_X * delta_time;
-		}
+			animLoader->SetAnimation(3);  /*walk_left*/
 	}
-	//zキーで攻撃
-	if (tnl::Input::IsKeyDown(eKeys::KB_Z))
-	{
-		//攻撃処理
-	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))//&& m_jump_count < PLAYER_JUMP_MAX_COUNT
-	{
-			m_pos.y -= PLAYER_VELOCITY_Y * delta_time*5;
-	}
+
+	
+
+	//if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT))
+	//{
+	//	m_is_dirction_right = true;
+
+	//	if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
+	//	{
+	//		m_pos.x += PLAYER_VELOCITY_X * delta_time * 2;
+	//	}
+	//	else
+	//	{
+	//		m_pos.x += PLAYER_VELOCITY_X * delta_time;
+	//	}
+	//	//右と上を同時に押す＋Lineの当たり判定が発生している場合は斜め上へ移動
+	//	if (tnl::Input::IsKeyDown(eKeys::KB_UP)) 
+	//	{
+	//	
+	//	}
+	//}
+	//if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
+	//{
+	//	m_is_dirction_right = false;
+
+	//	if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
+	//	{
+	//		m_pos.x -= PLAYER_VELOCITY_X * delta_time * 2;
+	//	}
+	//	else
+	//	{
+	//		m_pos.x -= PLAYER_VELOCITY_X * delta_time;
+	//	}
+	//}
+	////zキーで攻撃
+	//if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+	//{
+	//	//攻撃処理
+	//}
+	//if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))//&& m_jump_count < PLAYER_JUMP_MAX_COUNT
+	//{
+	//		m_pos.y -= PLAYER_VELOCITY_Y * delta_time*5;
+	//}
 	//あとで
 	//	m_is_jump = true;
 	//	m_is_ground = false;
@@ -123,72 +165,83 @@ void Player::MoveHandle(float delta_time)
 //状況によってセットするアニメーションIDを変える(ID番号はcsvにて確認)
 void Player::AnimHandle(float delta_time)
 {
-	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT))
-	{
-		if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
-		{
-			animLoader->SetAnimation(4);	 /*dash_right*/
-		}
-		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
-		{
-			animLoader->SetAnimation(6);	 /*jump_right*/
-		}
-		else
-		{
-			animLoader->SetAnimation(2);    /*walk_right*/
-		}
-	}
-	else if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
-	{
-		if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
-		{
-			animLoader->SetAnimation(5);	 /*dash_right*/
-		}
-		else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
-		{
-			animLoader->SetAnimation(7);	 /*jump_left*/
-		}
-		else
-		{
-			animLoader->SetAnimation(3);	 /*walk_left*/
-		}
-	}
-	else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
-	{
-		if (m_is_dirction_right)
-		{
-			animLoader->SetAnimation(6);	 /*jump_right*/
-		}
-		else
-		{
-			animLoader->SetAnimation(7);	 /*jump_left*/
-		}
-	}
-	else if (tnl::Input::IsKeyDown(eKeys::KB_Z))
-	{
-		if (m_is_dirction_right)
-		{
-			animLoader->SetAnimation(16);	 /*roll_right*/
-			//再生後、フラグを立ててアイドルに戻す
-			//animLoader->SetAnimation(0);	 /*idle_right*/
-		}
-		else
-		{
-			animLoader->SetAnimation(8);	 /*roll_left*/
-			//animLoader->SetAnimation(1);	 /*idle_left*/
-		}
-	}
-	else
-	{
-		if (m_is_dirction_right)
-		{
-			animLoader->SetAnimation(0);	 /*idle_right*/
-		}
-		else
-		{
-			animLoader->SetAnimation(1);	 /*idle_left*/
-		}
-	}
+	
+
+	//if (m_direction >= 1000)
+	//{
+	//	animLoader->SetAnimation(4);	 /*dash_right*/
+	//}
+	////
+	//{
+	//	animLoader->SetAnimation(0);	 /*idle*/
+	//}
+
+	//if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT))
+	//{
+	//	if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
+	//	{
+	//		animLoader->SetAnimation(4);	 /*dash_right*/
+	//	}
+	//	else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
+	//	{
+	//		animLoader->SetAnimation(6);	 /*jump_right*/
+	//	}
+	//	else
+	//	{
+	//		animLoader->SetAnimation(2);    /*walk_right*/
+	//	}
+	//}
+	//else if (tnl::Input::IsKeyDown(eKeys::KB_LEFT))
+	//{
+	//	if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT))
+	//	{
+	//		animLoader->SetAnimation(5);	 /*dash_right*/
+	//	}
+	//	else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
+	//	{
+	//		animLoader->SetAnimation(7);	 /*jump_left*/
+	//	}
+	//	else
+	//	{
+	//		animLoader->SetAnimation(3);	 /*walk_left*/
+	//	}
+	//}
+	//else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE))
+	//{
+	//	if (m_is_dirction_right)
+	//	{
+	//		animLoader->SetAnimation(6);	 /*jump_right*/
+	//	}
+	//	else
+	//	{
+	//		animLoader->SetAnimation(7);	 /*jump_left*/
+	//	}
+	//}
+	//else if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+	//{
+	//	if (m_is_dirction_right)
+	//	{
+	//		animLoader->SetAnimation(16);	 /*roll_right*/
+	//		//再生後、フラグを立ててアイドルに戻す
+	//		//animLoader->SetAnimation(0);	 /*idle_right*/
+	//	}
+	//	else
+	//	{
+	//		animLoader->SetAnimation(8);	 /*roll_left*/
+	//		//animLoader->SetAnimation(1);	 /*idle_left*/
+	//	}
+	//}
+	//else
+	//{
+	//	if (m_is_dirction_right)
+	//	{
+	//		animLoader->SetAnimation(0);	 /*idle_right*/
+	//	}
+	//	else
+	//	{
+	//		animLoader->SetAnimation(1);	 /*idle_left*/
+	//	}
+	//}
 }
 
 void Player::Finalize()

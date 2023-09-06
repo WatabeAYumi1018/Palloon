@@ -44,11 +44,11 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(new Balloon());
 	m_gameObjects.emplace_back(m_player);
 
-	EnemyInit();
+	InitEnemy();
 	m_gameObjects.emplace_back(new UI());
 }
 
-void ScenePlay::EnemyInit()
+void ScenePlay::InitEnemy()
 {
 	EnemyLoad enemyLoad;
 	m_enemyInfos = enemyLoad.LoadEnemyInfo("csv/EnemyLoad.csv");
@@ -98,13 +98,13 @@ void ScenePlay::EnemyInit()
 	}
 }
 
-void ScenePlay::EffectInit()
+void ScenePlay::CreateEffect()
 {
-	if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z))
 	{
 		EffectPlayer* effect = new EffectPlayer();
 		effect->SetPos(m_player->GetPos()); 
-		effect->SetIsFinished(true);
+		effect->SetIsMoved(true);
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
 	}
@@ -118,13 +118,13 @@ void ScenePlay::Update(float delta_time)
 	m_camera->Update(delta_time, m_player, m_map);
 	m_map->LoadMapCollision(m_camera);
 
-	EffectInit();
+	CreateEffect();
 
 	CollisionCheckEnemy();
+	
+	CheckEffectDuration();
 
 	RemoveAndDelete();
-
-	m_enemiesRemoveList.clear();
 
 	for (auto obj : m_gameObjects)
 	{
@@ -167,26 +167,36 @@ bool ScenePlay::SeqIdle(float delta_time)
 	return true;
 }
 
-void ScenePlay::CollisionCheckEnemy()
+void ScenePlay::CheckEffectDuration()
 {
-	for (auto enemy : m_enemies)
+	for (auto effect : m_effects)
 	{
-		m_collision->CollisionCalculate(enemy, m_map, 10);
-		m_collision->CollisionCharacter(m_player, enemy);
-
-		for (auto effect : m_effects)
+		if (effect->GetElapsedTime() > effect->GetDuration())
 		{
-			if (!enemy->GetIsDead() && effect->GetIsFinished() &&
-				wta::IsIntersectCircleCircle(effect->GetPos(), effect->GetSize(), enemy->GetPos(), enemy->GetSize())
-				)				
-			{
-				enemy->SetIsDead(true);
-
-				m_enemiesRemoveList.emplace_back(enemy);
-				m_effectsRemoveList.emplace_back(effect);
-			}
+			m_effectsRemoveList.emplace_back(effect);
 		}
 	}
+}
+
+void ScenePlay::CollisionCheckEnemy()
+{
+    for (auto enemy : m_enemies)
+    {
+        m_collision->CollisionCalculate(enemy, m_map, 10);
+        m_collision->CollisionCharacter(m_player, enemy);
+
+        for (auto effect : m_effects)
+        {
+            if (wta::IsIntersectCircleCircle(effect->GetPos(), effect->GetSize(), enemy->GetPos(), enemy->GetSize()))
+            {
+                enemy->SetIsDead(true);
+                effect->SetIsMoved(false);
+
+                m_enemiesRemoveList.emplace_back(enemy);
+				m_effectsRemoveList.emplace_back(effect);
+            }
+        }
+    }
 }
 
 void ScenePlay::RemoveAndDeleteEffect(EffectPlayer* effect)
@@ -214,4 +224,6 @@ void ScenePlay::RemoveAndDelete()
 	{
 		RemoveAndDeleteEnemy(enemy);
 	}
+
+	m_enemiesRemoveList.clear();
 }

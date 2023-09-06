@@ -43,9 +43,11 @@ private:
 	std::list<Enemy*> m_enemiesRemoveList;			/*削除予定の敵*/
 	std::list<EffectPlayer*> m_effectsRemoveList;	/*削除予定のエフェクト*/
 
-	void EnemyInit();
-	void EffectInit();
+	void InitEnemy();
+	void CreateEffect();
 	bool SeqIdle(float delta_time);
+
+	void CheckEffectDuration();
 	void CollisionCheckEnemy();
 	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);
 	void RemoveAndDeleteEnemy(Enemy *enemy);

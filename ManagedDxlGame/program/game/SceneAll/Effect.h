@@ -13,7 +13,7 @@ protected:
 	//-----メンバ変数-----//
 	int m_size = 20;						/*サイズ*/
 	tnl::Vector3 m_velocity = {1000,0,0};	/*速度*/
-	bool m_is_finished = false;				/*終了フラグ*/
+	bool m_is_moved = false;				/*終了フラグ*/
 	float duration = 3.0f;					/*エフェクトの持続時間*/
 	float elapsed_time = 0.0f;				/*経過時間*/
 	eEffectType m_type;						/*エフェクトの種類*/
@@ -22,6 +22,8 @@ protected:
 
 public:
 	int GetSize() const { return m_size; }
-	bool GetIsFinished() const { return m_is_finished; }
-	void SetIsFinished(bool is_finished) { m_is_finished = is_finished; }
+	bool GetIsMoved() const { return m_is_moved; }
+	void SetIsMoved(bool is_moved) { m_is_moved = is_moved; }
+	float GetElapsedTime() const { return elapsed_time; }
+	float GetDuration() const { return duration; }
 };
