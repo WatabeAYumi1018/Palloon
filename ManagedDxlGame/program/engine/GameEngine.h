@@ -1,6 +1,27 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
 
+enum class ePlayerAction
+{
+	Idle_right,
+	Idle_left,
+	Move_right,
+	Move_left,
+	Dash_right,
+	Dash_left,
+	Jump_right,
+	Jump_left,
+	Stamp_right,
+	Stamp_left,
+	Roll_right,
+	Roll_left,
+	Fire_right,
+	Fire_left,
+	Beam_right,
+	Beam_left,
+	Max
+};
+
 enum class eCollisionType
 {
 	None,
@@ -39,3 +60,4 @@ enum class eEffectType
 	Line,
 	Max
 };
+

@@ -2,8 +2,8 @@
 #include "EnemySlim.h"
 #include "../Player/Player.h"
 
-EnemySlim::EnemySlim(const sEnemyData& data, const sEnemyInfo& info,Player* player) :
-    Enemy(data, info, player)
+EnemySlim::EnemySlim(const sEnemyData& data, const sEnemyInfo& info,Player* player, Map* map, Collision* collision) :
+    Enemy(data, info, player,map,collision)
 {
     
 }
@@ -32,26 +32,48 @@ void EnemySlim::Draw(float delta_time, const Camera* camera)
 
 bool EnemySlim::SeqMove(float delta_time)
 {
+    if (tnl_sequence_.isStart())
+    {
+        
+
+
+        
+    }
+
     if (m_player) 
     {
-        float chance = m_distribution(m_generator);
-
-        //move→idleの確率
-        if (chance < 0.001f)
-        {
-            tnl_sequence_.change(&Enemy::SeqIdle);
-        }
-
         //プレイヤーとの距離計算
         if (std::abs(m_pos.x - m_player->GetPos().x) < 100.0f)
         {
-            tnl_sequence_.change(&Enemy::SeqAttack);
+            tnl_sequence_.change(&EnemySlim::SeqAttack);
         }
         DrawStringEx(0, 0, -1, "move");
 
         //経過時間をカウント
-        m_moveTimeCounter += delta_time;
+        //m_moveTimeCounter += delta_time;
 
+        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+                animLoader->SetAnimation(20);
+                
+                //足元の当たり判定を常に計算（当たり判定のIDを取得すればいいだけ）
+
+                m_pos.x += m_velocity.x * delta_time;
+
+                m_is_dirction_right = true;
+        });
+
+        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+                animLoader->SetAnimation(21);
+                m_pos.x -= m_velocity.x * delta_time;
+
+                m_is_dirction_right = false;
+        });
+
+        tnl_sequence_.change(&EnemySlim::SeqIdle);
+
+#if 0
         if (m_moveTimeCounter <= 2.0f)
         {
             TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
@@ -76,21 +98,24 @@ bool EnemySlim::SeqMove(float delta_time)
         {
             m_moveTimeCounter = 0.0f;
         }
+#endif
 
-        tnl_sequence_.change(&Enemy::SeqMove);
         TNL_SEQ_CO_END;
     }
 }
 
+//左右でそれぞれ別々に作る
+//ScenePlayにてCollision判定→移動方向→先の地形みて→移動するかどうか
+
 bool EnemySlim::SeqIdle(float delta_time)
 {
-    DrawStringEx(0, 0, -1, "idle");
+    DrawStringEx(0, 50, -1, "idle");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
         if (m_is_dirction_right) 
         {
-            animLoader->SetAnimation(20);
+            animLoader->SetAnimation(18);
         }
         else
         {
@@ -98,7 +123,7 @@ bool EnemySlim::SeqIdle(float delta_time)
 		}
     });
 
-    tnl_sequence_.change(&Enemy::SeqMove);
+    tnl_sequence_.change(&EnemySlim::SeqMove);
     TNL_SEQ_CO_END;
 }
 
@@ -111,7 +136,7 @@ bool EnemySlim::SeqAttack(float delta_time)
         if (m_is_dirction_right)
         {
 			animLoader->SetAnimation(22);
-            
+            m_pos.x += m_velocity.x * delta_time;
 		}
         else
         {
@@ -120,7 +145,7 @@ bool EnemySlim::SeqAttack(float delta_time)
 		}
     });
 
-    tnl_sequence_.change(&Enemy::SeqMove);
+    tnl_sequence_.change(&EnemySlim::SeqMove);
     TNL_SEQ_CO_END;
 }
 

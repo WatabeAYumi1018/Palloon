@@ -2,8 +2,8 @@
 #include "EnemyPlant.h"
 #include "../Player/Player.h"
 
-EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info, Player* player) :
-    Enemy(data, info, m_player)
+EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info, Player* player,Map *map,Collision *collision) :
+    Enemy(data, info, m_player,map, collision)
 {
 
 }

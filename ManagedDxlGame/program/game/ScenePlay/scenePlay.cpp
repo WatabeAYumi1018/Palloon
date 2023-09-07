@@ -43,7 +43,6 @@ void ScenePlay::Initialize()
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());
 	m_gameObjects.emplace_back(m_player);
-
 	InitEnemy();
 	m_gameObjects.emplace_back(new UI());
 }
@@ -61,40 +60,54 @@ void ScenePlay::InitEnemy()
 		switch (data.s_type_id)
 		{
 		case 0:
-			enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id], m_player);
+			
+			enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id], m_player,m_map,m_collision);
+			
 			break;
 
 		case 1:
-			enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id], m_player);
+			
+			enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			
 			break;
 
 		case 2:
-			enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id], m_player);
+			
+			enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			
 			break;
 
 		case 3:
-			enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id], m_player);
+			
+			enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			
 			break;
 
 		case 4:
-			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player);
+			
+			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			
 			break;
 
 		case 5:
-			enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id], m_player);
+			
+			enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			
 			break;
 
 		case 6:
-			enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id], m_player);
+			
+			enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			
 			break;
 
 		default:
+			
 			continue;	//無効なIDの場合はスキップ
 		}
 
 		m_enemies.emplace_back(enemy);
 		m_gameObjects.emplace_back(enemy);
-		
 	}
 }
 
@@ -132,7 +145,7 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	m_backGround->Draw(delta_time, m_camera);
+	//m_backGround->Draw(delta_time, m_camera);
 
 	m_map->Draw(m_camera);
 
@@ -177,6 +190,7 @@ void ScenePlay::CollisionCheck()
 			if (!effect->GetIsMoved()) 
 			{
 				m_effectsRemoveList.emplace_back(effect);
+
 				continue;
 			}
 

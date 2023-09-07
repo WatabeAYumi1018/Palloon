@@ -7,13 +7,15 @@
 
 class Camera;
 class Player;
+class Map;
+class Collision;
 
 class Enemy :public Character
 {
 
 public:
 
-	Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player);
+	Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player,Map *map,Collision *coiision);
 	virtual ~Enemy() {}
 
 protected:
@@ -30,6 +32,8 @@ protected:
 	std::uniform_real_distribution<float> m_distribution{ 0.0f, 1.0f };	//乱数調節（idle→move）
 
 	Player* m_player = nullptr;		
+	Map * m_map = nullptr;
+	Collision * m_collision = nullptr;
 
 	//-----メンバ関数-----//
 	float DistanceCalc();						//プレイヤーとの距離計算

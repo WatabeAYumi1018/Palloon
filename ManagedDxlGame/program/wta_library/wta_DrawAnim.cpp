@@ -12,7 +12,7 @@ namespace wta
     {
         for (const auto& anim : animations)
         {
-            if (anim.id == id) {
+            if (anim.s_id == id) {
                 //アニメーションの種類が変わった場合は初期化
                 if (currentAnim != &anim)
                 {
@@ -29,23 +29,23 @@ namespace wta
     // アニメーションを描画
     void DrawAnim::Draw(float delta_time, tnl::Vector3 pos, float scale, float angle) 
     {
-        if (!currentAnim || currentAnim->animImage.empty()) return; //現在のアニメーションがない、空の場合何もしない
+        if (!currentAnim || currentAnim->s_animImage.empty()) return; //現在のアニメーションがない、空の場合何もしない
         elapsedTime += delta_time;
         if (elapsedTime >= frameDuration) 
         {
             elapsedTime -= frameDuration;
             ++currentFrame;
-            if (currentAnim->loop) 
+            if (currentAnim->s_loop) 
             {
-                currentFrame %= currentAnim->animImage.size();
+                currentFrame %= currentAnim->s_animImage.size();
             }
-            else if (currentFrame >= currentAnim->animImage.size())
+            else if (currentFrame >= currentAnim->s_animImage.size())
             {
-                currentFrame = currentAnim->animImage.size() - 1;
+                currentFrame = currentAnim->s_animImage.size() - 1;
             }
         }
         //線分との当たり判定＆補正発生中はangleを45度に固定
         
-        DrawRotaGraph(static_cast<int>(pos.x), static_cast<int>(pos.y), scale, tnl::ToRadian(angle), currentAnim->animImage[currentFrame], TRUE);
+        DrawRotaGraph(static_cast<int>(pos.x), static_cast<int>(pos.y), scale, tnl::ToRadian(angle), currentAnim->s_animImage[currentFrame], TRUE);
     }
 }

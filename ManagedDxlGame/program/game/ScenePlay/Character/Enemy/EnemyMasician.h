@@ -11,7 +11,7 @@ class EnemyMasician :public Enemy
 {
 public:
 
-	EnemyMasician(const sEnemyData& data, const sEnemyInfo& info, Player* player);
+	EnemyMasician(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
 	~EnemyMasician();
 
 private:

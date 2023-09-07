@@ -11,7 +11,7 @@ class EnemyFairy :public Enemy
 {
 public:
 	
-	EnemyFairy(const sEnemyData& data, const sEnemyInfo& info, Player* player);
+	EnemyFairy(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
 	~EnemyFairy();
 
 private:

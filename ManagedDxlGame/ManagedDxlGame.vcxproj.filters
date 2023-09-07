@@ -251,6 +251,9 @@
     <ClCompile Include="program\game\ScenePlay\Effect\EffectPlayer.cpp">
       <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
     </ClCompile>
+    <ClCompile Include="program\wta_library\wta_AnimUnit.cpp">
+      <Filter>program\[002]wta_library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -442,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Effect\EffectPlayer.h">
       <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="program\wta_library\wta_AnimUnit.h">
+      <Filter>program\[002]wta_library</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

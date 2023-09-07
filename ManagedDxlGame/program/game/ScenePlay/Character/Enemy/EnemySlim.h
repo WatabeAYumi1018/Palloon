@@ -11,12 +11,12 @@ class EnemySlim :public Enemy
 {
 public:
 
-	EnemySlim(const sEnemyData& data, const sEnemyInfo& info, Player* player);
+	EnemySlim(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
 	~EnemySlim();
 
 private:
 
-	TNL_CO_SEQUENCE(Enemy, &Enemy::SeqMove);						//コルーチンシーケンス
+	TNL_CO_SEQUENCE(EnemySlim, &EnemySlim::SeqMove);						//コルーチンシーケンス
 
 public:
 	

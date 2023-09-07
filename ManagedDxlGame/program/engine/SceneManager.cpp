@@ -60,6 +60,7 @@ bool SceneManager::SeqTransIn(const float delta_time)
 bool SceneManager::SeqTransOut(const float delta_time)
 {
 	int alpha = (sequence_.getProgressTime() / trans_time_ * 255.0f);
+
 	if (alpha >= 255)
 	{
 		sequence_.change(&SceneManager::SeqTransIn);

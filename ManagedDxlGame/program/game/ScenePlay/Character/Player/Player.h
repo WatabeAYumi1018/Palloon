@@ -43,10 +43,12 @@ private:
 	bool m_key_direction_right;							//キーでの入力方向
 
 	//ゲームスティック用
-	float normalizedInputX;
+	float normalizedInputX;								/*アナログスティックの傾きベクトル*/
 	const float DASH_THRESHOLD = 0.8f;					/*ダッシュのしきい値を定義*/
 	int m_input_x;
 	int m_input_y;
+
+	ePlayerAction e_currentAction = ePlayerAction::Idle_right;		//アクション
 
 public:
 	//-----メンバ関数-----//
@@ -60,12 +62,9 @@ public:
 
 private:
 	void HpHandle();						//HPの挙動処理
-	void MovePadHandle(float delta_time);	//ゲームパッドスティック操作
-	void MovePadBottonHandle(float delta_time);//ゲームボタン操作
-	void MoveKeyHandle(float delta_time);	//キーボード操作
-	void AnimPadHandle(float delta_time);		//パッド操作でのアニメーションの再生
-	void AnimKeyHandle(float delta_time);		//キーボード操作でのアニメーションの再生
-	void isFlag(float delta_time);
+	void MoveHandle(float delta_time);	//ゲームパッドスティック操作
+
+	void ActionHandle(float delta_time);		//入力処理
 };
 
 //Playerのボタン操作の挙動処理を行うクラス

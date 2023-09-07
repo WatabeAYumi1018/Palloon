@@ -33,6 +33,7 @@ protected:
 	bool m_is_jump = false;							/*ジャンプ中*/
 	bool m_is_attack = false;						/*攻撃中*/
 	bool m_is_dead = false;							/*死亡*/
+	bool m_is_direction_right = true;				/*右向き*/
 
 	wta::DrawAnim* animLoader = nullptr;		//アニメーションデータをロード
 

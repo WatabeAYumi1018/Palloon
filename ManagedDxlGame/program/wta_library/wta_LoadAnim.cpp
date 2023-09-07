@@ -8,8 +8,8 @@ namespace wta
     void CsvAnimData::LoadImages(const std::string& basePath)
     {
         //ロードの度にリセット
-        animImage.clear();
-        std::string folderPath = basePath + "/" + fileName;
+        s_animImage.clear();
+        std::string folderPath = basePath + "/" + s_fileName;
         //WIN32_FIND_DATA構造体：Windowsでファイル検索を行う際に使用されるデータ構造体
         //Windows APIのファイル検索関数であるFindFirstFileやFindNextFileを使用する際
          //検索結果のファイル情報を格納するために使われる
@@ -25,7 +25,7 @@ namespace wta
                 //ファイルのフルパスを取得
                 std::string fullPath = folderPath + "/" + findData.cFileName;
                 //画像をロードして配列に追加
-                animImage.emplace_back(LoadGraph(fullPath.c_str()));
+                s_animImage.emplace_back(LoadGraph(fullPath.c_str()));
             }
         } while (FindNextFile(hFind, &findData) != 0);
         //ファイル検索を終了する
@@ -46,16 +46,56 @@ namespace wta
         {
             //csvファイルの情報を構造体に格納
             CsvAnimData anim;
-            anim.id = row[0].getInt();
-            anim.characterName = row[1].getString();
-            anim.action = row[2].getString();
-            anim.direction = row[3].getInt();
-            anim.fileName = row[4].getString();
-            anim.loop = row[5].getBool();
+            anim.s_id = row[0].getInt();
+            anim.s_characterName = row[1].getString();
+            anim.s_action = row[2].getString();
+            anim.s_direction = row[3].getInt();
+            anim.s_fileName = row[4].getString();
+            anim.s_loop = row[5].getBool();
             anim.LoadImages(basePath);
             anims.emplace_back(anim);
         }
         return anims;
     }
 
+    int CsvAnimData::GetAnimID(std::string action, int direction)
+    {
+        if (s_characterName == "player")
+        {
+            if (action == "idle")
+            {
+                return s_direction ? 0 : 1;
+            }
+            else if (action == "move")
+            {
+                return s_direction ? 2 : 3;
+            }
+            else if (action == "run")
+            {
+				return s_direction ? 4 : 5;
+			}
+            else if (action == "jump")
+            {
+				return s_direction ? 6 : 7;
+			}
+            else if (action == "roll")
+            {
+				return s_direction ? 8 : 9;
+			}
+            else if (action == "stamp")
+            {
+				return s_direction ? 10 : 11;
+			}
+            else if (action == "fire")
+			{
+            	return s_direction ? 12 : 13;
+            }
+            else if (action == "beam")
+            {
+            	return s_direction ? 14 : 15;
+            }
+        }
+	
+		return -1;
+	}
 }

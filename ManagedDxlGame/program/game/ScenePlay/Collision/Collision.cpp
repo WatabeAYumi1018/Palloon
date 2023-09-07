@@ -105,7 +105,7 @@ void Collision::CheckBoxCollision(Character* chara, Map* map, const std::vector<
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
                 chara->SetPos(nearly_point + normalize * chara->GetSize());
                 //衝突応答処理
-                DrawStringEx(0, 70, -1, "boxhit");
+                //DrawStringEx(0, 70, -1, "boxhit");
             }
         }
     }
@@ -136,7 +136,7 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
                 chara->SetPos(nearly_point + normalize * chara->GetSize());
                 //衝突応答処理
-                DrawStringEx(0, 90, -1, "linehit");
+                //DrawStringEx(0, 90, -1, "linehit");
             }
         }
     }
@@ -200,33 +200,3 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
         player->SetPos(player_pos - diff * overlap);
     }
 }
-
-//-----------------------------無視してください--------------------------------//
-
-////キャラクター位置を取得し、マップIDから当たり判定のタイプを取得
-////eCollisionType CollisionCalc::GetCollisionTypeMap(Character* chara, MapChip* mapChip) {
-//eCollisionType CollisionCalc::GetCollisionTypeMap(int px, int py, MapChip* mapChip) {
-//    // キャラクターのワールド座標をマップのグリッド座標に変換
-//    int chara_x = px / mapChip->MAP_CHIP_SIZE;
-//    int chara_y = py / mapChip->MAP_CHIP_SIZE;
-//
-//    int mx[3] = { chara_x - 1, chara_x, chara_x + 1 };
-//    int my[3] = { chara_y - 1, chara_y, chara_y + 1 };
-//
-//    for (int i = 0; i < 3; ++i) {
-//        for (int k = 0; k < 3; ++k) {
-//            if (mx[k] < 0) continue;
-//            if (mx[k] >= mapChip->MAP_CHIP_SIZE) continue;
-//            if (mx[i] < 0) continue;
-//            if (mx[i] >= mapChip->MAP_CHIP_SIZE) continue;
-//
-//            int cellId = mapChip->GetChipId(mx[k], my[i]);
-//            if (-1 != cellId) {
-//                DrawStringEx(10, 10, -1, "m = %d", cellId);
-//                return mapChip->GetCollisionTypeById(cellId);
-//            }
-//        }
-//    }
-//    return eCollisionType::eCollision_None;
-//
-//}

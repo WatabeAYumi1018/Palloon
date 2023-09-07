@@ -11,7 +11,7 @@ class EnemyKobold :public Enemy
 {
 public:
 	
-	EnemyKobold(const sEnemyData& data, const sEnemyInfo& info, Player* player);
+	EnemyKobold(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
 	~EnemyKobold();
 
 private:
