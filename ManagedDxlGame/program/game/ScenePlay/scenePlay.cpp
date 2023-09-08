@@ -8,7 +8,6 @@
 #include "../ScenePlay/Character/Enemy/EnemyPlant.h"
 #include "../ScenePlay/Character/Enemy/EnemyBird.h"
 #include "../ScenePlay/Character/Enemy/EnemyMasician.h"
-#include "../ScenePlay/Character/Enemy/EnemyKobold.h"
 #include "../ScenePlay/Character/Enemy/EnemyFairy.h"
 #include "../ScenePlay/Character/Enemy/EnemyDoragon.h"
 #include "../ScenePlay/Effect/EffectPlayer.h"
@@ -79,23 +78,17 @@ void ScenePlay::InitEnemy()
 
 		case 3:
 			
-			enemy = new EnemyKobold(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
 			
 			break;
 
 		case 4:
 			
-			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
-			
-			break;
-
-		case 5:
-			
 			enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
 			
 			break;
 
-		case 6:
+		case 5:
 			
 			enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
 			

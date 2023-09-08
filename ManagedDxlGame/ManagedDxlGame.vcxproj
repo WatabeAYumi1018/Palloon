@@ -179,7 +179,6 @@
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyBird.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyDoragon.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyFairy.cpp" />
-    <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyKobold.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyLoad.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyMasician.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyPlant.cpp" />
@@ -239,7 +238,6 @@
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyBird.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyDoragon.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyFairy.h" />
-    <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyKobold.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyLoad.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyMasician.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyPlant.h" />
