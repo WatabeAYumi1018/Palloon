@@ -2,9 +2,6 @@
 #include "../../../../engine/GameEngine.h"
 #include "Enemy.h"
 
-class Camera;
-class Player;
-
 //スライムクラス
 
 class EnemySlim :public Enemy
@@ -16,7 +13,7 @@ public:
 
 private:
 
-	TNL_CO_SEQUENCE(EnemySlim, &EnemySlim::SeqMove);						//コルーチンシーケンス
+	TNL_CO_SEQUENCE(EnemySlim, &EnemySlim::SeqIdle);						//コルーチンシーケンス
 
 public:
 	
@@ -25,7 +22,7 @@ public:
 
 private:
 
-	bool SeqMove(const float delta_time) override;	//基本行動01（通常）
-	bool SeqIdle(const float delta_time) override;	//基本行動02（通常～遷移がある場合のみ使用）
-	bool SeqAttack(const float delta_time) override;		//攻撃処理(プレイヤーが一定以上近づくと攻撃)
+	bool SeqIdle(const float delta_time) override;	
+	bool SeqMove(const float delta_time) override;	
+	bool SeqAttack(const float delta_time) override;
 };

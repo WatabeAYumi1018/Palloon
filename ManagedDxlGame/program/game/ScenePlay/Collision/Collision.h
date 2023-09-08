@@ -21,8 +21,11 @@ private:
 	tnl::Vector3 m_lastCharaPos;							/*前回取得したキャラクターの座標*/
 	std::vector<std::vector<sCollisionInfo>> m_cachedChips; /*前回取得した当たり判定情報*/
 
+public:
 	//-----メンバ関数-----//
 	tnl::Vector3 GetCharacterMapChipPos(const tnl::Vector3& charaPos, const Map* map);
+
+private:
 
 	std::vector<sCollisionInfo> GetRowChips(int chip_x, int i, int range, const Map* map);
 

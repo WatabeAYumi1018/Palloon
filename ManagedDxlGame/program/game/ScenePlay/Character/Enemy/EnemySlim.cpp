@@ -30,83 +30,6 @@ void EnemySlim::Draw(float delta_time, const Camera* camera)
     animLoader->Draw(delta_time, draw_pos);
 }
 
-bool EnemySlim::SeqMove(float delta_time)
-{
-    if (tnl_sequence_.isStart())
-    {
-        
-
-
-        
-    }
-
-    if (m_player) 
-    {
-        //プレイヤーとの距離計算
-        if (std::abs(m_pos.x - m_player->GetPos().x) < 100.0f)
-        {
-            tnl_sequence_.change(&EnemySlim::SeqAttack);
-        }
-        DrawStringEx(0, 0, -1, "move");
-
-        //経過時間をカウント
-        //m_moveTimeCounter += delta_time;
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-                animLoader->SetAnimation(20);
-                
-                //足元の当たり判定を常に計算（当たり判定のIDを取得すればいいだけ）
-
-                m_pos.x += m_velocity.x * delta_time;
-
-                m_is_dirction_right = true;
-        });
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-                animLoader->SetAnimation(21);
-                m_pos.x -= m_velocity.x * delta_time;
-
-                m_is_dirction_right = false;
-        });
-
-        tnl_sequence_.change(&EnemySlim::SeqIdle);
-
-#if 0
-        if (m_moveTimeCounter <= 2.0f)
-        {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-            {
-                    animLoader->SetAnimation(20);
-                    m_pos.x += m_velocity.x * delta_time;
-
-                    m_is_dirction_right = true;
-            });
-        }
-        else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
-        {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-            {
-                    animLoader->SetAnimation(21);
-                    m_pos.x -= m_velocity.x * delta_time;
-
-                    m_is_dirction_right = false;
-            });
-        }
-        else if (m_moveTimeCounter > 4.0f)
-        {
-            m_moveTimeCounter = 0.0f;
-        }
-#endif
-
-        TNL_SEQ_CO_END;
-    }
-}
-
-//左右でそれぞれ別々に作る
-//ScenePlayにてCollision判定→移動方向→先の地形みて→移動するかどうか
-
 bool EnemySlim::SeqIdle(float delta_time)
 {
     DrawStringEx(0, 50, -1, "idle");
@@ -125,6 +48,52 @@ bool EnemySlim::SeqIdle(float delta_time)
 
     tnl_sequence_.change(&EnemySlim::SeqMove);
     TNL_SEQ_CO_END;
+}
+
+bool EnemySlim::SeqMove(float delta_time)
+{
+    if (m_player) 
+    {
+        //プレイヤーとの距離計算
+        if (std::abs(m_pos.x - m_player->GetPos().x) < 90.0f)
+        {
+            if (CanMoveRight() || CanMoveLeft())
+            {
+                tnl_sequence_.change(&EnemySlim::SeqAttack);
+            }
+            else
+            {
+				tnl_sequence_.change(&EnemySlim::SeqIdle);
+			}
+        }
+        DrawStringEx(0, 0, -1, "move");
+
+        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+            animLoader->SetAnimation(20);
+                
+            if (CanMoveRight())
+            {
+                m_pos.x += m_velocity.x * delta_time;
+                m_is_dirction_right = true;
+            }
+        });
+
+        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+            animLoader->SetAnimation(21);
+
+            if (CanMoveLeft())
+            {
+                m_pos.x -= m_velocity.x * delta_time;
+                m_is_dirction_right = false;
+            }
+        });
+
+        tnl_sequence_.change(&EnemySlim::SeqIdle);
+
+        TNL_SEQ_CO_END;
+    }
 }
 
 bool EnemySlim::SeqAttack(float delta_time)

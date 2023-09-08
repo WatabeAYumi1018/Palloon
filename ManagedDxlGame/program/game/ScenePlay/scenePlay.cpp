@@ -168,7 +168,7 @@ void ScenePlay::Finalize()
 	m_effects.clear();
 }
 
-bool ScenePlay::SeqIdle(float delta_time)
+bool ScenePlay::SeqSceneIdle(float delta_time)
 {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN))
 	{

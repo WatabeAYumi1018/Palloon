@@ -29,25 +29,28 @@ void EnemyBird::Draw(float delta_time, const Camera* camera)
 
 bool EnemyBird::SeqMove(float delta_time)
 {
-    if (m_player) {
-
-        //プレイヤーとの距離計算
-        if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
-        {
-            tnl_sequence_.change(&Enemy::SeqAttack);
-        }
-    }
-    DrawStringEx(0, 0, -1, "move");
-
-    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    if (m_player)
     {
-            DrawStringEx(0, 50, -1, "left");
+        //プレイヤーとの距離計算
+        if (std::abs(m_pos.x - m_player->GetPos().x) < 90.0f)
+        {
+            tnl_sequence_.change(&EnemyBird::SeqAttack);
             m_pos.x -= m_velocity.x * delta_time;
-    });
-    
-        
-    tnl_sequence_.change(&Enemy::SeqMove);
-    TNL_SEQ_CO_END;
+        }
+        DrawStringEx(0, 0, -1, "move");
+
+        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+            //animLoader->SetAnimation(20);
+
+            if (!CanMoveLeft())
+            {
+                m_pos.x -= m_velocity.x * delta_time;
+            }
+        });
+
+        TNL_SEQ_CO_END;
+    }
 }
 
 bool EnemyBird::SeqAttack(float delta_time)
@@ -56,10 +59,10 @@ bool EnemyBird::SeqAttack(float delta_time)
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-            //攻撃アニメーション再生
+        //animLoader->SetAnimation(23);
+        m_pos.x -= m_velocity.x * delta_time;
     });
 
-    tnl_sequence_.change(&Enemy::SeqMove);
+    tnl_sequence_.change(&EnemyBird::SeqMove);
     TNL_SEQ_CO_END;
 }
-

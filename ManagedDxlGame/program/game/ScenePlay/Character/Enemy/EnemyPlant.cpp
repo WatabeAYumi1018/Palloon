@@ -32,22 +32,16 @@ void EnemyPlant::Draw(float delta_time, const Camera* camera)
 
 bool EnemyPlant::SeqIdle(float delta_time)
 {
-    DrawStringEx(0, 0, -1, "idle");
+    DrawStringEx(0, 50, -1, "idle");
 
-    if (m_player) {
-     
+    if (m_player)
+    {
         //プレイヤーとの距離計算
-        if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
+        if (std::abs(m_pos.x - m_player->GetPos().x) < 90.0f)
         {
-            tnl_sequence_.change(&Enemy::SeqAttack);
+            tnl_sequence_.change(&EnemyPlant::SeqAttack);
         }
     }
-
-    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            animLoader->SetAnimation(18);   /*こんな感じで*/
-        });
-    tnl_sequence_.change(&Enemy::SeqIdle);
     TNL_SEQ_CO_END;
 }
 
@@ -56,11 +50,17 @@ bool EnemyPlant::SeqAttack(float delta_time)
     DrawStringEx(0, 0, -1, "attack");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (m_is_dirction_right)
         {
-            //攻撃アニメーション再生
-        });
+            //animLoader->SetAnimation(22);
+        }
+        else
+        {
+            //animLoader->SetAnimation(23);
+        }
+    });
 
-    tnl_sequence_.change(&Enemy::SeqMove);
+    tnl_sequence_.change(&EnemyPlant::SeqIdle);
     TNL_SEQ_CO_END;
 }
-

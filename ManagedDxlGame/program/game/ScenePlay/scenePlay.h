@@ -34,7 +34,7 @@ public:
 private:
 	
 	std::list<GameObject*> m_gameObjects;
-	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
+	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
 	
 	std::list<Enemy*> m_enemies;					// 敵のリスト
 	std::map<int, sEnemyInfo> m_enemyInfos;			// 敵の情報リスト
@@ -45,7 +45,7 @@ private:
 
 	void InitEnemy();
 	void CreateEffect();
-	bool SeqIdle(float delta_time);
+	bool SeqSceneIdle(float delta_time);
 
 	void CollisionCheck();
 	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);

@@ -29,62 +29,70 @@ void EnemyMasician::Draw(float delta_time, const Camera* camera)
     animLoader->Draw(delta_time, draw_pos);
 }
 
+bool EnemyMasician::SeqIdle(float delta_time)
+{
+    DrawStringEx(0, 50, -1, "idle");
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    {
+            if (m_is_dirction_right)
+            {
+            //    animLoader->SetAnimation(18);
+            }
+            else
+            {
+            //    animLoader->SetAnimation(19);
+            }
+    });
+
+    tnl_sequence_.change(&EnemyMasician::SeqMove);
+    TNL_SEQ_CO_END;
+}
+
 bool EnemyMasician::SeqMove(float delta_time)
 {
-    if (m_player) {
-        float chance = m_distribution(m_generator);
-
-        //move→idleの確率
-        if (chance < 0.001f)
-        {
-            tnl_sequence_.change(&Enemy::SeqIdle);
-        }
-
+    if (m_player)
+    {
         //プレイヤーとの距離計算
-        if (std::abs(m_pos.x - m_player->GetPos().x) < 2.0f)
+        if (std::abs(m_pos.x - m_player->GetPos().x) < 90.0f)
         {
-            tnl_sequence_.change(&Enemy::SeqAttack);
+            if (CanMoveRight() || CanMoveLeft())
+            {
+                tnl_sequence_.change(&EnemyMasician::SeqAttack);
+            }
+            else
+            {
+                tnl_sequence_.change(&EnemyMasician::SeqIdle);
+            }
         }
         DrawStringEx(0, 0, -1, "move");
 
-        //経過時間をカウント
-        m_moveTimeCounter += delta_time;
+        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+            //animLoader->SetAnimation(20);
 
-        if (m_moveTimeCounter <= 2.0f)
+            if (CanMoveRight())
+            {
+                m_pos.x += m_velocity.x * delta_time;
+                m_is_dirction_right = true;
+            }
+        });
+
+        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
-                    DrawStringEx(0, 50, -1, "right");
-                    m_pos.x += m_velocity.x * delta_time;
-                });
-        }
-        else if (m_moveTimeCounter > 2.0f && m_moveTimeCounter <= 4.0f)
-        {
-            TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-                {
-                    DrawStringEx(0, 50, -1, "left");
-                    m_pos.x -= m_velocity.x * delta_time;
-                });
-        }
-        else if (m_moveTimeCounter > 4.0f)
-        {
-            m_moveTimeCounter = 0.0f;
-        }
-        tnl_sequence_.change(&Enemy::SeqMove);
+            animLoader->SetAnimation(21);
+
+            if (CanMoveLeft())
+            {
+                m_pos.x -= m_velocity.x * delta_time;
+                m_is_dirction_right = false;
+            }
+        });
+
+        tnl_sequence_.change(&EnemyMasician::SeqIdle);
+
         TNL_SEQ_CO_END;
     }
-}
-
-bool EnemyMasician::SeqIdle(float delta_time)
-{
-    DrawStringEx(0, 0, -1, "idle");
-
-    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            animLoader->SetAnimation(18);   /*こんな感じで*/
-        });
-    tnl_sequence_.change(&Enemy::SeqMove);
-    TNL_SEQ_CO_END;
 }
 
 bool EnemyMasician::SeqAttack(float delta_time)
@@ -92,11 +100,19 @@ bool EnemyMasician::SeqAttack(float delta_time)
     DrawStringEx(0, 0, -1, "attack");
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (m_is_dirction_right)
         {
-            //攻撃アニメーション再生
-        });
+            //animLoader->SetAnimation(22);
+            m_pos.x += m_velocity.x * delta_time;
+        }
+        else
+        {
+            //animLoader->SetAnimation(23);
+            m_pos.x -= m_velocity.x * delta_time;
+        }
+    });
 
-    tnl_sequence_.change(&Enemy::SeqMove);
+    tnl_sequence_.change(&EnemyMasician::SeqMove);
     TNL_SEQ_CO_END;
 }
-

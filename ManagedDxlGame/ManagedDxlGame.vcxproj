@@ -232,7 +232,6 @@
     <ClInclude Include="program\game\SceneAll\Balloon.h" />
     <ClInclude Include="program\game\SceneAll\Effect.h" />
     <ClInclude Include="program\game\SceneAll\GameObject.h" />
-    <ClInclude Include="program\game\SceneAll\GameObjectManager.h" />
     <ClInclude Include="program\game\SceneAll\UI.h" />
     <ClInclude Include="program\game\ScenePlay\Camera\Camera.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Character.h" />

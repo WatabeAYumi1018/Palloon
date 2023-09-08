@@ -383,9 +383,6 @@
     <ClInclude Include="program\game\SceneAll\GameObject.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\SceneAll\GameObjectManager.h">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClInclude>
     <ClInclude Include="program\game\SceneAll\BackGround.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>

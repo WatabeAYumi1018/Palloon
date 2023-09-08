@@ -2,9 +2,6 @@
 #include "../../../../engine/GameEngine.h"
 #include "Enemy.h"
 
-class Camera;
-class Player;
-
 //スライムクラス
 
 class EnemyPlant :public Enemy
@@ -16,7 +13,7 @@ public:
 
 private:
 
-	TNL_CO_SEQUENCE(Enemy, &Enemy::SeqIdle);						//コルーチンシーケンス
+	TNL_CO_SEQUENCE(EnemyPlant, &EnemyPlant::SeqIdle);						//コルーチンシーケンス
 
 public:
 
@@ -25,6 +22,6 @@ public:
 
 private:
 
-	bool SeqIdle(const float delta_time) override;	//基本行動（
-	bool SeqAttack(const float delta_time) override;//攻撃処理(プレイヤーが一定以上近づくと攻撃)
+	bool SeqIdle(const float delta_time) override;	
+	bool SeqAttack(const float delta_time) override;
 };
