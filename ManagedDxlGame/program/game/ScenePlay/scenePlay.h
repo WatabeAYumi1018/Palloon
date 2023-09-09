@@ -30,6 +30,7 @@ public:
 	Collision *m_collision=nullptr;
 	EnemyLoad* m_enemyLoad = nullptr;
 	Player *m_player = nullptr;
+	Enemy* m_enemy = nullptr;
 
 private:
 	

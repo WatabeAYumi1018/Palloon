@@ -92,6 +92,20 @@ void Player::ActionHandle(float delta_time)
 
 		break;
 
+	case ePlayerAction::Jump_right:
+
+		m_pos.y -= PLAYER_VELOCITY_Y * delta_time;
+		animLoader->SetAnimation(6);  /*jump_right*/
+
+		break;
+
+	case ePlayerAction::Jump_left:
+
+		m_pos.y -= PLAYER_VELOCITY_Y * delta_time;
+		animLoader->SetAnimation(7);  /*jump_left*/
+
+		break;
+
 	default:
 		break;
 	}
@@ -130,6 +144,17 @@ void Player::MoveHandle(float delta_time)
 		{
 			e_currentAction = ePlayerAction::Move_left;
 		}	
+	}
+	else if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) || tnl::Input::IsPadDown(ePad::KEY_3))
+	{
+		if (m_is_direction_right)
+		{
+			e_currentAction = ePlayerAction::Jump_right;
+		}
+		else
+		{
+			e_currentAction = ePlayerAction::Jump_left;
+		}
 	}
 	else
 	{

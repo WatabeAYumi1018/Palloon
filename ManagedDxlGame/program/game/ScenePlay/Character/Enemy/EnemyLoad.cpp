@@ -32,9 +32,9 @@ std::map<int, sEnemyInfo> EnemyLoad::LoadEnemyInfo(const std::string& file_path)
     return enemyInfo;
 }
 
-std::vector<sEnemyData> EnemyLoad::LoadEnemyData(const std::string& file_path)
+std::list<sEnemyData> EnemyLoad::LoadEnemyData(const std::string& file_path)
 {
-    std::vector<sEnemyData> enemyData;
+    std::list<sEnemyData> enemyData;
 
     // CSVを読み取る
     auto csvData = tnl::LoadCsv(file_path);
@@ -44,7 +44,7 @@ std::vector<sEnemyData> EnemyLoad::LoadEnemyData(const std::string& file_path)
     {
         for (int j = 0; j < csvData[i].size(); ++j)
         {
-            // 0ではない場合、敵データとして保存
+            // -1ではない場合、敵データとして保存
             if (csvData[i][j].getInt() != -1)
             {
                 sEnemyData data;

@@ -48,49 +48,48 @@ void ScenePlay::Initialize()
 
 void ScenePlay::InitEnemy()
 {
-	EnemyLoad enemyLoad;
-	m_enemyInfos = enemyLoad.LoadEnemyInfo("csv/EnemyLoad.csv");
-	auto dataList = enemyLoad.LoadEnemyData("csv/stage1-1enemy.csv");
+	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
+	auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-1enemy.csv");
+	//auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-1enemysample.csv"); デバッグ用
 
-	for (const auto& data : dataList)
+	for (auto& data : dataList)
 	{
-		Enemy* enemy = nullptr;
 
 		switch (data.s_type_id)
 		{
 		case 0:
 			
-			enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id], m_player,m_map,m_collision);
+			m_enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id], m_player,m_map,m_collision, m_camera);
 			
 			break;
 
 		case 1:
 			
-			enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			m_enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 2:
 			
-			enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			m_enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 3:
 			
-			enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			m_enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 4:
 			
-			enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			m_enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 5:
 			
-			enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision);
+			m_enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
@@ -99,8 +98,8 @@ void ScenePlay::InitEnemy()
 			continue;	//無効なIDの場合はスキップ
 		}
 
-		m_enemies.emplace_back(enemy);
-		m_gameObjects.emplace_back(enemy);
+		m_enemies.emplace_back(m_enemy);
+		m_gameObjects.emplace_back(m_enemy);
 	}
 }
 
@@ -138,7 +137,7 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	//m_backGround->Draw(delta_time, m_camera);
+	m_backGround->Draw(delta_time, m_camera);
 
 	m_map->Draw(m_camera);
 

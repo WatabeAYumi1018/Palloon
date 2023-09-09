@@ -17,7 +17,7 @@ public:
 private:
 	//-----定数-----//
 	static constexpr float PLAYER_POS_X = 100;			//初期位置
-	static constexpr float PLAYER_POS_Y = 100;
+	static constexpr float PLAYER_POS_Y = -100;
 
 	static constexpr int PLAYER_SIZE = 35;				//サイズ
 	static constexpr int PLAYER_MAX_HP = 5;				//HP

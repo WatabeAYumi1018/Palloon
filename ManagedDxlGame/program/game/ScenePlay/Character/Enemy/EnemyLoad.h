@@ -12,5 +12,5 @@ private:
 public:
 
     std::map<int, sEnemyInfo> LoadEnemyInfo(const std::string& csvPath);
-    std::vector<sEnemyData> LoadEnemyData(const std::string& csvPath);
+    std::list<sEnemyData> LoadEnemyData(const std::string& csvPath);
 };

@@ -2,8 +2,8 @@
 #include "EnemyBird.h"
 #include "../Player/Player.h"
 
-EnemyBird::EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision) :
-    Enemy(data, info, m_player, map, collision)
+EnemyBird::EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera) :
+    Enemy(data, info, player, map, collision, camera)
 {
 
 }
@@ -41,7 +41,7 @@ bool EnemyBird::SeqMove(float delta_time)
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
-            //animLoader->SetAnimation(20);
+            animLoader->SetAnimation(40);
 
             if (!CanMoveLeft())
             {
@@ -59,7 +59,7 @@ bool EnemyBird::SeqAttack(float delta_time)
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        //animLoader->SetAnimation(23);
+        animLoader->SetAnimation(41);
         m_pos.x -= m_velocity.x * delta_time;
     });
 

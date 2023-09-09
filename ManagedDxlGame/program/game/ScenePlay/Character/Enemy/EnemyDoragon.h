@@ -9,12 +9,12 @@ class EnemyDoragon :public Enemy
 {
 public:
 	
-	EnemyDoragon(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
+	EnemyDoragon(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera);
 	~EnemyDoragon();
 
 private:
 
-	TNL_CO_SEQUENCE(EnemyDoragon, &EnemyDoragon::SeqMove);						//コルーチンシーケンス
+	//TNL_CO_SEQUENCE(EnemyDoragon, &EnemyDoragon::SeqMove);						//コルーチンシーケンス
 
 public:
 	
@@ -23,8 +23,8 @@ public:
 
 private:
 	
-	bool SeqMove(const float delta_time) override { return 0; }
-	bool SeqIdle(const float delta_time) override { return 0; }
-	bool SeqAttack(const float delta_time) override { return 0; }
+	//bool SeqMove(const float delta_time) ;
+	//bool SeqIdle(const float delta_time) ;
+	//bool SeqAttack(const float delta_time);
 
 };

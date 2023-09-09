@@ -8,7 +8,7 @@ class EnemySlim :public Enemy
 {
 public:
 
-	EnemySlim(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
+	EnemySlim(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera);
 	~EnemySlim();
 
 private:
@@ -22,7 +22,9 @@ public:
 
 private:
 
-	bool SeqIdle(const float delta_time) override;	
-	bool SeqMove(const float delta_time) override;	
-	bool SeqAttack(const float delta_time) override;
+	bool SeqIdle(const float delta_time) ;	
+	bool SeqMove(const float delta_time) ;	
+	bool SeqAttack(const float delta_time);
 };
+
+//idle‚¾‚ÆƒXƒ‰ƒCƒ€Battack‚¾‚ÆA•¨‚É‚È‚Á‚Ä‚é

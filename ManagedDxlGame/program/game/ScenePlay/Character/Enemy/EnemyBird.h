@@ -8,7 +8,7 @@ class EnemyBird :public Enemy
 {
 public:
 	
-	EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
+	EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera);
 	~EnemyBird();
 
 private:
@@ -22,6 +22,6 @@ public:
 
 private:
 
-	bool SeqMove(const float delta_time) override;	
-	bool SeqAttack(const float delta_time) override;		
+	bool SeqMove(const float delta_time);	
+	bool SeqAttack(const float delta_time);		
 };

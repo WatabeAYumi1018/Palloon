@@ -2,8 +2,8 @@
 #include "EnemyDoragon.h"
 #include "../Player/Player.h"
 
-EnemyDoragon::EnemyDoragon(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision) :
-    Enemy(data, info, m_player, map, collision)
+EnemyDoragon::EnemyDoragon(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera) :
+    Enemy(data, info, player, map, collision, camera)
 {
 
 }
@@ -18,7 +18,7 @@ void EnemyDoragon::Update(float delta_time)
     //èdóÕÇ≈â∫Ç…óéÇøÇÈ
     m_pos.y += m_gravity.y * delta_time;
 
-    tnl_sequence_.update(delta_time);
+    //tnl_sequence_.update(delta_time);
 }
 
 void EnemyDoragon::Draw(float delta_time, const Camera* camera)

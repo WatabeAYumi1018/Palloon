@@ -8,7 +8,7 @@ class EnemyMasician :public Enemy
 {
 public:
 
-	EnemyMasician(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision);
+	EnemyMasician(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera);
 	~EnemyMasician();
 
 private:
@@ -20,9 +20,7 @@ public:
 	void Update(const float delta_time) override;	//XVˆ—
 	void Draw(const float delta_time, const Camera* camera) override;		//•`‰æˆ—
 
-private:
-
-	bool SeqIdle(const float delta_time) override;
-	bool SeqMove(const float delta_time) override;
-	bool SeqAttack(const float delta_time) override;
+	bool SeqIdle(const float delta_time);
+	bool SeqMove(const float delta_time);
+	bool SeqAttack(const float delta_time);
 };

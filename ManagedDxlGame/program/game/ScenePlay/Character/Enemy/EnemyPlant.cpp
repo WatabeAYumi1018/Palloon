@@ -2,8 +2,8 @@
 #include "EnemyPlant.h"
 #include "../Player/Player.h"
 
-EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info, Player* player,Map *map,Collision *collision) :
-    Enemy(data, info, m_player,map, collision)
+EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info, Player* player,Map *map,Collision *collision, Camera* camera) :
+    Enemy(data, info, player, map, collision, camera)
 {
 
 }
@@ -16,7 +16,7 @@ EnemyPlant::~EnemyPlant()
 void EnemyPlant::Update(float delta_time)
 {
     //重力で下に落ちる
-    m_pos.y += m_gravity.y * delta_time;
+    m_pos.y += m_gravity.y * delta_time*0.1;
 
     tnl_sequence_.update(delta_time);
 }
@@ -34,14 +34,27 @@ bool EnemyPlant::SeqIdle(float delta_time)
 {
     DrawStringEx(0, 50, -1, "idle");
 
-    if (m_player)
+    //if (m_player)
+    //{
+    //    //プレイヤーとの距離計算
+    //    if (std::abs(m_pos.x - m_player->GetPos().x) < 90.0f)
+    //    {
+    //        tnl_sequence_.change(&EnemyPlant::SeqAttack);
+    //    }
+    //}
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
-        //プレイヤーとの距離計算
-        if (std::abs(m_pos.x - m_player->GetPos().x) < 90.0f)
+        if (m_is_dirction_right)
         {
-            tnl_sequence_.change(&EnemyPlant::SeqAttack);
+            animLoader->SetAnimation(24);
         }
-    }
+        else
+        {
+            animLoader->SetAnimation(25);
+        }
+    });
+
     TNL_SEQ_CO_END;
 }
 
@@ -53,11 +66,11 @@ bool EnemyPlant::SeqAttack(float delta_time)
     {
         if (m_is_dirction_right)
         {
-            //animLoader->SetAnimation(22);
+            animLoader->SetAnimation(26);
         }
         else
         {
-            //animLoader->SetAnimation(23);
+            animLoader->SetAnimation(26);
         }
     });
 
