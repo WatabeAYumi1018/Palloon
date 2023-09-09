@@ -9,7 +9,7 @@ Balloon::Balloon() : GameObject(tnl::Vector3(0, 0, 0))
 void Balloon::Initialize()
 {
     // バルーンの画像をロード
-    m_balloon_hdl = LoadGraph("graphics/balloon.png");
+    m_balloon_hdl = LoadGraph("graphics/balloon/balloon_red.png");
     //画面の幅に基づいてランダムなX位置を設定
     m_pos.x = rand() % 640;
     //画面の下部からランダムな位置で開始

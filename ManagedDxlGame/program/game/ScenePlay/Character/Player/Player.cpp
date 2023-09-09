@@ -111,7 +111,6 @@ void Player::ActionHandle(float delta_time)
 	}
 }
 
-
 void Player::MoveHandle(float delta_time)
 {
 	//アナログスティックの入力値を取得

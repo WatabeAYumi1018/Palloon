@@ -35,18 +35,14 @@ bool EnemyBird::SeqMove(float delta_time)
         if (std::abs(m_pos.x - m_player->GetPos().x) < 90.0f)
         {
             tnl_sequence_.change(&EnemyBird::SeqAttack);
-            m_pos.x -= m_velocity.x * delta_time;
         }
+
         DrawStringEx(0, 0, -1, "move");
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
             animLoader->SetAnimation(40);
-
-            if (!CanMoveLeft())
-            {
-                m_pos.x -= m_velocity.x * delta_time;
-            }
+            m_pos.x -= m_velocity.x * delta_time;
         });
 
         TNL_SEQ_CO_END;
@@ -60,7 +56,7 @@ bool EnemyBird::SeqAttack(float delta_time)
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
         animLoader->SetAnimation(41);
-        m_pos.x -= m_velocity.x * delta_time;
+        m_pos.x -= m_velocity.x * delta_time * 2;
     });
 
     tnl_sequence_.change(&EnemyBird::SeqMove);

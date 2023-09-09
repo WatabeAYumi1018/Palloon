@@ -4,7 +4,6 @@
 
 class Camera;
 class Player;
-class Balloon;
 
 //UIの処理一括を行うクラス
 class UI : public GameObject
@@ -19,8 +18,9 @@ private:
 	int m_extend_x = 500;
 	int m_extend_y = 200;
 
+	int m_hp_hdl = 0;
+
 	Player* m_player = nullptr;
-	Balloon* m_balloon = nullptr;
 
 public:
 	//-----メンバ関数-----//
