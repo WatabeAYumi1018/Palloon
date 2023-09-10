@@ -30,15 +30,27 @@ void Player::Update(float delta_time)
 	m_pos.y += m_gravity.y * delta_time;
 
 	ActionHandle(delta_time);
+	Invincible(delta_time);
 }
 
 void Player::Draw(float delta_time, const Camera* camera)
 {
 	tnl::Vector3 draw_pos =
 		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-	
+
 	//アニメーションの描画
-	animLoader->Draw(delta_time, draw_pos);
+	if (m_is_invincible)
+	{
+		// 0.1秒ごとに表示・非表示を切り替えることで点滅を実現
+		if (static_cast<int>(m_invincible_time * 10) % 2 == 0)
+		{
+			animLoader->Draw(delta_time, draw_pos);
+		}
+	}
+	else
+	{
+		animLoader->Draw(delta_time, draw_pos);
+	}
 	
 	//★デバッグ用
 	DrawFormatString(0, 30, 1, "Player_x: %.2f", draw_pos.x);
@@ -168,6 +180,32 @@ void Player::MoveHandle(float delta_time)
 	}
 
 	float speedMultiplier = abs(normalizedInputX) > DASH_THRESHOLD ? 2.0f : 1.0f;
+}
+
+void Player::Invincible(float delta_time)
+{
+	if (m_is_invincible)
+	{
+		m_invincible_time += delta_time;
+
+		if (m_invincible_time >= 5.0f)
+		{
+			m_is_invincible = false;
+		}
+	}
+}
+
+void Player::flashing(float delta_time)
+{
+	// 0.1秒ごとに表示・非表示を切り替えることで点滅を実現
+	if (static_cast<int>(m_invincible_time * 10) % 2 == 0)
+	{
+		animLoader->Draw(delta_time, m_pos);
+	}
+	else
+	{
+		return; // 描画をスキップ
+	}
 }
 
 void Player::Finalize()

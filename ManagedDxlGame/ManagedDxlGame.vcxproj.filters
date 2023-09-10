@@ -251,6 +251,9 @@
     <ClCompile Include="program\wta_library\wta_AnimUnit.cpp">
       <Filter>program\[002]wta_library</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Character\Character.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">

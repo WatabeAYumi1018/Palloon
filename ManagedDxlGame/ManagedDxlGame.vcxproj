@@ -175,6 +175,7 @@
     <ClCompile Include="program\game\SceneAll\Balloon.cpp" />
     <ClCompile Include="program\game\SceneAll\UI.cpp" />
     <ClCompile Include="program\game\ScenePlay\Camera\Camera.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Character\Character.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\Enemy.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyBird.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\EnemyDoragon.cpp" />

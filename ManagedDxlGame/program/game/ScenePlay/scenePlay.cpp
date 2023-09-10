@@ -43,7 +43,7 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(new Balloon());
 	m_gameObjects.emplace_back(m_player);
 	InitEnemy();
-	m_gameObjects.emplace_back(new UI());
+	m_gameObjects.emplace_back(new UI(m_player));
 }
 
 void ScenePlay::InitEnemy()

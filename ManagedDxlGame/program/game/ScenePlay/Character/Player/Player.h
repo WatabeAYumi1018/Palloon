@@ -34,7 +34,6 @@ private:
 	tnl::Vector3 m_jump_height = { 0,200,0 };			//ジャンプ高さ
 
 	//フラグ
-	bool m_is_jump = false;								//ジャンプ中
 	bool m_is_falling = false;							//落下中
 	bool m_was_ground = false;							//前フレームの接地判定
 
@@ -56,14 +55,11 @@ public:
 	void Draw(float delta_time, const Camera* camera) override;
 	void Finalize() override;
 
-	//-----Getter-----//
-	int GetMaxHP() const { return PLAYER_MAX_HP; }
-
 private:
-	void HpHandle();						//HPの挙動処理
 	void MoveHandle(float delta_time);	//ゲームパッドスティック操作
-
 	void ActionHandle(float delta_time);		//入力処理
+	void Invincible(float delta_time);					//無敵時間の処理
+	void flashing(float delta_time);					//点滅処理
 };
 
 //Playerのボタン操作の挙動処理を行うクラス

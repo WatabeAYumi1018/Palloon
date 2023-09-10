@@ -9,7 +9,7 @@ class Player;
 class UI : public GameObject
 {
 public:
-	UI();
+	UI(Player* player);
 	virtual ~UI() {}
 
 private:
