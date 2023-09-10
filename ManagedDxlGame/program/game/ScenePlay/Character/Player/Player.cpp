@@ -118,6 +118,18 @@ void Player::ActionHandle(float delta_time)
 
 		break;
 
+	case ePlayerAction::Beam_right:
+
+		animLoader->SetAnimation(16);  /*beam_right*/
+
+		break;
+
+	case ePlayerAction::Beam_left:
+
+		animLoader->SetAnimation(17);  /*beam_left*/
+
+		break;
+
 	default:
 		break;
 	}
@@ -165,6 +177,17 @@ void Player::MoveHandle(float delta_time)
 		else
 		{
 			e_currentAction = ePlayerAction::Jump_left;
+		}
+	}
+	else if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+	{
+		if (m_is_direction_right)
+		{
+				e_currentAction = ePlayerAction::Beam_right;
+		}
+		else
+		{
+				e_currentAction = ePlayerAction::Beam_left;
 		}
 	}
 	else

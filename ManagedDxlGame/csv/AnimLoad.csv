@@ -1,4 +1,4 @@
-ID,Character,Action,"Direction(0:right,1:left)",GraphicPath,Loop
+ID,Name,Action,"Direction(0:right,1:left)",GraphicPath,Loop
 0,player,idle,0,player/idle_right,TRUE
 1,player,idle,1,player/idle_left,TRUE
 2,player,move,0,player/move_right,TRUE
@@ -41,3 +41,5 @@ ID,Character,Action,"Direction(0:right,1:left)",GraphicPath,Loop
 39,fairy_peach,attack,1,fairy/peach/attack_right,FALSE
 40,bird_green,move,1,bird/green/move,TRUE
 41,bird_green,attack,1,bird/green/attack,FALSE
+42,effect_player,beam,0,effect_player/beam_right,FALSE
+43,effect_player,beam,1,effect_player/beam_left,FALSE

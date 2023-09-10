@@ -48,6 +48,8 @@ public:
 	tnl::Vector3 GetVelocity() const { return m_velocity; }
 	void SetVelocity(tnl::Vector3 velocity) { m_velocity = velocity; }
 
+	bool GetIsDirectionRight() const { return m_is_direction_right; }
+
 	bool GetIsInvincible() const { return m_is_invincible; }
 };
 

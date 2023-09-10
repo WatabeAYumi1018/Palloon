@@ -2,8 +2,10 @@
 #include "../Camera/Camera.h"
 #include "EffectPlayer.h"
 
-EffectPlayer::EffectPlayer():Effect(tnl::Vector3(0,0,0),m_player)
+EffectPlayer::EffectPlayer(Player *player):Effect(tnl::Vector3(0,0,0),player)
 {
+	// CSVからアニメーションデータをロード
+	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
 
 }
 
@@ -19,8 +21,6 @@ void EffectPlayer::Update(float delta_time)
 	//{
 	//	m_pos = m_player->GetPos();
 	//}
-	m_pos.x += m_velocity.x * delta_time*0.1f;
-
 	if (m_is_moved) 
 	{
 		elapsed_time += delta_time;
@@ -30,19 +30,38 @@ void EffectPlayer::Update(float delta_time)
 			m_is_moved = false;
 		}
 	}
+	EffectHandle();
 }
 
 void EffectPlayer::Draw(float delta_time, const Camera* camera)
 {
-	tnl::Vector3 draw_pos =
-		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-	
+	if (m_player->GetIsDirectionRight())
+	{
+		tnl::Vector3 draw_pos =
+			m_pos + m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+		
+		animLoader->Draw(delta_time * 2, draw_pos);
+	}
+	else
+	{
+		tnl::Vector3 draw_pos =
+			m_pos - m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+
+		animLoader->Draw(delta_time * 2, draw_pos);
+	}
+}
+
+void EffectPlayer::EffectHandle()
+{
 	if (m_is_moved)
 	{
-		DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
+		if (m_player->GetIsDirectionRight())
+		{
+			animLoader->SetAnimation(42);  /*effect_beam_right*/
+		}
+		else
+		{
+			animLoader->SetAnimation(43);  /*effect_beam_left*/
+		}
 	}
-
-	//if (m_type == eEffectType::Circle)
-	//{
-	//}
 }

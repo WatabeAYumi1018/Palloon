@@ -23,6 +23,8 @@
 
 ScenePlay::ScenePlay()
 {
+	//m_graph_hdl = LoadGraph("graphics/beam001.png");
+
 	Initialize();
 }
 
@@ -107,8 +109,9 @@ void ScenePlay::CreateEffect()
 {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z))
 	{
-		EffectPlayer* effect = new EffectPlayer();
+		EffectPlayer* effect = new EffectPlayer(m_player);
 		effect->SetPos(m_player->GetPos()); 
+		effect->SetOffset(tnl::Vector3(400, 0, 0));
 		effect->SetIsMoved(true);
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
@@ -145,6 +148,7 @@ void ScenePlay::Draw(float delta_time)
 	{
 		obj->Draw(delta_time, m_camera);
 	}
+	//DrawExtendGraph(400, 200,900,300, m_graph_hdl, TRUE);
 }
 
 void ScenePlay::Finalize()
