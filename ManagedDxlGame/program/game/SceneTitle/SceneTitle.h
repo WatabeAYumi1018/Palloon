@@ -5,14 +5,23 @@ class GameObject;
 
 class SceneTitle : public SceneBase {
 
+private:
+	//-----メンバ変数-----//
+	int m_back_hdl = 0;
+	int m_logo_hdl = 0;
+	float m_current_width = 0;
+	const float m_display_time = 100;
+
+	tnl::Sequence<SceneTitle> sequence_ = tnl::Sequence<SceneTitle>(this, &SceneTitle::SeqIdle);
+
 public:
+	//-----メンバ関数-----//
 	void Update(float delta_time) override;
 	void Draw(float delta_time) override;
 
 private:
-	tnl::Sequence<SceneTitle> sequence_ = tnl::Sequence<SceneTitle>(this, &SceneTitle::SeqIdle);
-	bool SeqIdle(float delta_time);
 
-	//タイトル画面のグラフィック 
-	int title_back_gif = 0;
+	bool SeqIdle(float delta_time);
+	void logoHandle(float delta_time);
+ 
 };
