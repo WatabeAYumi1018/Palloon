@@ -2,35 +2,32 @@
 #include "../Camera/Camera.h"
 #include "EffectPlayer.h"
 
-EffectPlayer::EffectPlayer(Player *player):Effect(tnl::Vector3(0,0,0),player)
+EffectPlayer::EffectPlayer(Player *player, eEffectPlayerType effectType):
+	Effect(tnl::Vector3(0, 0, 0), player), m_effectType(effectType)
 {
 	// CSVからアニメーションデータをロード
 	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
-
 }
 
 EffectPlayer::~EffectPlayer()
 {
-
+	delete animLoader;
+	animLoader = nullptr;
 }
 
 void EffectPlayer::Update(float delta_time)
 {
-	//プレイヤー座標に追従
-	//if (m_player)
-	//{
-	//	m_pos = m_player->GetPos();
-	//}
+	EffectHandle();
+	
 	if (m_is_moved) 
 	{
 		elapsed_time += delta_time;
-	
+
 		if (elapsed_time > duration) 
 		{
 			m_is_moved = false;
 		}
 	}
-	EffectHandle();
 }
 
 void EffectPlayer::Draw(float delta_time, const Camera* camera)
@@ -51,7 +48,7 @@ void EffectPlayer::Draw(float delta_time, const Camera* camera)
 	}
 }
 
-void EffectPlayer::EffectHandle()
+void EffectPlayer::EffectFireHandle()
 {
 	if (m_is_moved)
 	{
@@ -63,5 +60,38 @@ void EffectPlayer::EffectHandle()
 		{
 			animLoader->SetAnimation(43);  /*effect_beam_left*/
 		}
+	}
+}
+
+void EffectPlayer::EffectBeamHandle()
+{
+	if (m_is_moved)
+	{
+		if (m_player->GetIsDirectionRight())
+		{
+			animLoader->SetAnimation(44);  /*effect_beam_right*/
+		}
+		else
+		{
+			animLoader->SetAnimation(45);  /*effect_beam_left*/
+		}
+	}
+}
+
+void EffectPlayer::EffectHandle()
+{
+	switch (m_effectType)
+	{
+	case eEffectPlayerType::Fire:
+
+		EffectFireHandle();
+
+		break;
+		
+	case eEffectPlayerType::Beam:
+		
+		EffectBeamHandle();
+			
+		break;
 	}
 }

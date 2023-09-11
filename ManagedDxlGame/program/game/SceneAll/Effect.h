@@ -12,16 +12,19 @@ public:
 protected:
 	//-----メンバ変数-----//
 	int m_size = 20;						/*サイズ*/
-	tnl::Vector3 m_velocity = {1000,0,0};	/*速度*/
-	tnl::Vector3 m_offset;					/*オフセット*/
-	bool m_is_moved = false;				/*終了フラグ*/
 	float duration = 1.0f;					/*エフェクトの持続時間*/
 	float elapsed_time = 0.0f;				/*経過時間*/
-	eEffectType m_type;						/*エフェクトの種類*/
+	
+	tnl::Vector3 m_offset;					/*オフセット*/
+	
+	bool m_is_moved = false;				/*終了フラグ*/
+
+	eEffectPlayerType m_type;				/*エフェクトの種類*/
 
 	Player* m_player = nullptr;				/*プレイヤー*/
 
 public:
+
 	int GetSize() const { return m_size; }
 
 	void SetOffset(tnl::Vector3 offset) { m_offset = offset; }

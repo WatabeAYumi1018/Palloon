@@ -22,6 +22,14 @@ enum class ePlayerAction
 	Max
 };
 
+enum class eEffectPlayerType
+{
+	None,
+	Fire,
+	Beam,
+	Max
+};
+
 enum class eCollisionType
 {
 	None,
@@ -52,7 +60,7 @@ struct sEnemyInfo
 	int s_size;
 };
 
-enum class eEffectType
+enum class eEffectCollisionType
 {
 	None,
 	Box,

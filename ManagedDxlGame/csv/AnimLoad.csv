@@ -41,5 +41,7 @@ ID,Name,Action,"Direction(0:right,1:left)",GraphicPath,Loop
 39,fairy_peach,attack,1,fairy/peach/attack_right,FALSE
 40,bird_green,move,1,bird/green/move,TRUE
 41,bird_green,attack,1,bird/green/attack,FALSE
-42,effect_player,beam,0,effect_player/beam_right,FALSE
-43,effect_player,beam,1,effect_player/beam_left,FALSE
+42,effect_player,fire,0,effect_player/fire_right,FALSE
+43,effect_player,fire,1,effect_player/fire_left,FALSE
+44,effect_player,beam,0,effect_player/beam_right,FALSE
+45,effect_player,beam,1,effect_player/beam_left,FALSE
