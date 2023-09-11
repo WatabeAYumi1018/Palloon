@@ -36,22 +36,6 @@ void Balloon::Draw(float delta_time, const Camera* camera)
     DrawExtendGraph(draw_pos.x, draw_pos.y, draw_pos.x + m_size, draw_pos.y + m_size, m_balloon_hdl, TRUE);
 }
 
-void Balloon::Spawn()
-{
-    ////ランダムな確率でバルーンを生成
-    //if (rand() % 100 < 1)
-    //{
-    //    balloons.emplace_back(new Balloon());
-    //}
-    ////バルーンが画面外に出たら削除
-    //balloons.erase
-    //(
-    //    std::remove_if(balloons.begin(), balloons.end(), [](const Balloon& b) { return b.m_pos.y + 100 < 0; }),
-    //    balloons.end()
-    //);
-    //
-}
-
 void Balloon::Finalize()
 {
 	// バルーンの画像を削除

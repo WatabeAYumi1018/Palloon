@@ -18,7 +18,6 @@ private:
     tnl::Vector3 m_hover_velocity;        // 垂直速度
     int m_balloon_hdl = 0;                // バルーンの画像ハンドル
     int m_size = 200;                     // バルーンのサイズ
-    std::vector<Balloon> balloons;		  // バルーンの配列  
 
 public:
 
@@ -27,7 +26,6 @@ public:
     void Update(float delta_time) override;
     void Draw(float delta_time, const Camera* camera) override;
     void Finalize() override;
-    void Spawn();
 
     //-----Getter&Setter-----//
     int GetHdl() const { return m_balloon_hdl; }
