@@ -3,6 +3,8 @@
 #include "../Character.h"
 
 class Camera;
+class Map;
+class Collision;
 
 //プレイヤーのクラス
 //主にボタン操作の挙動処理を行う
@@ -11,13 +13,13 @@ class Camera;
 class Player :public Character
 {
 public:
-	Player();
+	Player(Collision* collision, Map* map);
 	virtual ~Player();
 
 private:
 	//-----定数-----//
 	static constexpr float PLAYER_POS_X = 100;			//初期位置
-	static constexpr float PLAYER_POS_Y = -100;
+	static constexpr float PLAYER_POS_Y = 0;
 
 	static constexpr int PLAYER_SIZE = 35;				//サイズ
 	static constexpr int PLAYER_MAX_HP = 5;				//HP
@@ -25,26 +27,26 @@ private:
 	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）
 	static constexpr float PLAYER_VELOCITY_Y = 500;
 
-	static constexpr int PLAYER_JUMP_MAX_COUNT = 3;		//最大ジャンプ回数
+	static constexpr float AIR_LEAK_TIME = 1.0f;        // 空気が抜けるまでの時間
+
+	const float DASH_THRESHOLD = 0.8f;					/*ダッシュのしきい値を定義*/
+
+	const float PLAYER_INITIAL_HOVER_FORCE = 1.5f; // 初期の浮遊力
+	const float PLAYER_HOVER_DECAY_RATE = 1.0f; // 浮遊力の減衰率
 
 	//-----メンバ変数-----//
 	int m_hp_hdl = 0;									//HP画像
-	int m_jump_count = 0;								//ジャンプ回数
-	float m_jump_time = 10;								//ジャンプ時間
-	tnl::Vector3 m_jump_height = { 0,200,0 };			//ジャンプ高さ
-
-	//フラグ
-	bool m_is_falling = false;							//落下中
-	bool m_was_ground = false;							//前フレームの接地判定
-
-	bool m_pad_direction_right;							//パッドでの入力方向
-	bool m_key_direction_right;							//キーでの入力方向
+	
+	float m_hovering_force = 0.0f;						// 現在の浮遊力
+	bool m_is_hovered = false;							// 空気が抜けたかどうかのフラグ
 
 	//ゲームスティック用
-	float normalizedInputX;								/*アナログスティックの傾きベクトル*/
-	const float DASH_THRESHOLD = 0.8f;					/*ダッシュのしきい値を定義*/
+	float normalized_input_x;							/*アナログスティックの傾きベクトル*/
 	int m_input_x;
 	int m_input_y;
+
+	Collision* m_collision=nullptr;
+	Map* m_map=nullptr;
 
 	ePlayerAction e_currentAction = ePlayerAction::Idle_right;		//アクション
 
@@ -56,10 +58,17 @@ public:
 	void Finalize() override;
 
 private:
-	void MoveHandle(float delta_time);	//ゲームパッドスティック操作
-	void ActionHandle(float delta_time);		//入力処理
-	void Invincible(float delta_time);					//無敵時間の処理
-	void flashing(float delta_time);					//点滅処理
+
+	void MoveHandle(float delta_time);		//ゲームパッドスティック操作
+	void ActionHandle(float delta_time);	//入力処理
+	
+	void MoveRange();						//移動範囲の制限
+	void Gravity(float delta_time);			//重力処理
+
+	void Hovering(float delta_time);		//ホバリング処理
+	bool CheckIsGround();					//接地判定
+	
+	void Invincible(float delta_time);		//無敵時間の処理
 };
 
 //Playerのボタン操作の挙動処理を行うクラス

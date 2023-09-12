@@ -129,12 +129,14 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
                     chara->GetPos(),
                     { info.s_pos.x - (info.s_size >> 1),info.s_pos.y + (info.s_size >> 1),0 },
                     { info.s_pos.x + (info.s_size >> 1),info.s_pos.y - (info.s_size >> 1),0 }
-            );
+                );
 
             if ((nearly_point - chara->GetPos()).length() < chara->GetSize())
             {
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
                 chara->SetPos(nearly_point + normalize * chara->GetSize());
+                
+                
                 //衝突応答処理
                 //DrawStringEx(0, 90, -1, "linehit");
             }
@@ -144,6 +146,7 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
 
 ////当たり判定に応じて分岐処理
 void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
+
     //判定範囲内のマップチップを取得
     auto surroundingChips = GetSurroundingChips(chara, map, range);
 
@@ -157,13 +160,13 @@ void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
             case eCollisionType::Box:
 
                 CheckBoxCollision(chara, map, surroundingChips);
-                DrawStringEx(10, 10, -1, "box");
+
                 break;
 
             case eCollisionType::Line:
 
                 CheckLineCollision(chara, map, surroundingChips);
-                DrawStringEx(10, 20, -1, "line");
+
 
                 break;
 

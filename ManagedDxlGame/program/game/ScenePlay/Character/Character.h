@@ -29,8 +29,6 @@ protected:
 	bool m_is_direction_right = true;				/*右向き*/
 	bool m_is_invincible = false;					/*無敵*/
 
-
-
 	wta::DrawAnim* animLoader = nullptr;		//アニメーションデータをロード
 
 public:
@@ -47,6 +45,9 @@ public:
 
 	tnl::Vector3 GetVelocity() const { return m_velocity; }
 	void SetVelocity(tnl::Vector3 velocity) { m_velocity = velocity; }
+
+	bool IsGround() const { return m_is_ground; }
+	void SetIsGround(bool is_ground) { m_is_ground = is_ground; }
 
 	bool GetIsDirectionRight() const { return m_is_direction_right; }
 

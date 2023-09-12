@@ -65,17 +65,6 @@ void Map::LoadMapCollision(const Camera* camera)
 			info.s_type = type;
 			//当たり判定の情報を各マップチップに格納
 			m_collision_info[i][j] = info;
-			//if (type != eCollisionType::None)
-			//{
-				////カメラの位置に合わせて描画位置をずらす
-				//tnl::Vector3 draw_pos = info.s_pos - camera->GetTarget() +
-				//	tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
-			//	if(type == eCollisionType::Box)
-			//		DrawBoxEx(draw_pos, info.s_size, info.s_size);
-				//if (type == eCollisionType::Line)
-				//	DrawLine(draw_pos.x- (info.s_size>>1),draw_pos.y + (info.s_size >> 1),draw_pos.x+ (info.s_size >> 1), draw_pos.y - (info.s_size >> 1),-1);
-			//}
 		}
 	}
 }

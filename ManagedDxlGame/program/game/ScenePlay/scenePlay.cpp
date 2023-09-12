@@ -39,7 +39,7 @@ void ScenePlay::Initialize()
 	m_camera=new Camera();
 	m_collision = new Collision();
 	m_map = new Map();
-	m_player = new Player();
+	m_player = new Player(m_collision, m_map);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());
@@ -105,28 +105,6 @@ void ScenePlay::InitEnemy()
 	}
 }
 
-void ScenePlay::CreateEffect()
-{
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z))
-	{
-		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
-		effect->SetPos(m_player->GetPos()); 
-		effect->SetOffset(tnl::Vector3(400, 0, 0));
-		effect->SetIsMoved(true);
-		m_gameObjects.emplace_back(effect);
-		m_effects.emplace_back(effect);
-	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X))
-	{
-		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
-		effect->SetPos(m_player->GetPos());
-		effect->SetOffset(tnl::Vector3(200, 0, 0)); // ファイアの初期オフセット
-		effect->SetIsMoved(true);
-		m_gameObjects.emplace_back(effect);
-		m_effects.emplace_back(effect);
-	}
-}
-
 void ScenePlay::Update(float delta_time) 
 {	
 	m_sequence.update(delta_time);
@@ -171,6 +149,28 @@ void ScenePlay::Finalize()
 	m_map->Finalize();
 	m_enemies.clear();
 	m_effects.clear();
+}
+
+void ScenePlay::CreateEffect()
+{
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z))
+	{
+		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
+		effect->SetPos(m_player->GetPos()); 
+		effect->SetOffset(tnl::Vector3(400, 0, 0));
+		effect->SetIsMoved(true);
+		m_gameObjects.emplace_back(effect);
+		m_effects.emplace_back(effect);
+	}
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X))
+	{
+		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
+		effect->SetPos(m_player->GetPos());
+		effect->SetOffset(tnl::Vector3(200, 0, 0)); // ファイアの初期オフセット
+		effect->SetIsMoved(true);
+		m_gameObjects.emplace_back(effect);
+		m_effects.emplace_back(effect);
+	}
 }
 
 bool ScenePlay::SeqSceneIdle(float delta_time)

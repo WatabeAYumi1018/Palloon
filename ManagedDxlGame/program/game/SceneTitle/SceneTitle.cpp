@@ -40,7 +40,6 @@ bool SceneTitle::SeqIdle(float delta_time)
 		m_back_hdl = LoadGraph("graphics/title/Titleback.jpg");
 		m_logo_hdl = LoadGraph("graphics/title/TitleLogo.png");
 		m_palloon_hdl= LoadGraph("graphics/title/PALLOON.png");
-
 		
 		m_current_width = 0;
 	}
