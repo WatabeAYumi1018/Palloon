@@ -28,6 +28,12 @@ void Player::Update(float delta_time)
 	Gravity(delta_time);
 	MoveRange();
 
+	//if (m_landing_time >= 1.0f)
+	//{
+	//	m_landing_time += delta_time;
+	//	m_hover_end_drawed = false;
+	//}
+
 	ActionHandle(delta_time);
 	Invincible(delta_time);
 
@@ -60,6 +66,9 @@ void Player::Draw(float delta_time, const Camera* camera)
 
 void Player::ActionHandle(float delta_time)
 {
+	// 1秒未満の場合、アクションを変更しない
+	//if (m_landing_time < 1.0f) return;
+
 	MoveHandle(delta_time);
 
 	switch (e_currentAction)
@@ -137,6 +146,7 @@ void Player::ActionHandle(float delta_time)
 		break;
 
 	default:
+
 		break;
 	}
 }
@@ -150,13 +160,17 @@ void Player::MoveHandle(float delta_time)
 
 	if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) || tnl::Input::IsPadDown(ePad::KEY_3))
 	{
-		Hovering(delta_time);
-		HoveringHandle(delta_time);
-		
-		return;  // ジャンプ判定が行われた場合、このメソッドをここで終了する
+		m_is_hovering = true;
 	}
 
-	if (CheckIsGround())
+	if (m_is_hovering)
+	{
+		Hovering(delta_time);
+		HoveringDirection(delta_time);
+	}
+		//HoveringEnd();
+
+	if (CheckIsGround() && !m_is_hovering)
 	{
 		if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
 		{
@@ -202,15 +216,18 @@ void Player::MoveHandle(float delta_time)
 	}
 	else 
 	{
-		if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+		if (!m_hover_end_drawed) 
 		{
-			if (m_is_direction_right)
+			if (tnl::Input::IsKeyDown(eKeys::KB_Z))
 			{
-				e_currentAction = ePlayerAction::Beam_right;
-			}
-			else
-			{
-				e_currentAction = ePlayerAction::Beam_left;
+				if (m_is_direction_right)
+				{
+					e_currentAction = ePlayerAction::Beam_right;
+				}
+				else
+				{
+					e_currentAction = ePlayerAction::Beam_left;
+				}
 			}
 		}
 	}
@@ -236,6 +253,7 @@ void Player::MoveRange()
 		m_pos.x = PLAYER_POS_X;
 		m_pos.y = PLAYER_POS_Y;
 		//カメラもリセット
+		//UIもリセット
 
 	}
 }
@@ -253,65 +271,6 @@ void Player::Gravity(float delta_time)
 	}
 }
 
-void Player::HoveringHandle(float delta_time)
-{
-	// ホバリング中
-	if (m_hovering_force > 0)
-	{
-		if (m_is_direction_right)
-		{
-			e_currentAction = ePlayerAction::Hover_right;
-
-			if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
-			{
-				m_pos.x += PLAYER_VELOCITY_X * delta_time;
-			}
-		}
-		else
-		{
-			e_currentAction = ePlayerAction::Hover_left;
-
-			if (tnl::Input::IsKeyDown(eKeys::KB_LEFT) || normalized_input_x < 0)  // この条件を追加
-			{
-				m_pos.x -= PLAYER_VELOCITY_X * delta_time;
-			}
-		}
-	}
-	//下降中
-	else if (!CheckIsGround())
-	{
-		m_is_hovered = true;
-
-		if (m_is_direction_right)
-		{
-			if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
-			{
-				m_pos.x += PLAYER_VELOCITY_X * delta_time;
-			}
-		}
-		else
-		{
-			if (tnl::Input::IsKeyDown(eKeys::KB_LEFT) || normalized_input_x < 0)
-			{
-				m_pos.x -= PLAYER_VELOCITY_X * delta_time;
-			}
-		}
-	}
-	//着地の瞬間
-	if (CheckIsGround() && m_is_hovered)
-	{
-		if (m_is_direction_right)
-		{
-			e_currentAction = ePlayerAction::Hover_end_right;
-		}
-		else
-		{
-			e_currentAction = ePlayerAction::Hover_end_left;
-		}
-		m_is_hovered = false;
-	}
-}
-
 void Player::Hovering(float delta_time)
 {
 	if (m_is_ground)
@@ -321,14 +280,95 @@ void Player::Hovering(float delta_time)
 	if (m_hovering_force > 0)
 	{
 		m_pos.y -= m_hovering_force * PLAYER_VELOCITY_Y * delta_time; // 浮遊力に基づいて位置を更新
-
 		m_hovering_force -= PLAYER_HOVER_DECAY_RATE * delta_time; // 浮遊力を減少させる
 		m_hovering_force = max(m_hovering_force, 0.0f); // 0以下にはならないようにする
 	}
 	else
 	{
 		m_hovering_force = 0.0f; // キーが離されたら浮遊力を0にリセット
+		m_is_hovering = false;
 		m_is_hovered = false;
+	}
+}
+
+void Player::HoveringDirection(float delta_time)
+{
+	// ホバリング中
+	if (m_hovering_force > 0)
+	{
+		if (m_is_direction_right)
+		{
+			HoveringStartRight(delta_time);
+		}
+		else
+		{
+			HoveringStartLeft(delta_time);
+		}
+	}
+	//下降中
+	else
+	{
+		if (m_is_direction_right)
+		{
+			HoveringStartRight(delta_time);
+		}
+		else
+		{
+			HoveringStartLeft(delta_time);
+		}
+	}
+}
+
+void Player::HoveringStartRight(float delta_time)
+{
+	e_currentAction = ePlayerAction::Hover_right;
+
+	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
+	{
+		m_pos.x += PLAYER_VELOCITY_X * delta_time;
+	}
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT) || normalized_input_x < 0)
+	{
+		e_currentAction = ePlayerAction::Hover_left;
+		m_pos.x -= PLAYER_VELOCITY_X * delta_time;
+	}
+}
+
+void Player::HoveringStartLeft(float delta_time)
+{
+	e_currentAction = ePlayerAction::Hover_left;
+
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT) || normalized_input_x < 0)
+	{
+		m_pos.x -= PLAYER_VELOCITY_X * delta_time;
+	}
+	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
+	{
+		e_currentAction = ePlayerAction::Hover_right;
+		m_pos.x += PLAYER_VELOCITY_X * delta_time;
+	}
+}
+
+void Player::HoveringEnd()
+{
+	if (CheckIsGround())
+	{
+		//m_landing_time = 0.0f; // 着地した瞬間にタイマーをリセット
+
+		if (m_is_direction_right)
+		{
+			e_currentAction = ePlayerAction::Hover_end_right;
+		}
+		else
+		{
+			e_currentAction = ePlayerAction::Hover_end_left;
+		}
+		m_is_hovering = false;
+		m_hover_end_drawed = true;
+	}
+	else
+	{
+		m_is_hovering = false;
 	}
 }
 

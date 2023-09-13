@@ -35,9 +35,13 @@ private:
 	//-----メンバ変数-----//
 	int m_hp_hdl = 0;									//HP画像
 	
-	float m_hovering_time=0;
 	float m_hovering_force = 0.0f;						// 現在の浮遊力
+	float m_landing_time = 0.0f;						// 着地してからの経過時間
+	
+	bool m_is_hovering = false;							// 空中にいるかどうかのフラグ
 	bool m_is_hovered = false;							// 空気が抜けたかどうかのフラグ
+	bool m_was_in_air = false;							// 空中にいたかどうかのフラグ
+	bool m_hover_end_drawed=false;						// 着地時のアクションが設定されているかどうかのフラグ
 
 	//ゲームスティック用
 	float normalized_input_x;							/*アナログスティックの傾きベクトル*/
@@ -64,8 +68,11 @@ private:
 	void MoveRange();						//移動範囲の制限
 	void Gravity(float delta_time);			//重力処理
 
-	void HoveringHandle(float delta_time);	//ホバリング操作
 	void Hovering(float delta_time);		//ホバリング処理
+	void HoveringDirection(float delta_time);	//ホバリング操作
+	void HoveringStartRight(float delta_time);				//ホバリング開始処理（右）
+	void HoveringStartLeft(float delta_time);				//ホバリング開始処理（左）
+	void HoveringEnd();						//ホバリング終了処理
 	bool CheckIsGround();					//接地判定
 	
 	void Invincible(float delta_time);		//無敵時間の処理
