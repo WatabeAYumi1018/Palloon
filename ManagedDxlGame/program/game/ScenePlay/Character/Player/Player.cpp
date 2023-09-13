@@ -158,7 +158,8 @@ void Player::MoveHandle(float delta_time)
 
 	normalized_input_x = m_input_x / 1000.0f;
 
-	if (tnl::Input::IsKeyDown(eKeys::KB_SPACE) || tnl::Input::IsPadDown(ePad::KEY_3))
+	//ジャンプボタン、または接地判定falseの場合、ジャンプ処理を行う
+	if ((tnl::Input::IsKeyDown(eKeys::KB_SPACE) || tnl::Input::IsPadDown(ePad::KEY_3))|| !CheckIsGround())
 	{
 		m_is_hovering = true;
 	}

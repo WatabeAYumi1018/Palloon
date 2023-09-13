@@ -188,32 +188,39 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
     // 2つのキャラクターが衝突しているかチェック
     if (wta::IsIntersectCircleCircle(player_pos, player_size, enemy_pos, enemy_size))
     {
-        if (!player->GetIsInvincible())
+        //プレイヤーの座標が高い場合は敵のHPを減らす
+        if (enemy_pos.y < player_pos.y)
         {
-            //プレイヤーのHPを減らす
-            player->DecreaseHP(1);
-
-            player->MakeInvincible();
-
-            if (player->GetIsDead())
+            enemy->DecreaseHP(1);
+        }
+        else {
+            if (!player->GetIsInvincible())
             {
-                //プレイヤーが死んだらの処理
+                //プレイヤーのHPを減らす
+                player->DecreaseHP(1);
 
+                player->MakeInvincible();
+
+                if (player->GetIsDead())
+                {
+                    //プレイヤーが死んだらの処理
+
+                }
+
+                tnl::Vector3 diff = enemy_pos - player_pos;
+
+                //衝突した2つのキャラクター間の距離
+                float distance = diff.length();
+
+                //衝突の度合いを計算
+                float overlap = (player_size + enemy_size) - distance;
+
+                //方向ベクトルを正規化
+                diff = tnl::Vector3::Normalize(diff);
+
+                //プレイヤーを適切な位置に移動
+                player->SetPos(player_pos - diff * overlap);
             }
-
-            tnl::Vector3 diff = enemy_pos - player_pos;
-
-            //衝突した2つのキャラクター間の距離
-            float distance = diff.length();
-
-            //衝突の度合いを計算
-            float overlap = (player_size + enemy_size) - distance;
-
-            //方向ベクトルを正規化
-            diff = tnl::Vector3::Normalize(diff);
-
-            //プレイヤーを適切な位置に移動
-            player->SetPos(player_pos - diff * overlap);
         }
     }
 }
