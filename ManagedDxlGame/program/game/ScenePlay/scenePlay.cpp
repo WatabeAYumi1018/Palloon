@@ -123,6 +123,11 @@ void ScenePlay::Update(float delta_time)
 	{
 		obj->Update(delta_time);
 	}
+	// エフェクトの持続時間を経過させる
+	for (auto effect : m_effects)
+	{
+		effect->Update(delta_time);
+	}
 }
 
 void ScenePlay::Draw(float delta_time)
@@ -158,6 +163,7 @@ void ScenePlay::CreateEffect()
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
 		effect->SetPos(m_player->GetPos()); 
 		effect->SetOffset(tnl::Vector3(400, 0, 0));
+		effect->CalculateCollisionCircles();
 		effect->SetIsMoved(true);
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
@@ -185,30 +191,47 @@ bool ScenePlay::SeqSceneIdle(float delta_time)
 
 void ScenePlay::CollisionCheck()
 {
-    for (auto enemy : m_enemies)
-    {
-        m_collision->CollisionCalculate(enemy, m_map, 10);
-        m_collision->CollisionCharacter(m_player, enemy);
+	for (auto enemy : m_enemies)
+	{
+		if (enemy->GetIsDead())
+		{
+			continue; // 既に死んでいる敵に対する判定はスキップ
+		}
 
-        for (auto effect : m_effects)
-        {
-			if (!effect->GetIsMoved()) 
+		m_collision->CollisionCalculate(enemy, m_map, 10);
+		m_collision->CollisionCharacter(m_player, enemy);
+
+		for (auto effect : m_effects)
+		{
+			if (!effect->GetIsMoved())
 			{
-				m_effectsRemoveList.emplace_back(effect);
-
-				continue;
+				continue; // 動いていないエフェクトの判定はスキップ
 			}
 
-			if(wta::IsIntersectCircleCircle(effect->GetPos(), effect->GetSize(), enemy->GetPos(), enemy->GetSize()))
-            {
-                enemy->SetIsDead(true);
-                effect->SetIsMoved(false);
+			bool effectHitEnemy = false; // 当たり判定があったかどうかのフラグ
 
-                m_enemiesRemoveList.emplace_back(enemy);
-				m_effectsRemoveList.emplace_back(effect);
-            }
-        }
-    }
+			// ここでeffect内の全ての円と敵との当たり判定をチェック
+			for (auto circlePos : effect->GetCollisionCirclesPos())
+			{
+				if (wta::IsIntersectCircleCircle(circlePos, effect->GetSize(), enemy->GetPos(), enemy->GetSize()))
+				{
+					effectHitEnemy = true;
+					break;
+				}
+			}
+
+			// 1つ以上の円が敵にヒットした場合の処理
+			if (effectHitEnemy)
+			{
+				enemy->SetIsDead(true);
+				// 持続時間を超えるように設定
+				//effect->elapsed_time = effect->duration + 1.0f;
+
+				m_enemiesRemoveList.emplace_back(enemy);
+				break;  // 敵は一度死んでしまったら、それ以上の当たり判定は不要なので、このエフェクトのループを抜ける
+			}
+		}
+	}
 }
 
 void ScenePlay::RemoveAndDeleteEffect(EffectPlayer* effect)
@@ -238,4 +261,7 @@ void ScenePlay::RemoveAndDelete()
 	}
 
 	m_enemiesRemoveList.clear();
+
+	// エフェクトの持続時間が経過したエフェクトを削除
+	m_effects.remove_if([](EffectPlayer* effect) { return !effect->GetIsMoved(); });
 }

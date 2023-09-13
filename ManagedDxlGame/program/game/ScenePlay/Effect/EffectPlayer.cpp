@@ -2,11 +2,15 @@
 #include "../Camera/Camera.h"
 #include "EffectPlayer.h"
 
+
 EffectPlayer::EffectPlayer(Player *player, eEffectPlayerType effectType):
 	Effect(tnl::Vector3(0, 0, 0), player), m_effectType(effectType)
 {
 	// CSVからアニメーションデータをロード
 	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
+	
+	//ビームの場合
+	m_size = 30;
 }
 
 EffectPlayer::~EffectPlayer()
@@ -36,7 +40,7 @@ void EffectPlayer::Draw(float delta_time, const Camera* camera)
 	{
 		tnl::Vector3 draw_pos =
 			m_pos + m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-		
+
 		animLoader->Draw(delta_time * 2, draw_pos);
 	}
 	else
@@ -45,6 +49,22 @@ void EffectPlayer::Draw(float delta_time, const Camera* camera)
 			m_pos - m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
 		animLoader->Draw(delta_time * 2, draw_pos);
+	}
+}
+
+void EffectPlayer::CalculateCollisionCircles()
+{
+	m_collision_circles_pos.clear();
+
+	tnl::Vector3 effect_pos = this->GetPos();
+
+	if (m_effectType == eEffectPlayerType::Beam)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			tnl::Vector3 circle_pos = effect_pos + tnl::Vector3(i * m_size * 2, 0, 0);
+			m_collision_circles_pos.emplace_back(circle_pos);
+		}
 	}
 }
 
