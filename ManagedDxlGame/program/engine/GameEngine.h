@@ -9,8 +9,10 @@ enum class ePlayerAction
 	Move_left,
 	Dash_right,
 	Dash_left,
-	Jump_right,
-	Jump_left,
+	Hover_right,
+	Hover_left,
+	Hover_end_right,
+	Hover_end_left,
 	Stamp_right,
 	Stamp_left,
 	Roll_right,
@@ -30,7 +32,16 @@ enum class eEffectPlayerType
 	Max
 };
 
-enum class eCollisionType
+enum class eEffectCollisionType
+{
+	None,
+	Box,
+	Circle,
+	Line,
+	Max
+};
+
+enum class eMapCollisionType
 {
 	None,
 	Box,
@@ -42,7 +53,7 @@ struct sCollisionInfo
 {
 	tnl::Vector3 s_pos;
 	int s_size;
-	eCollisionType s_type;
+	eMapCollisionType s_type;
 };
 
 struct sEnemyData 
@@ -58,14 +69,5 @@ struct sEnemyInfo
 	std::string s_color;
 	int s_hp;
 	int s_size;
-};
-
-enum class eEffectCollisionType
-{
-	None,
-	Box,
-	Circle,
-	Line,
-	Max
 };
 

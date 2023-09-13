@@ -34,7 +34,7 @@ bool Enemy::CanMoveRight()
     sCollisionInfo forwardCollision = m_map->GetCollisionInfo()[chipPos.y][chipPos.x];
     DrawBoxEx(forwardPos, 30, 30, true);
 
-    return forwardCollision.s_type == eCollisionType::Box;
+    return forwardCollision.s_type == eMapCollisionType::Box;
 }
 
 bool Enemy::CanMoveLeft()
@@ -44,5 +44,5 @@ bool Enemy::CanMoveLeft()
     sCollisionInfo backwardCollision = m_map->GetCollisionInfo()[chipPos.y][chipPos.x];
     DrawBoxEx (backwardPos,30,30,true);
     
-    return backwardCollision.s_type == eCollisionType::Box;
+    return backwardCollision.s_type == eMapCollisionType::Box;
 }

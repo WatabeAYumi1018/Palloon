@@ -35,7 +35,7 @@ std::vector<sCollisionInfo> Collision::GetRowChips(int chip_x, int i, int range,
         sCollisionInfo info = map->GetCollisionInfo()[i][j];
 
         //“–‚½‚è”»’è‚ª‚È‚¢ê‡‚Í–³‹
-        if (info.s_type != eCollisionType::None)
+        if (info.s_type != eMapCollisionType::None)
         {
             rowChips.emplace_back(info);
         }
@@ -94,7 +94,7 @@ void Collision::CheckBoxCollision(Character* chara, Map* map, const std::vector<
     {
         for (const auto& info : row)
         {
-            if (info.s_type == eCollisionType::None || info.s_type == eCollisionType::Line)
+            if (info.s_type == eMapCollisionType::None || info.s_type == eMapCollisionType::Line)
             {
                 continue;
             }
@@ -118,7 +118,7 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
     {
         for (const auto& info : row)
         {
-            if (info.s_type == eCollisionType::None)
+            if (info.s_type == eMapCollisionType::None)
             {
                 continue;
             }
@@ -157,13 +157,13 @@ void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
             // “–‚½‚è”»’è‚Ìƒ^ƒCƒv‚ÉŠî‚Ã‚¢‚Äˆ—
             switch (info.s_type)
             {
-            case eCollisionType::Box:
+            case eMapCollisionType::Box:
 
                 CheckBoxCollision(chara, map, surroundingChips);
 
                 break;
 
-            case eCollisionType::Line:
+            case eMapCollisionType::Line:
 
                 CheckLineCollision(chara, map, surroundingChips);
 

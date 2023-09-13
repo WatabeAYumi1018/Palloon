@@ -27,8 +27,6 @@ private:
 	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）
 	static constexpr float PLAYER_VELOCITY_Y = 500;
 
-	static constexpr float AIR_LEAK_TIME = 1.0f;        // 空気が抜けるまでの時間
-
 	const float DASH_THRESHOLD = 0.8f;					/*ダッシュのしきい値を定義*/
 
 	const float PLAYER_INITIAL_HOVER_FORCE = 1.5f; // 初期の浮遊力
@@ -37,6 +35,7 @@ private:
 	//-----メンバ変数-----//
 	int m_hp_hdl = 0;									//HP画像
 	
+	float m_hovering_time=0;
 	float m_hovering_force = 0.0f;						// 現在の浮遊力
 	bool m_is_hovered = false;							// 空気が抜けたかどうかのフラグ
 
@@ -65,6 +64,7 @@ private:
 	void MoveRange();						//移動範囲の制限
 	void Gravity(float delta_time);			//重力処理
 
+	void HoveringHandle(float delta_time);	//ホバリング操作
 	void Hovering(float delta_time);		//ホバリング処理
 	bool CheckIsGround();					//接地判定
 	

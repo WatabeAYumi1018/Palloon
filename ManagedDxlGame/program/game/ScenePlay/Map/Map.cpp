@@ -57,7 +57,7 @@ void Map::LoadMapCollision(const Camera* camera)
 			int posX = j * MAP_CHIP_SIZE + (MAP_CHIP_SIZE >> 1);
 			int posY = i * MAP_CHIP_SIZE + (MAP_CHIP_SIZE >> 1);
 			//eCollisionTypeと読み取った数字を関連付ける（同じ数字で連動しやすいように）
-			eCollisionType type = static_cast<eCollisionType>(m_csv_collision[i][j]);
+			eMapCollisionType type = static_cast<eMapCollisionType>(m_csv_collision[i][j]);
 			//構造体型に各情報を代入
 			sCollisionInfo info;
 			info.s_pos = tnl::Vector3(posX, posY, 0);
