@@ -192,6 +192,13 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
                 player->SetIsStamp(true);
                 enemy->SetIsDead(true);
             }
+
+            else if (player->GetIsRolling())
+            {
+				//プレイヤーが回転中なら敵を倒す
+				enemy->SetIsDead(true);
+			}
+
             else
             {
                 //プレイヤーのHPを減らす

@@ -81,20 +81,11 @@ void Player::RollAction(float delta_time)
 {
 	if (m_is_direction_right)
 	{
-		m_pos.x += m_roll_speed * delta_time;
 		e_currentAction = ePlayerAction::Roll_right;
 	}
 	else
 	{
-		m_pos.x -= m_roll_speed * delta_time;
 		e_currentAction = ePlayerAction::Roll_left;
-	}
-	//ロールの減速
-	m_roll_speed -= ROLL_DECELERATION * delta_time;
-
-	if (m_roll_speed <= 0)
-	{
-		m_is_rolling = false;
 	}
 }
 
@@ -211,6 +202,8 @@ void Player::ActionHandle(float delta_time)
 
 void Player::MoveHandle(float delta_time)
 {
+	m_is_rolling = false;
+
 	//アナログスティックの入力値を取得
 	GetJoypadAnalogInput(&m_input_x, &m_input_y, DX_INPUT_PAD1);
 
@@ -245,15 +238,11 @@ void Player::MoveHandle(float delta_time)
 				m_pos.x += VELOCITY_X * delta_time * 2;
 				e_currentAction = ePlayerAction::Dash_right;
 
-				//ダッシュ中にZで転がる攻撃
+				//ダッシュ中にCで転がる攻撃
 				if (tnl::Input::IsKeyDown(eKeys::KB_Z))
 				{
 					m_is_rolling = true;
-
-					if (m_is_rolling)
-					{
-						RollAction(delta_time);
-					}
+					RollAction(delta_time);
 				}
 			}
 			else
@@ -271,21 +260,28 @@ void Player::MoveHandle(float delta_time)
 				m_pos.x -= VELOCITY_X * delta_time * 2;
 				e_currentAction = ePlayerAction::Dash_left;
 
-				//ダッシュ中にZで転がる攻撃
+				//ダッシュ中にCで転がる攻撃
 				if (tnl::Input::IsKeyDown(eKeys::KB_Z))
 				{
 					m_is_rolling = true;
-
-					if (m_is_rolling)
-					{
-						RollAction(delta_time);
-					}
+					RollAction(delta_time);
 				}
 			}
 			else
 			{
 				m_pos.x -= VELOCITY_X * delta_time;
 				e_currentAction = ePlayerAction::Move_left;
+			}
+		}
+		else if (tnl::Input::IsKeyDown(eKeys::KB_C))
+		{
+			if (m_is_direction_right)
+			{
+				e_currentAction = ePlayerAction::Beam_right;
+			}
+			else
+			{
+				e_currentAction = ePlayerAction::Beam_left;
 			}
 		}
 		else
@@ -297,20 +293,6 @@ void Player::MoveHandle(float delta_time)
 			else
 			{
 				e_currentAction = ePlayerAction::Idle_left;
-			}
-		}
-	}
-	else 
-	{
-		if (tnl::Input::IsKeyDown(eKeys::KB_Z))
-		{
-			if (m_is_direction_right)
-			{
-				e_currentAction = ePlayerAction::Beam_right;
-			}
-			else
-			{
-				e_currentAction = ePlayerAction::Beam_left;
 			}
 		}
 	}

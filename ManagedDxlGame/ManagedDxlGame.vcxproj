@@ -203,7 +203,6 @@
     <ClCompile Include="program\library\tnl_seek_unit.cpp" />
     <ClCompile Include="program\library\tnl_util.cpp" />
     <ClCompile Include="program\library\tnl_vector.cpp" />
-    <ClCompile Include="program\wta_library\wta_AnimUnit.cpp" />
     <ClCompile Include="program\wta_library\wta_DrawAnim.cpp" />
     <ClCompile Include="program\wta_library\wta_IsIntersectCalc.cpp" />
     <ClCompile Include="program\wta_library\wta_LoadAnim.cpp" />
@@ -270,7 +269,6 @@
     <ClInclude Include="program\library\tnl_using.h" />
     <ClInclude Include="program\library\tnl_util.h" />
     <ClInclude Include="program\library\tnl_vector.h" />
-    <ClInclude Include="program\wta_library\wta_AnimUnit.h" />
     <ClInclude Include="program\wta_library\wta_DrawAnim.h" />
     <ClInclude Include="program\wta_library\wta_IsIntersectCalc.h" />
     <ClInclude Include="program\wta_library\wta_LoadAnim.h" />

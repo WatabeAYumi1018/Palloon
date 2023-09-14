@@ -153,7 +153,7 @@ void ScenePlay::Finalize()
 
 void ScenePlay::CreateEffect()
 {
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z))
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C))
 	{
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
 		effect->SetPos(m_player->GetPos()); 
@@ -163,7 +163,7 @@ void ScenePlay::CreateEffect()
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
 	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X))
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C))
 	{
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
 		effect->SetPos(m_player->GetPos());
