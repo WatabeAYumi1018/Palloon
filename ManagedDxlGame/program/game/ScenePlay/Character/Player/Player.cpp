@@ -5,8 +5,8 @@
 
 //キャラクターの初期化子
 Player::Player(Collision* collision, Map* map):
-	Character({ PLAYER_POS_X, PLAYER_POS_Y, 0 },PLAYER_SIZE,
-				PLAYER_MAX_HP,{ PLAYER_VELOCITY_X, PLAYER_VELOCITY_Y,0 }),
+	Character({ POS_X, POS_Y, 0 },SIZE,
+				MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),
 				m_collision(collision), m_map(map)
 {
 
@@ -56,8 +56,8 @@ void Player::Draw(float delta_time, const Camera* camera)
 	//DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
 }
 
-void Player::StampAction()
-{
+void Player::StampAction(float delta_time)
+{	
 	if (m_is_direction_right)
 	{
 		e_currentAction = ePlayerAction::Stamp_right;
@@ -65,6 +65,15 @@ void Player::StampAction()
 	else
 	{
 		e_currentAction = ePlayerAction::Stamp_left;
+	}
+
+	m_stamp_time += delta_time;
+
+	if (m_stamp_time >= STAMP_DURATION)
+	{
+		m_stamp_time = 0.0f; // タイマーをリセット
+		m_is_stamp = false;
+		m_is_hovering = false;
 	}
 }
 
@@ -180,14 +189,19 @@ void Player::MoveHandle(float delta_time)
 		m_is_hovering = true;
 	}
 
-	if (m_is_hovering)
+	if (m_is_hovering && m_stamp_time == 0.0f)
 	{
 		Hovering(delta_time);
 		HoveringDirection(delta_time);
 	}
+
+	if (m_is_stamp)
+	{
+		StampAction(delta_time);
+	}
 		//HoveringEnd();
 
-	if (CheckIsGround() && !m_is_hovering)
+	if (CheckIsGround())
 	{
 		if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
 		{
@@ -195,12 +209,12 @@ void Player::MoveHandle(float delta_time)
 
 			if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT) || normalized_input_x > DASH_THRESHOLD)
 			{
-				m_pos.x += PLAYER_VELOCITY_X * delta_time * 2;
+				m_pos.x += VELOCITY_X * delta_time * 2;
 				e_currentAction = ePlayerAction::Dash_right;
 			}
 			else
 			{
-				m_pos.x += PLAYER_VELOCITY_X * delta_time;
+				m_pos.x += VELOCITY_X * delta_time;
 				e_currentAction = ePlayerAction::Move_right;
 			}
 		}
@@ -210,12 +224,12 @@ void Player::MoveHandle(float delta_time)
 
 			if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT) || abs(normalized_input_x) > DASH_THRESHOLD)
 			{
-				m_pos.x -= PLAYER_VELOCITY_X * delta_time * 2;
+				m_pos.x -= VELOCITY_X * delta_time * 2;
 				e_currentAction = ePlayerAction::Dash_left;
 			}
 			else
 			{
-				m_pos.x -= PLAYER_VELOCITY_X * delta_time;
+				m_pos.x -= VELOCITY_X * delta_time;
 				e_currentAction = ePlayerAction::Move_left;
 			}
 		}
@@ -253,22 +267,22 @@ void Player::MoveHandle(float delta_time)
 void Player::MoveRange()
 {
 	//プレイヤーの移動範囲を制限
-	if (m_pos.x < PLAYER_SIZE)
+	if (m_pos.x < SIZE)
 	{
-		m_pos.x = PLAYER_SIZE;
+		m_pos.x = SIZE;
 	}
-	if (m_pos.x > (m_map -> GetMapChipX() * m_map->MAP_CHIP_SIZE - PLAYER_SIZE))
+	if (m_pos.x > (m_map -> GetMapChipX() * m_map->MAP_CHIP_SIZE - SIZE))
 	{
-		m_pos.x = m_map->GetMapChipX()* m_map->MAP_CHIP_SIZE - PLAYER_SIZE;
+		m_pos.x = m_map->GetMapChipX()* m_map->MAP_CHIP_SIZE - SIZE;
 	}
-	if (m_pos.y < PLAYER_SIZE)
+	if (m_pos.y < SIZE)
 	{
-		m_pos.y = PLAYER_SIZE;
+		m_pos.y = SIZE;
 	}
-	if (m_pos.y >= (m_map->GetMapChipY() * m_map->MAP_CHIP_SIZE - PLAYER_SIZE))
+	if (m_pos.y >= (m_map->GetMapChipY() * m_map->MAP_CHIP_SIZE - SIZE))
 	{
-		m_pos.x = PLAYER_POS_X;
-		m_pos.y = PLAYER_POS_Y;
+		m_pos.x = POS_X;
+		m_pos.y = POS_Y;
 		//カメラもリセット
 		//UIもリセット
 
@@ -292,12 +306,12 @@ void Player::Hovering(float delta_time)
 {
 	if (m_is_ground)
 	{
-		m_hovering_force = PLAYER_INITIAL_HOVER_FORCE; // 地面にいるときは浮遊力をリセット
+		m_hovering_force = HOVER_FIRST_FORCE; // 地面にいるときは浮遊力をリセット
 	}
 	if (m_hovering_force > 0)
 	{
-		m_pos.y -= m_hovering_force * PLAYER_VELOCITY_Y * delta_time; // 浮遊力に基づいて位置を更新
-		m_hovering_force -= PLAYER_HOVER_DECAY_RATE * delta_time; // 浮遊力を減少させる
+		m_pos.y -= m_hovering_force * VELOCITY_Y * delta_time; // 浮遊力に基づいて位置を更新
+		m_hovering_force -= HOVER_DECAY_RATE * delta_time; // 浮遊力を減少させる
 		m_hovering_force = max(m_hovering_force, 0.0f); // 0以下にはならないようにする
 	}
 	else
@@ -338,31 +352,55 @@ void Player::HoveringDirection(float delta_time)
 
 void Player::HoveringStartRight(float delta_time)
 {
-	e_currentAction = ePlayerAction::Hover_right;
-
 	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
 	{
-		m_pos.x += PLAYER_VELOCITY_X * delta_time;
+		m_is_direction_right = true;
+		e_currentAction = ePlayerAction::Hover_right;
+		m_pos.x += VELOCITY_X * delta_time;
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT) || normalized_input_x < 0)
+	else if (tnl::Input::IsKeyDown(eKeys::KB_LEFT) || normalized_input_x < 0)
 	{
+		m_is_direction_right = false;
 		e_currentAction = ePlayerAction::Hover_left;
-		m_pos.x -= PLAYER_VELOCITY_X * delta_time;
+		m_pos.x -= VELOCITY_X * delta_time;
+	}
+	else
+	{
+		if (m_is_direction_right)
+		{
+			e_currentAction = ePlayerAction::Hover_right;
+		}
+		else
+		{
+			e_currentAction = ePlayerAction::Hover_left;
+		}
 	}
 }
 
 void Player::HoveringStartLeft(float delta_time)
 {
-	e_currentAction = ePlayerAction::Hover_left;
-
 	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT) || normalized_input_x < 0)
 	{
-		m_pos.x -= PLAYER_VELOCITY_X * delta_time;
+		m_is_direction_right = false;
+		e_currentAction = ePlayerAction::Hover_left;
+		m_pos.x -= VELOCITY_X * delta_time;
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
+	else if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
 	{
+		m_is_direction_right = true;
 		e_currentAction = ePlayerAction::Hover_right;
-		m_pos.x += PLAYER_VELOCITY_X * delta_time;
+		m_pos.x += VELOCITY_X * delta_time;
+	}
+	else
+	{
+		if (m_is_direction_right)
+		{
+			e_currentAction = ePlayerAction::Hover_right;
+		}
+		else
+		{
+			e_currentAction = ePlayerAction::Hover_left;
+		}
 	}
 }
 
@@ -391,7 +429,7 @@ void Player::HoveringEnd()
 
 bool Player::CheckIsGround()
 {
-	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, PLAYER_SIZE, 0);
+	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, SIZE, 0);
 	DrawBoxEx(foot_pos,30,30);
 	tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(foot_pos, m_map);
 	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
@@ -417,6 +455,7 @@ void Player::Invincible(float delta_time)
 
 void Player::Finalize()
 {
-
+	delete animLoader;
+	animLoader = nullptr;
 }
 

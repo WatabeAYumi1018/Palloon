@@ -135,10 +135,6 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
             {
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
                 chara->SetPos(nearly_point + normalize * chara->GetSize());
-                
-                
-                //衝突応答処理
-                //DrawStringEx(0, 90, -1, "linehit");
             }
         }
     }
@@ -188,32 +184,26 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
     // 2つのキャラクターが衝突しているかチェック
     if (wta::IsIntersectCircleCircle(player_pos, player_size, enemy_pos, enemy_size))
     {
-        if (!player->GetIsInvincible() && enemy_pos.y <= player_pos.y)
+        if (!player->GetIsInvincible())
         {
-            //プレイヤーのHPを減らす
-            player->DecreaseHP(1);
-
-            player->MakeInvincible();
-
-            if (player->GetIsDead())
+            if (enemy_pos.y > player_pos.y)
             {
-                //プレイヤーが死んだらの処理
-
+                //プレイヤーが敵を踏んでいると設定
+                player->SetIsStamp(true);
+                enemy->SetIsDead(true);
             }
+            else
+            {
+                //プレイヤーのHPを減らす
+                player->DecreaseHP(1);
+                player->MakeInvincible();
 
-            //tnl::Vector3 diff = enemy_pos - player_pos;
+                if (player->GetIsDead())
+                {
+                    //プレイヤーが死んだらの処理
 
-            ////衝突した2つのキャラクター間の距離
-            //float distance = diff.length();
-
-            ////衝突の度合いを計算
-            //float overlap = (player_size + enemy_size) - distance;
-
-            ////方向ベクトルを正規化
-            //diff = tnl::Vector3::Normalize(diff);
-
-            ////プレイヤーを適切な位置に移動
-            //player->SetPos(player_pos - diff * overlap);
+                }
+            }
         }
     }
 }

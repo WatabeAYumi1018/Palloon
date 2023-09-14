@@ -29,6 +29,7 @@ void EnemySlim::Draw(float delta_time, const Camera* camera)
 
     animLoader->Draw(delta_time, draw_pos);
     //DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
+    
 }
 
 bool EnemySlim::SeqIdle(float delta_time)

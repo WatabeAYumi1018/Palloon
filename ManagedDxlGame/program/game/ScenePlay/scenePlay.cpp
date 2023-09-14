@@ -115,7 +115,7 @@ void ScenePlay::Update(float delta_time)
 
 	CreateEffect();
 
-	CollisionCheck();
+	CollisionCheck(delta_time);
 	
 	RemoveAndDelete();
 
@@ -184,31 +184,19 @@ bool ScenePlay::SeqSceneIdle(float delta_time)
 	return true;
 }
 
-void ScenePlay::CollisionCheck()
+void ScenePlay::CollisionCheck(float delta_time)
 {
 	for (auto enemy : m_enemies)
 	{
 		if (enemy->GetIsDead())
 		{
-			continue; // 既に死んでいる敵に対する判定はスキップ
+			m_enemiesRemoveList.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ
+			continue;
 		}
 
 		m_collision->CollisionCalculate(enemy, m_map, 10);
 		m_collision->CollisionCharacter(m_player, enemy);
 
-		//プレイヤーが上にいる場合は敵のHPを減らす
-		//(y座標は上下逆)
-		if (wta::IsIntersectCircleCircle(m_player->GetPos(), m_player->GetSize(), enemy->GetPos(), enemy->GetSize()))
-		{
-			if(enemy->GetPos().y > m_player->GetPos().y)
-			{
-				m_player->StampAction();
-				enemy->SetIsDead(true);
-				m_enemiesRemoveList.emplace_back(enemy);
-
-				continue;
-			}
-		}
 
 		for (auto effect : m_effects)
 		{
@@ -234,7 +222,6 @@ void ScenePlay::CollisionCheck()
 			if (effect_hit_enemy)
 			{
 				enemy->SetIsDead(true);
-				m_enemiesRemoveList.emplace_back(enemy);
 
 				break;  // 敵は一度死んでしまったら、それ以上の当たり判定は不要なので、このエフェクトのループを抜ける
 			}

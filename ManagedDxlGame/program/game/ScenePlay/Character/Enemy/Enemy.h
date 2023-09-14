@@ -24,6 +24,7 @@ protected:
 	int m_type_id;											/*敵のタイプID*/
 	std::string m_type;										/*敵のタイプ*/
 	std::string m_color;									/*敵の色*/
+	
 	bool m_is_dirction_right = true;						/*右向き*/
 
 	Player* m_player = nullptr;		

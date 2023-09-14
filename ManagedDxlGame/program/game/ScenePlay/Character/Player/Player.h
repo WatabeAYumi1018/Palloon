@@ -18,30 +18,32 @@ public:
 
 private:
 	//-----定数-----//
-	static constexpr float PLAYER_POS_X = 100;			//初期位置
-	static constexpr float PLAYER_POS_Y = 0;
+	static constexpr float POS_X = 100;			//初期位置
+	static constexpr float POS_Y = 0;
 
-	static constexpr int PLAYER_SIZE = 35;				//サイズ
-	static constexpr int PLAYER_MAX_HP = 5;				//HP
+	static constexpr int SIZE = 35;				//サイズ
+	static constexpr int MAX_HP = 5;				//HP
 
-	static constexpr float PLAYER_VELOCITY_X = 100;		//移動速度（pix/fps）
-	static constexpr float PLAYER_VELOCITY_Y = 500;
+	static constexpr float VELOCITY_X = 100;		//移動速度（pix/fps）
+	static constexpr float VELOCITY_Y = 500;
 
 	const float DASH_THRESHOLD = 0.8f;					/*ダッシュのしきい値を定義*/
 
-	const float PLAYER_INITIAL_HOVER_FORCE = 1.5f; // 初期の浮遊力
-	const float PLAYER_HOVER_DECAY_RATE = 1.0f; // 浮遊力の減衰率
+	const float HOVER_FIRST_FORCE = 1.5f; // 初期の浮遊力
+	const float HOVER_DECAY_RATE = 1.0f; // 浮遊力の減衰率
+	const float STAMP_DURATION= 1.5f; // 着地時のアクションの時間
 
 	//-----メンバ変数-----//
 	int m_hp_hdl = 0;									//HP画像
 	
 	float m_hovering_force = 0.0f;						// 現在の浮遊力
-	float m_landing_time = 0.0f;						// 着地してからの経過時間
-	
+	float m_stamp_time = 0.0f;							// 着地時のアクションのタイマー
+
 	bool m_is_hovering = false;							// 空中にいるかどうかのフラグ
 	bool m_is_hovered = false;							// 空気が抜けたかどうかのフラグ
-	bool m_was_in_air = false;							// 空中にいたかどうかのフラグ
 	bool m_hover_end_drawed=false;						// 着地時のアクションが設定されているかどうかのフラグ
+
+	bool m_is_stamp = false;								//着地したかどうかのフラグ
 
 	//ゲームスティック用
 	float normalized_input_x;							/*アナログスティックの傾きベクトル*/
@@ -60,7 +62,10 @@ public:
 	void Draw(float delta_time, const Camera* camera) override;
 	void Finalize() override;
 
-	void StampAction();						//着地時のアクション
+	void StampAction(float delta_time);						//着地時のアクション
+
+	//-----Getter,Setter-----//
+	void SetIsStamp(bool is_stamp) { m_is_stamp = is_stamp; }
 
 private:
 
@@ -77,7 +82,6 @@ private:
 	void HoveringEnd();						//ホバリング終了処理
 	bool CheckIsGround();					//接地判定
 	
-
 	void Invincible(float delta_time);		//無敵時間の処理
 };
 
