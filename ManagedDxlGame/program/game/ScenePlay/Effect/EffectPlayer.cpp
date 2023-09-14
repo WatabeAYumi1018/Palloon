@@ -63,7 +63,7 @@ void EffectPlayer::CalculateCollisionCircles()
 
 	if (m_effectType == eEffectPlayerType::Beam)
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			tnl::Vector3 circle_pos = effect_pos + tnl::Vector3(i * m_size * 2, 0, 0);
 			m_collision_circles_pos.emplace_back(circle_pos);

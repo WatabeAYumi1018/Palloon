@@ -77,6 +77,27 @@ void Player::StampAction(float delta_time)
 	}
 }
 
+void Player::RollAction(float delta_time)
+{
+	if (m_is_direction_right)
+	{
+		m_pos.x += m_roll_speed * delta_time;
+		e_currentAction = ePlayerAction::Roll_right;
+	}
+	else
+	{
+		m_pos.x -= m_roll_speed * delta_time;
+		e_currentAction = ePlayerAction::Roll_left;
+	}
+	//ロールの減速
+	m_roll_speed -= ROLL_DECELERATION * delta_time;
+
+	if (m_roll_speed <= 0)
+	{
+		m_is_rolling = false;
+	}
+}
+
 void Player::ActionHandle(float delta_time)
 {
 	// 1秒未満の場合、アクションを変更しない
@@ -158,6 +179,18 @@ void Player::ActionHandle(float delta_time)
 
 		break;
 
+	case ePlayerAction::Roll_right:
+		
+		animLoader->SetAnimation(12);  /*roll_right*/
+
+		break;
+
+	case ePlayerAction::Roll_left:
+
+		animLoader->SetAnimation(13);  /*roll_left*/
+
+		break;
+
 	case ePlayerAction::Beam_right:
 
 		animLoader->SetAnimation(16);  /*beam_right*/
@@ -211,6 +244,17 @@ void Player::MoveHandle(float delta_time)
 			{
 				m_pos.x += VELOCITY_X * delta_time * 2;
 				e_currentAction = ePlayerAction::Dash_right;
+
+				//ダッシュ中にZで転がる攻撃
+				if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+				{
+					m_is_rolling = true;
+
+					if (m_is_rolling)
+					{
+						RollAction(delta_time);
+					}
+				}
 			}
 			else
 			{
@@ -226,6 +270,17 @@ void Player::MoveHandle(float delta_time)
 			{
 				m_pos.x -= VELOCITY_X * delta_time * 2;
 				e_currentAction = ePlayerAction::Dash_left;
+
+				//ダッシュ中にZで転がる攻撃
+				if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+				{
+					m_is_rolling = true;
+
+					if (m_is_rolling)
+					{
+						RollAction(delta_time);
+					}
+				}
 			}
 			else
 			{
@@ -247,18 +302,15 @@ void Player::MoveHandle(float delta_time)
 	}
 	else 
 	{
-		if (!m_hover_end_drawed) 
+		if (tnl::Input::IsKeyDown(eKeys::KB_Z))
 		{
-			if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+			if (m_is_direction_right)
 			{
-				if (m_is_direction_right)
-				{
-					e_currentAction = ePlayerAction::Beam_right;
-				}
-				else
-				{
-					e_currentAction = ePlayerAction::Beam_left;
-				}
+				e_currentAction = ePlayerAction::Beam_right;
+			}
+			else
+			{
+				e_currentAction = ePlayerAction::Beam_left;
 			}
 		}
 	}
@@ -419,7 +471,6 @@ void Player::HoveringEnd()
 			e_currentAction = ePlayerAction::Hover_end_left;
 		}
 		m_is_hovering = false;
-		m_hover_end_drawed = true;
 	}
 	else
 	{
@@ -437,7 +488,6 @@ bool Player::CheckIsGround()
 	return (foot_collision.s_type == eMapCollisionType::Box ||
 				foot_collision.s_type == eMapCollisionType::Line);
 }
-
 
 void Player::Invincible(float delta_time)
 {
