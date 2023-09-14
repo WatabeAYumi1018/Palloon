@@ -36,19 +36,22 @@ void EffectPlayer::Update(float delta_time)
 
 void EffectPlayer::Draw(float delta_time, const Camera* camera)
 {
-	if (m_player->GetIsDirectionRight())
+	if (m_is_moved)
 	{
-		tnl::Vector3 draw_pos =
-			m_pos + m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+		if (m_player->GetIsDirectionRight())
+		{
+			tnl::Vector3 draw_pos =
+				m_pos + m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-		animLoader->Draw(delta_time * 2, draw_pos);
-	}
-	else
-	{
-		tnl::Vector3 draw_pos =
-			m_pos - m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+			animLoader->Draw(delta_time * 2, draw_pos);
+		}
+		else
+		{
+			tnl::Vector3 draw_pos =
+				m_pos - m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-		animLoader->Draw(delta_time * 2, draw_pos);
+			animLoader->Draw(delta_time * 2, draw_pos);
+		}
 	}
 }
 

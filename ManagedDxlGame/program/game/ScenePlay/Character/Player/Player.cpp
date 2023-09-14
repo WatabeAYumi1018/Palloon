@@ -9,7 +9,7 @@ Player::Player(Collision* collision, Map* map):
 				PLAYER_MAX_HP,{ PLAYER_VELOCITY_X, PLAYER_VELOCITY_Y,0 }),
 				m_collision(collision), m_map(map)
 {
-	Initialize();
+
 }
 
 Player::~Player()
@@ -27,16 +27,8 @@ void Player::Update(float delta_time)
 	m_is_ground = CheckIsGround();
 	Gravity(delta_time);
 	MoveRange();
-
-	//if (m_landing_time >= 1.0f)
-	//{
-	//	m_landing_time += delta_time;
-	//	m_hover_end_drawed = false;
-	//}
-
 	ActionHandle(delta_time);
 	Invincible(delta_time);
-
 }
 
 void Player::Draw(float delta_time, const Camera* camera)
@@ -62,6 +54,18 @@ void Player::Draw(float delta_time, const Camera* camera)
 	DrawFormatString(0, 30, 1, "Player_x: %.2f", draw_pos.x);
 	DrawFormatString(0, 50, 1, "Player_y: %.2f", draw_pos.y);
 	//DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
+}
+
+void Player::StampAction()
+{
+	if (m_is_direction_right)
+	{
+		e_currentAction = ePlayerAction::Stamp_right;
+	}
+	else
+	{
+		e_currentAction = ePlayerAction::Stamp_left;
+	}
 }
 
 void Player::ActionHandle(float delta_time)
@@ -130,6 +134,18 @@ void Player::ActionHandle(float delta_time)
 	case ePlayerAction::Hover_end_left:
 
 		animLoader->SetAnimation(9);  /*jump_end_left*/
+
+		break;
+
+	case ePlayerAction::Stamp_right:
+
+		animLoader->SetAnimation(10);  /*stamp_right*/
+
+		break;
+
+	case ePlayerAction::Stamp_left:
+
+		animLoader->SetAnimation(11);  /*stamp_left*/
 
 		break;
 
@@ -383,6 +399,7 @@ bool Player::CheckIsGround()
 	return (foot_collision.s_type == eMapCollisionType::Box ||
 				foot_collision.s_type == eMapCollisionType::Line);
 }
+
 
 void Player::Invincible(float delta_time)
 {

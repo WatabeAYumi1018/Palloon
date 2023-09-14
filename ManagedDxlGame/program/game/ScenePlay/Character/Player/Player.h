@@ -60,6 +60,8 @@ public:
 	void Draw(float delta_time, const Camera* camera) override;
 	void Finalize() override;
 
+	void StampAction();						//着地時のアクション
+
 private:
 
 	void MoveHandle(float delta_time);		//ゲームパッドスティック操作
@@ -75,6 +77,7 @@ private:
 	void HoveringEnd();						//ホバリング終了処理
 	bool CheckIsGround();					//接地判定
 	
+
 	void Invincible(float delta_time);		//無敵時間の処理
 };
 

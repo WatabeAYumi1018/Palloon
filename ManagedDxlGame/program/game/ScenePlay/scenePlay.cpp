@@ -123,11 +123,6 @@ void ScenePlay::Update(float delta_time)
 	{
 		obj->Update(delta_time);
 	}
-	// エフェクトの持続時間を経過させる
-	for (auto effect : m_effects)
-	{
-		effect->Update(delta_time);
-	}
 }
 
 void ScenePlay::Draw(float delta_time)
@@ -201,33 +196,46 @@ void ScenePlay::CollisionCheck()
 		m_collision->CollisionCalculate(enemy, m_map, 10);
 		m_collision->CollisionCharacter(m_player, enemy);
 
+		//プレイヤーが上にいる場合は敵のHPを減らす
+		//(y座標は上下逆)
+		if (wta::IsIntersectCircleCircle(m_player->GetPos(), m_player->GetSize(), enemy->GetPos(), enemy->GetSize()))
+		{
+			if(enemy->GetPos().y > m_player->GetPos().y)
+			{
+				m_player->StampAction();
+				enemy->SetIsDead(true);
+				m_enemiesRemoveList.emplace_back(enemy);
+
+				continue;
+			}
+		}
+
 		for (auto effect : m_effects)
 		{
 			if (!effect->GetIsMoved())
 			{
+				m_effectsRemoveList.emplace_back(effect);
 				continue; // 動いていないエフェクトの判定はスキップ
 			}
 
-			bool effectHitEnemy = false; // 当たり判定があったかどうかのフラグ
+			bool effect_hit_enemy = false; // 当たり判定があったかどうかのフラグ
 
 			// ここでeffect内の全ての円と敵との当たり判定をチェック
 			for (auto circlePos : effect->GetCollisionCirclesPos())
 			{
 				if (wta::IsIntersectCircleCircle(circlePos, effect->GetSize(), enemy->GetPos(), enemy->GetSize()))
 				{
-					effectHitEnemy = true;
+					effect_hit_enemy = true;
 					break;
 				}
 			}
 
 			// 1つ以上の円が敵にヒットした場合の処理
-			if (effectHitEnemy)
+			if (effect_hit_enemy)
 			{
 				enemy->SetIsDead(true);
-				// 持続時間を超えるように設定
-				//effect->elapsed_time = effect->duration + 1.0f;
-
 				m_enemiesRemoveList.emplace_back(enemy);
+
 				break;  // 敵は一度死んでしまったら、それ以上の当たり判定は不要なので、このエフェクトのループを抜ける
 			}
 		}
@@ -261,7 +269,4 @@ void ScenePlay::RemoveAndDelete()
 	}
 
 	m_enemiesRemoveList.clear();
-
-	// エフェクトの持続時間が経過したエフェクトを削除
-	m_effects.remove_if([](EffectPlayer* effect) { return !effect->GetIsMoved(); });
 }
