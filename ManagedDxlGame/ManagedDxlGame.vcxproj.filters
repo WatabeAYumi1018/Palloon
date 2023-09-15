@@ -251,6 +251,9 @@
     <ClCompile Include="program\game\ScenePlay\Character\Character.cpp">
       <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\SceneSelect\SceneSelect.cpp">
+      <Filter>program\[004] game\[003]sceneSelect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -436,6 +439,9 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Effect\EffectPlayer.h">
       <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneSelect\SceneSelect.h">
+      <Filter>program\[004] game\[003]sceneSelect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

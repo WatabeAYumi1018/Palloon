@@ -1,18 +1,8 @@
 #include "../../dxlib_ext/dxlib_ext.h"
 #include "SceneTitle.h"
-#include "../ScenePlay/scenePlay.h"
+#include "../sceneSelect/SceneSelect.h"
 #include "../../engine/SceneManager.h"
 
-//void SceneTitle::Initialize()
-//{
-//	m_back_hdl = LoadGraph("graphics/title/Titleback.jpg");
-//	m_logo_hdl = LoadGraph("graphics/title/TitleLogo.png");
-//	m_palloon_hdl = LoadGraph("graphics/title/PALLOON.png");
-//
-//	SpawnBalloon();
-//	m_current_width = 0;
-//
-//}
 
 void SceneTitle::Update(float delta_time) 
 {
@@ -65,7 +55,7 @@ bool SceneTitle::SeqIdle(float delta_time)
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) 
 	{
 		auto scene = SceneManager::GetInstance();
-		scene->ChangeScene(new ScenePlay());
+		scene->ChangeScene(new SceneSelect());
 	}
 	return true;
 }
