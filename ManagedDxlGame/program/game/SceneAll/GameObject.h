@@ -7,7 +7,6 @@ class Camera;
 
 class GameObject
 {
-
 public:
 
 	GameObject(const tnl::Vector3& pos) : m_pos(pos) {}

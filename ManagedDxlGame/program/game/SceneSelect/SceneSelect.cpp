@@ -15,7 +15,6 @@ void SceneSelect::Draw(float delta_time)
 {
 	DrawExtendGraph(0, 0, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, m_back_hdl, TRUE);
 
-// ‚·‚×‚Ä‚Ì•—‘D‚ð•`‰æ
 	DrawGraph(50, 100 + (m_selected_stage == 0 ? m_balloon_offset_y : 0), m_stage1_hdl, TRUE);
 	DrawGraph(350, 300 + (m_selected_stage == 1 ? m_balloon_offset_y : 0), m_stage2_hdl, TRUE);
 	DrawGraph(650, 100 + (m_selected_stage == 2 ? m_balloon_offset_y : 0), m_stage3_hdl, TRUE);
@@ -26,7 +25,7 @@ bool SceneSelect::SeqIdle(float delta_time)
 {
 	if (sequence_.isStart())
 	{
-		m_back_hdl   = LoadGraph("graphics/title/Titleback.jpg");
+		m_back_hdl   = LoadGraph("graphics/title/title.png");
 		m_stage1_hdl = LoadGraph("graphics/select/stage1.png");
 		m_stage2_hdl = LoadGraph("graphics/select/stage2.png");
 		m_stage3_hdl = LoadGraph("graphics/select/stage3.png");

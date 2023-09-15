@@ -37,12 +37,13 @@ void ScenePlay::Initialize()
 	m_camera=new Camera();
 	m_collision = new Collision();
 	m_backGround=new BackGround();
+	m_clearBalloon = new ClearBalloon(m_collision);
 	m_map = new Map();
 	m_player = new Player(m_collision, m_map);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
-	m_gameObjects.emplace_back(new Balloon());
-	//m_gameObjects.emplace_back(new ClearBalloon(m_collision));
+	m_gameObjects.emplace_back(new Balloon());	
+	m_gameObjects.emplace_back(m_clearBalloon);
 	m_gameObjects.emplace_back(m_player);
 	InitEnemy();
 	m_gameObjects.emplace_back(new UI(m_player));
@@ -107,7 +108,7 @@ void ScenePlay::InitEnemy()
 
 void ScenePlay::Update(float delta_time) 
 {	
-	//m_sequence.update(delta_time);
+	m_sequence.update(delta_time);
 
 	m_collision->CollisionCalculate(m_player, m_map, 10);
 	m_camera->Update(delta_time, m_player, m_map);
@@ -127,8 +128,8 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	m_backGround->Draw(delta_time, m_camera);
-	m_map->Draw(m_camera);
+	//m_backGround->Draw(delta_time, m_camera);
+	//m_map->Draw(m_camera);
 
 	for (auto obj : m_gameObjects) 
 	{
@@ -171,30 +172,36 @@ void ScenePlay::CreateEffect()
 		m_effects.emplace_back(effect);
 	}
 }
-//
-//bool ScenePlay::SeqSceneIdle(float delta_time)
-//{
-//	//if (ClearCheckErea() && tnl::Input::IsKeyDownTrigger(eKeys::KB_UP))
-//	//{
-//	//	delete m_player;
-//	//	m_player = nullptr;
-//
-//	//	auto scene = SceneManager::GetInstance();
-//	//	scene->ChangeScene(new SceneSelect());
-//	//}
-//	//return true;
-//}
 
-//bool ScenePlay::ClearCheckErea()
-//{
-//	bool is_clear_erea=
-//		m_player->GetPos().x > (m_clearBalloon->GetPos().x - m_player->GetSize()) &&
-//		m_player->GetPos().x < (m_clearBalloon->GetPos().x + m_player->GetSize()) &&
-//		m_player->GetPos().y >(m_clearBalloon->GetPos().y - m_player->GetSize()) &&
-//		m_player->GetPos().y < (m_clearBalloon->GetPos().y + m_player->GetSize());
-//
-//	return is_clear_erea;
-//}
+bool ScenePlay::SeqSceneIdle(float delta_time)
+{
+	if (ClearCheckErea() && tnl::Input::IsKeyDownTrigger(eKeys::KB_UP))
+	{
+		delete m_player;
+		m_player = nullptr;
+
+		auto scene = SceneManager::GetInstance();
+		scene->ChangeScene(new SceneSelect());
+	}
+	return true;
+}
+
+bool ScenePlay::ClearCheckErea()
+{
+
+	if ((m_player->GetPos().x > (m_clearBalloon->GetPos().x - 100)) &&
+		(m_player->GetPos().x < (m_clearBalloon->GetPos().x + 100)) &&
+		(m_player->GetPos().y >(m_clearBalloon->GetPos().y - 100)) &&
+		(m_player->GetPos().y < (m_clearBalloon->GetPos().y + 100)))
+	{
+		return true;
+	}
+	else
+	{
+	DrawBox(m_clearBalloon->GetPos().x - 100, m_clearBalloon->GetPos().y - 100, m_clearBalloon->GetPos().x + 100, m_clearBalloon->GetPos().y + 100, -1, true);
+		return false;
+	}
+}
 
 void ScenePlay::CollisionCheck(float delta_time)
 {

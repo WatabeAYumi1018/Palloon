@@ -5,9 +5,8 @@
 
 //キャラクターの初期化子
 Player::Player(Collision* collision, Map* map):
-	Character({ POS_X, POS_Y, 0 },SIZE,
-				MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),
-				m_collision(collision), m_map(map)
+	Character({ POS_X, POS_Y, 0 },SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),
+	m_collision(collision), m_map(map)
 {
 
 }
@@ -463,7 +462,6 @@ void Player::HoveringEnd()
 bool Player::CheckIsGround()
 {
 	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, SIZE, 0);
-	DrawBoxEx(foot_pos,30,30);
 	tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(foot_pos, m_map);
 	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
 

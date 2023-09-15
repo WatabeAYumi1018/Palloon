@@ -53,9 +53,9 @@ bool Collision::IsRowCollisionExists(const std::vector<sCollisionInfo>& rowChips
 //一般的にキャラを中心に(2*range+1)*(2*range+1)の範囲のマップチップを取得する
 std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Character* chara, Map* map, int range)
 {
-    tnl::Vector3 currentPos = chara->GetPos();
+    tnl::Vector3 current_pos = chara->GetPos();
     //現在の座標から前の座標を引いて、マップチップのサイズより小さい場合はキャッシュを返す
-    if ((currentPos - m_last_chara_pos).length() < map->MAP_CHIP_SIZE)
+    if ((current_pos - m_last_chara_pos).length() < map->MAP_CHIP_SIZE)
     {
         return m_cachedChips;
     }
@@ -63,9 +63,9 @@ std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Characte
     std::vector<std::vector<sCollisionInfo>> chips;
 
     //キャラの座標からグリッド座標を取得
-    tnl::Vector3 chipPos = GetCharacterMapChipPos(currentPos, map);
+    tnl::Vector3 chip_pos = GetCharacterMapChipPos(current_pos, map);
 
-    for (int i = chipPos.y - range; i <= chipPos.y + range; ++i)
+    for (int i = chip_pos.y - range; i <= chip_pos.y + range; ++i)
     {
         //範囲外は無視
         if (i < 0 || i >= map->GetCollisionInfo().size())
@@ -73,16 +73,15 @@ std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Characte
             continue;
         }
 
-        auto rowChips = GetRowChips(chipPos.x, i, range, map);
+        auto rowChips = GetRowChips(chip_pos.x, i, range, map);
 
         if (IsRowCollisionExists(rowChips))
         {
             chips.emplace_back(rowChips);
         }
     }
-
     m_cachedChips = chips;
-    m_last_chara_pos = currentPos;
+    m_last_chara_pos = current_pos;
 
     return chips;
 }
@@ -105,8 +104,6 @@ void Collision::CheckBoxCollision(Character* chara, Map* map, const std::vector<
             {
                 tnl::Vector3 normalize = tnl::Vector3::Normalize(chara->GetPos() - nearly_point);
                 chara->SetPos(nearly_point + normalize * chara->GetSize());
-                //衝突応答処理
-                //DrawStringEx(0, 70, -1, "boxhit");
             }
         }
     }
@@ -119,7 +116,7 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
     {
         for (const auto& info : row)
         {
-            if (info.s_type == eMapCollisionType::None)
+            if (info.s_type == eMapCollisionType::None || info.s_type == eMapCollisionType::Clear)
             {
                 continue;
             }
@@ -142,10 +139,11 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
 }
 
 ////当たり判定に応じて分岐処理
-void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
-    auto surroundingChips = GetSurroundingChips(chara, map, range);
+void Collision::CollisionCalculate(Character* chara, Map* map, int range) 
+{
+    auto surrounding_chips = GetSurroundingChips(chara, map, range);
 
-    for (const auto& row : surroundingChips) 
+    for (const auto& row : surrounding_chips) 
     {
         for (const auto& info : row) 
         {
@@ -156,8 +154,8 @@ void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
         }
     }
     // 一度だけBoxとLineの当たり判定を呼び出す
-    CheckBoxCollision(chara, map, surroundingChips);
-    CheckLineCollision(chara, map, surroundingChips);
+    CheckBoxCollision(chara, map, surrounding_chips);
+    CheckLineCollision(chara, map, surrounding_chips);
 }
 
 void Collision::CollisionCharacter(Player* player, Enemy* enemy)

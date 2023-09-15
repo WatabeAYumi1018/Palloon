@@ -29,20 +29,18 @@ float Enemy::DistanceCalc()
 //矩形ならば進行可能とする
 bool Enemy::CanMoveRight()
 {
-    tnl::Vector3 forwardPos = m_pos + tnl::Vector3(32, 40, 0);
-    tnl::Vector3 chipPos = m_collision->GetCharacterMapChipPos(forwardPos, m_map);
-    sCollisionInfo forwardCollision = m_map->GetCollisionInfo()[chipPos.y][chipPos.x];
-    DrawBoxEx(forwardPos, 30, 30, true);
+    tnl::Vector3 forward_pos = m_pos + tnl::Vector3(32, 40, 0);
+    tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(forward_pos, m_map);
+    sCollisionInfo forward_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
 
-    return forwardCollision.s_type == eMapCollisionType::Box;
+    return forward_collision.s_type == eMapCollisionType::Box;
 }
 
 bool Enemy::CanMoveLeft()
 {
-    tnl::Vector3 backwardPos = m_pos - tnl::Vector3(32, -40, 0);
-    tnl::Vector3 chipPos = m_collision->GetCharacterMapChipPos(backwardPos, m_map);
-    sCollisionInfo backwardCollision = m_map->GetCollisionInfo()[chipPos.y][chipPos.x];
-    DrawBoxEx (backwardPos,30,30,true);
+    tnl::Vector3 backward_pos = m_pos - tnl::Vector3(32, -40, 0);
+    tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(backward_pos, m_map);
+    sCollisionInfo backward_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
     
-    return backwardCollision.s_type == eMapCollisionType::Box;
+    return backward_collision.s_type == eMapCollisionType::Box;
 }

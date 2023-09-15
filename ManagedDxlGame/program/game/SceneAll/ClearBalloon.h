@@ -3,6 +3,7 @@
 #include "GameObject.h"
 
 class Player;
+class Camera;
 class Collision;
 
 class ClearBalloon : public GameObject
@@ -33,12 +34,14 @@ public:
 
 private:
 
-	bool IsPlayerAttached(const Player* player);
-	void AttachPlayer();
-	void MoveBalloon(float delta_time);
+	void ClearPosChange(const Camera* camera);
+	//bool IsPlayerAttached(const Player* player);
+	//void AttachPlayer();
+	//void MoveBalloon(float delta_time);
 
 public:
 
 	//-----Getter&Setter-----//
+	void SetClearPosition(const tnl::Vector3& pos){this->SetPos(pos);}
 	void SetPlayerAttached(bool player_attached) { m_player_attached = player_attached; }
 };
