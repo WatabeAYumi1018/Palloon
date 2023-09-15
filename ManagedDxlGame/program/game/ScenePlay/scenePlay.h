@@ -53,7 +53,5 @@ private:
 	void RemoveAndDeleteEnemy(Enemy *enemy);
 	void RemoveAndDelete();
 
-	//遷移後、back,Map,UI,Player,Enemyなどを描画する
-	//現在のシーンで描画するグラフィックを変える
-	int m_graph_hdl = 0;
+	//int m_graph_hdl = 0;
 };

@@ -35,7 +35,7 @@ void gameStart() {
 	srand(time(0));
 	SetWindowText("Palloon!");
 	
-	SceneManager::GetInstance(new ScenePlay());
+	SceneManager::GetInstance(new SceneTitle());
 }
 
 //------------------------------------------------------------------------------------------------------------

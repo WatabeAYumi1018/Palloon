@@ -11,9 +11,9 @@ void Balloon::Initialize()
     // バルーンの画像をロード
     m_balloon_hdl = LoadGraph("graphics/balloon/balloon_red.png");
     //画面の幅に基づいてランダムなX位置を設定
-    m_pos.x = rand() % 640;
+    m_pos.x = rand() % DXE_WINDOW_WIDTH;
     //画面の下部からランダムな位置で開始
-    m_pos.y = 480 + rand() % 100;
+    m_pos.y = 480 + rand() % DXE_WINDOW_HEIGHT;
     //1から3の間でランダムな上向き速度
     m_hover_velocity = -(rand() % 3 + 1);
 }
@@ -25,6 +25,13 @@ void Balloon::Update(float delta_time)
 
     //ふわふわさせるための小さいランダムな変動を加える
     m_hover_velocity.y += (rand() % 3 - 1) * 0.1f;
+
+    // バルーンが画面の上端を超えたかどうかのチェック
+    if (m_pos.y + m_size < 0) // m_sizeはバルーンの大きさを考慮して
+    {
+        m_pos.y = DXE_WINDOW_HEIGHT; // 画面の下端に再設定
+        // 必要であれば、x座標や速度なども再設定することが可能です。
+    }
 }
 
 void Balloon::Draw(float delta_time, const Camera* camera)

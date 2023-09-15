@@ -29,4 +29,5 @@ public:
 
     //-----Getter&Setter-----//
     int GetHdl() const { return m_balloon_hdl; }
+    int GetSize() const { return m_size; }
 };

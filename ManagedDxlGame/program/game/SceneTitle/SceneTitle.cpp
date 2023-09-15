@@ -3,31 +3,50 @@
 #include "../ScenePlay/scenePlay.h"
 #include "../../engine/SceneManager.h"
 
+//void SceneTitle::Initialize()
+//{
+//	m_back_hdl = LoadGraph("graphics/title/Titleback.jpg");
+//	m_logo_hdl = LoadGraph("graphics/title/TitleLogo.png");
+//	m_palloon_hdl = LoadGraph("graphics/title/PALLOON.png");
+//
+//	SpawnBalloon();
+//	m_current_width = 0;
+//
+//}
+
 void SceneTitle::Update(float delta_time) 
 {
 	sequence_.update(delta_time);
-	logoHandle(delta_time);
-	bounceHandle(delta_time);
+	LogoHandle(delta_time);
+	BoundHandle(delta_time);
+
+	m_balloon_spawn_timer += delta_time;
+
+	if (m_balloon_spawn_timer >= SPAWN_INTERVSL)
+	{
+		SpawnBalloon();
+		m_balloon_spawn_timer = 0.0f; // タイマーをリセット
+	}
 
 	for (auto& balloon : balloons)
 	{
 		balloon.Update(delta_time);
 	}
-	SpawnBalloon(); // 風船を生成
 }
 
 void SceneTitle::Draw(float delta_time) 
 {
 	DrawExtendGraph(0, 0, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, m_back_hdl, TRUE);
 
-	//for (const auto& balloon : balloons)
-	//{
-	//	DrawExtendGraph(m_pos.x, m_pos.y, m_pos.x + m_size, m_pos.y + m_size, m_balloon_hdl, TRUE);
-	//}
+	for (const auto& balloon : balloons)
+	{
+		DrawExtendGraph(balloon.GetPos().x, balloon.GetPos().y,balloon.GetPos().x + balloon.GetSize(),
+						balloon.GetPos().y + balloon.GetSize(), balloon.GetHdl(), TRUE);
+	}
 
-	int logoHeight; // ロゴの高さを取得
-	GetGraphSize(m_logo_hdl, NULL, &logoHeight); // ロゴの高さを取得
-	DrawRectExtendGraph(300, 400, 400 + m_current_width, 400 + logoHeight, 0, 0, m_current_width, logoHeight, m_logo_hdl, TRUE);
+	int logo_height; // ロゴの高さを取得
+	GetGraphSize(m_logo_hdl, NULL, &logo_height); // ロゴの高さを取得
+	DrawRectExtendGraph(300, 400, 400 + m_current_width, 400 + logo_height, 0, 0, m_current_width, logo_height, m_logo_hdl, TRUE);
 	DrawGraph(400, m_chara_pos.y, m_palloon_hdl, TRUE);
 }
 
@@ -35,7 +54,6 @@ bool SceneTitle::SeqIdle(float delta_time)
 {
 	if (sequence_.isStart())
 
-		//balloon->Initialize();
 	{
 		m_back_hdl = LoadGraph("graphics/title/Titleback.jpg");
 		m_logo_hdl = LoadGraph("graphics/title/TitleLogo.png");
@@ -52,10 +70,10 @@ bool SceneTitle::SeqIdle(float delta_time)
 	return true;
 }
 
-void SceneTitle::logoHandle(float delta_time)
+void SceneTitle::LogoHandle(float delta_time)
 {
 	// ロゴの幅を徐々に増やす
-	m_current_width += m_display_time * delta_time * 5;
+	m_current_width += DISPLAY_TIME * delta_time * 5;
 
 	// ロゴの幅が画面幅を超えたら画面幅に固定
 	if (m_current_width > DXE_WINDOW_WIDTH) 
@@ -69,32 +87,44 @@ void SceneTitle::logoHandle(float delta_time)
 	}
 }
 
-void SceneTitle::bounceHandle(float delta_time)
+void SceneTitle::BoundHandle(float delta_time)
 {
 	// ロゴが完全に表示されてからキャラをバウンドさせる
 	if (!m_is_logo_displayed) return;
 
-	if (m_bounceCount < m_maxBounce)
+	if (m_bound_count < MAX_BOUNDE)
 	{
 		m_velocity.y += m_gravity.y; // 重力を速度に加える
 		m_chara_pos.y += m_velocity.y; // 速度を位置に加える
 
 		// イラストが地面に到達したらバウンドさせる
-		if (m_chara_pos.y >= m_ground_y)
+		if (m_chara_pos.y >= GROUND_Y)
 		{
-			m_chara_pos.y = m_ground_y; // 位置を地面に設定
-			m_velocity.y *= m_bounceRate; // バウンドさせるために速度を反転&減少させる
-			m_bounceCount++; // バウンド回数を増やす
+			m_chara_pos.y = GROUND_Y; // 位置を地面に設定
+			m_velocity.y *= BOUND_RATE; // バウンドさせるために速度を反転&減少させる
+			m_bound_count++; // バウンド回数を増やす
 		}
 	}
 	else
 	{
 		// 最大バウンド回数を超えた場合、イラストを画面中央に固定する
-		m_chara_pos.y = m_ground_y;
+		m_chara_pos.y = GROUND_Y;
 	}
 }
 
 void SceneTitle::SpawnBalloon() 
 {
-	
+	if (balloons.size() <= BALLOON_SPAWN)
+	{
+		balloons.push_back(Balloon());
+	}
+}
+
+void SceneTitle::Finalize()
+{
+	DeleteGraph(m_back_hdl);
+	DeleteGraph(m_logo_hdl);
+	DeleteGraph(m_palloon_hdl);
+
+	balloons.clear();
 }
