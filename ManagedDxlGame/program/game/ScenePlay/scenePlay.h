@@ -6,6 +6,7 @@ class Camera;
 class BackGround;
 class Map;
 class Collision;
+class ClearBalloon;
 class EnemyLoad;
 class Player;
 class Enemy;
@@ -28,6 +29,7 @@ public:
 	Camera*m_camera=nullptr;
 	Map *m_map=nullptr;
 	Collision *m_collision=nullptr;
+	ClearBalloon *m_clearBalloon=nullptr;
 	EnemyLoad* m_enemyLoad = nullptr;
 	Player *m_player = nullptr;
 	Enemy* m_enemy = nullptr;
@@ -35,7 +37,7 @@ public:
 private:
 	
 	std::list<GameObject*> m_gameObjects;
-	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
+	//tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
 	
 	std::list<Enemy*> m_enemies;					// 敵のリスト
 	std::map<int, sEnemyInfo> m_enemyInfos;			// 敵の情報リスト
@@ -46,9 +48,10 @@ private:
 
 	void InitEnemy();
 	void CreateEffect();
-	bool SeqSceneIdle(float delta_time);
+	//bool SeqSceneIdle(float delta_time);
 
 	void CollisionCheck(float delta_time);
+	//bool ClearCheckErea();
 	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);
 	void RemoveAndDeleteEnemy(Enemy *enemy);
 	void RemoveAndDelete();

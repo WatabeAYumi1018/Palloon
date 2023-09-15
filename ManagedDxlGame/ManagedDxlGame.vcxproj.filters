@@ -254,6 +254,9 @@
     <ClCompile Include="program\game\SceneSelect\SceneSelect.cpp">
       <Filter>program\[004] game\[003]sceneSelect</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\SceneAll\ClearBalloon.cpp">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -442,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="program\game\SceneSelect\SceneSelect.h">
       <Filter>program\[004] game\[003]sceneSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\ClearBalloon.h">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -173,6 +173,7 @@
     <ClCompile Include="program\game\gm_main.cpp" />
     <ClCompile Include="program\game\SceneAll\BackGround.cpp" />
     <ClCompile Include="program\game\SceneAll\Balloon.cpp" />
+    <ClCompile Include="program\game\SceneAll\ClearBalloon.cpp" />
     <ClCompile Include="program\game\SceneAll\UI.cpp" />
     <ClCompile Include="program\game\ScenePlay\Camera\Camera.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Character.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="program\game\gm_main.h" />
     <ClInclude Include="program\game\SceneAll\BackGround.h" />
     <ClInclude Include="program\game\SceneAll\Balloon.h" />
+    <ClInclude Include="program\game\SceneAll\ClearBalloon.h" />
     <ClInclude Include="program\game\SceneAll\Effect.h" />
     <ClInclude Include="program\game\SceneAll\GameObject.h" />
     <ClInclude Include="program\game\SceneAll\UI.h" />

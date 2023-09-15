@@ -14,7 +14,6 @@ void SceneTitle::Update(float delta_time)
 
 	if (m_balloon_spawn_timer >= SPAWN_INTERVSL)
 	{
-		SpawnBalloon();
 		m_balloon_spawn_timer = 0.0f; // タイマーをリセット
 	}
 
@@ -45,10 +44,11 @@ bool SceneTitle::SeqIdle(float delta_time)
 	if (sequence_.isStart())
 
 	{
-		m_back_hdl = LoadGraph("graphics/title/Titleback.jpg");
+		m_back_hdl = LoadGraph("graphics/title/title.png");
 		m_logo_hdl = LoadGraph("graphics/title/TitleLogo.png");
 		m_palloon_hdl= LoadGraph("graphics/title/PALLOON.png");
 		
+		SpawnBalloon();
 		m_current_width = 0;
 	}
 
@@ -104,9 +104,9 @@ void SceneTitle::BoundHandle(float delta_time)
 
 void SceneTitle::SpawnBalloon() 
 {
-	if (balloons.size() <= BALLOON_SPAWN)
+	for (int i = 0; i < BALLOON_SPAWN; ++i)
 	{
-		balloons.push_back(Balloon());
+		balloons.emplace_back(); // 複数のバルーンをスポーン
 	}
 }
 

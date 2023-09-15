@@ -36,6 +36,7 @@ bool SceneSelect::SeqIdle(float delta_time)
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN))
 	{
 		auto scene = SceneManager::GetInstance();
+		//選んだステージによって切り替える
 		scene->ChangeScene(new ScenePlay());
 	}
 	return true;
@@ -46,15 +47,15 @@ void SceneSelect::MoveBalloon(float delta_time)
 	// キー入力の処理
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT))
 	{
-		m_selected_stage = (m_selected_stage + 1) % 4; // 4はステージの数です
+		m_selected_stage = (m_selected_stage + 1) % STAGE_NUM;
 	}
 	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT))
 	{
-		m_selected_stage = (m_selected_stage - 1 + 4) % 4;
+		m_selected_stage = (m_selected_stage - 1 + STAGE_NUM) % STAGE_NUM;
 	}
 
 	// タイマーの増加
-	m_balloon_timer += delta_time * 5.0f; // 2.0fは風船の動きの速さを調整するための値です。適切に調整してください。
+	m_balloon_timer += delta_time * m_balloon_velocity_y; // 2.0fは風船の動きの速さを調整するための値です。適切に調整してください。
 
 	// sin関数を使用して風船の上下のオフセットを計算
 	m_balloon_offset_y = sin(m_balloon_timer) * 10.0f;

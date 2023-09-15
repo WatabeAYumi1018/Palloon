@@ -2,7 +2,7 @@
 #include "../ScenePlay/Camera/Camera.h"
 
 
-BackGround::BackGround()
+BackGround::BackGround() : GameObject(tnl::Vector3{ 0,0,0 })
 {
 	Initialize();
 }

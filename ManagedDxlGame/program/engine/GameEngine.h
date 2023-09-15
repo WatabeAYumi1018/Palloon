@@ -1,6 +1,15 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
 
+enum class eBalloonColor
+{
+	None,
+	Red,
+	Blue,
+	Green,
+	Max
+};
+
 enum class ePlayerAction
 {
 	Idle_right,
@@ -46,6 +55,7 @@ enum class eMapCollisionType
 	None,
 	Box,
 	Line,
+	Clear,
 	Max
 };
 

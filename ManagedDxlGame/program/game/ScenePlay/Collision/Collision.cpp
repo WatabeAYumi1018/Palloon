@@ -5,7 +5,7 @@
 #include "../Map/Map.h"
 #include "Collision.h"
 
-Collision::Collision() : m_lastCharaPos(0.0f, 0.0f, 0.0f)
+Collision::Collision() : m_last_chara_pos(0, 0, 0)
 {
 
 }
@@ -55,7 +55,7 @@ std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Characte
 {
     tnl::Vector3 currentPos = chara->GetPos();
     //現在の座標から前の座標を引いて、マップチップのサイズより小さい場合はキャッシュを返す
-    if ((currentPos - m_lastCharaPos).length() < map->MAP_CHIP_SIZE)
+    if ((currentPos - m_last_chara_pos).length() < map->MAP_CHIP_SIZE)
     {
         return m_cachedChips;
     }
@@ -82,7 +82,7 @@ std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Characte
     }
 
     m_cachedChips = chips;
-    m_lastCharaPos = currentPos;
+    m_last_chara_pos = currentPos;
 
     return chips;
 }
@@ -94,7 +94,8 @@ void Collision::CheckBoxCollision(Character* chara, Map* map, const std::vector<
     {
         for (const auto& info : row)
         {
-            if (info.s_type == eMapCollisionType::None || info.s_type == eMapCollisionType::Line)
+            if (info.s_type == eMapCollisionType::None || info.s_type == eMapCollisionType::Line ||
+                info.s_type == eMapCollisionType::Clear)
             {
                 continue;
             }
@@ -142,35 +143,21 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
 
 ////当たり判定に応じて分岐処理
 void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
-
-    //判定範囲内のマップチップを取得
     auto surroundingChips = GetSurroundingChips(chara, map, range);
 
-    for (const auto& row : surroundingChips)
+    for (const auto& row : surroundingChips) 
     {
-        for (const auto& info : row)
+        for (const auto& info : row) 
         {
-            // 当たり判定のタイプに基づいて処理
-            switch (info.s_type)
+            if (info.s_type == eMapCollisionType::Clear) 
             {
-            case eMapCollisionType::Box:
-
-                CheckBoxCollision(chara, map, surroundingChips);
-
-                break;
-
-            case eMapCollisionType::Line:
-
-                CheckLineCollision(chara, map, surroundingChips);
-
-
-                break;
-
-            default:
-                break;
+                m_clear_pos = info.s_pos;
             }
         }
     }
+    // 一度だけBoxとLineの当たり判定を呼び出す
+    CheckBoxCollision(chara, map, surroundingChips);
+    CheckLineCollision(chara, map, surroundingChips);
 }
 
 void Collision::CollisionCharacter(Player* player, Enemy* enemy)
@@ -214,3 +201,39 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
         }
     }
 }
+
+//////当たり判定に応じて分岐処理
+//void Collision::CollisionCalculate(Character* chara, Map* map, int range) {
+//
+//    //判定範囲内のマップチップを取得
+//    auto surroundingChips = GetSurroundingChips(chara, map, range);
+//
+//    bool hasClearCollision = false;
+//
+//    for (const auto& row : surroundingChips)
+//    {
+//        for (const auto& info : row)
+//        {
+//            // 当たり判定のタイプに基づいて処理
+//            switch (info.s_type)
+//            {
+//            case eMapCollisionType::Box:
+//
+//                CheckBoxCollision(chara, map, surroundingChips);
+//
+//                break;
+//
+//            case eMapCollisionType::Line:
+//
+//                CheckLineCollision(chara, map, surroundingChips);
+//
+//            case eMapCollisionType::Clear:
+//
+//                //Clearの座標を保持
+//                m_clear_pos = info.s_pos;
+//
+//                break;
+//            }
+//        }
+//    }
+//}
