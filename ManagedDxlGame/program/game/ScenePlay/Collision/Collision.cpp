@@ -141,7 +141,6 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
 ////“–‚½‚è”»’è‚É‰‚¶‚Ä•ªŠòˆ—
 void Collision::CollisionCalculate(Character* chara, Map* map, int range) 
 {
-    m_is_clear = false;
 
     auto surrounding_chips = GetSurroundingChips(chara, map, range);
 
@@ -151,7 +150,7 @@ void Collision::CollisionCalculate(Character* chara, Map* map, int range)
         {
             if (info.s_type == eMapCollisionType::Clear) 
             {
-                m_clear_pos = info.s_pos;
+                 m_clear_pos = info.s_pos;
                 m_is_clear = true;
                 
                 break;

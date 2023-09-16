@@ -108,7 +108,6 @@ void ScenePlay::InitEnemy()
 
 void ScenePlay::Update(float delta_time) 
 {	
-	m_sequence.update(delta_time);
 
 	m_collision->CollisionCalculate(m_player, m_map, 10);
 	m_camera->Update(delta_time, m_player, m_map);
@@ -124,6 +123,8 @@ void ScenePlay::Update(float delta_time)
 	{
 		obj->Update(delta_time);
 	}
+
+	m_sequence.update(delta_time);
 }
 
 void ScenePlay::Draw(float delta_time)
@@ -175,13 +176,16 @@ void ScenePlay::CreateEffect()
 
 bool ScenePlay::SeqSceneIdle(float delta_time)
 {
-	if (m_collision->GetIsClear() && tnl::Input::IsKeyDown(eKeys::KB_UP))
+	if (m_collision->GetIsClear())
 	{
-		delete m_player;
-		m_player = nullptr;
+		if (tnl::Input::IsKeyDown(eKeys::KB_UP))
+		{
+			delete m_player;
+			m_player = nullptr;
 
-		auto scene = SceneManager::GetInstance();
-		scene->ChangeScene(new SceneSelect());
+			auto scene = SceneManager::GetInstance();
+			scene->ChangeScene(new SceneSelect());
+		}
 	}
 	return true;
 }

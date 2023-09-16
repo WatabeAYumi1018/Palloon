@@ -17,7 +17,7 @@ private:
 	int m_balloon_clear_hdl = 0;
 
 	float m_size_x = 300;
-	float m_size_y = 544;
+	float m_size_y = 500;
 
 	float m_balloon_timer = 0.0f;
 	float m_balloon_offset_y = 10.0f;

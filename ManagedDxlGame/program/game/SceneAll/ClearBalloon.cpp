@@ -42,26 +42,25 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 	tnl::Vector3 draw_pos =
 		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-
 	if (m_pos.x != 0 && m_pos.y != 0)
 	{
 		if (m_collision->GetIsClear() && tnl::Input::IsKeyDown(eKeys::KB_UP))
 		{
-			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y + m_size_y, draw_pos.x + m_size_x, draw_pos.y - m_size_y, m_balloon_clear_hdl, true);
+			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
+				draw_pos.x + m_size_x, draw_pos.y, m_balloon_clear_hdl, true);
 		}
 		else
 		{
+			DrawBoxEx(draw_pos,30,30);
 			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
-				draw_pos.x + m_size_x, draw_pos.y,
-				m_balloon_hdl, true);
-
-			//DrawGraph(draw_pos.x, draw_pos.y, m_balloon_hdl, true);
+							draw_pos.x + m_size_x, draw_pos.y,m_balloon_hdl, true);
 		}
 	}
 }
 
 void ClearBalloon::ClearPosChange()
 {
+
 	tnl::Vector3 clear_pos = m_collision->GetClearPos();
 	tnl::Vector3 default_pos = {0,0,0};
 
