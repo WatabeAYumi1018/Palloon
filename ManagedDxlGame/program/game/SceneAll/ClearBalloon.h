@@ -19,9 +19,16 @@ private:
 	float m_size_x = 300;
 	float m_size_y = 500;
 
-	float m_balloon_timer = 0.0f;
-	float m_balloon_offset_y = 10.0f;
-	float m_balloon_velocity_y = 5.0f;
+	float m_float_time = 0.0f;
+	float m_offset_y = 10.0f;
+	float m_velocity_y = 100.0f;
+
+	tnl::Vector3 m_target_pos;
+
+	bool m_is_chane_grahic = false;
+	bool m_is_scene_change = false;
+
+	eBalloonState e_balloon_state = eBalloonState::Hidden;
 
 	Collision *m_collision = nullptr;
 
@@ -35,12 +42,9 @@ public:
 private:
 
 	void ClearPosChange();
-	//bool IsPlayerAttached(const Player* player);
-	//void AttachPlayer();
-	//void MoveBalloon(float delta_time);
+	void MoveBalloon(float delta_time);
 
 public:
-
 	//-----Getter&Setter-----//
-	void SetClearPosition(const tnl::Vector3& pos){this->SetPos(pos);}
+	bool GetIsChangeGraphic() const { return m_is_chane_grahic; }
 };

@@ -30,7 +30,6 @@ enum class ePlayerAction
 	Fire_left,
 	Beam_right,
 	Beam_left,
-	Max
 };
 
 enum class eEffectPlayerType
@@ -38,7 +37,6 @@ enum class eEffectPlayerType
 	None,
 	Fire,
 	Beam,
-	Max
 };
 
 enum class eEffectCollisionType
@@ -47,7 +45,6 @@ enum class eEffectCollisionType
 	Box,
 	Circle,
 	Line,
-	Max
 };
 
 enum class eMapCollisionType
@@ -56,7 +53,6 @@ enum class eMapCollisionType
 	Box,
 	Line,
 	Clear,
-	Max
 };
 
 struct sCollisionInfo
@@ -79,5 +75,13 @@ struct sEnemyInfo
 	std::string s_color;
 	int s_hp;
 	int s_size;
+};
+
+enum class eBalloonState
+{
+	Hidden,
+	Rising,
+	Floating,
+	SceneChange
 };
 

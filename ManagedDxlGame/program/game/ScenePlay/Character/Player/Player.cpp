@@ -32,6 +32,12 @@ void Player::Update(float delta_time)
 
 void Player::Draw(float delta_time, const Camera* camera)
 {
+	if (!m_is_draw)
+	{
+		//描画しない場合はここで終了
+		return;
+	}
+
 	if (m_is_draw)
 	{
 		tnl::Vector3 draw_pos =
@@ -51,10 +57,6 @@ void Player::Draw(float delta_time, const Camera* camera)
 			animLoader->Draw(delta_time, draw_pos);
 		}
 	}
-	//★デバッグ用
-	//DrawFormatString(0, 30, 1, "Player_x: %.2f", draw_pos.x);
-	//DrawFormatString(0, 50, 1, "Player_y: %.2f", draw_pos.y);
-	//DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
 }
 
 void Player::StampAction(float delta_time)

@@ -129,7 +129,7 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	//m_backGround->Draw(delta_time, m_camera);
+	m_backGround->Draw(delta_time, m_camera);
 	m_map->Draw(m_camera);
 
 	for (auto obj : m_gameObjects) 
@@ -176,14 +176,16 @@ void ScenePlay::CreateEffect()
 
 bool ScenePlay::SeqSceneIdle(float delta_time)
 {
-	if (m_collision->GetIsClear())
+	if (m_clearBalloon->GetIsChangeGraphic())
 	{
-		if (tnl::Input::IsKeyDown(eKeys::KB_UP))
-		{
-			m_player->SetIsDraw(false);
-			auto scene = SceneManager::GetInstance();
-			scene->ChangeScene(new SceneSelect());
-		}
+		m_player->SetIsDraw(false);
+		m_is_change_scene = true;
+	}
+	
+	if(m_is_change_scene && tnl::Input::IsKeyDown(eKeys::KB_RETURN))
+	{
+		auto scene = SceneManager::GetInstance();
+		scene->ChangeScene(new SceneSelect());
 	}
 	return true;
 }

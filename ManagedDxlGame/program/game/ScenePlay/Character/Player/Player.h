@@ -73,7 +73,6 @@ public:
 
 	//-----Getter,Setter-----//
 	void SetIsDraw(bool is_draw) { m_is_draw = is_draw; }
-	bool GetIsDraw() const { return m_is_draw; }
 	void SetIsStamp(bool is_stamp) { m_is_stamp = is_stamp; }
 	bool GetIsRolling() const { return m_is_rolling; }
 

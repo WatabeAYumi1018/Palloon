@@ -36,6 +36,8 @@ public:
 
 private:
 	
+	bool m_is_change_scene = false;
+
 	std::list<GameObject*> m_gameObjects;
 	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
 	

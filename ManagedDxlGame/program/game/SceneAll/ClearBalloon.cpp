@@ -19,19 +19,7 @@ void ClearBalloon::Update(float delta_time)
 {
 	if (m_pos.x != 0 && m_pos.y != 0)
 	{
-		//if ()
-		//{
-		//	//まっすぐ上昇させる
-		//	m_pos.y += delta_time * m_balloon_velocity_y;
-		//}
-		//else
-		//{
-		//	//その場で少々ふわふわさせる
-		//	m_balloon_timer += delta_time * m_balloon_velocity_y;
-
-		//	// sin関数を使用して風船の上下のオフセットを計算
-		//	m_balloon_offset_y = sin(m_balloon_timer) * 5.0f;
-		//}
+		MoveBalloon(delta_time);
 	}
 }
 
@@ -46,12 +34,17 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 	{
 		if (m_collision->GetIsClear() && tnl::Input::IsKeyDown(eKeys::KB_UP))
 		{
+			m_is_chane_grahic = true;
+		}
+
+		if(m_is_chane_grahic)
+		{
 			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
 				draw_pos.x + m_size_x, draw_pos.y, m_balloon_clear_hdl, true);
+			e_balloon_state = eBalloonState::SceneChange;
 		}
 		else
 		{
-			DrawBoxEx(draw_pos,30,30);
 			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
 							draw_pos.x + m_size_x, draw_pos.y,m_balloon_hdl, true);
 		}
@@ -60,13 +53,58 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 
 void ClearBalloon::ClearPosChange()
 {
-
 	tnl::Vector3 clear_pos = m_collision->GetClearPos();
 	tnl::Vector3 default_pos = {0,0,0};
 
 	if (clear_pos.x != default_pos.x && clear_pos.y != default_pos.y)
 	{
-		SetClearPosition(clear_pos);
+		m_target_pos=clear_pos;
+
+		if (e_balloon_state == eBalloonState::Hidden)
+		{
+			e_balloon_state = eBalloonState::Rising;
+			m_pos = { m_target_pos.x, DXE_WINDOW_HEIGHT + m_size_y, 0 };
+		}
+	}
+}
+
+void ClearBalloon::MoveBalloon(float delta_time)
+{
+	switch (e_balloon_state)
+	{
+	case eBalloonState::Rising:
+		
+		m_pos.y -= delta_time * m_velocity_y;
+		
+		if (m_pos.y <= m_target_pos.y) 
+		{
+			m_pos.y = m_target_pos.y;
+			e_balloon_state = eBalloonState::Floating;
+		}
+	
+		break;
+	
+	case eBalloonState::Floating:
+		
+		m_float_time += delta_time;
+		m_offset_y = sin(m_float_time) * 5.0f;
+	
+		break;
+	
+	case eBalloonState::SceneChange:
+		
+		m_pos.y -= delta_time * m_velocity_y;
+
+		if (m_pos.y <= 0)
+		{
+			m_is_scene_change = true;
+		}
+		
+		break;
+
+	default:
+		
+		break;
 	}
 }
 

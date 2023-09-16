@@ -138,10 +138,9 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
     }
 }
 
-////“–‚½‚è”»’è‚É‰‚¶‚Ä•ªŠòˆ—
+//“–‚½‚è”»’è‚É‰‚¶‚Ä•ªŠòˆ—
 void Collision::CollisionCalculate(Character* chara, Map* map, int range) 
 {
-
     auto surrounding_chips = GetSurroundingChips(chara, map, range);
 
     for (const auto& row : surrounding_chips) 
