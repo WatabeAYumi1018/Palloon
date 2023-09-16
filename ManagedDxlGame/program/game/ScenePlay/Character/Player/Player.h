@@ -14,7 +14,7 @@ class Player :public Character
 {
 public:
 	Player(Collision* collision, Map* map);
-	virtual ~Player();
+	virtual ~Player() {}
 
 private:
 	//-----定数-----//
@@ -63,13 +63,12 @@ private:
 
 public:
 	//-----メンバ関数-----//
-	void Initialize() override;
 	void Update(float delta_time) override;
 	void Draw(float delta_time, const Camera* camera) override;
-	void Finalize() override;
 
 	void StampAction(float delta_time);						//着地時のアクション
 	void RollAction(float delta_time);						//ロール時のアクション
+	bool CheckIsGround();					//接地判定
 
 	//-----Getter,Setter-----//
 	void SetIsDraw(bool is_draw) { m_is_draw = is_draw; }
@@ -89,7 +88,6 @@ private:
 	void HoveringStartRight(float delta_time);				//ホバリング開始処理（右）
 	void HoveringStartLeft(float delta_time);				//ホバリング開始処理（左）
 	void HoveringEnd();						//ホバリング終了処理
-	bool CheckIsGround();					//接地判定
 	
 	void Invincible(float delta_time);		//無敵時間の処理
 };

@@ -18,7 +18,6 @@ void UI::Draw(float delta_time, const Camera* camera)
 	HpBalloons();
 }
 
-//•`‰æ‡‚Ì‚±‚Æ‚ğl‚¦‚é‚Æ‚±‚±‚Å‘€ì‚·‚×‚«H
 void UI::HpBalloons()
 {
 	if (!m_player)

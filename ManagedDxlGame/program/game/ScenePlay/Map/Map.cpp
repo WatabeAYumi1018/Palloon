@@ -73,24 +73,3 @@ void Map::Finalize()
 	m_csv_collision.clear();
 	DeleteGraph(m_map_hdl[0]);
 }
-
-//メモ書き
-// イベントチップを上書きして追加イベントとかもあり
-////LoadMapChipInfo()関数で読み取った情報を基に、チップが自分自身の判定を持つようにしたい
-//void MapChip::LoadMapChipCollision() {
-//	// 当たり判定情報を格納するためにサイズを設定
-//	//m_map_chip_collision.resize(m_map_tile.size(), std::vector<Collision>(m_map_tile[0].size()));
-//	//描画しているチップIDに対応するCollision情報を格納（当たり判定情報を独自で管理するため）
-//	for (int i = 0; i < m_map_tile.size(); ++i) {
-//		for (int j = 0; j < m_map_tile[i].size(); ++j) {
-//			//マップチップのIDを取得
-//			int chipID = m_map_tile[i][j];
-//			if(chipID==-1)continue;
-//			else {
-//				eCollisionType type = m_map_chip_collision[chipID]; // マップから当たり判定を取得
-//				//オブジェクト指向にはなるけど、マップ全体となると非効率（今回は見送り濃厚）
-//				//m_map_tile[i][j] = type;
-//			}
-//		}
-//	}
-//}

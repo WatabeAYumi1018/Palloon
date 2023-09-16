@@ -11,16 +11,6 @@ Player::Player(Collision* collision, Map* map):
 
 }
 
-Player::~Player()
-{
-	Finalize();
-}
-
-void Player::Initialize()
-{
-
-}
-
 void Player::Update(float delta_time)
 {
 	m_is_ground = CheckIsGround();
@@ -301,6 +291,22 @@ void Player::MoveHandle(float delta_time)
 	}
 }
 
+bool Player::CheckIsGround()
+{
+	if (m_is_dead)
+	{
+		return false;
+	}
+
+	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, SIZE, 0);
+	tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(foot_pos, m_map);
+	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
+
+	return (foot_collision.s_type == eMapCollisionType::Box ||
+		foot_collision.s_type == eMapCollisionType::Line);
+}
+
+
 void Player::MoveRange()
 {
 	//プレイヤーの移動範囲を制限
@@ -318,11 +324,7 @@ void Player::MoveRange()
 	}
 	if (m_pos.y >= (m_map->GetMapChipY() * m_map->MAP_CHIP_SIZE - SIZE))
 	{
-		m_pos.x = POS_X;
-		m_pos.y = POS_Y;
-		//カメラもリセット
-		//UIもリセット
-
+		m_is_dead=true;
 	}
 }
 
@@ -445,8 +447,6 @@ void Player::HoveringEnd()
 {
 	if (CheckIsGround())
 	{
-		//m_landing_time = 0.0f; // 着地した瞬間にタイマーをリセット
-
 		if (m_is_direction_right)
 		{
 			e_currentAction = ePlayerAction::Hover_end_right;
@@ -463,16 +463,6 @@ void Player::HoveringEnd()
 	}
 }
 
-bool Player::CheckIsGround()
-{
-	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, SIZE, 0);
-	tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(foot_pos, m_map);
-	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
-
-	return (foot_collision.s_type == eMapCollisionType::Box ||
-				foot_collision.s_type == eMapCollisionType::Line);
-}
-
 void Player::Invincible(float delta_time)
 {
 	// 無敵時間を更新
@@ -487,9 +477,4 @@ void Player::Invincible(float delta_time)
 	}
 }
 
-void Player::Finalize()
-{
-	delete animLoader;
-	animLoader = nullptr;
-}
 

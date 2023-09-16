@@ -29,6 +29,11 @@ float Enemy::DistanceCalc()
 //矩形ならば進行可能とする
 bool Enemy::CanMoveRight()
 {
+    if (m_is_dead)
+    {
+        return false;
+    }
+
     tnl::Vector3 forward_pos = m_pos + tnl::Vector3(32, 40, 0);
     tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(forward_pos, m_map);
     sCollisionInfo forward_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
@@ -38,6 +43,11 @@ bool Enemy::CanMoveRight()
 
 bool Enemy::CanMoveLeft()
 {
+    if (m_is_dead)
+    {
+        return false;
+    }
+
     tnl::Vector3 backward_pos = m_pos - tnl::Vector3(32, -40, 0);
     tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(backward_pos, m_map);
     sCollisionInfo backward_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];

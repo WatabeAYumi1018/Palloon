@@ -27,15 +27,11 @@ void EnemySlim::Draw(float delta_time, const Camera* camera)
     tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
         tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-    animLoader->Draw(delta_time, draw_pos);
-    //DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
-    
+    animLoader->Draw(delta_time, draw_pos);    
 }
 
 bool EnemySlim::SeqIdle(float delta_time)
 {
-    DrawStringEx(0, 50, -1, "idle");
-
     float distance_x = m_pos.x - m_player->GetPos().x;
 
     //プレイヤーとの距離計算
@@ -76,7 +72,6 @@ bool EnemySlim::SeqMove(float delta_time)
         {
             tnl_sequence_.change(&EnemySlim::SeqAttack);
         }
-        DrawStringEx(0, 0, -1, "move");
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
@@ -105,8 +100,6 @@ bool EnemySlim::SeqMove(float delta_time)
 }
 bool EnemySlim::SeqAttack(float delta_time)
 {
-    DrawStringEx(0, 0, -1, "attack");
-
     float distance_x = m_pos.x - m_player->GetPos().x;
     
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
@@ -115,11 +108,8 @@ bool EnemySlim::SeqAttack(float delta_time)
         {
             if (CanMoveRight() && distance_x < 0)
             {
-                DrawStringEx(0, 100, -1, "Moving right"); 
                 animLoader->SetAnimation(22);
-                DrawString(0, 150, "%d",m_pos.x,-1);
                 m_pos.x += m_velocity.x * delta_time;
-                DrawString(0, 200,  "%d", m_pos.x,-1); 
                 m_is_dirction_right = true;
             }
         }
@@ -131,7 +121,6 @@ bool EnemySlim::SeqAttack(float delta_time)
         {
             if (CanMoveLeft() && distance_x > 0)
             {
-                DrawStringEx(0, 100, -1, "Moving left"); 
                 animLoader->SetAnimation(23);
                 m_pos.x -= m_velocity.x * delta_time;
                 m_is_dirction_right = false;

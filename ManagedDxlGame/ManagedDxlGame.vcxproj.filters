@@ -410,9 +410,6 @@
     <ClInclude Include="program\game\ScenePlay\Camera\Camera.h">
       <Filter>program\[004] game\[004]scenePlay\[05]Camera</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\Collision\Collision.h">
-      <Filter>program\[004] game\[004]scenePlay\[06]Collision</Filter>
-    </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemyLoad.h">
       <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClInclude>
@@ -448,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="program\game\SceneAll\ClearBalloon.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Collision\Collision.h">
+      <Filter>program\[004] game\[004]scenePlay\[06]Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

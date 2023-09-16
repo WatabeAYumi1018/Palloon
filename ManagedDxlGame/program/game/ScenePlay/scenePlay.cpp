@@ -182,7 +182,8 @@ bool ScenePlay::SeqSceneIdle(float delta_time)
 		m_is_change_scene = true;
 	}
 	
-	if(m_is_change_scene && tnl::Input::IsKeyDown(eKeys::KB_RETURN))
+	if((m_is_change_scene && tnl::Input::IsKeyDown(eKeys::KB_RETURN)) ||
+		(m_player->GetIsDead() && tnl::Input::IsKeyDown(eKeys::KB_RETURN)))
 	{
 		auto scene = SceneManager::GetInstance();
 		scene->ChangeScene(new SceneSelect());

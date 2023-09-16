@@ -197,12 +197,6 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
                 //プレイヤーのHPを減らす
                 player->DecreaseHP(1);
                 player->MakeInvincible();
-
-                if (player->GetIsDead())
-                {
-                    //プレイヤーが死んだらの処理
-
-                }
             }
         }
     }
