@@ -8,7 +8,6 @@ class Collision;
 
 class ClearBalloon : public GameObject
 {
-
 public:
 	ClearBalloon(Collision *collision);
 
@@ -17,11 +16,12 @@ private:
 	int m_balloon_hdl = 0;
 	int m_balloon_clear_hdl = 0;
 
+	float m_size_x = 300;
+	float m_size_y = 544;
+
 	float m_balloon_timer = 0.0f;
 	float m_balloon_offset_y = 10.0f;
 	float m_balloon_velocity_y = 5.0f;
-
-	bool m_player_attached = false;
 
 	Collision *m_collision = nullptr;
 
@@ -34,7 +34,7 @@ public:
 
 private:
 
-	void ClearPosChange(const Camera* camera);
+	void ClearPosChange();
 	//bool IsPlayerAttached(const Player* player);
 	//void AttachPlayer();
 	//void MoveBalloon(float delta_time);
@@ -43,5 +43,4 @@ public:
 
 	//-----Getter&Setter-----//
 	void SetClearPosition(const tnl::Vector3& pos){this->SetPos(pos);}
-	void SetPlayerAttached(bool player_attached) { m_player_attached = player_attached; }
 };

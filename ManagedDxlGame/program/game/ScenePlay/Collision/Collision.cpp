@@ -141,6 +141,8 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
 ////当たり判定に応じて分岐処理
 void Collision::CollisionCalculate(Character* chara, Map* map, int range) 
 {
+    m_is_clear = false;
+
     auto surrounding_chips = GetSurroundingChips(chara, map, range);
 
     for (const auto& row : surrounding_chips) 
@@ -150,7 +152,15 @@ void Collision::CollisionCalculate(Character* chara, Map* map, int range)
             if (info.s_type == eMapCollisionType::Clear) 
             {
                 m_clear_pos = info.s_pos;
+                m_is_clear = true;
+                
+                break;
             }
+        }
+        // 既にClear位置を検出したので、このループも終了
+        if (m_is_clear)
+        {
+            break;
         }
     }
     // 一度だけBoxとLineの当たり判定を呼び出す

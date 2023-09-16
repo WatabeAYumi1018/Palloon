@@ -21,6 +21,9 @@ private:
 	tnl::Vector3 m_last_chara_pos;							/*前回取得したキャラクターの座標*/
 	tnl::Vector3 m_clear_pos;								/*Clear地点の座標*/
 	
+	bool m_is_clear=false;
+
+
 	std::vector<std::vector<sCollisionInfo>> m_cachedChips; /*前回取得した当たり判定情報*/
 
 public:
@@ -28,6 +31,8 @@ public:
 	void CollisionCalculate(Character* chara, Map* map, int range);
 	void CollisionCharacter(Player* player, Enemy* enemy);
 	tnl::Vector3 GetCharacterMapChipPos(const tnl::Vector3& charaPos, const Map* map);
+
+	void ResetClearFlag() { m_is_clear = false; }
 
 private:
 
@@ -41,6 +46,7 @@ public:
 
 	//-----Getter,Setter-----//
 	const tnl::Vector3 GetClearPos() const { return m_clear_pos; }
+	bool GetIsClear() const { return m_is_clear; }
 };
 
 //当たり判定の処理を行うクラス（計算式はnamespaceにて定義）
