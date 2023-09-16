@@ -43,11 +43,12 @@ private:
 	float m_stamp_time = 0.0f;							// 着地時のアクションのタイマー
 	float m_roll_speed=0.0f;							// ロールの現在の速度
 
+	bool m_is_draw = true;							// 透明化フラグ
+
 	bool m_is_hovering = false;							// 空中にいるかどうかのフラグ
 	bool m_is_hovered = false;							// 空気が抜けたかどうかのフラグ
 
 	bool m_is_stamp = false;							//着地したかどうかのフラグ
-
 	bool m_is_rolling=false;							// ロール中か確認するフラグ
 
 	//ゲームスティック用
@@ -71,8 +72,10 @@ public:
 	void RollAction(float delta_time);						//ロール時のアクション
 
 	//-----Getter,Setter-----//
+	void SetIsDraw(bool is_draw) { m_is_draw = is_draw; }
+	bool GetIsDraw() const { return m_is_draw; }
 	void SetIsStamp(bool is_stamp) { m_is_stamp = is_stamp; }
-	bool GetIsRolling() { return m_is_rolling; }
+	bool GetIsRolling() const { return m_is_rolling; }
 
 private:
 

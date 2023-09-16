@@ -180,9 +180,7 @@ bool ScenePlay::SeqSceneIdle(float delta_time)
 	{
 		if (tnl::Input::IsKeyDown(eKeys::KB_UP))
 		{
-			delete m_player;
-			m_player = nullptr;
-
+			m_player->SetIsDraw(false);
 			auto scene = SceneManager::GetInstance();
 			scene->ChangeScene(new SceneSelect());
 		}

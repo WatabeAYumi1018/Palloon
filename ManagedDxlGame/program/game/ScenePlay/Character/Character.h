@@ -17,8 +17,8 @@ protected:
 	int m_size;										/*当たり判定用サイズ*/
 	int m_hp;										/*HP*/
 
-	tnl::Vector3 m_velocity = { 1000,0,0 };			/*速度*/
-	tnl::Vector3 m_gravity = { 0,10,0 };			/*重力*/
+	tnl::Vector3 m_velocity = { 100,0,0 };			/*速度*/
+	tnl::Vector3 m_gravity = { 0,100,0 };			/*重力*/
 
 	float m_invincible_time = 0.0f;					/*無敵時間*/
 

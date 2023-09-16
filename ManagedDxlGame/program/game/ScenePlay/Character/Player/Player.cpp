@@ -32,26 +32,28 @@ void Player::Update(float delta_time)
 
 void Player::Draw(float delta_time, const Camera* camera)
 {
-	tnl::Vector3 draw_pos =
-		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
-	//アニメーションの描画
-	if (m_is_invincible)
+	if (m_is_draw)
 	{
-		// 0.1秒ごとに表示・非表示を切り替えることで点滅を実現
-		if (static_cast<int>(m_invincible_time * 10) % 2 == 0)
+		tnl::Vector3 draw_pos =
+			m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+
+		//アニメーションの描画
+		if (m_is_invincible)
+		{
+			// 0.1秒ごとに表示・非表示を切り替えることで点滅を実現
+			if (static_cast<int>(m_invincible_time * 10) % 2 == 0)
+			{
+				animLoader->Draw(delta_time, draw_pos);
+			}
+		}
+		else
 		{
 			animLoader->Draw(delta_time, draw_pos);
 		}
 	}
-	else
-	{
-		animLoader->Draw(delta_time, draw_pos);
-	}
-	
 	//★デバッグ用
-	DrawFormatString(0, 30, 1, "Player_x: %.2f", draw_pos.x);
-	DrawFormatString(0, 50, 1, "Player_y: %.2f", draw_pos.y);
+	//DrawFormatString(0, 30, 1, "Player_x: %.2f", draw_pos.x);
+	//DrawFormatString(0, 50, 1, "Player_y: %.2f", draw_pos.y);
 	//DrawCircle(draw_pos.x, draw_pos.y, m_size, -1, TRUE);
 }
 
