@@ -2,7 +2,7 @@
 #include "EnemyMasician.h"
 #include "../Player/Player.h"
 
-EnemyMasician::EnemyMasician(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera) :
+EnemyMasician::EnemyMasician(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map1* map, Collision* collision, Camera* camera) :
     Enemy(data, info, player, map, collision, camera)
 {
 

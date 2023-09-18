@@ -2,7 +2,9 @@
 #include <string>
 #include "../dxlib_ext/dxlib_ext.h"
 #include "gm_main.h"
-#include "../game/ScenePlay/ScenePlay.h"
+#include "../game/ScenePlay/ScenePlay1.h"
+#include "../game/ScenePlay/ScenePlay2.h"
+#include "../game/ScenePlay/ScenePlay3.h"
 #include "../game/SceneTitle/SceneTitle.h"
 #include "../engine/SceneManager.h"
 
@@ -35,7 +37,7 @@ void gameStart() {
 	srand(time(0));
 	SetWindowText("Palloon!");
 	
-	SceneManager::GetInstance(new SceneTitle());
+	SceneManager::GetInstance(new ScenePlay3());
 }
 
 //------------------------------------------------------------------------------------------------------------

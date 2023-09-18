@@ -1,13 +1,13 @@
 #pragma once
 #include "../../../../engine/GameEngine.h"
-#include "../../Map/Map.h"
+#include "../../Map/Map1.h"
 
 class EnemyLoad
 {
 
 private:
 
-    Map* m_map = nullptr;
+    Map1* m_map = nullptr;
 
 public:
 

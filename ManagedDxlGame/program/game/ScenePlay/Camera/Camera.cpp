@@ -1,14 +1,14 @@
 #include "Camera.h"
 #include "../Character/Player/Player.h"
-#include "../Map/Map.h"
+#include "../Map/Map1.h"
 
-void Camera::Update(float delta_time, Player* player, Map* map)
+void Camera::Update(float delta_time, Player* player, Map1* map)
 {
 	Scroll(player, map);
 	MoveRange(player, map);
 }
 
-void Camera::MoveRange(Player* player, Map* map)
+void Camera::MoveRange(Player* player, Map1* map)
 {
 	const float halfWidth = DXE_WINDOW_WIDTH >> 1;
 	const float halfHeight = DXE_WINDOW_HEIGHT >> 1;
@@ -21,7 +21,7 @@ void Camera::MoveRange(Player* player, Map* map)
 }
 
 //★背景とチップのスクロール値調節すること
-void Camera::Scroll(Player* player, Map* map)
+void Camera::Scroll(Player* player, Map1* map)
 {
 	if (!m_is_active)
 	{

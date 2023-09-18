@@ -2,7 +2,7 @@
 #include "../Character/Character.h"
 #include "../Character/Player/Player.h"
 #include "../Character/Enemy/Enemy.h"
-#include "../Map/Map.h"
+#include "../Map/Map1.h"
 #include "Collision.h"
 
 Collision::Collision() : m_last_chara_pos(0, 0, 0)
@@ -10,7 +10,7 @@ Collision::Collision() : m_last_chara_pos(0, 0, 0)
 
 }
 
-tnl::Vector3 Collision::GetCharacterMapChipPos(const tnl::Vector3& charaPos, const Map* map)
+tnl::Vector3 Collision::GetCharacterMapChipPos(const tnl::Vector3& charaPos, const Map1* map)
 {
     //キャラの位置からグリッド座標を取得
     float chip_x = charaPos.x / map->MAP_CHIP_SIZE;
@@ -19,7 +19,7 @@ tnl::Vector3 Collision::GetCharacterMapChipPos(const tnl::Vector3& charaPos, con
     return tnl::Vector3(chip_x, chip_y, 0.0f);
 }
 
-std::vector<sCollisionInfo> Collision::GetRowChips(int chip_x, int i, int range, const Map* map)
+std::vector<sCollisionInfo> Collision::GetRowChips(int chip_x, int i, int range, const Map1* map)
 {
     std::vector<sCollisionInfo> rowChips;
 
@@ -51,7 +51,7 @@ bool Collision::IsRowCollisionExists(const std::vector<sCollisionInfo>& rowChips
 
 //キャラクターの周囲のマップチップを取得する(当たり判定処理軽減のため)
 //一般的にキャラを中心に(2*range+1)*(2*range+1)の範囲のマップチップを取得する
-std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Character* chara, Map* map, int range)
+std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Character* chara, Map1* map, int range)
 {
     tnl::Vector3 current_pos = chara->GetPos();
     //現在の座標から前の座標を引いて、マップチップのサイズより小さい場合はキャッシュを返す
@@ -87,7 +87,7 @@ std::vector<std::vector<sCollisionInfo>> Collision::GetSurroundingChips(Characte
 }
 
 //矩形との当たり判定計算
-void Collision::CheckBoxCollision(Character* chara, Map* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
+void Collision::CheckBoxCollision(Character* chara, Map1* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
 {
     for (const auto& row : surroundingChips)
     {
@@ -110,7 +110,7 @@ void Collision::CheckBoxCollision(Character* chara, Map* map, const std::vector<
 }
 
 //線分との当たり判定
-void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
+void Collision::CheckLineCollision(Character* chara, Map1* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips)
 {
     for (const auto& row : surroundingChips)
     {
@@ -139,7 +139,7 @@ void Collision::CheckLineCollision(Character* chara, Map* map, const std::vector
 }
 
 //当たり判定に応じて分岐処理
-void Collision::CollisionCalculate(Character* chara, Map* map, int range) 
+void Collision::CollisionCalculate(Character* chara, Map1* map, int range)
 {
     auto surrounding_chips = GetSurroundingChips(chara, map, range);
 

@@ -1,10 +1,10 @@
 #include "Player.h"
 #include "../../Camera/Camera.h"
 #include "../../Collision/Collision.h"
-#include "../../Map/Map.h"
+#include "../../Map/Map1.h"
 
 //キャラクターの初期化子
-Player::Player(Collision* collision, Map* map):
+Player::Player(Collision* collision, Map1* map):
 	Character({ POS_X, POS_Y, 0 },SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),
 	m_collision(collision), m_map(map)
 {

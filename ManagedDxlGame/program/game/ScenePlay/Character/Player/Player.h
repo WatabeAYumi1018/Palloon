@@ -3,7 +3,7 @@
 #include "../Character.h"
 
 class Camera;
-class Map;
+class Map1;
 class Collision;
 
 //プレイヤーのクラス
@@ -13,7 +13,7 @@ class Collision;
 class Player :public Character
 {
 public:
-	Player(Collision* collision, Map* map);
+	Player(Collision* collision, Map1* map);
 	virtual ~Player() {}
 
 private:
@@ -57,7 +57,7 @@ private:
 	int m_input_y;
 
 	Collision* m_collision=nullptr;
-	Map* m_map=nullptr;
+	Map1* m_map=nullptr;
 
 	ePlayerAction e_currentAction = ePlayerAction::Idle_right;		//アクション
 

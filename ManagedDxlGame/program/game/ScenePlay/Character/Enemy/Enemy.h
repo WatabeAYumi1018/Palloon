@@ -8,14 +8,14 @@
 class Collision;
 class Camera;
 class Player;
-class Map;
+class Map1;
 
 class Enemy :public Character
 {
 
 public:
 
-	Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player,Map *map,Collision * collision, Camera* camera);
+	Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player, Map1*map,Collision * collision, Camera* camera);
 	virtual ~Enemy() {}
 
 protected:
@@ -28,7 +28,7 @@ protected:
 	bool m_is_dirction_right = true;						/*‰EŒü‚«*/
 
 	Player* m_player = nullptr;		
-	Map * m_map = nullptr;
+	Map1* m_map = nullptr;
 	Collision * m_collision = nullptr;
 	Camera* m_camera = nullptr;
 

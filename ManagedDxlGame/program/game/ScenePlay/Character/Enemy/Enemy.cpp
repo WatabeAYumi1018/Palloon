@@ -1,12 +1,12 @@
 #include <random>
 #include "Enemy.h"
-#include "../../Map/Map.h"
+#include "../../Map/Map1.h"
 #include "../../Collision/Collision.h"
 #include "../../Camera/Camera.h"
 #include "../Player/Player.h"
 #include "../../Camera/Camera.h"
 
-Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player,Map* map, Collision* collision, Camera* camera)
+Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player, Map1* map, Collision* collision, Camera* camera)
          : Character(data.s_pos, info.s_size, info.s_hp, tnl::Vector3(100, 0, 0)),
              m_player(player), m_map(map), m_collision(collision),m_camera(camera)
 {

@@ -8,7 +8,7 @@ class EnemyBird :public Enemy
 {
 public:
 	
-	EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera);
+	EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map1* map, Collision* collision, Camera* camera);
 	~EnemyBird();
 
 private:

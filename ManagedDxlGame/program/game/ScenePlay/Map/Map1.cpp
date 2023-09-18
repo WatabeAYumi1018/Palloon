@@ -1,29 +1,29 @@
-#include "Map.h"
+#include "Map1.h"
 #include "../Character/Character.h"
 #include "../Camera/Camera.h"
 
-Map::Map()
+Map1::Map1()
 {
 	Initialize();
 }
 
-Map::~Map()
+Map1::~Map1()
 {
 	Finalize();
 }
 
-void Map::Initialize()
+void Map1::Initialize()
 {
 	//csvファイルのマップタイル描画情報を読み込む
 	m_csv_map_tile = tnl::LoadCsv<int>("csv/stage1-1.csv");
 	//csvファイルから当たり判定の情報を読み込む
 	m_csv_collision = tnl::LoadCsv<int>("csv/stage1-1collision.csv");
 	//画像の読み込み
-	LoadDivGraph("graphics/Stage1-1.png", MAP_ALL_NUM, MAP_ROW_COL, MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
+	LoadDivGraph("graphics/stagetile/Stage1-1.png", MAP_ALL_NUM, MAP_ROW_COL, MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 }
 
 //描画
-void Map::Draw(const Camera* camera)
+void Map1::Draw(const Camera* camera)
 {
 	//マップ画像の描画
 	for (int i = 0; i < m_csv_map_tile.size(); ++i) //行数はm_map_tileのサイズに基づく
@@ -42,7 +42,7 @@ void Map::Draw(const Camera* camera)
 }
 
 //当たり判定の読み込み
-void Map::LoadMapCollision(const Camera* camera)
+void Map1::LoadMapCollision(const Camera* camera)
 {
 	// サイズ初期化（m_csv_collision.size()で最初の0列目のサイズを読み取り、それがsizeの列分だけある）
 	m_collision_info.resize(m_csv_collision.size(), std::vector<sCollisionInfo>(m_csv_collision[0].size()));
@@ -67,7 +67,7 @@ void Map::LoadMapCollision(const Camera* camera)
 	}
 }
 
-void Map::Finalize()
+void Map1::Finalize()
 {
 	m_csv_map_tile.clear();
 	m_csv_collision.clear();

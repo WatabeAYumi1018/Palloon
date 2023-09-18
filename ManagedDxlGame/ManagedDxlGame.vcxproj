@@ -189,8 +189,11 @@
     <ClCompile Include="program\game\ScenePlay\Collision\Collision.cpp" />
     <ClCompile Include="program\game\ScenePlay\Effect\EffectPlayer.cpp" />
     <ClCompile Include="program\game\ScenePlay\Item\Item.cpp" />
-    <ClCompile Include="program\game\ScenePlay\Map\Map.cpp" />
-    <ClCompile Include="program\game\ScenePlay\scenePlay.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Map\Map1.cpp" />
+    <ClCompile Include="program\game\ScenePlay\Map\Map3.cpp" />
+    <ClCompile Include="program\game\ScenePlay\scenePlay1.cpp" />
+    <ClCompile Include="program\game\ScenePlay\ScenePlay2.cpp" />
+    <ClCompile Include="program\game\ScenePlay\ScenePlay3.cpp" />
     <ClCompile Include="program\game\SceneSelect\SceneSelect.cpp" />
     <ClCompile Include="program\game\SceneTitle\SceneTitle.cpp" />
     <ClCompile Include="program\library\json11.cpp" />
@@ -249,8 +252,11 @@
     <ClInclude Include="program\game\ScenePlay\Collision\Collision.h" />
     <ClInclude Include="program\game\ScenePlay\Effect\EffectPlayer.h" />
     <ClInclude Include="program\game\ScenePlay\Item\Item.h" />
-    <ClInclude Include="program\game\ScenePlay\Map\Map.h" />
-    <ClInclude Include="program\game\ScenePlay\scenePlay.h" />
+    <ClInclude Include="program\game\ScenePlay\Map\Map1.h" />
+    <ClInclude Include="program\game\ScenePlay\Map\Map3.h" />
+    <ClInclude Include="program\game\ScenePlay\scenePlay1.h" />
+    <ClInclude Include="program\game\ScenePlay\ScenePlay2.h" />
+    <ClInclude Include="program\game\ScenePlay\ScenePlay3.h" />
     <ClInclude Include="program\game\SceneSelect\SceneSelect.h" />
     <ClInclude Include="program\game\SceneTitle\SceneTitle.h" />
     <ClInclude Include="program\library\json11.hpp" />
