@@ -9,7 +9,8 @@ class Player;
 class Map
 {
 public:
-	Map();
+
+	Map(const std::string& stageName);
 	virtual ~Map();
 
 	//-----定数-----//
@@ -18,27 +19,38 @@ public:
 	static const int MAP_ALL_NUM = 49;			//マップチップの縦幅
 	static const int MAP_CHIP_SIZE = 32;		//マップチップのサイズ
 
+
 private:
 	//-----メンバ変数-----//
-	tnl::Vector3 m_pos;											//マップの座標
 	int m_map_hdl[MAP_ALL_NUM];									//マップチップのタイルハンドル
+	tnl::Vector3 m_pos;											//マップの座標
 	std::vector<std::vector<int>> m_csv_map_tile;				//描画ファイル
 	std::vector<std::vector<int>> m_csv_collision;				//チップ情報ファイル
 	std::vector<std::vector<sCollisionInfo>> m_collision_info;	//当たり判定の情報格納用
 
+	std::vector<sStageInfo> stageList = 
+	{ 
+		{"stage1", "csv/stage1-1.csv", "csv/stage1-1collision.csv", "csv/stage1-1enemy.csv", {0,100,0}},
+		{ "stage2", "csv/stage1-2.csv", "csv/stage1-2collision.csv", "csv/stage1-2enemy.csv",{500,6000,0} },
+		{ "stage3", "csv/stage1-3.csv", "csv/stage1-3collision.csv", "csv/stage1-3enemy.csv",{100,300,0} }
+	};
+
+	sStageInfo s_current_stage_info;  //現在のステージ情報
+
 public:
 	//-----メンバ関数-----//
-	void Initialize();
+	void Initialize(const std::string& stageName);
 	void Draw(const Camera* camera);
 	void Finalize();
 
 	//当たり判定専用のマップ関数
-	void LoadMapCollision(const Camera* camera);
+	void LoadMapCollision();
 
 	//-----Getter-----//
 	const size_t GetMapChipX() const { return m_csv_map_tile[0].size(); }
 	const size_t GetMapChipY() const { return m_csv_map_tile.size(); }
 	const std::vector<std::vector<sCollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }
+	const sStageInfo& GetCurrentStageInfo() const { return s_current_stage_info; }
 };
 
 

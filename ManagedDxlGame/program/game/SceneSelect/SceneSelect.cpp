@@ -4,6 +4,14 @@
 #include "../../engine/SceneManager.h"
 
 
+SceneSelect::SceneSelect() : m_selected_stage(0)
+{
+	m_stage_names.emplace_back("stage1");
+	m_stage_names.emplace_back("stage2");
+	m_stage_names.emplace_back("stage3");
+	m_stage_names.emplace_back("boss");
+};
+
 void SceneSelect::Update(float delta_time)
 {
 	sequence_.update(delta_time);
@@ -36,7 +44,7 @@ bool SceneSelect::SeqIdle(float delta_time)
 	{
 		auto scene = SceneManager::GetInstance();
 		//選んだステージによって切り替える
-		scene->ChangeScene(new ScenePlay());
+		scene->ChangeScene(new ScenePlay(GetSelectedStage()));
 	}
 	return true;
 }

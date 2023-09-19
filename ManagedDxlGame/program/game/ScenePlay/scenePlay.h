@@ -17,7 +17,7 @@ class EffectPlayer;
 class ScenePlay : public SceneBase 
 {
 public:
-	ScenePlay();
+	ScenePlay(const std::string& stageName);
 	virtual ~ScenePlay();
 
 	//-----ƒƒ“ƒoŠÖ”-----//
@@ -38,6 +38,8 @@ public:
 
 private:
 	
+	std::string m_stage_name;
+
 	bool m_is_change_scene = false;
 
 	std::list<GameObject*> m_gameObjects;

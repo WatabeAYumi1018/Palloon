@@ -22,7 +22,7 @@
 #include "ScenePlay.h"
 
 
-ScenePlay::ScenePlay()
+ScenePlay::ScenePlay(const std::string& stageName) : m_stage_name(stageName)
 {
 	Initialize();
 }
@@ -38,8 +38,11 @@ void ScenePlay::Initialize()
 	m_collision = new Collision();
 	m_backGround=new BackGround();
 	m_clearBalloon = new ClearBalloon(m_collision);
-	m_map = new Map();
-	m_player = new Player(m_collision, m_map);
+	
+	m_map = new Map(m_stage_name);
+	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().initial_player_position;	
+	
+	m_player = new Player(player_init_pos, m_collision, m_map);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());	
@@ -52,7 +55,7 @@ void ScenePlay::Initialize()
 void ScenePlay::InitEnemy()
 {
 	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
-	auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-2enemy.csv");
+	auto dataList = m_enemyLoad->LoadEnemyData(m_map->GetCurrentStageInfo().s_enemy_csv);
 
 	for (auto& data : dataList)
 	{
@@ -109,7 +112,7 @@ void ScenePlay::Update(float delta_time)
 {	
 	m_collision->CollisionCalculate(m_player, m_map, 10);
 	m_camera->Update(delta_time, m_player, m_map);
-	m_map->LoadMapCollision(m_camera);
+	m_map->LoadMapCollision();
 
 	CreateEffect();
 

@@ -4,8 +4,8 @@
 #include "../../Map/Map.h"
 
 //キャラクターの初期化子
-Player::Player(Collision* collision, Map* map):
-	Character({ POS_X, POS_Y, 0 },SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map)
+Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map):
+	Character(initialPos, SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map)
 {
 
 }
@@ -302,7 +302,7 @@ bool Player::CheckIsGround()
 	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
 
 	return (foot_collision.s_type == eMapCollisionType::Box ||
-		foot_collision.s_type == eMapCollisionType::Line);
+			foot_collision.s_type == eMapCollisionType::Line);
 }
 
 void Player::MoveRange()

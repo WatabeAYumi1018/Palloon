@@ -13,14 +13,12 @@ class Collision;
 class Player :public Character
 {
 public:
-	Player(Collision* collision, Map* map);
+
+	Player(const tnl::Vector3& initialPos, Collision* collision, Map* map);
 	virtual ~Player() {}
 
 private:
 	//-----定数-----//
-	static constexpr float POS_X = 500;//0;// 500; //100;			//初期位置
-	static constexpr float POS_Y = 6000; //100;// 6000; //300;
-
 	static constexpr int SIZE = 35;				//サイズ
 	static constexpr int MAX_HP = 5;				//HP
 

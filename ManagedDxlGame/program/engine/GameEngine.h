@@ -85,3 +85,12 @@ enum class eBalloonState
 	SceneChange
 };
 
+struct sStageInfo
+{
+	std::string s_stage_name;
+	std::string s_map_csv;
+	std::string s_collision_csv;
+	std::string s_enemy_csv;
+	tnl::Vector3 initial_player_position;  // プレイヤーの初期位置
+};
+

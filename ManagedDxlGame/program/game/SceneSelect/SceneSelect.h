@@ -4,7 +4,11 @@
 
 class GameObject;
 
-class SceneSelect : public SceneBase {
+class SceneSelect : public SceneBase 
+{
+public:
+
+	SceneSelect();
 
 private:
 
@@ -23,6 +27,8 @@ private:
 	float m_balloon_offset_y = 10.0f; // 選択されている風船の上下オフセット
 	float m_balloon_velocity_y = 5.0f; // 選択されている風船の上下の速度
 	
+	std::vector<std::string> m_stage_names; // ステージ名
+
 	tnl::Sequence<SceneSelect> sequence_ = tnl::Sequence<SceneSelect>(this, &SceneSelect::SeqIdle);
 
 public:
@@ -35,5 +41,8 @@ private:
 
 	bool SeqIdle(float delta_time);
 	void MoveBalloon(float delta_time);
+
+public:
+	std::string GetSelectedStage() const { return m_stage_names[m_selected_stage]; };
 };
 
