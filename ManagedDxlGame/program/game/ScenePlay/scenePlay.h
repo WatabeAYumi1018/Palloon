@@ -3,12 +3,10 @@
 #include "../SceneAll/GameObject.h"
 
 //scene内で必要な全ての要素を管理するクラス
-//★Mapと同様、現状は期限内完成を優先し、同じ内容で素材の異なる複数コピークラスを作成。
-//★このままでは再利用性が皆無のため、後日改めて修正し、ひとつのステージにまとめる実装に変更する。
 
 class Camera;
 class BackGround;
-class Map1;
+class Map;
 class Collision;
 class ClearBalloon;
 class EnemyLoad;
@@ -16,11 +14,11 @@ class Player;
 class Enemy;
 class EffectPlayer;
 
-class ScenePlay1 : public SceneBase 
+class ScenePlay : public SceneBase 
 {
 public:
-	ScenePlay1();
-	virtual ~ScenePlay1();
+	ScenePlay();
+	virtual ~ScenePlay();
 
 	//-----メンバ関数-----//
 	void Initialize() override;
@@ -30,8 +28,8 @@ public:
 
 	//-----メンバ変数-----//
 	BackGround *m_backGround=nullptr;
-	Camera*m_camera=nullptr;
-	Map1*m_map=nullptr;
+	Camera *m_camera=nullptr;
+	Map *m_map=nullptr;
 	Collision *m_collision=nullptr;
 	ClearBalloon *m_clearBalloon=nullptr;
 	EnemyLoad* m_enemyLoad = nullptr;
@@ -43,7 +41,7 @@ private:
 	bool m_is_change_scene = false;
 
 	std::list<GameObject*> m_gameObjects;
-	tnl::Sequence<ScenePlay1> m_sequence = tnl::Sequence<ScenePlay1>(this, &ScenePlay1::SeqSceneIdle);
+	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
 	
 	std::list<Enemy*> m_enemies;					// 敵のリスト
 	std::map<int, sEnemyInfo> m_enemyInfos;			// 敵の情報リスト

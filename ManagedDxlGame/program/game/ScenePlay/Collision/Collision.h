@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../engine/GameEngine.h"
 
-class Map1;
+class Map;
 class Character;
 class Player;
 class Enemy;
@@ -28,19 +28,19 @@ private:
 
 public:
 	//-----ÉÅÉìÉoä÷êî-----//
-	void CollisionCalculate(Character* chara, Map1* map, int range);
+	void CollisionCalculate(Character* chara, Map* map, int range);
 	void CollisionCharacter(Player* player, Enemy* enemy);
-	tnl::Vector3 GetCharacterMapChipPos(const tnl::Vector3& charaPos, const Map1* map);
+	tnl::Vector3 GetCharacterMapChipPos(const tnl::Vector3& charaPos, const Map* map);
 
 	void ResetClearFlag() { m_is_clear = false; }
 
 private:
 
-	void CheckBoxCollision(Character* chara, Map1* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
-	void CheckLineCollision(Character* chara, Map1* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
+	void CheckBoxCollision(Character* chara, Map* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
+	void CheckLineCollision(Character* chara, Map* map, const std::vector<std::vector<sCollisionInfo>>& surroundingChips);
 	bool IsRowCollisionExists(const std::vector<sCollisionInfo>& rowChips);
-	std::vector<sCollisionInfo> GetRowChips(int chip_x, int i, int range, const Map1* map);
-	std::vector<std::vector<sCollisionInfo>> GetSurroundingChips(Character* chara, Map1* map, int range);
+	std::vector<sCollisionInfo> GetRowChips(int chip_x, int i, int range, const Map* map);
+	std::vector<std::vector<sCollisionInfo>> GetSurroundingChips(Character* chara, Map* map, int range);
 
 public:
 

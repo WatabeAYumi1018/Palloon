@@ -1,14 +1,14 @@
 #include "Camera.h"
 #include "../Character/Player/Player.h"
-#include "../Map/Map1.h"
+#include "../Map/Map.h"
 
-void Camera::Update(float delta_time, Player* player, Map1* map)
+void Camera::Update(float delta_time, Player* player, Map* map)
 {
 	Scroll(player, map);
 	MoveRange(player, map);
 }
 
-void Camera::MoveRange(Player* player, Map1* map)
+void Camera::MoveRange(Player* player, Map* map)
 {
 	const float halfWidth = DXE_WINDOW_WIDTH >> 1;
 	const float halfHeight = DXE_WINDOW_HEIGHT >> 1;
@@ -16,12 +16,20 @@ void Camera::MoveRange(Player* player, Map1* map)
 	const float maxY = map->MAP_CHIP_SIZE * map->GetMapChipY() - halfHeight;
 
 	//clamp関数で範囲内に収める。clamp(値, 最小値, 最大値)
-	m_target.x = std::clamp(m_target.x, halfWidth, maxX);
+	if (halfWidth < maxX)
+	{
+		m_target.x = std::clamp(m_target.x, halfWidth, maxX);
+	}
+	else
+	{
+		//csvファイルのサイズがmaxとなる
+		m_target.x = maxX;
+	}
 	m_target.y = std::clamp(m_target.y, halfHeight, maxY);
 }
 
 //★背景とチップのスクロール値調節すること
-void Camera::Scroll(Player* player, Map1* map)
+void Camera::Scroll(Player* player, Map* map)
 {
 	if (!m_is_active)
 	{

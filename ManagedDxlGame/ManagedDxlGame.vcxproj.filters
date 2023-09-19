@@ -179,7 +179,7 @@
     <ClCompile Include="program\library\tnl_instance.cpp">
       <Filter>program\[000] library</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\scenePlay1.cpp">
+    <ClCompile Include="program\game\ScenePlay\scenePlay.cpp">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClCompile>
     <ClCompile Include="program\wta_library\wta_IsIntersectCalc.cpp">
@@ -206,7 +206,7 @@
     <ClCompile Include="program\game\ScenePlay\Character\Enemy\Enemy.cpp">
       <Filter>program\[004] game\[004]scenePlay\[01]Character\[2]Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\Map\Map1.cpp">
+    <ClCompile Include="program\game\ScenePlay\Map\Map.cpp">
       <Filter>program\[004] game\[004]scenePlay\[02]Map</Filter>
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Item\Item.cpp">
@@ -256,15 +256,6 @@
     </ClCompile>
     <ClCompile Include="program\game\SceneAll\ClearBalloon.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\Map\Map3.cpp">
-      <Filter>program\[004] game\[004]scenePlay\[02]Map</Filter>
-    </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\ScenePlay2.cpp">
-      <Filter>program\[004] game\[004]scenePlay</Filter>
-    </ClCompile>
-    <ClCompile Include="program\game\ScenePlay\ScenePlay3.cpp">
-      <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -398,7 +389,7 @@
     <ClInclude Include="program\game\SceneAll\BackGround.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\scenePlay1.h">
+    <ClInclude Include="program\game\ScenePlay\scenePlay.h">
       <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Character\Player\Player.h">
@@ -410,7 +401,7 @@
     <ClInclude Include="program\game\ScenePlay\Character\Character.h">
       <Filter>program\[004] game\[004]scenePlay\[01]Character</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\Map\Map1.h">
+    <ClInclude Include="program\game\ScenePlay\Map\Map.h">
       <Filter>program\[004] game\[004]scenePlay\[02]Map</Filter>
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Item\Item.h">
@@ -457,15 +448,6 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Collision\Collision.h">
       <Filter>program\[004] game\[004]scenePlay\[06]Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\Map\Map3.h">
-      <Filter>program\[004] game\[004]scenePlay\[02]Map</Filter>
-    </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\ScenePlay2.h">
-      <Filter>program\[004] game\[004]scenePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="program\game\ScenePlay\ScenePlay3.h">
-      <Filter>program\[004] game\[004]scenePlay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

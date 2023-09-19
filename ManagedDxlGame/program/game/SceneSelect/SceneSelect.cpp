@@ -1,6 +1,6 @@
 #include "../../dxlib_ext/dxlib_ext.h"
 #include "SceneSelect.h"
-#include "../ScenePlay/scenePlay1.h"
+#include "../ScenePlay/scenePlay.h"
 #include "../../engine/SceneManager.h"
 
 
@@ -36,7 +36,7 @@ bool SceneSelect::SeqIdle(float delta_time)
 	{
 		auto scene = SceneManager::GetInstance();
 		//選んだステージによって切り替える
-		scene->ChangeScene(new ScenePlay1());
+		scene->ChangeScene(new ScenePlay());
 	}
 	return true;
 }

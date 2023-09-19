@@ -1,7 +1,7 @@
 #include "../../../../library/tnl_csv.h"
 #include "EnemyLoad.h"
 #include "../../Camera/Camera.h"
-#include "../../Map/Map1.h"
+#include "../../Map/Map.h"
 #include "Enemy.h"
 
 

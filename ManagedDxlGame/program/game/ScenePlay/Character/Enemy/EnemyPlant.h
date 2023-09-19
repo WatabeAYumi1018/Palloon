@@ -8,7 +8,7 @@ class EnemyPlant :public Enemy
 {
 public:
 
-	EnemyPlant(const sEnemyData& data, const sEnemyInfo& info,Player *player, Map1* map, Collision* collision, Camera* camera);
+	EnemyPlant(const sEnemyData& data, const sEnemyInfo& info,Player *player, Map* map, Collision* collision, Camera* camera);
 	~EnemyPlant();
 
 private:

@@ -14,7 +14,6 @@ public:
 
 private:
 	//-----ƒƒ“ƒo•Ï”-----//
-	int m_ui_hdl = 0;
 	int m_extend_x = 500;
 	int m_extend_y = 200;
 

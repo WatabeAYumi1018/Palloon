@@ -1,18 +1,18 @@
-#include "Map1.h"
+#include "Map.h"
 #include "../Character/Character.h"
 #include "../Camera/Camera.h"
 
-Map1::Map1()
+Map::Map()
 {
 	Initialize();
 }
 
-Map1::~Map1()
+Map::~Map()
 {
 	Finalize();
 }
 
-void Map1::Initialize()
+void Map::Initialize()
 {
 	//csvファイルのマップタイル描画情報を読み込む
 	m_csv_map_tile = tnl::LoadCsv<int>("csv/stage1-1.csv");
@@ -23,7 +23,7 @@ void Map1::Initialize()
 }
 
 //描画
-void Map1::Draw(const Camera* camera)
+void Map::Draw(const Camera* camera)
 {
 	//マップ画像の描画
 	for (int i = 0; i < m_csv_map_tile.size(); ++i) //行数はm_map_tileのサイズに基づく
@@ -42,7 +42,7 @@ void Map1::Draw(const Camera* camera)
 }
 
 //当たり判定の読み込み
-void Map1::LoadMapCollision(const Camera* camera)
+void Map::LoadMapCollision(const Camera* camera)
 {
 	// サイズ初期化（m_csv_collision.size()で最初の0列目のサイズを読み取り、それがsizeの列分だけある）
 	m_collision_info.resize(m_csv_collision.size(), std::vector<sCollisionInfo>(m_csv_collision[0].size()));
@@ -67,7 +67,7 @@ void Map1::LoadMapCollision(const Camera* camera)
 	}
 }
 
-void Map1::Finalize()
+void Map::Finalize()
 {
 	m_csv_map_tile.clear();
 	m_csv_collision.clear();

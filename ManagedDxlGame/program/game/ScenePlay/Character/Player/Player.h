@@ -3,7 +3,7 @@
 #include "../Character.h"
 
 class Camera;
-class Map1;
+class Map;
 class Collision;
 
 //プレイヤーのクラス
@@ -13,13 +13,13 @@ class Collision;
 class Player :public Character
 {
 public:
-	Player(Collision* collision, Map1* map);
+	Player(Collision* collision, Map* map);
 	virtual ~Player() {}
 
 private:
 	//-----定数-----//
-	static constexpr float POS_X = 100;			//初期位置
-	static constexpr float POS_Y = 0;
+	static constexpr float POS_X = 0;// 500;			//初期位置
+	static constexpr float POS_Y = 100;// 6000;
 
 	static constexpr int SIZE = 35;				//サイズ
 	static constexpr int MAX_HP = 5;				//HP
@@ -57,7 +57,7 @@ private:
 	int m_input_y;
 
 	Collision* m_collision=nullptr;
-	Map1* m_map=nullptr;
+	Map* m_map=nullptr;
 
 	ePlayerAction e_currentAction = ePlayerAction::Idle_right;		//アクション
 

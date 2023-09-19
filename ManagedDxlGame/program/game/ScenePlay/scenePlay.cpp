@@ -17,39 +17,39 @@
 #include "../SceneAll/BackGround.h"
 #include "../SceneAll/ClearBalloon.h"
 #include "../SceneAll/Balloon.h"
-#include "../ScenePlay/Map/Map1.h"
+#include "../ScenePlay/Map/Map.h"
 #include "../SceneAll/UI.h"
-#include "ScenePlay1.h"
+#include "ScenePlay.h"
 
 
-ScenePlay1::ScenePlay1()
+ScenePlay::ScenePlay()
 {
 	Initialize();
 }
 
-ScenePlay1::~ScenePlay1()
+ScenePlay::~ScenePlay()
 {
 	Finalize();
 }
 
-void ScenePlay1::Initialize()
+void ScenePlay::Initialize()
 {
 	m_camera=new Camera();
 	m_collision = new Collision();
 	m_backGround=new BackGround();
 	m_clearBalloon = new ClearBalloon(m_collision);
-	m_map = new Map1();
+	m_map = new Map();
 	m_player = new Player(m_collision, m_map);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());	
 	m_gameObjects.emplace_back(m_clearBalloon);
 	m_gameObjects.emplace_back(m_player);
-	InitEnemy();
+	//InitEnemy();
 	m_gameObjects.emplace_back(new UI(m_player));
 }
 
-void ScenePlay1::InitEnemy()
+void ScenePlay::InitEnemy()
 {
 	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
 	auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-1enemy.csv");
@@ -106,7 +106,7 @@ void ScenePlay1::InitEnemy()
 	}
 }
 
-void ScenePlay1::Update(float delta_time)
+void ScenePlay::Update(float delta_time)
 {	
 	m_collision->CollisionCalculate(m_player, m_map, 10);
 	m_camera->Update(delta_time, m_player, m_map);
@@ -114,7 +114,7 @@ void ScenePlay1::Update(float delta_time)
 
 	CreateEffect();
 
-	CollisionCheck(delta_time);
+	//CollisionCheck(delta_time);
 	
 	RemoveAndDelete();
 
@@ -126,7 +126,7 @@ void ScenePlay1::Update(float delta_time)
 	m_sequence.update(delta_time);
 }
 
-void ScenePlay1::Draw(float delta_time)
+void ScenePlay::Draw(float delta_time)
 {
 	m_backGround->Draw(delta_time, m_camera);
 	m_map->Draw(m_camera);
@@ -137,7 +137,7 @@ void ScenePlay1::Draw(float delta_time)
 	}
 }
 
-void ScenePlay1::Finalize()
+void ScenePlay::Finalize()
 {
 	for (auto obj : m_gameObjects)
 	{
@@ -150,7 +150,7 @@ void ScenePlay1::Finalize()
 	m_effects.clear();
 }
 
-void ScenePlay1::CreateEffect()
+void ScenePlay::CreateEffect()
 {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C))
 	{
@@ -173,7 +173,7 @@ void ScenePlay1::CreateEffect()
 	}
 }
 
-bool ScenePlay1::SeqSceneIdle(float delta_time)
+bool ScenePlay::SeqSceneIdle(float delta_time)
 {
 	if (m_clearBalloon->GetIsChangeGraphic())
 	{
@@ -190,7 +190,7 @@ bool ScenePlay1::SeqSceneIdle(float delta_time)
 	return true;
 }
 
-void ScenePlay1::CollisionCheck(float delta_time)
+void ScenePlay::CollisionCheck(float delta_time)
 {
 	for (auto enemy : m_enemies)
 	{
@@ -235,19 +235,19 @@ void ScenePlay1::CollisionCheck(float delta_time)
 	}
 }
 
-void ScenePlay1::RemoveAndDeleteEffect(EffectPlayer* effect)
+void ScenePlay::RemoveAndDeleteEffect(EffectPlayer* effect)
 {
 	m_gameObjects.remove(effect);
 	m_effects.remove(effect);
 }
 
-void ScenePlay1::RemoveAndDeleteEnemy(Enemy* enemy)
+void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
 {
 	m_gameObjects.remove(enemy);
 	m_enemies.remove(enemy);
 }
 
-void ScenePlay1::RemoveAndDelete()
+void ScenePlay::RemoveAndDelete()
 {
 	for (auto effect : m_effectsRemoveList)
 	{
