@@ -306,7 +306,6 @@ bool Player::CheckIsGround()
 		foot_collision.s_type == eMapCollisionType::Line);
 }
 
-
 void Player::MoveRange()
 {
 	//ƒvƒŒƒCƒ„[‚ÌˆÚ“®”ÍˆÍ‚ğ§ŒÀ

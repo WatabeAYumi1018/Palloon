@@ -15,9 +15,9 @@ Map::~Map()
 void Map::Initialize()
 {
 	//csvファイルのマップタイル描画情報を読み込む
-	m_csv_map_tile = tnl::LoadCsv<int>("csv/stage1-1.csv");
+	m_csv_map_tile = tnl::LoadCsv<int>("csv/stage1-3.csv");
 	//csvファイルから当たり判定の情報を読み込む
-	m_csv_collision = tnl::LoadCsv<int>("csv/stage1-1collision.csv");
+	m_csv_collision = tnl::LoadCsv<int>("csv/stage1-3collision.csv");
 	//画像の読み込み
 	LoadDivGraph("graphics/stagetile/Stage1-1.png", MAP_ALL_NUM, MAP_ROW_COL, MAP_ROW_COL, MAP_CHIP_SIZE, MAP_CHIP_SIZE, m_map_hdl);
 }

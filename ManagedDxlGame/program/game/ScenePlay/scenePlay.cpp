@@ -53,7 +53,6 @@ void ScenePlay::InitEnemy()
 {
 	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
 	auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-1enemy.csv");
-	//auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-1enemysample.csv"); デバッグ用
 
 	for (auto& data : dataList)
 	{
