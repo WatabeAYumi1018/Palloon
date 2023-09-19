@@ -5,8 +5,7 @@
 
 //キャラクターの初期化子
 Player::Player(Collision* collision, Map* map):
-	Character({ POS_X, POS_Y, 0 },SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),
-	m_collision(collision), m_map(map)
+	Character({ POS_X, POS_Y, 0 },SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map)
 {
 
 }
