@@ -18,8 +18,8 @@ public:
 
 private:
 	//-----定数-----//
-	static constexpr float POS_X = 100;//0;// 500;			//初期位置
-	static constexpr float POS_Y = 300; //100;// 6000;
+	static constexpr float POS_X = 500;//0;// 500; //100;			//初期位置
+	static constexpr float POS_Y = 6000; //100;// 6000; //300;
 
 	static constexpr int SIZE = 35;				//サイズ
 	static constexpr int MAX_HP = 5;				//HP

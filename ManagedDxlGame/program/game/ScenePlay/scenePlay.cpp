@@ -45,14 +45,14 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(new Balloon());	
 	m_gameObjects.emplace_back(m_clearBalloon);
 	m_gameObjects.emplace_back(m_player);
-	//InitEnemy();
+	InitEnemy();
 	m_gameObjects.emplace_back(new UI(m_player));
 }
 
 void ScenePlay::InitEnemy()
 {
 	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
-	auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-1enemy.csv");
+	auto dataList = m_enemyLoad->LoadEnemyData("csv/stage1-2enemy.csv");
 
 	for (auto& data : dataList)
 	{
@@ -113,7 +113,7 @@ void ScenePlay::Update(float delta_time)
 
 	CreateEffect();
 
-	//CollisionCheck(delta_time);
+	CollisionCheck(delta_time);
 	
 	RemoveAndDelete();
 

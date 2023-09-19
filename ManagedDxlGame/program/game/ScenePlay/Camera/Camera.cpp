@@ -25,17 +25,17 @@ void Camera::MoveRange(Player* player, Map* map)
 		//csvファイルのサイズがmaxとなる
 		m_target.x = maxX;
 	}
+	m_target.y = std::clamp(m_target.y, halfHeight, maxY);
+	//float distance_y = halfHeight - maxY;
 
-	float distance_y = halfHeight - maxY;
-
-	if (distance_y < map->MAP_CHIP_SIZE)
-	{
-		m_target.y = maxY;
-	}
-	else
-	{
-		m_target.y = std::clamp(m_target.y, halfHeight, maxY);
-	}
+	//if (distance_y < map->MAP_CHIP_SIZE)
+	//{
+	//	m_target.y = maxY;
+	//}
+	//else
+	//{
+	//	m_target.y = std::clamp(m_target.y, halfHeight, maxY);
+	//}
 
 }
 
