@@ -52,7 +52,7 @@ private:
 	std::list<Enemy*> m_enemiesRemoveList;			/*削除予定の敵*/
 	std::list<EffectPlayer*> m_effectsRemoveList;	/*削除予定のエフェクト*/
 
-	void InitEnemy();
+	void InitEnemy(int enemyID = -1);
 	void CreateEffect();
 	bool SeqSceneIdle(float delta_time);
 

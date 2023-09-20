@@ -34,6 +34,8 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Initialize()
 {
+	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
+
 	m_camera=new Camera();
 	m_collision = new Collision();
 	m_backGround=new BackGround();
@@ -52,13 +54,17 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(new UI(m_player));
 }
 
-void ScenePlay::InitEnemy()
+void ScenePlay::InitEnemy(int enemyID)
 {
-	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
 	auto dataList = m_enemyLoad->LoadEnemyData(m_map->GetCurrentStageInfo().s_enemy_csv);
 
 	for (auto& data : dataList)
 	{
+		// enemyIDがデフォルト値以外の場合、そのIDの敵だけを生成する
+		if (enemyID != -1 && data.s_type_id != enemyID)
+		{
+			continue;
+		}
 
 		switch (data.s_type_id)
 		{
@@ -200,6 +206,14 @@ void ScenePlay::CollisionCheck(float delta_time)
 		if (enemy->GetIsDead())
 		{
 			m_enemiesRemoveList.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ
+			
+			// ステージ3で、敵が倒されたときのスポーン処理
+			if (m_stage_name == "stage3")
+			{
+				int defeated_enemy_ID = enemy->GetTypeID();
+				InitEnemy(defeated_enemy_ID);
+			}
+			
 			continue;
 		}
 

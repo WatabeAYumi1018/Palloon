@@ -12,7 +12,6 @@ class Map;
 
 class Enemy :public Character
 {
-
 public:
 
 	Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player, Map*map,Collision * collision, Camera* camera);
@@ -41,4 +40,7 @@ public:
 
 	bool CanMoveRight();
 	bool CanMoveLeft();
+
+	//-----Setter&Getter-----//
+	int GetTypeID() const { return m_type_id; }
 };
