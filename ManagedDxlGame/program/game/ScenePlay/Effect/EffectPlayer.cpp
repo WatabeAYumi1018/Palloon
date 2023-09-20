@@ -84,6 +84,26 @@ void EffectPlayer::CalculateCollisionCircles()
 				m_collision_circles_pos.emplace_back(circle_pos);
 			}
 		}
+		else
+		{
+			// ‰E‚Ì‰~
+			circle_pos = -effect_pos;
+			m_collision_circles_pos.emplace_back(circle_pos);
+
+			// ’†‰›‚Ì‚Q‚Â‚Ì‰~
+			for (int i = 1; i <= 2; i++)
+			{
+				circle_pos = effect_pos - tnl::Vector3(i * m_size, 0, 0);
+				m_collision_circles_pos.emplace_back(circle_pos);
+			}
+
+			// ¶‚Ì‚R‚Â‚Ì‰~
+			for (int i = 1; i <= 3; i++)
+			{
+				circle_pos = effect_pos - tnl::Vector3((i + 2) * m_size, 0, 0);
+				m_collision_circles_pos.emplace_back(circle_pos);
+			}
+		}
 	}
 
 	else if (m_effectType == eEffectPlayerType::Beam)
