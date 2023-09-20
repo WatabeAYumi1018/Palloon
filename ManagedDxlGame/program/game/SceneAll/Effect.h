@@ -12,7 +12,7 @@ public:
 protected:
 	//-----メンバ変数-----//
 	int m_size = 20;						/*サイズ*/
-	float duration = 1.0f;					/*エフェクトの持続時間*/
+	float duration = 0.8f;					/*エフェクトの持続時間*/
 	float elapsed_time = 0.0f;				/*経過時間*/
 	
 	tnl::Vector3 m_offset;					/*オフセット*/

@@ -9,7 +9,6 @@ EffectPlayer::EffectPlayer(Player *player, eEffectPlayerType effectType):
 	// CSVからアニメーションデータをロード
 	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
 	
-	//ビームの場合
 	m_size = 30;
 }
 
@@ -38,20 +37,20 @@ void EffectPlayer::Draw(float delta_time, const Camera* camera)
 {
 	if (m_is_moved)
 	{
+		tnl::Vector3 draw_pos;
+
 		if (m_player->GetIsDirectionRight())
 		{
-			tnl::Vector3 draw_pos =
-				m_pos + m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
-			animLoader->Draw(delta_time * 2, draw_pos);
+			draw_pos =m_pos + m_offset - camera->GetTarget() + 
+				tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 		}
 		else
 		{
-			tnl::Vector3 draw_pos =
-				m_pos - m_offset - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
-			animLoader->Draw(delta_time * 2, draw_pos);
+			draw_pos =m_pos - m_offset - camera->GetTarget() +
+				tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 		}
+
+		animLoader->Draw(delta_time * 2, draw_pos);
 	}
 }
 
@@ -61,12 +60,46 @@ void EffectPlayer::CalculateCollisionCircles()
 
 	tnl::Vector3 effect_pos = this->GetPos();
 
-	if (m_effectType == eEffectPlayerType::Beam)
+	tnl::Vector3 circle_pos;
+
+	if (m_effectType == eEffectPlayerType::Fire)
 	{
-		for (int i = 0; i < 7; i++)
+		if (m_player->GetIsDirectionRight())
 		{
-			tnl::Vector3 circle_pos = effect_pos + tnl::Vector3(i * m_size * 2, 0, 0);
+			// 左の円
+			circle_pos = effect_pos;
 			m_collision_circles_pos.emplace_back(circle_pos);
+
+			// 中央の２つの円
+			for (int i = 1; i <= 2; i++)
+			{
+				circle_pos = effect_pos + tnl::Vector3(i * m_size, 0, 0);
+				m_collision_circles_pos.emplace_back(circle_pos);
+			}
+
+			// 右の３つの円
+			for (int i = 1; i <= 3; i++)
+			{
+				circle_pos = effect_pos + tnl::Vector3((i + 2) * m_size, 0, 0);
+				m_collision_circles_pos.emplace_back(circle_pos);
+			}
+		}
+	}
+
+	else if (m_effectType == eEffectPlayerType::Beam)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			if (m_player->GetIsDirectionRight())
+			{
+				circle_pos = effect_pos + tnl::Vector3(i * m_size * 2, 0, 0);
+				m_collision_circles_pos.emplace_back(circle_pos);
+			}
+			else
+			{
+				circle_pos = effect_pos - tnl::Vector3(i * m_size * 2, 0, 0);
+				m_collision_circles_pos.emplace_back(circle_pos);
+			}		
 		}
 	}
 }
@@ -77,11 +110,11 @@ void EffectPlayer::EffectFireHandle()
 	{
 		if (m_player->GetIsDirectionRight())
 		{
-			animLoader->SetAnimation(42);  /*effect_beam_right*/
+			animLoader->SetAnimation(42);  /*effect_fire_right*/
 		}
 		else
 		{
-			animLoader->SetAnimation(43);  /*effect_beam_left*/
+			animLoader->SetAnimation(43);  /*effect_fire_left*/
 		}
 	}
 }

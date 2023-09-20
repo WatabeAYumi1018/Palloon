@@ -174,6 +174,18 @@ void Player::ActionHandle(float delta_time)
 
 		break;
 
+	case ePlayerAction::Fire_right:
+
+		animLoader->SetAnimation(14);  /*fire_right*/
+
+		break;
+
+	case ePlayerAction::Fire_left:
+
+		animLoader->SetAnimation(15);  /*fire_left*/
+
+		break;
+
 	case ePlayerAction::Beam_right:
 
 		animLoader->SetAnimation(16);  /*beam_right*/
@@ -274,6 +286,17 @@ void Player::MoveHandle(float delta_time)
 			else
 			{
 				e_currentAction = ePlayerAction::Beam_left;
+			}
+		}
+		else if (tnl::Input::IsKeyDown(eKeys::KB_X))
+		{
+			if (m_is_direction_right)
+			{
+				e_currentAction = ePlayerAction::Fire_right;
+			}
+			else
+			{
+				e_currentAction = ePlayerAction::Fire_left;
 			}
 		}
 		else

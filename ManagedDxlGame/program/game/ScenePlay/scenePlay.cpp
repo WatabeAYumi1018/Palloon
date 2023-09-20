@@ -164,11 +164,12 @@ void ScenePlay::CreateEffect()
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
 	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C))
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X))
 	{
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
 		effect->SetPos(m_player->GetPos());
-		effect->SetOffset(tnl::Vector3(200, 0, 0)); // ファイアの初期オフセット
+		effect->SetOffset(tnl::Vector3(230, -110, 0)); // ファイアの初期オフセット
+		effect->CalculateCollisionCircles();
 		effect->SetIsMoved(true);
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
