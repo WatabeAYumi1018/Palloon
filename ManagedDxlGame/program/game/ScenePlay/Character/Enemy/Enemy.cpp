@@ -54,3 +54,5 @@ bool Enemy::CanMoveLeft()
     
     return backward_collision.s_type == eMapCollisionType::Box;
 }
+
+

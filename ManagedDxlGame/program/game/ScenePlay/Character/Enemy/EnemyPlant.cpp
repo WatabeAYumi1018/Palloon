@@ -23,11 +23,15 @@ void EnemyPlant::Update(float delta_time)
 
 void EnemyPlant::Draw(float delta_time, const Camera* camera)
 {
-    //カメラの位置に合わせて描画位置をずらす
-    tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
-        tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+    if (m_is_active)
+    {
 
-    animLoader->Draw(delta_time, draw_pos);
+        //カメラの位置に合わせて描画位置をずらす
+        tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
+            tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+
+        animLoader->Draw(delta_time, draw_pos);
+    }
 }
 
 bool EnemyPlant::SeqIdle(float delta_time)

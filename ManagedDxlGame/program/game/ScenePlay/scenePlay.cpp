@@ -34,7 +34,7 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Initialize()
 {
-	m_enemyInfos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
+	m_enemy_infos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
 
 	m_camera=new Camera();
 	m_collision = new Collision();
@@ -54,53 +54,47 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(new UI(m_player));
 }
 
-void ScenePlay::InitEnemy(int enemyID)
+void ScenePlay::InitEnemy()
 {
 	auto dataList = m_enemyLoad->LoadEnemyData(m_map->GetCurrentStageInfo().s_enemy_csv);
 
 	for (auto& data : dataList)
 	{
-		// enemyIDがデフォルト値以外の場合、そのIDの敵だけを生成する
-		if (enemyID != -1 && data.s_type_id != enemyID)
-		{
-			continue;
-		}
-
 		switch (data.s_type_id)
 		{
 		case 0:
 			
-			m_enemy = new EnemySlim(data, m_enemyInfos[data.s_type_id], m_player,m_map,m_collision, m_camera);
+			m_enemy = new EnemySlim(data, m_enemy_infos[data.s_type_id], m_player,m_map,m_collision, m_camera);
 			
 			break;
 
 		case 1:
 			
-			m_enemy = new EnemyPlant(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
+			m_enemy = new EnemyPlant(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 2:
 			
-			m_enemy = new EnemyMasician(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
+			m_enemy = new EnemyMasician(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 3:
 			
-			m_enemy = new EnemyFairy(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
+			m_enemy = new EnemyFairy(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 4:
 			
-			m_enemy = new EnemyBird(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
+			m_enemy = new EnemyBird(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
 		case 5:
 			
-			m_enemy = new EnemyDoragon(data, m_enemyInfos[data.s_type_id], m_player, m_map, m_collision, m_camera);
+			m_enemy = new EnemyDoragon(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
 			break;
 
@@ -122,9 +116,16 @@ void ScenePlay::Update(float delta_time)
 
 	CreateEffect();
 
+
 	CollisionCheck(delta_time);
 	
 	RemoveAndDelete();
+
+	//ステージ3のみ実行
+	if (m_stage_name == "stage3" && !m_enemy->GetIsActive()) // 非活性化
+	{
+		EnemyRespawn(delta_time);
+	}
 
 	for (auto obj : m_gameObjects)
 	{
@@ -199,21 +200,32 @@ bool ScenePlay::SeqSceneIdle(float delta_time)
 	return true;
 }
 
+void ScenePlay::EnemyRespawn(float delta_time)
+{
+	m_enemy_respawn_time -= delta_time;
+
+	if (m_enemy_respawn_time <= 0)
+	{
+		for (auto enemy : m_enemies)
+		{
+			if (!enemy->GetIsActive()) 
+			{
+				enemy->SetIsActive(true);
+				// 必要であれば、敵の位置や状態をリセットする処理をここに追加
+				break;
+			}
+		}
+		m_enemy_respawn_time = 5.0f;  // タイマーをリセット
+	}
+}
+
 void ScenePlay::CollisionCheck(float delta_time)
 {
 	for (auto enemy : m_enemies)
 	{
 		if (enemy->GetIsDead())
 		{
-			m_enemiesRemoveList.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ
-			
-			// ステージ3で、敵が倒されたときのスポーン処理
-			if (m_stage_name == "stage3")
-			{
-				int defeated_enemy_ID = enemy->GetTypeID();
-				InitEnemy(defeated_enemy_ID);
-			}
-			
+			m_enemiesRemoveList.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ	
 			continue;
 		}
 
@@ -244,7 +256,7 @@ void ScenePlay::CollisionCheck(float delta_time)
 			// 1つ以上の円が敵にヒットした場合の処理
 			if (effect_hit_enemy)
 			{
-				enemy->SetIsDead(true);
+				enemy->SetIsActive(false);  // 非活性化
 
 				break;  // 敵は一度死んでしまったら、それ以上の当たり判定は不要なので、このエフェクトのループを抜ける
 			}
@@ -258,11 +270,10 @@ void ScenePlay::RemoveAndDeleteEffect(EffectPlayer* effect)
 	m_effects.remove(effect);
 }
 
-void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
-{
-	m_gameObjects.remove(enemy);
-	m_enemies.remove(enemy);
-}
+//void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
+//{
+//	enemy->SetIsActive(false);  // 非活性化
+//}
 
 void ScenePlay::RemoveAndDelete()
 {
@@ -275,7 +286,7 @@ void ScenePlay::RemoveAndDelete()
 
 	for (auto enemy : m_enemiesRemoveList)
 	{
-		RemoveAndDeleteEnemy(enemy);
+		enemy->SetIsActive(false);  // 非活性化
 	}
 
 	m_enemiesRemoveList.clear();

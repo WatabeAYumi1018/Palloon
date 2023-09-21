@@ -94,3 +94,8 @@ struct sStageInfo
 	tnl::Vector3 initial_player_position;  // プレイヤーの初期位置
 };
 
+struct RespawnInfo
+{
+	float respawnTimer = 0.0f;     // 再生成までのタイマー
+	int respawnCount = 0;          // これまでの再生成回数
+};
