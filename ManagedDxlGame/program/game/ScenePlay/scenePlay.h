@@ -8,6 +8,7 @@ class Camera;
 class BackGround;
 class Map;
 class Collision;
+class BalloonInstruction;
 class ClearBalloon;
 class EnemyLoad;
 class Player;
@@ -31,6 +32,7 @@ public:
 	Camera *m_camera=nullptr;
 	Map *m_map=nullptr;
 	Collision *m_collision=nullptr;
+	BalloonInstruction *m_balloonInstruction=nullptr;
 	ClearBalloon *m_clearBalloon=nullptr;
 	EnemyLoad* m_enemyLoad = nullptr;
 	Player *m_player = nullptr;
@@ -43,7 +45,6 @@ private:
 	bool m_is_change_scene = false;
 
 	std::list<GameObject*> m_gameObjects;
-	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
 	
 	std::list<Enemy*> m_enemies;					// 敵のリスト
 	std::map<int, sEnemyInfo> m_enemy_infos;			// 敵の情報リスト
@@ -53,13 +54,22 @@ private:
 	std::list<Enemy*> m_enemiesRemoveList;			/*削除予定の敵*/
 	std::list<EffectPlayer*> m_effectsRemoveList;	/*削除予定のエフェクト*/
 
+	float m_instruction_time = 0.0f;
+	const float m_instruction_interval = 2.0f;		/*1秒ごとに表示*/
+
+	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
+
 	void InitEnemy();
+
 	void CreateEffect();
-	bool SeqSceneIdle(float delta_time);
+
+	void CreateInstructionBalloon(float delta_time);
 
 	void CollisionCheck(float delta_time);
-	bool ClearCheckErea();
+	
 	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);
 	void RemoveAndDeleteEnemy(Enemy *enemy);
 	void RemoveAndDelete();
+	
+	bool SeqSceneIdle(float delta_time);
 };

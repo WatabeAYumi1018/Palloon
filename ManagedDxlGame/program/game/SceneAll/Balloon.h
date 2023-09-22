@@ -6,12 +6,13 @@ class Camera;
 
 class Balloon : public GameObject
 {
-
 public:
+
     Balloon();
+    Balloon(Camera *camera);
     ~Balloon() {}
 
-private:
+protected:
 
     //-----ÉÅÉìÉoïœêî-----//
     tnl::Vector3 m_hover_velocity;        // êÇíºë¨ìx
@@ -24,6 +25,8 @@ private:
     eBalloonColor e_balloon_color = eBalloonColor::None;
 
     std::vector<int> m_balloons_hdl;
+
+    Camera *m_camera = nullptr;
 
 public:
 

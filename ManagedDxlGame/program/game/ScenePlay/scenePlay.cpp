@@ -17,6 +17,7 @@
 #include "../SceneAll/BackGround.h"
 #include "../SceneAll/ClearBalloon.h"
 #include "../SceneAll/Balloon.h"
+#include "../SceneAll/BalloonInstruction.h"
 #include "../ScenePlay/Map/Map.h"
 #include "../SceneAll/UI.h"
 #include "ScenePlay.h"
@@ -37,15 +38,18 @@ void ScenePlay::Initialize()
 	m_camera=new Camera();
 	m_collision = new Collision();
 	m_backGround=new BackGround();
+	m_balloonInstruction = new BalloonInstruction();
 	m_clearBalloon = new ClearBalloon(m_collision);
 	
 	m_map = new Map(m_stage_name);
+
 	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().initial_player_position;	
 	
 	m_player = new Player(player_init_pos, m_collision, m_map);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
-	m_gameObjects.emplace_back(new Balloon());	
+	m_gameObjects.emplace_back(new Balloon(m_camera));
+	m_gameObjects.emplace_back(m_balloonInstruction);
 	m_gameObjects.emplace_back(m_clearBalloon);
 	m_gameObjects.emplace_back(m_player);
 	InitEnemy();
@@ -113,6 +117,8 @@ void ScenePlay::Update(float delta_time)
 	
 	RemoveAndDelete();
 
+	CreateInstructionBalloon(delta_time);
+
 	for (auto obj : m_gameObjects)
 	{
 		obj->Update(delta_time);
@@ -166,6 +172,18 @@ void ScenePlay::CreateEffect()
 		effect->SetIsActive(true);
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
+	}
+}
+
+void ScenePlay::CreateInstructionBalloon(float delta_time)
+{
+	m_instruction_time += delta_time;
+
+	//一定時間ごとに表示する画像の種類を変更
+	if (m_instruction_time >= m_instruction_interval)
+	{
+		m_instruction_time = 0.0f;
+		m_balloonInstruction->SetActiveType(static_cast<eInstructionType>(rand() % static_cast<int>(eInstructionType::Max)));
 	}
 }
 

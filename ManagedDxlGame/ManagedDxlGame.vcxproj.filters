@@ -257,6 +257,9 @@
     <ClCompile Include="program\game\SceneAll\ClearBalloon.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\SceneAll\BalloonInstruction.cpp">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -448,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Effect\Effect.h">
       <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\BalloonInstruction.h">
+      <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,6 +10,17 @@ enum class eBalloonColor
 	Max
 };
 
+enum class eInstructionType
+{
+	Run,
+	Roll,
+	Float,
+	Stamp,
+	Fire,
+	Beam,
+	Max
+};
+
 enum class ePlayerAction
 {
 	Idle_right,

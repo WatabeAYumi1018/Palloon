@@ -7,6 +7,12 @@ Balloon::Balloon() : GameObject(tnl::Vector3(0, 0, 0))
     Initialize();
 }
 
+Balloon::Balloon(Camera* camera) : GameObject(tnl::Vector3(0, 0, 0))
+{
+    e_balloon_color = static_cast<eBalloonColor>(rand() % static_cast<int>(eBalloonColor::Max));
+    Initialize();
+}
+
 void Balloon::Initialize()
 {
     // バルーンの画像をロード
@@ -26,7 +32,7 @@ void Balloon::Initialize()
     //画面の下部からランダムな位置で開始
     m_pos.y = 480 + rand() % DXE_WINDOW_HEIGHT;
     //1から3の間でランダムな上向き速度
-    m_hover_velocity = -(rand() % 3 + 1);
+    m_hover_velocity = -(rand() % 2 + 0.1f);
 }
 
 void Balloon::Update(float delta_time)
@@ -35,7 +41,7 @@ void Balloon::Update(float delta_time)
     m_pos.y += m_hover_velocity.y;
 
     //ふわふわさせるための小さいランダムな変動を加える
-    m_hover_velocity.y += (rand() % 3 - 1) * 0.1f;
+    m_hover_velocity.y += (rand() % 3 - 1) * 0.05f;
 
     // バルーンが画面の上端を超えたかどうかのチェック
     if (m_pos.y + m_size < 0) // m_sizeはバルーンの大きさを考慮して
