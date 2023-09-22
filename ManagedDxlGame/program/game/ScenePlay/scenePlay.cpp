@@ -34,8 +34,6 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Initialize()
 {
-	m_enemy_infos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
-
 	m_camera=new Camera();
 	m_collision = new Collision();
 	m_backGround=new BackGround();
@@ -56,6 +54,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::InitEnemy()
 {
+	m_enemy_infos = m_enemyLoad->LoadEnemyInfo("csv/EnemyLoad.csv");
 	auto dataList = m_enemyLoad->LoadEnemyData(m_map->GetCurrentStageInfo().s_enemy_csv);
 
 	for (auto& data : dataList)
@@ -92,12 +91,6 @@ void ScenePlay::InitEnemy()
 			
 			break;
 
-		case 5:
-			
-			m_enemy = new EnemyDoragon(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
-			
-			break;
-
 		default:
 			
 			continue;	//無効なIDの場合はスキップ
@@ -116,16 +109,9 @@ void ScenePlay::Update(float delta_time)
 
 	CreateEffect();
 
-
 	CollisionCheck(delta_time);
 	
 	RemoveAndDelete();
-
-	//ステージ3のみ実行
-	if (m_stage_name == "stage3" && !m_enemy->GetIsActive()) // 非活性化
-	{
-		EnemyRespawn(delta_time);
-	}
 
 	for (auto obj : m_gameObjects)
 	{
@@ -161,23 +147,23 @@ void ScenePlay::Finalize()
 
 void ScenePlay::CreateEffect()
 {
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C))
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1))
 	{
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
 		effect->SetPos(m_player->GetPos()); 
 		effect->SetOffset(tnl::Vector3(400, 0, 0));
 		effect->CalculateCollisionCircles();
-		effect->SetIsMoved(true);
+		effect->SetIsActive(true);
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
 	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X))
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0))
 	{
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
 		effect->SetPos(m_player->GetPos());
 		effect->SetOffset(tnl::Vector3(270, 0, 0)); // ファイアの初期オフセット
 		effect->CalculateCollisionCircles();
-		effect->SetIsMoved(true);
+		effect->SetIsActive(true);
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
 	}
@@ -191,32 +177,13 @@ bool ScenePlay::SeqSceneIdle(float delta_time)
 		m_is_change_scene = true;
 	}
 	
-	if((m_is_change_scene && tnl::Input::IsKeyDown(eKeys::KB_RETURN)) ||
-		(m_player->GetIsDead() && tnl::Input::IsKeyDown(eKeys::KB_RETURN)))
+	if((m_is_change_scene && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))) ||
+		(m_player->GetIsDead() && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))))
 	{
 		auto scene = SceneManager::GetInstance();
 		scene->ChangeScene(new SceneSelect());
 	}
 	return true;
-}
-
-void ScenePlay::EnemyRespawn(float delta_time)
-{
-	m_enemy_respawn_time -= delta_time;
-
-	if (m_enemy_respawn_time <= 0)
-	{
-		for (auto enemy : m_enemies)
-		{
-			if (!enemy->GetIsActive()) 
-			{
-				enemy->SetIsActive(true);
-				// 必要であれば、敵の位置や状態をリセットする処理をここに追加
-				break;
-			}
-		}
-		m_enemy_respawn_time = 5.0f;  // タイマーをリセット
-	}
 }
 
 void ScenePlay::CollisionCheck(float delta_time)
@@ -235,7 +202,7 @@ void ScenePlay::CollisionCheck(float delta_time)
 
 		for (auto effect : m_effects)
 		{
-			if (!effect->GetIsMoved())
+			if (!effect->GetIsActive())
 			{
 				m_effectsRemoveList.emplace_back(effect);
 				continue; // 動いていないエフェクトの判定はスキップ
@@ -256,7 +223,7 @@ void ScenePlay::CollisionCheck(float delta_time)
 			// 1つ以上の円が敵にヒットした場合の処理
 			if (effect_hit_enemy)
 			{
-				enemy->SetIsActive(false);  // 非活性化
+				enemy->SetIsDead(true);
 
 				break;  // 敵は一度死んでしまったら、それ以上の当たり判定は不要なので、このエフェクトのループを抜ける
 			}
@@ -270,10 +237,11 @@ void ScenePlay::RemoveAndDeleteEffect(EffectPlayer* effect)
 	m_effects.remove(effect);
 }
 
-//void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
-//{
-//	enemy->SetIsActive(false);  // 非活性化
-//}
+void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
+{
+	m_gameObjects.remove(enemy);
+	m_enemies.remove(enemy);
+}
 
 void ScenePlay::RemoveAndDelete()
 {
@@ -286,7 +254,7 @@ void ScenePlay::RemoveAndDelete()
 
 	for (auto enemy : m_enemiesRemoveList)
 	{
-		enemy->SetIsActive(false);  // 非活性化
+		RemoveAndDeleteEnemy(enemy);
 	}
 
 	m_enemiesRemoveList.clear();

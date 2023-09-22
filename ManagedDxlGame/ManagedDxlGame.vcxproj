@@ -232,7 +232,6 @@
     <ClInclude Include="program\game\SceneAll\BackGround.h" />
     <ClInclude Include="program\game\SceneAll\Balloon.h" />
     <ClInclude Include="program\game\SceneAll\ClearBalloon.h" />
-    <ClInclude Include="program\game\SceneAll\Effect.h" />
     <ClInclude Include="program\game\SceneAll\GameObject.h" />
     <ClInclude Include="program\game\SceneAll\UI.h" />
     <ClInclude Include="program\game\ScenePlay\Camera\Camera.h" />
@@ -247,6 +246,7 @@
     <ClInclude Include="program\game\ScenePlay\Character\Enemy\EnemySlim.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Player\Player.h" />
     <ClInclude Include="program\game\ScenePlay\Collision\Collision.h" />
+    <ClInclude Include="program\game\ScenePlay\Effect\Effect.h" />
     <ClInclude Include="program\game\ScenePlay\Effect\EffectPlayer.h" />
     <ClInclude Include="program\game\ScenePlay\Item\Item.h" />
     <ClInclude Include="program\game\ScenePlay\Map\Map.h" />

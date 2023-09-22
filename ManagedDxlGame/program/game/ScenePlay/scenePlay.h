@@ -40,8 +40,6 @@ private:
 	
 	std::string m_stage_name;
 
-	float m_enemy_respawn_time = 5.0f;
-
 	bool m_is_change_scene = false;
 
 	std::list<GameObject*> m_gameObjects;
@@ -60,8 +58,6 @@ private:
 	bool SeqSceneIdle(float delta_time);
 
 	void CollisionCheck(float delta_time);
-	void EnemyRespawn(float delta_time);
-
 	bool ClearCheckErea();
 	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);
 	void RemoveAndDeleteEnemy(Enemy *enemy);

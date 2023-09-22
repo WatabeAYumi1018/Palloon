@@ -40,7 +40,7 @@ bool SceneSelect::SeqIdle(float delta_time)
 		m_boss_hdl   = LoadGraph("graphics/select/stage_boss.png");
 	}
 
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN))
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN) || tnl::Input::IsPadDownTrigger(ePad::KEY_1))
 	{
 		auto scene = SceneManager::GetInstance();
 		//選んだステージによって切り替える
@@ -51,21 +51,38 @@ bool SceneSelect::SeqIdle(float delta_time)
 
 void SceneSelect::MoveBalloon(float delta_time)
 {
+	// クールダウンの更新
+	//子アナログスティックの感知による過剰入力を防ぐ（ある程度の力は無視する）
+	if (m_input_cooldown > 0.0f)
+	{
+		m_input_cooldown -= delta_time;
+	}
+
+	GetJoypadAnalogInput(&m_input_x, &m_input_y, DX_INPUT_PAD1);
+	normalized_input_x = m_input_x / 1000.0f;
+
 	// キー入力の処理
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT))
+	if (m_input_cooldown <= 0.0f)
 	{
-		m_selected_stage = (m_selected_stage + 1) % STAGE_NUM;
+		if ((tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT) || (normalized_input_x > m_deadzone && m_previous_input_x <= m_deadzone)))
+		{
+			m_selected_stage = (m_selected_stage + 1) % STAGE_NUM;
+			m_input_cooldown = m_input_cooldown_time;
+		}
+		else if ((tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT) || (normalized_input_x < -m_deadzone && m_previous_input_x >= -m_deadzone)))
+		{
+			m_selected_stage = (m_selected_stage - 1 + STAGE_NUM) % STAGE_NUM;
+			m_input_cooldown = m_input_cooldown_time;
+		}
 	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT))
-	{
-		m_selected_stage = (m_selected_stage - 1 + STAGE_NUM) % STAGE_NUM;
-	}
+
+	m_previous_input_x = normalized_input_x;
 
 	// タイマーの増加
-	m_balloon_timer += delta_time * m_balloon_velocity_y; // 2.0fは風船の動きの速さを調整するための値です。適切に調整してください。
+	m_balloon_time += delta_time * m_balloon_velocity_y; // 2.0fは風船の動きの速さを調整するための値です。適切に調整してください。
 
 	// sin関数を使用して風船の上下のオフセットを計算
-	m_balloon_offset_y = sin(m_balloon_timer) * 10.0f;
+	m_balloon_offset_y = sin(m_balloon_time) * 10.0f;
 }
 
 void SceneSelect::Finalize()

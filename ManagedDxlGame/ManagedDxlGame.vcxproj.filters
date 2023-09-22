@@ -380,9 +380,6 @@
     <ClInclude Include="program\game\SceneTitle\SceneTitle.h">
       <Filter>program\[004] game\[002]sceneTitle</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\SceneAll\Effect.h">
-      <Filter>program\[004] game\[001]sceneAll</Filter>
-    </ClInclude>
     <ClInclude Include="program\game\SceneAll\GameObject.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
     </ClInclude>
@@ -448,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Map\Map.h">
       <Filter>program\[004] game\[004]scenePlay\[02]Map</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Effect\Effect.h">
+      <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

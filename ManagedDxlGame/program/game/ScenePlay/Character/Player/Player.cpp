@@ -21,9 +21,9 @@ void Player::Update(float delta_time)
 
 void Player::Draw(float delta_time, const Camera* camera)
 {
+	//描画しない場合は終了
 	if (!m_is_draw)
 	{
-		//描画しない場合はここで終了
 		return;
 	}
 
@@ -32,10 +32,10 @@ void Player::Draw(float delta_time, const Camera* camera)
 		tnl::Vector3 draw_pos =
 			m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-		//アニメーションの描画
+		//無敵中は点滅描画
 		if (m_is_invincible)
 		{
-			// 0.1秒ごとに表示・非表示を切り替えることで点滅を実現
+			// 0.1秒ごとに表示・非表示を切り替えて点滅
 			if (static_cast<int>(m_invincible_time * 10) % 2 == 0)
 			{
 				animLoader->Draw(delta_time, draw_pos);
@@ -61,9 +61,10 @@ void Player::StampAction(float delta_time)
 
 	m_stamp_time += delta_time;
 
-	if (m_stamp_time >= STAMP_DURATION)
+	//スタンプアクション終了につきリセット
+	if (m_stamp_time >= STAMP_TIME)
 	{
-		m_stamp_time = 0.0f; // タイマーをリセット
+		m_stamp_time = 0.0f; 
 		m_is_stamp = false;
 		m_is_hovering = false;
 	}
@@ -81,11 +82,9 @@ void Player::RollAction(float delta_time)
 	}
 }
 
+//アニメーション設定
 void Player::ActionHandle(float delta_time)
 {
-	// 1秒未満の場合、アクションを変更しない
-	//if (m_landing_time < 1.0f) return;
-
 	MoveHandle(delta_time);
 
 	switch (e_currentAction)
@@ -204,6 +203,7 @@ void Player::ActionHandle(float delta_time)
 	}
 }
 
+//ボタン処理
 void Player::MoveHandle(float delta_time)
 {
 	m_is_rolling = false;
@@ -214,7 +214,8 @@ void Player::MoveHandle(float delta_time)
 	normalized_input_x = m_input_x / 1000.0f;
 
 	//ジャンプボタン、または接地判定falseの場合、ジャンプ処理を行う
-	if ((tnl::Input::IsKeyDown(eKeys::KB_SPACE) || tnl::Input::IsPadDown(ePad::KEY_3))|| !CheckIsGround())
+	if ((tnl::Input::IsKeyDown(eKeys::KB_SPACE) ||
+		tnl::Input::IsPadDown(ePad::KEY_3))|| !CheckIsGround())
 	{
 		m_is_hovering = true;
 	}
@@ -229,8 +230,8 @@ void Player::MoveHandle(float delta_time)
 	{
 		StampAction(delta_time);
 	}
-		//HoveringEnd();
 
+	//地上にいる場合
 	if (CheckIsGround())
 	{
 		if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
@@ -243,7 +244,7 @@ void Player::MoveHandle(float delta_time)
 				e_currentAction = ePlayerAction::Dash_right;
 
 				//ダッシュ中にCで転がる攻撃
-				if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+				if (tnl::Input::IsKeyDown(eKeys::KB_Z) || tnl::Input::IsPadDown(ePad::KEY_2))
 				{
 					m_is_rolling = true;
 					RollAction(delta_time);
@@ -265,7 +266,7 @@ void Player::MoveHandle(float delta_time)
 				e_currentAction = ePlayerAction::Dash_left;
 
 				//ダッシュ中にCで転がる攻撃
-				if (tnl::Input::IsKeyDown(eKeys::KB_Z))
+				if (tnl::Input::IsKeyDown(eKeys::KB_Z) || tnl::Input::IsPadDown(ePad::KEY_2))
 				{
 					m_is_rolling = true;
 					RollAction(delta_time);
@@ -277,7 +278,7 @@ void Player::MoveHandle(float delta_time)
 				e_currentAction = ePlayerAction::Move_left;
 			}
 		}
-		else if (tnl::Input::IsKeyDown(eKeys::KB_C))
+		else if (tnl::Input::IsKeyDown(eKeys::KB_C) || tnl::Input::IsPadDown(ePad::KEY_1))
 		{
 			if (m_is_direction_right)
 			{
@@ -288,7 +289,7 @@ void Player::MoveHandle(float delta_time)
 				e_currentAction = ePlayerAction::Beam_left;
 			}
 		}
-		else if (tnl::Input::IsKeyDown(eKeys::KB_X))
+		else if (tnl::Input::IsKeyDown(eKeys::KB_X) || tnl::Input::IsPadDown(ePad::KEY_0))
 		{
 			if (m_is_direction_right)
 			{
@@ -313,6 +314,7 @@ void Player::MoveHandle(float delta_time)
 	}
 }
 
+//接地判定
 bool Player::CheckIsGround()
 {
 	if (m_is_dead)
@@ -320,10 +322,12 @@ bool Player::CheckIsGround()
 		return false;
 	}
 
+	//足元の座標を取得
 	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, SIZE, 0);
 	tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(foot_pos, m_map);
 	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
 
+	//足元が地面か判定
 	return (foot_collision.s_type == eMapCollisionType::Box ||
 			foot_collision.s_type == eMapCollisionType::Line);
 }
@@ -354,7 +358,8 @@ void Player::Gravity(float delta_time)
 	//重力で下に落ちる
 	if (m_is_hovered)
 	{
-		m_pos.y += 2 * m_gravity.y * delta_time;    // 空気が抜けた場合、重力の影響を2倍にする
+		//空気が抜けたら落下時の重力2倍
+		m_pos.y += 2 * m_gravity.y * delta_time;    
 	}
 	else
 	{
@@ -366,17 +371,21 @@ void Player::Hovering(float delta_time)
 {
 	if (m_is_ground)
 	{
-		m_hovering_force = HOVER_FIRST_FORCE; // 地面にいるときは浮遊力をリセット
+		//地面にいるときは浮遊力をリセット
+		m_hovering_force = HOVER_FIRST_FORCE; 
 	}
 	if (m_hovering_force > 0)
 	{
-		m_pos.y -= m_hovering_force * VELOCITY_Y * delta_time; // 浮遊力に基づいて位置を更新
-		m_hovering_force -= HOVER_DECAY_RATE * delta_time; // 浮遊力を減少させる
-		m_hovering_force = max(m_hovering_force, 0.0f); // 0以下にはならないようにする
+		//浮遊力に基づいて位置を更新
+		m_pos.y -= m_hovering_force * VELOCITY_Y * delta_time; 
+		//浮遊力を減少
+		m_hovering_force -= HOVER_DECAY_FORCE * delta_time;
+		// 0以下にはならないようにする
+		m_hovering_force = max(m_hovering_force, 0.0f); 
 	}
 	else
 	{
-		m_hovering_force = 0.0f; // キーが離されたら浮遊力を0にリセット
+		m_hovering_force = 0.0f; 
 		m_is_hovering = false;
 		m_is_hovered = false;
 	}
@@ -464,26 +473,6 @@ void Player::HoveringStartLeft(float delta_time)
 	}
 }
 
-void Player::HoveringEnd()
-{
-	if (CheckIsGround())
-	{
-		if (m_is_direction_right)
-		{
-			e_currentAction = ePlayerAction::Hover_end_right;
-		}
-		else
-		{
-			e_currentAction = ePlayerAction::Hover_end_left;
-		}
-		m_is_hovering = false;
-	}
-	else
-	{
-		m_is_hovering = false;
-	}
-}
-
 void Player::Invincible(float delta_time)
 {
 	// 無敵時間を更新
@@ -497,5 +486,26 @@ void Player::Invincible(float delta_time)
 		}
 	}
 }
+
+//着地アニメーション描画のために作成したが未完
+//void Player::HoveringEnd()
+//{
+//	if (CheckIsGround())
+//	{
+//		if (m_is_direction_right)
+//		{
+//			e_currentAction = ePlayerAction::Hover_end_right;
+//		}
+//		else
+//		{
+//			e_currentAction = ePlayerAction::Hover_end_left;
+//		}
+//		m_is_hovering = false;
+//	}
+//	else
+//	{
+//		m_is_hovering = false;
+//	}
+//}
 
 

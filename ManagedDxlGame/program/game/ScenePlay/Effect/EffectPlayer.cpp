@@ -8,8 +8,6 @@ EffectPlayer::EffectPlayer(Player *player, eEffectPlayerType effectType):
 {
 	// CSVからアニメーションデータをロード
 	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
-	
-	m_size = 30;
 }
 
 EffectPlayer::~EffectPlayer()
@@ -20,22 +18,21 @@ EffectPlayer::~EffectPlayer()
 
 void EffectPlayer::Update(float delta_time)
 {
-	EffectHandle();
-	
-	if (m_is_moved) 
+	if (m_is_active) 
 	{
-		elapsed_time += delta_time;
+		EffectHandle();
+		run_time += delta_time;
 
-		if (elapsed_time > duration) 
+		if (run_time > active_time) 
 		{
-			m_is_moved = false;
+			m_is_active = false;
 		}
 	}
 }
 
 void EffectPlayer::Draw(float delta_time, const Camera* camera)
 {
-	if (m_is_moved)
+	if (m_is_active)
 	{
 		tnl::Vector3 draw_pos;
 
@@ -54,53 +51,53 @@ void EffectPlayer::Draw(float delta_time, const Camera* camera)
 	}
 }
 
+//当たり判定の計算処理
 void EffectPlayer::CalculateCollisionCircles()
 {
 	m_collision_circles_pos.clear();
-
-	tnl::Vector3 effect_pos = this->GetPos();
 
 	tnl::Vector3 circle_pos;
 
 	if (m_effectType == eEffectPlayerType::Fire)
 	{
+		//放射状に当たり判定の円を配置
 		if (m_player->GetIsDirectionRight())
 		{
-			// 左の円
-			circle_pos = effect_pos;
+			//左：１つの円
+			circle_pos = m_pos;
 			m_collision_circles_pos.emplace_back(circle_pos);
 
-			// 中央の２つの円
+			//中央：２つの円
 			for (int i = 1; i <= 2; i++)
 			{
-				circle_pos = effect_pos + tnl::Vector3(i * m_size, 0, 0);
+				circle_pos = m_pos + tnl::Vector3(i * m_size, 0, 0);
 				m_collision_circles_pos.emplace_back(circle_pos);
 			}
 
-			// 右の３つの円
+			//右：３つの円
 			for (int i = 1; i <= 3; i++)
 			{
-				circle_pos = effect_pos + tnl::Vector3((i + 2) * m_size, 0, 0);
+				circle_pos = m_pos + tnl::Vector3((i + 2) * m_size, 0, 0);
 				m_collision_circles_pos.emplace_back(circle_pos);
 			}
 		}
 		else
 		{
-			// 右の円
-			circle_pos = -effect_pos;
+			//：右１つの円
+			circle_pos = -m_pos;
 			m_collision_circles_pos.emplace_back(circle_pos);
 
-			// 中央の２つの円
+			//中央：２つの円
 			for (int i = 1; i <= 2; i++)
 			{
-				circle_pos = effect_pos - tnl::Vector3(i * m_size, 0, 0);
+				circle_pos = m_pos - tnl::Vector3(i * m_size, 0, 0);
 				m_collision_circles_pos.emplace_back(circle_pos);
 			}
 
-			// 左の３つの円
+			//左：３つの円
 			for (int i = 1; i <= 3; i++)
 			{
-				circle_pos = effect_pos - tnl::Vector3((i + 2) * m_size, 0, 0);
+				circle_pos = m_pos - tnl::Vector3((i + 2) * m_size, 0, 0);
 				m_collision_circles_pos.emplace_back(circle_pos);
 			}
 		}
@@ -108,52 +105,51 @@ void EffectPlayer::CalculateCollisionCircles()
 
 	else if (m_effectType == eEffectPlayerType::Beam)
 	{
+		//直線状に当たり判定の円を配置
 		for (int i = 0; i < 10; i++)
 		{
 			if (m_player->GetIsDirectionRight())
 			{
-				circle_pos = effect_pos + tnl::Vector3(i * m_size * 2, 0, 0);
+				circle_pos = m_pos + tnl::Vector3(i * m_size * 2, 0, 0);
 				m_collision_circles_pos.emplace_back(circle_pos);
 			}
 			else
 			{
-				circle_pos = effect_pos - tnl::Vector3(i * m_size * 2, 0, 0);
+				circle_pos = m_pos - tnl::Vector3(i * m_size * 2, 0, 0);
 				m_collision_circles_pos.emplace_back(circle_pos);
 			}		
 		}
 	}
 }
 
+//ファイアのアニメーション設定
 void EffectPlayer::EffectFireHandle()
 {
-	if (m_is_moved)
+	if (m_player->GetIsDirectionRight())
 	{
-		if (m_player->GetIsDirectionRight())
-		{
-			animLoader->SetAnimation(42);  /*effect_fire_right*/
-		}
-		else
-		{
-			animLoader->SetAnimation(43);  /*effect_fire_left*/
-		}
+		animLoader->SetAnimation(42);  /*effect_fire_right*/
+	}
+	else
+	{
+		animLoader->SetAnimation(43);  /*effect_fire_left*/
 	}
 }
 
+//ビームのアニメーション設定
 void EffectPlayer::EffectBeamHandle()
 {
-	if (m_is_moved)
+
+	if (m_player->GetIsDirectionRight())
 	{
-		if (m_player->GetIsDirectionRight())
-		{
-			animLoader->SetAnimation(44);  /*effect_beam_right*/
-		}
-		else
-		{
-			animLoader->SetAnimation(45);  /*effect_beam_left*/
-		}
+		animLoader->SetAnimation(44);  /*effect_beam_right*/
+	}
+	else
+	{
+		animLoader->SetAnimation(45);  /*effect_beam_left*/
 	}
 }
 
+//エフェクトのアニメーション設定
 void EffectPlayer::EffectHandle()
 {
 	switch (m_effectType)

@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../wta_library/wta_DrawAnim.h"
 #include "../engine/GameEngine.h"
-#include "../../SceneAll/Effect.h"
+#include "Effect.h"
 
 class Player;
 
@@ -12,27 +12,27 @@ public:
 	EffectPlayer(Player *player, eEffectPlayerType effectType);
 	~EffectPlayer();
 
-	wta::DrawAnim* animLoader = nullptr;		//アニメーションデータをロード
-
 private:
 
-	std::vector<tnl::Vector3> m_collision_circles_pos;  // 5つの円の座標
+	//-----メンバ変数-----//
+	std::vector<tnl::Vector3> m_collision_circles_pos;			/*5つの円の座標*/
 
-	eEffectPlayerType m_effectType = eEffectPlayerType::None;
+	eEffectPlayerType m_effectType = eEffectPlayerType::None;	/*エフェクトの種類*/
 	
-public:
+	//-----ポインタ変数-----//
+	wta::DrawAnim* animLoader = nullptr;						/*アニメーション*/
 
-	void Update(float delta_time) override;
-	void Draw(float delta_time, const Camera* camera) override;
-
-	void CalculateCollisionCircles();	//円の座標を計算する関数(ビームの場合
-
-private:
-
+	//-----メンバ関数-----//
 	void EffectBeamHandle();
 	void EffectFireHandle();
 	void EffectHandle();
 
+public:
+
+	void CalculateCollisionCircles();							/*円の座標を計算する関数*/
+
+	void Update(float delta_time) override;
+	void Draw(float delta_time, const Camera* camera) override;
 
 public:
 	//-----Getter,Setter-----//
