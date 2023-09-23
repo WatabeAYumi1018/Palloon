@@ -13,6 +13,7 @@ SceneManager* SceneManager::GetInstance(SceneBase* start_scene)
 {
 	//ƒVƒ“ƒOƒ‹ƒgƒ“
 	static SceneManager* instance = nullptr;
+	
 	if (!instance) 
 	{
 		instance = new SceneManager(start_scene);

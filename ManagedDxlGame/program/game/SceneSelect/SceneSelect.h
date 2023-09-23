@@ -1,6 +1,6 @@
 #pragma once
 #include "../../engine/sceneBase.h"
-
+#include "../SceneAll/Music/MusicManager.h"
 
 class GameObject;
 
@@ -41,6 +41,7 @@ private:
 	float m_input_cooldown = 0.0f;				/*入力クールダウンタイマー*/
 	float m_previous_input_x = 0.0f;			/*前回の入力値*/
 
+	MusicManager m_musicManager;
 
 	tnl::Sequence<SceneSelect> sequence_ = tnl::Sequence<SceneSelect>(this, &SceneSelect::SeqIdle);
 

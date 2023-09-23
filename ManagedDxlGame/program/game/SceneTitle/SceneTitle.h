@@ -1,11 +1,12 @@
 #pragma once
 #include "../../engine/sceneBase.h"
+#include "../SceneAll/Music/MusicManager.h"
 #include "../SceneAll/Balloon.h"
 
 class GameObject;
 
-class SceneTitle : public SceneBase {
-
+class SceneTitle : public SceneBase 
+{
 private:
 
 	//-----定数-----//
@@ -34,11 +35,12 @@ private:
 
 	std::vector<Balloon> balloons; // バルーンの配列 
 
+	MusicManager m_musicManager;
+
 	tnl::Sequence<SceneTitle> sequence_ = tnl::Sequence<SceneTitle>(this, &SceneTitle::SeqIdle);
 
 public:
 	//-----メンバ関数-----//
-	//void Initialize() override;
 	void Update(float delta_time) override;
 	void Draw(float delta_time) override;
 	void Finalize() override;

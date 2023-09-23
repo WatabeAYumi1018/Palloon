@@ -1,6 +1,7 @@
 #pragma once
 #include "../../engine/sceneBase.h"
 #include "../SceneAll/GameObject.h"
+#include "../SceneAll/Music/MusicManager.h"
 
 //scene内で必要な全ての要素を管理するクラス
 
@@ -18,6 +19,7 @@ class EffectPlayer;
 class ScenePlay : public SceneBase 
 {
 public:
+
 	ScenePlay(const std::string& stageName);
 	virtual ~ScenePlay();
 
@@ -37,6 +39,8 @@ public:
 	EnemyLoad* m_enemyLoad = nullptr;
 	Player *m_player = nullptr;
 	Enemy* m_enemy = nullptr;
+
+	MusicManager m_musicManager;
 
 private:
 	

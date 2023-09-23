@@ -175,6 +175,9 @@
     <ClCompile Include="program\game\SceneAll\Balloon.cpp" />
     <ClCompile Include="program\game\SceneAll\BalloonInstruction.cpp" />
     <ClCompile Include="program\game\SceneAll\ClearBalloon.cpp" />
+    <ClCompile Include="program\game\SceneAll\Music\MusicBGM.cpp" />
+    <ClCompile Include="program\game\SceneAll\Music\MusicManager.cpp" />
+    <ClCompile Include="program\game\SceneAll\Music\MusicSE.cpp" />
     <ClCompile Include="program\game\SceneAll\UI.cpp" />
     <ClCompile Include="program\game\ScenePlay\Camera\Camera.cpp" />
     <ClCompile Include="program\game\ScenePlay\Character\Character.cpp" />
@@ -235,6 +238,9 @@
     <ClInclude Include="program\game\SceneAll\BalloonInstruction.h" />
     <ClInclude Include="program\game\SceneAll\ClearBalloon.h" />
     <ClInclude Include="program\game\SceneAll\GameObject.h" />
+    <ClInclude Include="program\game\SceneAll\Music\MusicBGM.h" />
+    <ClInclude Include="program\game\SceneAll\Music\MusicManager.h" />
+    <ClInclude Include="program\game\SceneAll\Music\MusicSE.h" />
     <ClInclude Include="program\game\SceneAll\UI.h" />
     <ClInclude Include="program\game\ScenePlay\Camera\Camera.h" />
     <ClInclude Include="program\game\ScenePlay\Character\Character.h" />

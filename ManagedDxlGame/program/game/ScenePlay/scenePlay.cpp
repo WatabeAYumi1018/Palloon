@@ -25,6 +25,8 @@
 
 ScenePlay::ScenePlay(const std::string& stageName) : m_stage_name(stageName)
 {
+
+
 	Initialize();
 }
 
@@ -47,7 +49,6 @@ void ScenePlay::Initialize()
 	m_player = new Player(player_init_pos, m_collision, m_map);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
-	m_gameObjects.emplace_back(m_balloonInstruction);
 	m_gameObjects.emplace_back(new Balloon());
 	m_gameObjects.emplace_back(m_clearBalloon);
 	m_gameObjects.emplace_back(m_player);
@@ -108,6 +109,7 @@ void ScenePlay::Update(float delta_time)
 {	
 	m_collision->CollisionCalculate(m_player, m_map, 10);
 	m_camera->Update(delta_time, m_player, m_map);
+	m_balloonInstruction->Update(delta_time);
 	m_map->LoadMapCollision();
 
 	CreateEffect();
@@ -127,6 +129,7 @@ void ScenePlay::Update(float delta_time)
 void ScenePlay::Draw(float delta_time)
 {
 	m_backGround->Draw(delta_time, m_camera);
+	m_balloonInstruction->Draw(delta_time, m_camera);
 	m_map->Draw(m_camera);
 
 	for (auto obj : m_gameObjects) 

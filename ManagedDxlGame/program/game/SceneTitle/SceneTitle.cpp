@@ -2,6 +2,7 @@
 #include "SceneTitle.h"
 #include "../sceneSelect/SceneSelect.h"
 #include "../../engine/SceneManager.h"
+#include "../SceneAll/Music/MusicManager.h"
 
 
 void SceneTitle::Update(float delta_time) 
@@ -44,16 +45,24 @@ bool SceneTitle::SeqIdle(float delta_time)
 	if (sequence_.isStart())
 
 	{
+		m_musicManager.LoadBGM("music/title.mp3");
+		m_musicManager.LoadSE("start","music/pushStart.wav");
+
 		m_back_hdl = LoadGraph("graphics/title/title.png");
 		m_logo_hdl = LoadGraph("graphics/title/TitleLogo.png");
 		m_palloon_hdl= LoadGraph("graphics/title/PALLOON.png");
 		
 		SpawnBalloon();
+
+		m_musicManager.PlayBGM();
+
 		m_current_width = 0;
 	}
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)|| tnl::Input::IsPadDownTrigger(ePad::KEY_1))
 	{
+		m_musicManager.PlaySE("start");
+
 		auto scene = SceneManager::GetInstance();
 		scene->ChangeScene(new SceneSelect());
 	}

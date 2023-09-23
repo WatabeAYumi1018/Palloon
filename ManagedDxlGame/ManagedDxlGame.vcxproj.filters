@@ -66,6 +66,9 @@
     <Filter Include="program\[004] game\[004]scenePlay\[06]Collision">
       <UniqueIdentifier>{68fc02bc-aecb-4727-bb11-6d8ea522244e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\[004] game\[001]sceneAll\[01]music">
+      <UniqueIdentifier>{8942087a-0147-48a7-b7e7-3931944d0ff1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ManagedDxlGame.cpp">
@@ -259,6 +262,15 @@
     </ClCompile>
     <ClCompile Include="program\game\SceneAll\BalloonInstruction.cpp">
       <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\SceneAll\Music\MusicBGM.cpp">
+      <Filter>program\[004] game\[001]sceneAll\[01]music</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\SceneAll\Music\MusicSE.cpp">
+      <Filter>program\[004] game\[001]sceneAll\[01]music</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\SceneAll\Music\MusicManager.cpp">
+      <Filter>program\[004] game\[001]sceneAll\[01]music</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -454,6 +466,15 @@
     </ClInclude>
     <ClInclude Include="program\game\SceneAll\BalloonInstruction.h">
       <Filter>program\[004] game\[001]sceneAll</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\Music\MusicBGM.h">
+      <Filter>program\[004] game\[001]sceneAll\[01]music</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\Music\MusicSE.h">
+      <Filter>program\[004] game\[001]sceneAll\[01]music</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\SceneAll\Music\MusicManager.h">
+      <Filter>program\[004] game\[001]sceneAll\[01]music</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

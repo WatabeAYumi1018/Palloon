@@ -20,18 +20,14 @@ void BalloonInstruction::Initialize()
     for (int i = 0; i < static_cast<int>(eInstructionType::Max); ++i)
     {
         m_phaseOffsets.emplace_back(static_cast<float>(rand()) / RAND_MAX * 10.0f);
-        m_pos_graphics[static_cast<eInstructionType>(i)] = tnl::Vector3(i * m_size , i * 50, 0);
+        m_pos_graphics[static_cast<eInstructionType>(i)] = tnl::Vector3(i * 400 , i * 50, 0);
     }
 }
 
 void BalloonInstruction::Draw(float delta_time, const Camera* camera)
 {
-    int count = 0;
-
     for (auto& pair : m_instruction_hdl)
     {
-        if (count >= m_maxDrawCount) break;
-
         eInstructionType type = pair.first;
         int hdl = pair.second;
         tnl::Vector3 pos = m_pos_graphics[type];
@@ -42,8 +38,6 @@ void BalloonInstruction::Draw(float delta_time, const Camera* camera)
 
 
         DrawExtendGraph(draw_pos.x, draw_pos.y, draw_pos.x + m_size, draw_pos.y + m_size, hdl, TRUE);
-
-        count++;
     }
 }
 
