@@ -40,7 +40,8 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 		if(m_is_chane_grahic)
 		{
 			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
-				draw_pos.x + m_size_x, draw_pos.y, m_balloon_clear_hdl, true);
+							draw_pos.x + m_size_x, draw_pos.y, m_balloon_clear_hdl, true);
+
 			e_balloon_state = eBalloonState::SceneChange;
 		}
 		else

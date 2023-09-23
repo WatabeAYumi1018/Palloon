@@ -7,12 +7,6 @@ Balloon::Balloon() : GameObject(tnl::Vector3(0, 0, 0))
     Initialize();
 }
 
-Balloon::Balloon(Camera* camera) : GameObject(tnl::Vector3(0, 0, 0))
-{
-    e_balloon_color = static_cast<eBalloonColor>(rand() % static_cast<int>(eBalloonColor::Max));
-    Initialize();
-}
-
 void Balloon::Initialize()
 {
     // バルーンの画像をロード

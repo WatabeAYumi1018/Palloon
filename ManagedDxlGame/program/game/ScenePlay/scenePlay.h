@@ -46,24 +46,19 @@ private:
 
 	std::list<GameObject*> m_gameObjects;
 	
-	std::list<Enemy*> m_enemies;					// 敵のリスト
-	std::map<int, sEnemyInfo> m_enemy_infos;			// 敵の情報リスト
+	std::list<Enemy*> m_enemies;					/*生成した敵*/
+	std::map<int, sEnemyInfo> m_enemy_infos;		/*敵の情報*/
 
 	std::list<EffectPlayer*> m_effects;				/*エフェクト*/
 
 	std::list<Enemy*> m_enemiesRemoveList;			/*削除予定の敵*/
 	std::list<EffectPlayer*> m_effectsRemoveList;	/*削除予定のエフェクト*/
 
-	float m_instruction_time = 0.0f;
-	const float m_instruction_interval = 2.0f;		/*1秒ごとに表示*/
-
 	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
 
 	void InitEnemy();
 
 	void CreateEffect();
-
-	void CreateInstructionBalloon(float delta_time);
 
 	void CollisionCheck(float delta_time);
 	

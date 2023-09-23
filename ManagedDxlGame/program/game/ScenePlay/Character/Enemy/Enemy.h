@@ -39,7 +39,7 @@ protected:
 	
 public:
 	virtual void Update(const float delta_time)  {}	//XVˆ—
-	virtual void Draw(const float delta_time, const Camera* camera)  {}		//•`‰æˆ—d 
+	virtual void Draw(const float delta_time, const Camera* camera)  {}		//•`‰æˆ—
 
 	bool CanMoveRight();
 	bool CanMoveLeft();

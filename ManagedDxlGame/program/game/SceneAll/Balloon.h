@@ -9,8 +9,7 @@ class Balloon : public GameObject
 public:
 
     Balloon();
-    Balloon(Camera *camera);
-    ~Balloon() {}
+    virtual ~Balloon() {}
 
 protected:
 
