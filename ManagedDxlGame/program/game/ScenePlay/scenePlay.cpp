@@ -25,8 +25,6 @@
 
 ScenePlay::ScenePlay(const std::string& stageName) : m_stage_name(stageName)
 {
-
-
 	Initialize();
 }
 
