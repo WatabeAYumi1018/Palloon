@@ -31,9 +31,9 @@ private:
 
 	std::vector<sStageInfo> stageList =						
 	{ 
-		{"stage1","csv/stage1-1.csv","csv/stage1-1collision.csv","csv/stage1-1enemy.csv",{0,100,0}},
-		{"stage2","csv/stage1-2.csv","csv/stage1-2collision.csv","csv/stage1-2enemy.csv",{500,6000,0} },
-		{"stage3","csv/stage1-3.csv","csv/stage1-3collision.csv","csv/stage1-3enemy.csv",{100,300,0} }
+		{"stage1","csv/stage1-1.csv","csv/stage1-1collision.csv","csv/stage1-1enemy.csv","music/stage1-1.mp3",{0,100,0}},
+		{"stage2","csv/stage1-2.csv","csv/stage1-2collision.csv","csv/stage1-2enemy.csv","music/stage1-2.mp3",{500,6000,0}},
+		{"stage3","csv/stage1-3.csv","csv/stage1-3collision.csv","csv/stage1-3enemy.csv","music/stage1-3.mp3",{100,300,0}}
 	};															/*ステージ分けlist*/							
 
 	sStageInfo s_current_stage_info;							/*現在のステージ情報*/
@@ -53,6 +53,8 @@ public:
 	const std::vector<std::vector<sCollisionInfo>>& GetCollisionInfo() const { return m_collision_info; }
 	
 	const sStageInfo& GetCurrentStageInfo() const { return s_current_stage_info; }
+
+	const std::vector<sStageInfo> GetStageList() const { return stageList; }
 };
 
 

@@ -1,4 +1,5 @@
 #include "../../../wta_library/wta_IsIntersectCalc.h"
+#include "../../SceneAll/Music/MusicManager.h"
 #include "../Character/Character.h"
 #include "../Character/Player/Player.h"
 #include "../Character/Enemy/Enemy.h"
@@ -7,7 +8,7 @@
 
 Collision::Collision() : m_last_chara_pos(0, 0, 0)
 {
-
+    MusicManager::GetInstance().LoadSE("stamp", "music/playerStamp.wav");
 }
 
 //マップチップとの当たり判定を行うため、キャラクターをグリッド座標に変換
@@ -206,6 +207,10 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
             //プレイヤーの方が高い位置にいる場合
             if (enemy_pos.y > player_pos.y)
             {
+                if (CheckSoundFile() == 0)
+                {
+                    MusicManager::GetInstance().PlaySE("stamp");
+                }
                 //敵を踏んでいると認識
                 player->SetIsStamp(true);
                 enemy->SetIsDead(true);

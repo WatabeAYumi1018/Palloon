@@ -102,11 +102,6 @@ struct sStageInfo
 	std::string s_map_csv;
 	std::string s_collision_csv;
 	std::string s_enemy_csv;
-	tnl::Vector3 initial_player_position;  // プレイヤーの初期位置
-};
-
-struct sRespawnInfo
-{
-	float s_respawn_time = 0.0f;     // 再生成までのタイマー
-	int s_respawn_count = 0;          // これまでの再生成回数
+	std::string s_music_bgm;
+	tnl::Vector3 s_initial_player_pos;
 };

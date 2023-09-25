@@ -7,6 +7,10 @@ class GameObject;
 
 class SceneTitle : public SceneBase 
 {
+public:
+	SceneTitle() {}
+	~SceneTitle();
+
 private:
 
 	//-----’è”-----//
@@ -34,8 +38,6 @@ private:
 	bool m_is_logo_displayed = false;
 
 	std::vector<Balloon> balloons; // ƒoƒ‹[ƒ“‚Ì”z—ñ 
-
-	MusicManager m_musicManager;
 
 	tnl::Sequence<SceneTitle> sequence_ = tnl::Sequence<SceneTitle>(this, &SceneTitle::SeqIdle);
 

@@ -28,11 +28,6 @@ ScenePlay::ScenePlay(const std::string& stageName) : m_stage_name(stageName)
 	Initialize();
 }
 
-ScenePlay::~ScenePlay()
-{
-	Finalize();
-}
-
 void ScenePlay::Initialize()
 {
 	m_camera=new Camera();
@@ -42,7 +37,7 @@ void ScenePlay::Initialize()
 	m_clearBalloon = new ClearBalloon(m_collision);
 	m_map = new Map(m_stage_name);
 
-	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().initial_player_position;	
+	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().s_initial_player_pos;	
 	
 	m_player = new Player(player_init_pos, m_collision, m_map);
 	
@@ -52,6 +47,30 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(m_player);
 	InitEnemy();
 	m_gameObjects.emplace_back(new UI(m_player));
+}
+
+void ScenePlay::InitMusic()
+{
+	// ステージ名からBGMのパスを取得
+	std::string bgmPath = "";
+	for (const auto& stageInfo : m_map->GetStageList())
+	{
+		if (stageInfo.s_stage_name == m_stage_name)
+		{
+			bgmPath = stageInfo.s_music_bgm;
+			break;
+		}
+	}
+
+	// BGMのロードと再生
+	if (!bgmPath.empty())
+	{
+		MusicManager::GetInstance().LoadBGM(bgmPath);
+		MusicManager::GetInstance().PlayBGM();
+	}
+
+	MusicManager::GetInstance().LoadSE("fire", "music/playerFire.mp3");
+	MusicManager::GetInstance().LoadSE("beam", "music/playerBeam.wav");
 }
 
 void ScenePlay::InitEnemy()
@@ -147,12 +166,18 @@ void ScenePlay::Finalize()
 	m_map->Finalize();
 	m_enemies.clear();
 	m_effects.clear();
+
+	MusicManager::GetInstance().StopBGM();
 }
 
 void ScenePlay::CreateEffect()
 {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1))
 	{
+		if (CheckSoundFile() == 0)
+		{
+			MusicManager::GetInstance().PlaySE("beam");
+		}
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
 		effect->SetPos(m_player->GetPos()); 
 		effect->SetOffset(tnl::Vector3(400, 0, 0));
@@ -163,6 +188,10 @@ void ScenePlay::CreateEffect()
 	}
 	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0))
 	{
+		if (CheckSoundFile() == 0)
+		{
+			MusicManager::GetInstance().PlaySE("fire");
+		}
 		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
 		effect->SetPos(m_player->GetPos());
 		effect->SetOffset(tnl::Vector3(270, 0, 0)); // ファイアの初期オフセット
@@ -173,8 +202,13 @@ void ScenePlay::CreateEffect()
 	}
 }
 
-bool ScenePlay::SeqSceneIdle(float delta_time)
+bool ScenePlay::SeqIdle(float delta_time)
 {
+	if (m_sequence.isStart())
+	{
+		InitMusic();
+	}
+
 	if (m_clearBalloon->GetIsChangeGraphic())
 	{
 		m_player->SetIsDraw(false);

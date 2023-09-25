@@ -5,17 +5,21 @@
 
 class MusicManager 
 {
-public:
+private:
 
     MusicManager() {}
-
-private:
 
     //-----メンバ変数-----//
     std::unique_ptr<MusicBGM> m_bgm;
     std::map<std::string, std::unique_ptr<MusicSE>> m_se;
 
 public:
+    // シングルトンインスタンスを取得するための関数
+    static MusicManager& GetInstance()
+    {
+        static MusicManager instance;  // 静的変数としてシングルトンインスタンスを作成
+        return instance;
+    }
 
     //-----メンバ関数-----//
     void LoadBGM(const std::string& path);                          /*BGMの読み込み*/

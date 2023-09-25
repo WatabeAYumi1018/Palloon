@@ -21,7 +21,6 @@ class ScenePlay : public SceneBase
 public:
 
 	ScenePlay(const std::string& stageName);
-	virtual ~ScenePlay();
 
 	//-----メンバ関数-----//
 	void Initialize() override;
@@ -40,8 +39,6 @@ public:
 	Player *m_player = nullptr;
 	Enemy* m_enemy = nullptr;
 
-	MusicManager m_musicManager;
-
 private:
 	
 	std::string m_stage_name;
@@ -58,9 +55,10 @@ private:
 	std::list<Enemy*> m_enemiesRemoveList;			/*削除予定の敵*/
 	std::list<EffectPlayer*> m_effectsRemoveList;	/*削除予定のエフェクト*/
 
-	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqSceneIdle);
+	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
 
 	void InitEnemy();
+	void InitMusic();
 
 	void CreateEffect();
 
@@ -70,5 +68,5 @@ private:
 	void RemoveAndDeleteEnemy(Enemy *enemy);
 	void RemoveAndDelete();
 	
-	bool SeqSceneIdle(float delta_time);
+	bool SeqIdle(float delta_time);
 };

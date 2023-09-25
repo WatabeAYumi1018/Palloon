@@ -33,8 +33,8 @@ bool SceneSelect::SeqIdle(float delta_time)
 {
 	if (sequence_.isStart())
 	{
-		m_musicManager.LoadSE("select", "music/selectBottan.wav");
-		m_musicManager.LoadSE("start", "music/pushStart.wav");
+		MusicManager::GetInstance().LoadSE("select", "music/selectBottan.wav");
+		MusicManager::GetInstance().LoadSE("start", "music/pushStart.wav");
 
 		m_back_hdl   = LoadGraph("graphics/title/title.png");
 		m_stage1_hdl = LoadGraph("graphics/select/stage1.png");
@@ -45,7 +45,7 @@ bool SceneSelect::SeqIdle(float delta_time)
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN) || tnl::Input::IsPadDownTrigger(ePad::KEY_1))
 	{
-		m_musicManager.PlaySE("start");
+		MusicManager::GetInstance().PlaySE("start");
 
 		auto scene = SceneManager::GetInstance();
 		//選んだステージによって切り替える
@@ -71,13 +71,13 @@ void SceneSelect::MoveBalloon(float delta_time)
 	{
 		if ((tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT) || (normalized_input_x > m_deadzone && m_previous_input_x <= m_deadzone)))
 		{
-			m_musicManager.PlaySE("select");
+			MusicManager::GetInstance().PlaySE("select");
 			m_selected_stage = (m_selected_stage + 1) % STAGE_NUM;
 			m_input_cooldown = m_input_cooldown_time;
 		}
 		else if ((tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT) || (normalized_input_x < -m_deadzone && m_previous_input_x >= -m_deadzone)))
 		{
-			m_musicManager.PlaySE("select");
+			MusicManager::GetInstance().PlaySE("select");
 			m_selected_stage = (m_selected_stage - 1 + STAGE_NUM) % STAGE_NUM;
 			m_input_cooldown = m_input_cooldown_time;
 		}
@@ -99,5 +99,5 @@ void SceneSelect::Finalize()
 	DeleteGraph(m_stage2_hdl);
 	DeleteGraph(m_stage3_hdl);
 	DeleteGraph(m_boss_hdl);
-	m_musicManager.StopBGM();
+	MusicManager::GetInstance().StopBGM();
 }

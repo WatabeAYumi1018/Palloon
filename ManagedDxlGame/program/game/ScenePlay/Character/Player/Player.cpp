@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "../../../SceneAll/Music/MusicManager.h"
 #include "../../Camera/Camera.h"
 #include "../../Collision/Collision.h"
 #include "../../Map/Map.h"
@@ -7,7 +8,8 @@
 Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map):
 	Character(initialPos, SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map)
 {
-
+	//MusicManager::GetInstance().LoadSE("move", "music/selectBottan.wav");
+	MusicManager::GetInstance().LoadSE("damaged", "music/damaged.wav");
 }
 
 void Player::Update(float delta_time)
@@ -237,7 +239,7 @@ void Player::MoveHandle(float delta_time)
 		if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT) || normalized_input_x > 0)
 		{
 			m_is_direction_right = true;
-
+	
 			if (tnl::Input::IsKeyDown(eKeys::KB_LSHIFT) || normalized_input_x > DASH_THRESHOLD)
 			{
 				m_pos.x += VELOCITY_X * delta_time * 2;
@@ -280,6 +282,7 @@ void Player::MoveHandle(float delta_time)
 		}
 		else if (tnl::Input::IsKeyDown(eKeys::KB_C) || tnl::Input::IsPadDown(ePad::KEY_1))
 		{
+
 			if (m_is_direction_right)
 			{
 				e_currentAction = ePlayerAction::Beam_right;
@@ -291,6 +294,7 @@ void Player::MoveHandle(float delta_time)
 		}
 		else if (tnl::Input::IsKeyDown(eKeys::KB_X) || tnl::Input::IsPadDown(ePad::KEY_0))
 		{
+
 			if (m_is_direction_right)
 			{
 				e_currentAction = ePlayerAction::Fire_right;

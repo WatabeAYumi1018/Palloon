@@ -65,6 +65,7 @@ bool SceneManager::SeqTransOut(const float delta_time)
 	if (alpha >= 255)
 	{
 		sequence_.change(&SceneManager::SeqTransIn);
+		now_scene_->Finalize();		//現在のシーンの終了処理
 		delete now_scene_;			//現在のシーン削除
 		now_scene_ = nullptr;
 		now_scene_ = next_scene_;	//次のシーンを現在のシーンに
