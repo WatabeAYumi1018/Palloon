@@ -18,6 +18,7 @@
 #include "../SceneAll/ClearBalloon.h"
 #include "../SceneAll/Balloon.h"
 #include "../SceneAll/BalloonInstruction.h"
+#include "../ScenePlay/Wind/Wind.h"
 #include "../ScenePlay/Map/Map.h"
 #include "../SceneAll/UI.h"
 #include "ScenePlay.h"
@@ -36,10 +37,12 @@ void ScenePlay::Initialize()
 	m_balloonInstruction = new BalloonInstruction();
 	m_clearBalloon = new ClearBalloon(m_collision);
 	m_map = new Map(m_stage_name);
+	m_wind = new Wind();
 
+	m_backGround->SetBackground(m_map->GetCurrentStageInfo().s_background_hdl);
 	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().s_initial_player_pos;	
 	
-	m_player = new Player(player_init_pos, m_collision, m_map);
+	m_player = new Player(player_init_pos, m_collision, m_map, m_wind);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());
@@ -128,6 +131,7 @@ void ScenePlay::Update(float delta_time)
 	m_camera->Update(delta_time, m_player, m_map);
 	m_balloonInstruction->Update(delta_time);
 	m_map->LoadMapCollision();
+	m_wind->Update(delta_time);
 
 	CreateEffect();
 

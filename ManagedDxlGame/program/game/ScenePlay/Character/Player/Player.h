@@ -5,6 +5,7 @@
 class Camera;
 class Map;
 class Collision;
+class Wind;
 
 //プレイヤークラス
 
@@ -12,7 +13,7 @@ class Player :public Character
 {
 public:
 
-	Player(const tnl::Vector3& initialPos, Collision* collision, Map* map);
+	Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wind* wind);
 	virtual ~Player() {}
 
 private:
@@ -56,6 +57,7 @@ private:
 	//-----ポインタ変数-----//
 	Collision* m_collision=nullptr;
 	Map* m_map=nullptr;
+	Wind* m_wind=nullptr;
 
 	//-----メンバ関数-----//
 	void MoveHandle(float delta_time);			/*ゲームパッドスティック操作*/
@@ -63,6 +65,8 @@ private:
 
 	void MoveRange();							/*移動範囲の制限*/
 	void Gravity(float delta_time);				/*重力処理*/
+
+	void ApplyWind(float delta_time);			/*風の影響*/
 
 	void Hovering(float delta_time);			/*ホバリング処理*/
 	void HoveringDirection(float delta_time);	/*ホバリング操作*/

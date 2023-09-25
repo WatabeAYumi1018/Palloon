@@ -15,6 +15,7 @@ class EnemyLoad;
 class Player;
 class Enemy;
 class EffectPlayer;
+class Wind;
 
 class ScenePlay : public SceneBase 
 {
@@ -38,6 +39,7 @@ public:
 	EnemyLoad* m_enemyLoad = nullptr;
 	Player *m_player = nullptr;
 	Enemy* m_enemy = nullptr;
+	Wind* m_wind = nullptr;
 
 private:
 	

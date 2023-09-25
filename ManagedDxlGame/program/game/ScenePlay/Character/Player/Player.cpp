@@ -2,11 +2,12 @@
 #include "../../../SceneAll/Music/MusicManager.h"
 #include "../../Camera/Camera.h"
 #include "../../Collision/Collision.h"
+#include "../../Wind/Wind.h"
 #include "../../Map/Map.h"
 
 //キャラクターの初期化子
-Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map):
-	Character(initialPos, SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map)
+Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wind* wind):
+	Character(initialPos, SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map),m_wind(wind)
 {
 	//MusicManager::GetInstance().LoadSE("move", "music/selectBottan.wav");
 	MusicManager::GetInstance().LoadSE("damaged", "music/damaged.wav");
@@ -16,6 +17,7 @@ void Player::Update(float delta_time)
 {
 	m_is_ground = CheckIsGround();
 	Gravity(delta_time);
+	ApplyWind(delta_time);
 	MoveRange();
 	ActionHandle(delta_time);
 	Invincible(delta_time);
@@ -368,6 +370,17 @@ void Player::Gravity(float delta_time)
 	else
 	{
 		m_pos.y += m_gravity.y * delta_time;
+	}
+}
+
+void Player::ApplyWind(float delta_time)
+{
+	float windEffect = m_wind->GetWindStrength();
+
+	if (m_pos.y < 4000)
+	{
+		float depthEffect = (-m_pos.y - 4000) / 100.0f;
+		m_pos.x += 10.0f * m_wind->GetDirection() * windEffect * (1.0f + depthEffect) * delta_time;
 	}
 }
 

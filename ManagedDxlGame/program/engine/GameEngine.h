@@ -99,6 +99,7 @@ enum class eBalloonState
 struct sStageInfo
 {
 	std::string s_stage_name;
+	std::string s_background_hdl;
 	std::string s_map_csv;
 	std::string s_collision_csv;
 	std::string s_enemy_csv;

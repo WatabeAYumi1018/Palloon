@@ -14,7 +14,7 @@ BackGround::~BackGround()
 
 void BackGround::Initialize()
 {
-	m_back_hdl = LoadGraph("graphics/backSky.jpg");
+	//m_stage_hdl = LoadGraph("graphics/stage1-1.jpg");
 }
 
 void BackGround::Draw(float delta_time, const Camera* camera)
@@ -22,15 +22,22 @@ void BackGround::Draw(float delta_time, const Camera* camera)
 	tnl::Vector3 draw_pos =
 		m_pos - (camera->GetTarget() * m_scroll_speed) + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-	DrawRotaGraph(draw_pos.x, draw_pos.y, 1.0f, 0, m_back_hdl, true);
+	DrawRotaGraph(draw_pos.x, draw_pos.y, 1.0f, 0, m_stage_hdl, true);
 }
 
 void BackGround::Finalize()
 {
-	DeleteGraph(m_back_hdl);
+	//DeleteGraph(m_stage_hdl);
 }
 
-
+void BackGround::SetBackground(const std::string& backgroundPath)
+{
+	if (m_stage_hdl != -1)
+	{
+		DeleteGraph(m_stage_hdl);
+	}
+	m_stage_hdl = LoadGraph(backgroundPath.c_str());
+}
 //Movie(camera);
 
 //void BackGround::Movie(const PlayCamera* camera){
