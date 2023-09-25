@@ -375,12 +375,12 @@ void Player::Gravity(float delta_time)
 
 void Player::ApplyWind(float delta_time)
 {
-	float windEffect = m_wind->GetWindStrength();
+	float wind_strength = m_wind->GetWindStrength();
 
-	if (m_pos.y < 4000)
+	if (m_pos.y < 5000)
 	{
-		float depthEffect = (-m_pos.y - 4000) / 100.0f;
-		m_pos.x += 10.0f * m_wind->GetDirection() * windEffect * (1.0f + depthEffect) * delta_time;
+		float depthEffect = ( m_pos.y - 5000) / 10.0f;
+		m_pos.x += m_wind->GetDirection() * wind_strength * depthEffect * delta_time;
 	}
 }
 
