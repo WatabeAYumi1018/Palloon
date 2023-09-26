@@ -233,8 +233,9 @@ void ScenePlay::CreateEffect()
 
 void ScenePlay::CreateEnemy(float delta_time)
 {
-	auto it = m_enemiesRespawnList.begin();
-	while (it != m_enemiesRespawnList.end())
+	auto it = m_enemies_respawn_list.begin();
+	
+	while (it != m_enemies_respawn_list.end())
 	{
 		Enemy* enemy = it->first;      // 敵の情報
 		float& respawn_timer = it->second; // リスポーンタイマーへの参照
@@ -251,7 +252,7 @@ void ScenePlay::CreateEnemy(float delta_time)
 			m_gameObjects.emplace_back(m_enemy);
 
 			delete enemy;  // メモリを解放
-			it = m_enemiesRespawnList.erase(it);  // リストから削除
+			it = m_enemies_respawn_list.erase(it);  // リストから削除
 		}
 		else
 		{
@@ -288,11 +289,11 @@ void ScenePlay::CollisionCheck(float delta_time)
 	{
 		if (enemy->GetIsDead())
 		{
-			m_enemiesRemoveList.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ	
+			m_enemies_remove_list.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ	
 			
 			if (m_stage_name == "stage3" && enemy->GetTypeID() == 3)
 			{
-				m_enemiesRespawnList.emplace_back(enemy,0.0f);
+				m_enemies_respawn_list.emplace_back(enemy,0.0f);
 			}
 			
 			continue;
@@ -306,7 +307,7 @@ void ScenePlay::CollisionCheck(float delta_time)
 		{
 			if (!effect->GetIsActive())
 			{
-				m_effectsRemoveList.emplace_back(effect);
+				m_effects_remove_list.emplace_back(effect);
 				continue; // 動いていないエフェクトの判定はスキップ
 			}
 
@@ -347,17 +348,17 @@ void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
 
 void ScenePlay::RemoveAndDelete()
 {
-	for (auto effect : m_effectsRemoveList)
+	for (auto effect : m_effects_remove_list)
 	{
 		RemoveAndDeleteEffect(effect);
 	}
 
-	m_effectsRemoveList.clear();
+	m_effects_remove_list.clear();
 
-	for (auto enemy : m_enemiesRemoveList)
+	for (auto enemy : m_enemies_remove_list)
 	{
 		RemoveAndDeleteEnemy(enemy);
 	}
 
-	m_enemiesRemoveList.clear();
+	m_enemies_remove_list.clear();
 }

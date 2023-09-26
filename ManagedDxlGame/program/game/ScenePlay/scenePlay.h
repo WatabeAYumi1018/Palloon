@@ -57,10 +57,10 @@ private:
 
 	std::list<EffectPlayer*> m_effects;							/*エフェクト*/
 
-	std::list<Enemy*> m_enemiesRemoveList;						/*削除予定の敵*/
-	std::list<EffectPlayer*> m_effectsRemoveList;				/*削除予定のエフェクト*/
+	std::list<Enemy*> m_enemies_remove_list;						/*削除予定の敵*/
+	std::list<EffectPlayer*> m_effects_remove_list;				/*削除予定のエフェクト*/
 
-	std::list<std::pair<Enemy*, float>> m_enemiesRespawnList;	/*リスポーン敵と秒数カウント*/
+	std::list<std::pair<Enemy*, float>> m_enemies_respawn_list;	/*リスポーン敵と秒数カウント*/
 
 	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
 
