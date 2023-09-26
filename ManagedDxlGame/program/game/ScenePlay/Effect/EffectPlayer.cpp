@@ -127,11 +127,11 @@ void EffectPlayer::EffectFireHandle()
 {
 	if (m_player->GetIsDirectionRight())
 	{
-		animLoader->SetAnimation(42);  /*effect_fire_right*/
+		animLoader->SetAnimation(44);  /*effect_fire_right*/
 	}
 	else
 	{
-		animLoader->SetAnimation(43);  /*effect_fire_left*/
+		animLoader->SetAnimation(45);  /*effect_fire_left*/
 	}
 }
 
@@ -141,11 +141,11 @@ void EffectPlayer::EffectBeamHandle()
 
 	if (m_player->GetIsDirectionRight())
 	{
-		animLoader->SetAnimation(44);  /*effect_beam_right*/
+		animLoader->SetAnimation(46);  /*effect_beam_right*/
 	}
 	else
 	{
-		animLoader->SetAnimation(45);  /*effect_beam_left*/
+		animLoader->SetAnimation(47);  /*effect_beam_left*/
 	}
 }
 

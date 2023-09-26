@@ -56,8 +56,8 @@ bool SceneSelect::SeqIdle(float delta_time)
 
 void SceneSelect::MoveBalloon(float delta_time)
 {
-	// クールダウンの更新
-	//子アナログスティックの感知による過剰入力を防ぐ（ある程度の力は無視する）
+	//クールダウンの更新
+	//アナログスティックの感知による過剰入力を防ぐ（ある程度の力は無視する）
 	if (m_input_cooldown > 0.0f)
 	{
 		m_input_cooldown -= delta_time;
@@ -86,7 +86,7 @@ void SceneSelect::MoveBalloon(float delta_time)
 	m_previous_input_x = normalized_input_x;
 
 	// タイマーの増加
-	m_balloon_time += delta_time * m_balloon_velocity_y; // 2.0fは風船の動きの速さを調整するための値です。適切に調整してください。
+	m_balloon_time += delta_time * m_balloon_velocity_y; //風船の動きの速さを調整
 
 	// sin関数を使用して風船の上下のオフセットを計算
 	m_balloon_offset_y = sin(m_balloon_time) * 10.0f;

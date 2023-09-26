@@ -215,6 +215,7 @@ void Player::MoveHandle(float delta_time)
 	//アナログスティックの入力値を取得
 	GetJoypadAnalogInput(&m_input_x, &m_input_y, DX_INPUT_PAD1);
 
+	//デフォルト検知が-1000～1000のため、-1.0～1.0に正規化
 	normalized_input_x = m_input_x / 1000.0f;
 
 	//ジャンプボタン、または接地判定falseの場合、ジャンプ処理を行う

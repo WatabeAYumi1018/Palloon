@@ -131,7 +131,11 @@ void ScenePlay::Update(float delta_time)
 	m_camera->Update(delta_time, m_player, m_map);
 	m_balloonInstruction->Update(delta_time);
 	m_map->LoadMapCollision();
-	m_wind->Update(delta_time);
+
+	if (m_stage_name == "stage2")
+	{
+		m_wind->Update(delta_time);
+	}
 
 	CreateEffect();
 

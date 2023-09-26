@@ -44,8 +44,6 @@ void gameMain(float delta_time)
 
 	//DrawCircle(characterPos.x, characterPos.y, 10, -1, true);
 
-	//DrawGraph(1000, 50, LoadGraph("graphics/color-yellow001.PNG"), true);
-	//DrawGraph(1100, 50, LoadGraph("graphics/color-yellow002.PNG"), true);
 }
 
 //------------------------------------------------------------------------------------------------------------

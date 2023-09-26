@@ -17,12 +17,15 @@ public:
 
 private:
 
+	//-----’è”-----//
+	const float BLOWING_TIME = 2.0f;				/*•—‚ª‚­ŠÔ*/
+	const float STOPPED_TIME = 10.0f;				/*•—‚ª~‚ŞŠÔ*/
+
 	//-----ƒƒ“ƒo•Ï”-----//
 	int m_direction;								/*•—‚Ì•ûŒü*/
 	float m_wind_strength=2.0f;						/*•—‚Ì‹­‚³*/
 	float m_time;									/*”­¶ŠÔ*/
-	const float BLOWING_TIME = 2.0f;				/*•—‚ª‚­ŠÔ*/
-	const float STOPPED_TIME = 10.0f;				/*•—‚ª~‚ŞŠÔ*/
+	
 	sWindState s_wind_state= sWindState::Stopped;	/*•—‚Ìó‘Ô*/
 
 public:
