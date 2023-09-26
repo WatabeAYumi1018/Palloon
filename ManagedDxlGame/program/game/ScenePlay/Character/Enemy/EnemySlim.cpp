@@ -49,7 +49,7 @@ bool EnemySlim::SeqIdle(float delta_time)
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
-        if (m_is_dirction_right) 
+        if (m_is_direction_right)
         {
            animLoader->SetAnimation(18);
         }
@@ -58,7 +58,7 @@ bool EnemySlim::SeqIdle(float delta_time)
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
-        if (!m_is_dirction_right)
+        if (!m_is_direction_right)
         {
             animLoader->SetAnimation(18);
         }
@@ -85,7 +85,7 @@ bool EnemySlim::SeqMove(float delta_time)
             {
                 animLoader->SetAnimation(20); 
                 m_pos.x += m_velocity.x * delta_time;
-                m_is_dirction_right = true;
+                m_is_direction_right = true;
             }
         });
 
@@ -95,7 +95,7 @@ bool EnemySlim::SeqMove(float delta_time)
             {
                 animLoader->SetAnimation(21); 
                 m_pos.x -= m_velocity.x * delta_time;
-                m_is_dirction_right = false;
+                m_is_direction_right = false;
             }
         });
 
@@ -116,7 +116,7 @@ bool EnemySlim::SeqAttack(float delta_time)
             {
                 animLoader->SetAnimation(22);
                 m_pos.x += m_velocity.x * delta_time;
-                m_is_dirction_right = true;
+                m_is_direction_right = true;
             }
         }
     });
@@ -129,7 +129,7 @@ bool EnemySlim::SeqAttack(float delta_time)
             {
                 animLoader->SetAnimation(23);
                 m_pos.x -= m_velocity.x * delta_time;
-                m_is_dirction_right = false;
+                m_is_direction_right = false;
             }
         }
     });

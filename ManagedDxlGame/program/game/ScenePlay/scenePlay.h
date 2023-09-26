@@ -42,20 +42,25 @@ public:
 	Wind* m_wind = nullptr;
 
 private:
-	
+
 	std::string m_stage_name;
 
+	float m_respawn_time= 0.0f;
+
 	bool m_is_change_scene = false;
+	bool m_is_respawn = false;
 
 	std::list<GameObject*> m_gameObjects;
 	
-	std::list<Enemy*> m_enemies;					/*生成した敵*/
-	std::map<int, sEnemyInfo> m_enemy_infos;		/*敵の情報*/
+	std::list<Enemy*> m_enemies;								/*生成した敵*/
+	std::map<int, sEnemyInfo> m_enemy_infos;					/*敵の情報*/
 
-	std::list<EffectPlayer*> m_effects;				/*エフェクト*/
+	std::list<EffectPlayer*> m_effects;							/*エフェクト*/
 
-	std::list<Enemy*> m_enemiesRemoveList;			/*削除予定の敵*/
-	std::list<EffectPlayer*> m_effectsRemoveList;	/*削除予定のエフェクト*/
+	std::list<Enemy*> m_enemiesRemoveList;						/*削除予定の敵*/
+	std::list<EffectPlayer*> m_effectsRemoveList;				/*削除予定のエフェクト*/
+
+	std::list<std::pair<Enemy*, float>> m_enemiesRespawnList;	/*リスポーン敵と秒数カウント*/
 
 	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
 
@@ -63,6 +68,7 @@ private:
 	void InitMusic();
 
 	void CreateEffect();
+	void CreateEnemy(float delta_time);
 
 	void CollisionCheck(float delta_time);
 	

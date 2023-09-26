@@ -21,18 +21,18 @@ protected:
 
 	//-----メンバ変数-----//
 	int m_type_id;											/*敵のタイプID*/
-	
+		
 	std::string m_type;										/*敵のタイプ*/
 	std::string m_color;									/*敵の色*/
 	
-	bool m_is_dirction_right = true;						/*右向き*/
-
 	bool m_is_active = true;								/*攻撃中*/
 
 	Player* m_player = nullptr;		
 	Map* m_map = nullptr;
 	Collision * m_collision = nullptr;
 	Camera* m_camera = nullptr;
+
+	sEnemyData s_date;
 
 	//-----メンバ関数-----//
 	float DistanceCalc();						//プレイヤーとの距離計算
@@ -49,4 +49,6 @@ public:
 
 	bool GetIsActive() const { return m_is_active; }
 	void SetIsActive(const bool is_active) { m_is_active = is_active; }
+
+	const sEnemyData& GetEnemyData() const { return s_date; }
 };

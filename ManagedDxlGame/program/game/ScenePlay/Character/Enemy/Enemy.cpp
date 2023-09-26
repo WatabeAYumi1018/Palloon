@@ -13,6 +13,9 @@ Enemy::Enemy(const sEnemyData& data, const sEnemyInfo& info,Player* player, Map*
     m_type_id = info.s_id;
     m_type = info.s_name;
     m_color = info.s_color;
+
+    //å≥ÉfÅ[É^ï€ë∂
+    s_date = data;
 }
 
 float Enemy::DistanceCalc()

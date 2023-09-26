@@ -40,22 +40,17 @@ bool EnemyBird::SeqMove(float delta_time)
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
-            if (CanMoveRight())
-            {
-                animLoader->SetAnimation(40);
-                m_pos.x += m_velocity.x * delta_time;
-                m_is_dirction_right = true;
-            }
+            animLoader->SetAnimation(52);
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
         });
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
-            if (CanMoveLeft())
-            {
-                animLoader->SetAnimation(41);
-                m_pos.x -= m_velocity.x * delta_time;
-                m_is_dirction_right = false;
-            }
+            animLoader->SetAnimation(53);
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;
+
         });
 
         TNL_SEQ_CO_END;
@@ -67,30 +62,30 @@ bool EnemyBird::SeqAttack(float delta_time)
     float distance_x = m_pos.x - m_player->GetPos().x;
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (m_player)
         {
-            if (m_player)
+            if (distance_x < 0)
             {
-                if (CanMoveRight() && distance_x < 0)
-                {
-                    animLoader->SetAnimation(42);
-                    m_pos.x += m_velocity.x * delta_time * 2;
-                    m_is_dirction_right = true;
-                }
+                animLoader->SetAnimation(54);
+                m_pos.x += m_velocity.x * delta_time * 2;
+                m_is_direction_right = true;
             }
-        });
+        }
+    });
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (m_player)
         {
-            if (m_player)
+            if (distance_x > 0)
             {
-                if (CanMoveLeft() && distance_x > 0)
-                {
-                    animLoader->SetAnimation(43);
-                    m_pos.x -= m_velocity.x * delta_time * 2;
-                    m_is_dirction_right = false;
-                }
+                animLoader->SetAnimation(55);
+                m_pos.x -= m_velocity.x * delta_time * 2;
+                m_is_direction_right = false;
             }
-        });
+        }
+    });
 
     tnl_sequence_.change(&EnemyBird::SeqMove);
     TNL_SEQ_CO_END;

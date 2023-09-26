@@ -72,6 +72,7 @@ void ScenePlay::InitMusic()
 		MusicManager::GetInstance().PlayBGM();
 	}
 
+	// SEのロード
 	MusicManager::GetInstance().LoadSE("fire", "music/playerFire.mp3");
 	MusicManager::GetInstance().LoadSE("beam", "music/playerBeam.wav");
 }
@@ -107,6 +108,11 @@ void ScenePlay::InitEnemy()
 			
 			m_enemy = new EnemyFairy(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
 			
+			if (m_stage_name == "stage3")
+			{
+				static_cast<EnemyFairy*>(m_enemy)->RandomType();
+			}
+
 			break;
 
 		case 4:
@@ -129,7 +135,12 @@ void ScenePlay::Update(float delta_time)
 {	
 	m_collision->CollisionCalculate(m_player, m_map, 10);
 	m_camera->Update(delta_time, m_player, m_map);
-	m_balloonInstruction->Update(delta_time);
+
+	if (m_stage_name == "stage1")
+	{
+		m_balloonInstruction->Update(delta_time);
+	}
+	
 	m_map->LoadMapCollision();
 
 	if (m_stage_name == "stage2")
@@ -140,7 +151,12 @@ void ScenePlay::Update(float delta_time)
 	CreateEffect();
 
 	CollisionCheck(delta_time);
-	
+
+	if (m_stage_name == "stage3")
+	{
+		CreateEnemy(delta_time);
+	}
+
 	RemoveAndDelete();
 
 	for (auto obj : m_gameObjects)
@@ -154,7 +170,12 @@ void ScenePlay::Update(float delta_time)
 void ScenePlay::Draw(float delta_time)
 {
 	m_backGround->Draw(delta_time, m_camera);
-	m_balloonInstruction->Draw(delta_time, m_camera);
+	
+	if (m_stage_name == "stage1")
+	{
+		m_balloonInstruction->Draw(delta_time, m_camera);
+	}
+	
 	m_map->Draw(m_camera);
 
 	for (auto obj : m_gameObjects) 
@@ -210,6 +231,35 @@ void ScenePlay::CreateEffect()
 	}
 }
 
+void ScenePlay::CreateEnemy(float delta_time)
+{
+	auto it = m_enemiesRespawnList.begin();
+	while (it != m_enemiesRespawnList.end())
+	{
+		Enemy* enemy = it->first;      // 敵の情報
+		float& respawn_timer = it->second; // リスポーンタイマーへの参照
+
+		respawn_timer += delta_time;
+
+		if (respawn_timer > 3.0f)
+		{
+			const sEnemyData& respawn_data = enemy->GetEnemyData();
+			m_enemy = new EnemyFairy(respawn_data, m_enemy_infos[respawn_data.s_type_id], m_player, m_map, m_collision, m_camera);
+			static_cast<EnemyFairy*>(m_enemy)->RandomType();
+
+			m_enemies.emplace_back(m_enemy);
+			m_gameObjects.emplace_back(m_enemy);
+
+			delete enemy;  // メモリを解放
+			it = m_enemiesRespawnList.erase(it);  // リストから削除
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
 bool ScenePlay::SeqIdle(float delta_time)
 {
 	if (m_sequence.isStart())
@@ -239,6 +289,12 @@ void ScenePlay::CollisionCheck(float delta_time)
 		if (enemy->GetIsDead())
 		{
 			m_enemiesRemoveList.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ	
+			
+			if (m_stage_name == "stage3" && enemy->GetTypeID() == 3)
+			{
+				m_enemiesRespawnList.emplace_back(enemy,0.0f);
+			}
+			
 			continue;
 		}
 
@@ -271,7 +327,7 @@ void ScenePlay::CollisionCheck(float delta_time)
 			{
 				enemy->SetIsDead(true);
 
-				break;  // 敵は一度死んでしまったら、それ以上の当たり判定は不要なので、このエフェクトのループを抜ける
+				break;  //死んだら当たり判定不要
 			}
 		}
 	}

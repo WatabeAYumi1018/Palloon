@@ -5,7 +5,7 @@
 EnemyPlant::EnemyPlant(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map*map,Collision *collision, Camera* camera) :
     Enemy(data, info, player, map, collision, camera)
 {
-    m_is_dirction_right = false;
+    m_is_direction_right = false;
 }
 
 EnemyPlant::~EnemyPlant()
@@ -46,7 +46,7 @@ bool EnemyPlant::SeqIdle(float delta_time)
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
-        if (m_is_dirction_right)
+        if (m_is_direction_right)
         {
             animLoader->SetAnimation(24);
         }
@@ -55,7 +55,7 @@ bool EnemyPlant::SeqIdle(float delta_time)
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
-        if (!m_is_dirction_right)
+        if (!m_is_direction_right)
         {
             animLoader->SetAnimation(25);
         }
@@ -75,7 +75,7 @@ bool EnemyPlant::SeqAttack(float delta_time)
             if (CanMoveRight() && distance_x < 0)
             {
                 animLoader->SetAnimation(26);
-                m_is_dirction_right = true;
+                m_is_direction_right = true;
             }
         }
     });
@@ -87,7 +87,7 @@ bool EnemyPlant::SeqAttack(float delta_time)
             if (CanMoveLeft() && distance_x > 0)
             {
                 animLoader->SetAnimation(27);
-                m_is_dirction_right = false;
+                m_is_direction_right = false;
             }
         }
     });

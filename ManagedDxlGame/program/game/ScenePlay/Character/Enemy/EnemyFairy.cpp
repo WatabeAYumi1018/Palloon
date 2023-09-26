@@ -15,8 +15,6 @@ EnemyFairy::~EnemyFairy()
 
 void EnemyFairy::Update(float delta_time)
 {
-    //ちょっと浮かばせたい
-
     tnl_sequence_.update(delta_time);
 }
 
@@ -29,10 +27,35 @@ void EnemyFairy::Draw(float delta_time, const Camera* camera)
     animLoader->Draw(delta_time, draw_pos);
 }
 
+void EnemyFairy::RandomType()
+{
+    int random_type = rand() % 3;
+
+    switch (random_type)
+    {
+    
+    case 0:
+        
+        s_type = Peach;
+    
+        break;
+    
+    case 1:
+    
+        s_type = Blue;
+        
+        break;
+    
+    case 2:
+    
+        s_type = Yellow;
+        
+        break;
+    }
+}
+
 bool EnemyFairy::SeqIdle(float delta_time)
 {
-    DrawStringEx(0, 50, -1, "idle");
-
     float distance_x = m_pos.x - m_player->GetPos().x;
 
     //プレイヤーとの距離計算
@@ -42,24 +65,47 @@ bool EnemyFairy::SeqIdle(float delta_time)
     }
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    {
+        //初期値trueのため最初は右向きから
+        if (m_is_direction_right)
         {
-            //初期値trueのため最初は右向きから
-            if (m_is_dirction_right)
+            if (s_type == Peach)
             {
                 animLoader->SetAnimation(34);
             }
-        });
+            else if (s_type == Blue)
+            {
+				animLoader->SetAnimation(40);
+			}
+            else if (s_type == Yellow)
+            {
+				animLoader->SetAnimation(48);
+			}
+        }
+    });
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    {
+        //初期値trueのため最初は右向きから
+        if (!m_is_direction_right)
         {
-            //初期値trueのため最初は右向きから
-            if (!m_is_dirction_right)
+            if (s_type == Peach)
             {
                 animLoader->SetAnimation(35);
             }
-        });
+            else if (s_type == Blue)
+            {
+                animLoader->SetAnimation(41);
+            }
+            else if (s_type == Yellow)
+            {
+                animLoader->SetAnimation(47);
+            }
+        }
+    });
 
     tnl_sequence_.change(&EnemyFairy::SeqMove);
+    
     TNL_SEQ_CO_END;
 }
 
@@ -73,27 +119,42 @@ bool EnemyFairy::SeqMove(float delta_time)
         {
             tnl_sequence_.change(&EnemyFairy::SeqAttack);
         }
-        DrawStringEx(0, 0, -1, "move");
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+            if (s_type == Peach)
             {
-                if (CanMoveRight())
-                {
-                    animLoader->SetAnimation(36);
-                    m_pos.x += m_velocity.x * delta_time;
-                    m_is_dirction_right = true;
-                }
-            });
+                animLoader->SetAnimation(36);
+            }
+            else if (s_type == Blue)
+            {
+                animLoader->SetAnimation(42);
+            }
+            else if (s_type == Yellow)
+            {
+                animLoader->SetAnimation(48);
+            }
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
+        });
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+        {
+            if (s_type == Peach)
             {
-                if (CanMoveLeft())
-                {
-                    animLoader->SetAnimation(37);
-                    m_pos.x -= m_velocity.x * delta_time;
-                    m_is_dirction_right = false;
-                }
-            });
+                animLoader->SetAnimation(37);
+            }
+            else if (s_type == Blue)
+            {
+                animLoader->SetAnimation(43);
+            }
+            else if (s_type == Yellow)
+            {
+                animLoader->SetAnimation(49);
+            }
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;        
+        });
 
         tnl_sequence_.change(&EnemyFairy::SeqIdle);
 
@@ -102,40 +163,59 @@ bool EnemyFairy::SeqMove(float delta_time)
 }
 bool EnemyFairy::SeqAttack(float delta_time)
 {
-    DrawStringEx(0, 0, -1, "attack");
-
     float distance_x = m_pos.x - m_player->GetPos().x;
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (m_player)
         {
-            if (m_player)
+            if (distance_x < 0)
             {
-                if (CanMoveRight() && distance_x < 0)
+
+                if (s_type == Peach)
                 {
-                    DrawStringEx(0, 100, -1, "Moving right");
                     animLoader->SetAnimation(38);
-                    DrawString(0, 150, "%d", m_pos.x, -1);
-                    m_pos.x += m_velocity.x * delta_time;
-                    DrawString(0, 200, "%d", m_pos.x, -1);
-                    m_is_dirction_right = true;
                 }
+                else if (s_type == Blue)
+                {
+                    animLoader->SetAnimation(44);
+                }
+                else if (s_type == Yellow)
+                {
+                    animLoader->SetAnimation(50);
+                }
+                m_pos.x += m_velocity.x * delta_time;
+                m_is_direction_right = true;
             }
-        });
+        }
+    });
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (m_player)
         {
-            if (m_player)
+            if (distance_x > 0)
             {
-                if (CanMoveLeft() && distance_x > 0)
+                if (s_type == Peach)
                 {
-                    DrawStringEx(0, 100, -1, "Moving left");
                     animLoader->SetAnimation(39);
-                    m_pos.x -= m_velocity.x * delta_time;
-                    m_is_dirction_right = false;
                 }
+                else if (s_type == Blue)
+                {
+                    animLoader->SetAnimation(45);
+                }
+                else if (s_type == Yellow)
+                {
+                    animLoader->SetAnimation(51);
+                }
+
+                m_pos.x -= m_velocity.x * delta_time;
+                m_is_direction_right = false;
             }
-        });
+        }
+    });
 
     tnl_sequence_.change(&EnemyFairy::SeqMove);
+
     TNL_SEQ_CO_END;
 }

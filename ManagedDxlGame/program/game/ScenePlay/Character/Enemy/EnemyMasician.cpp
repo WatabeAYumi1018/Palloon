@@ -41,7 +41,7 @@ bool EnemyMasician::SeqIdle(float delta_time)
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
-        if (m_is_dirction_right)
+        if (m_is_direction_right)
         {
             animLoader->SetAnimation(28);
         }
@@ -50,7 +50,7 @@ bool EnemyMasician::SeqIdle(float delta_time)
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
-        if (!m_is_dirction_right)
+        if (!m_is_direction_right)
         {
             animLoader->SetAnimation(29);
         }
@@ -73,22 +73,16 @@ bool EnemyMasician::SeqMove(float delta_time)
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
-            if (CanMoveRight())
-            {
-                animLoader->SetAnimation(30);
-                m_pos.x += m_velocity.x * delta_time;
-                m_is_dirction_right = true;
-            }
+            animLoader->SetAnimation(30);
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
         });
 
         TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
         {
-            if (CanMoveLeft())
-            {
-                animLoader->SetAnimation(31);
-                m_pos.x -= m_velocity.x * delta_time;
-                m_is_dirction_right = false;
-            }
+            animLoader->SetAnimation(31);
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;
         });
 
         tnl_sequence_.change(&EnemyMasician::SeqIdle);
@@ -104,11 +98,11 @@ bool EnemyMasician::SeqAttack(float delta_time)
     {
         if (m_player)
         {
-            if (CanMoveRight() && distance_x < 0)
+            if (distance_x < 0)
             {
                 animLoader->SetAnimation(32);
                 m_pos.x += m_velocity.x * delta_time;
-                m_is_dirction_right = true;
+                m_is_direction_right = true;
             }
         }
     });
@@ -117,11 +111,11 @@ bool EnemyMasician::SeqAttack(float delta_time)
     {
         if (m_player)
         {
-            if (CanMoveLeft() && distance_x > 0)
+            if (distance_x > 0)
             {
                 animLoader->SetAnimation(33);
                 m_pos.x -= m_velocity.x * delta_time;
-                m_is_dirction_right = false;
+                m_is_direction_right = false;
             }
         }
     });
