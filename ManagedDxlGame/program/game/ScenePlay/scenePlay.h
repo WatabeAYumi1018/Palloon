@@ -55,6 +55,8 @@ private:
 	bool m_is_change_scene = false;
 	bool m_is_respawn = false;
 
+	bool m_is_effect = false;
+
 	std::list<GameObject*> m_gameObjects;
 	
 	std::list<Enemy*> m_enemies;								/*¶¬‚µ‚½“G*/

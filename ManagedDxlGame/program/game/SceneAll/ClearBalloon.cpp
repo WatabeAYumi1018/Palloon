@@ -31,7 +31,7 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 	tnl::Vector3 draw_pos =
 		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-	if (m_pos.x != 0 && m_pos.y != 0)
+	if (m_pos.x != 0 && m_pos.y != 0 && m_collision->GetIsUp())
 	{
 		if (m_collision->GetIsClear() && 
 			(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_12)))

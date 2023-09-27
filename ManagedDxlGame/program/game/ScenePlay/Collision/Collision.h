@@ -22,6 +22,7 @@ private:
 	tnl::Vector3 m_clear_pos;								/*Clear地点の座標*/
 	
 	bool m_is_clear=false;									 /*Clearフラグ*/	
+	bool m_is_up = false;								     /*上ボタン判定*/
 
 	std::vector<std::vector<sCollisionInfo>> m_cached_chips; /*前回取得した当たり判定情報*/
 
@@ -42,4 +43,5 @@ public:
 	const tnl::Vector3 GetClearPos() const { return m_clear_pos; }
 	
 	bool GetIsClear() const { return m_is_clear; }
+	bool GetIsUp() const { return m_is_up; }
 };

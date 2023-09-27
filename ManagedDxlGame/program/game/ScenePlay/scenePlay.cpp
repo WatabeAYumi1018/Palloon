@@ -201,8 +201,10 @@ void ScenePlay::Finalize()
 
 void ScenePlay::CreateEffect()
 {
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1))
+	if (!m_is_effect && (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1)))
 	{
+		m_is_effect = true;
+
 		if (CheckSoundFile() == 0)
 		{
 			MusicManager::GetInstance().PlaySE("beam");
@@ -215,8 +217,10 @@ void ScenePlay::CreateEffect()
 		m_gameObjects.emplace_back(effect);
 		m_effects.emplace_back(effect);
 	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0))
+	else if (!m_is_effect && (tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0)))
 	{
+		m_is_effect = true;
+
 		if (CheckSoundFile() == 0)
 		{
 			MusicManager::GetInstance().PlaySE("fire");
@@ -351,6 +355,7 @@ void ScenePlay::RemoveAndDelete()
 	for (auto effect : m_effects_remove_list)
 	{
 		RemoveAndDeleteEffect(effect);
+		m_is_effect = false;
 	}
 
 	m_effects_remove_list.clear();

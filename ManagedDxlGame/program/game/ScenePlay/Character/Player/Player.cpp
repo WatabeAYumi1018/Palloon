@@ -236,6 +236,30 @@ void Player::MoveHandle(float delta_time)
 		StampAction(delta_time);
 	}
 
+	if (tnl::Input::IsKeyDown(eKeys::KB_C) || tnl::Input::IsPadDown(ePad::KEY_1))
+	{
+		if (m_is_direction_right)
+		{
+			e_currentAction = ePlayerAction::Beam_right;
+		}
+		else
+		{
+			e_currentAction = ePlayerAction::Beam_left;
+		}
+	}
+
+	else if (tnl::Input::IsKeyDown(eKeys::KB_X) || tnl::Input::IsPadDown(ePad::KEY_0))
+	{
+		if (m_is_direction_right)
+		{
+			e_currentAction = ePlayerAction::Fire_right;
+		}
+		else
+		{
+			e_currentAction = ePlayerAction::Fire_left;
+		}
+	}
+
 	//’nã‚É‚¢‚éê‡
 	if (CheckIsGround())
 	{
@@ -330,7 +354,7 @@ bool Player::CheckIsGround()
 	}
 
 	//‘«Œ³‚ÌÀ•W‚ðŽæ“¾
-	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, 55, 0);
+	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, 50, 0);
 	tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(foot_pos, m_map);
 	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
 
@@ -354,7 +378,7 @@ void Player::MoveRange()
 	{
 		m_pos.y = SIZE;
 	}
-	if (m_pos.y >= (m_map->GetMapChipY() * m_map->MAP_CHIP_SIZE - SIZE))
+	if (m_pos.y >= (m_map->GetMapChipY() * m_map->MAP_CHIP_SIZE - 55))
 	{
 		m_is_dead=true;
 	}

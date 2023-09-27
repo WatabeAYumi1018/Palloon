@@ -20,6 +20,10 @@ void EffectPlayer::Update(float delta_time)
 {
 	if (m_is_active) 
 	{
+		// エフェクトの位置をプレイヤーの位置に更新
+		m_pos = m_player->GetPos();
+
+
 		EffectHandle();
 		run_time += delta_time;
 
@@ -138,7 +142,6 @@ void EffectPlayer::EffectFireHandle()
 //ビームのアニメーション設定
 void EffectPlayer::EffectBeamHandle()
 {
-
 	if (m_player->GetIsDirectionRight())
 	{
 		animLoader->SetAnimation(58);  /*effect_beam_right*/
@@ -152,18 +155,13 @@ void EffectPlayer::EffectBeamHandle()
 //エフェクトのアニメーション設定
 void EffectPlayer::EffectHandle()
 {
-	switch (m_effectType)
+	if (m_effectType == eEffectPlayerType::Fire)
 	{
-	case eEffectPlayerType::Fire:
-
 		EffectFireHandle();
-
-		break;
-		
-	case eEffectPlayerType::Beam:
-		
+	}
+	
+	else if (m_effectType == eEffectPlayerType::Beam)
+	{
 		EffectBeamHandle();
-			
-		break;
 	}
 }

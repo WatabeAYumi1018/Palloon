@@ -232,4 +232,10 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
             }
         }
     }
+
+    if (wta::IsIntersectCircleCircle(player_pos, player_size, m_clear_pos, 32))
+    {
+        //クリアフラグを立てる
+		m_is_up = true;
+	}
 }
