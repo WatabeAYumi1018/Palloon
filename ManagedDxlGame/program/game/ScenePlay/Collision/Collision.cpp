@@ -8,7 +8,8 @@
 
 Collision::Collision() : m_last_chara_pos(0, 0, 0)
 {
-    MusicManager::GetInstance().LoadSE("stamp", "music/playerStamp.wav");
+    MusicManager::GetInstance().LoadSE("hit", "music/playerStamp.wav");
+    MusicManager::GetInstance().LoadSE("damaged", "music/damaged.wav");
 }
 
 //マップチップとの当たり判定を行うため、キャラクターをグリッド座標に変換
@@ -209,7 +210,7 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
             {
                 if (CheckSoundFile() == 0)
                 {
-                    MusicManager::GetInstance().PlaySE("stamp");
+                    MusicManager::GetInstance().PlaySE("hit");
                 }
                 //敵を踏んでいると認識
                 player->SetIsStamp(true);
@@ -219,12 +220,14 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
             //プレイヤーのロール中
             else if (player->GetIsRolling())
             {
+                MusicManager::GetInstance().PlaySE("hit");
 				//回転中は敵を倒す
 				enemy->SetIsDead(true);
 			}
 
             else
             {
+                MusicManager::GetInstance().PlaySE("damaged");
                 //プレイヤーのHPを減らす
                 player->DecreaseHP(1);
                 //一定時間無敵状態にする

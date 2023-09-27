@@ -1,4 +1,5 @@
 #include "ClearBalloon.h"
+#include "Music/MusicManager.h"
 #include "../ScenePlay/Character/Player/Player.h"
 #include "../ScenePlay/Collision/Collision.h"
 #include "../ScenePlay/Camera/Camera.h"
@@ -11,6 +12,8 @@ ClearBalloon::ClearBalloon(Collision *collision) :
 
 void ClearBalloon::Initialize()
 {
+	MusicManager::GetInstance().LoadSE("clear", "music/clear.wav");
+
 	m_balloon_hdl = LoadGraph("graphics/balloon/clear_balloon.png");
 	m_balloon_clear_hdl = LoadGraph("graphics/balloon/clear_palloon.png");
 	m_clear_up_hdl = LoadGraph("graphics/logo/clear_up.png");
@@ -36,6 +39,8 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 		if (m_collision->GetIsClear() && 
 			(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_12)))
 		{
+			MusicManager::GetInstance().PlaySE("clear");
+
 			m_is_change_grahic = true;
 		}
 

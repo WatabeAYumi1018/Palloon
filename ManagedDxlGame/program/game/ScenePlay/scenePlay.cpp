@@ -77,8 +77,11 @@ void ScenePlay::InitMusic()
 	}
 
 	// SE‚Ìƒ[ƒh
+	MusicManager::GetInstance().LoadSE("dead", "music/rollHit.mp3");
 	MusicManager::GetInstance().LoadSE("fire", "music/playerFire.mp3");
 	MusicManager::GetInstance().LoadSE("beam", "music/playerBeam.wav");
+	MusicManager::GetInstance().LoadSE("enter", "music/pushStart.wav");
+	MusicManager::GetInstance().LoadSE("interval", "music/interval.mp3");
 }
 
 void ScenePlay::InitEnemy()
@@ -278,6 +281,8 @@ bool ScenePlay::SeqIdle(float delta_time)
 
 	if (m_clearBalloon->GetIsChangeGraphic())
 	{
+		MusicManager::GetInstance().StopBGM();
+		MusicManager::GetInstance().PlaySE("interval");
 		m_player->SetIsDraw(false);
 		m_is_change_scene = true;
 		m_logo->SetIsClear(true);
@@ -287,6 +292,8 @@ bool ScenePlay::SeqIdle(float delta_time)
 	if((m_is_change_scene && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))) ||
 		(m_player->GetIsDead() && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))))
 	{
+		MusicManager::GetInstance().PlaySE("enter");
+		MusicManager::GetInstance().StopSE("interval");
 		auto scene = SceneManager::GetInstance();
 		scene->ChangeScene(new SceneTitle());
 	}
@@ -335,6 +342,7 @@ void ScenePlay::CollisionCheck(float delta_time)
 			// 1‚ÂˆÈã‚Ì‰~‚ª“G‚Éƒqƒbƒg‚µ‚½ê‡‚Ìˆ—
 			if (effect_hit_enemy)
 			{
+				MusicManager::GetInstance().PlaySE("dead");
 				enemy->SetIsDead(true);
 
 				break;  //Ž€‚ñ‚¾‚ç“–‚½‚è”»’è•s—v

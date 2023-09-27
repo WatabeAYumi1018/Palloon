@@ -10,8 +10,7 @@
 Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wind* wind, Logo* logo):
 	Character(initialPos, SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map),m_wind(wind),m_logo(logo)
 {
-	//MusicManager::GetInstance().LoadSE("move", "music/selectBottan.wav");
-	MusicManager::GetInstance().LoadSE("damaged", "music/damaged.wav");
+
 }
 
 void Player::Update(float delta_time)
