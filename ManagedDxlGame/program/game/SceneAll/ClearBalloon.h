@@ -12,6 +12,10 @@ public:
 	ClearBalloon(Collision *collision);
 
 private:
+
+	//-----’è”-----//
+	const float BLINK_INTERVAL = 2.0f; /*“_–Å*/
+
 	//-----ƒƒ“ƒo•Ï”-----//
 	int m_balloon_hdl = 0;
 	int m_balloon_clear_hdl = 0;
@@ -24,9 +28,11 @@ private:
 	float m_offset_y = 10.0f;
 	float m_velocity_y = 100.0f;
 
+	float m_blink_time = 0.0f;
+
 	tnl::Vector3 m_target_pos;
 
-	bool m_is_chane_grahic = false;
+	bool m_is_change_grahic = false;
 	bool m_is_scene_change = false;
 
 	eBalloonState e_balloon_state = eBalloonState::Hidden;
@@ -47,5 +53,5 @@ private:
 
 public:
 	//-----Getter&Setter-----//
-	bool GetIsChangeGraphic() const { return m_is_chane_grahic; }
+	bool GetIsChangeGraphic() const { return m_is_change_grahic; }
 };

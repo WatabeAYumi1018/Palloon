@@ -106,3 +106,11 @@ struct sStageInfo
 	std::string s_music_bgm;
 	tnl::Vector3 s_initial_player_pos;
 };
+
+enum class eLogoState
+{
+	None,
+	Clear,
+	Burst,
+	Fall
+};

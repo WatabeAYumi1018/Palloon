@@ -36,10 +36,10 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 		if (m_collision->GetIsClear() && 
 			(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_12)))
 		{
-			m_is_chane_grahic = true;
+			m_is_change_grahic = true;
 		}
 
-		if(m_is_chane_grahic)
+		if(m_is_change_grahic)
 		{
 			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
 							draw_pos.x + m_size_x, draw_pos.y, m_balloon_clear_hdl, true);
@@ -50,9 +50,12 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 		{
 			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
 							draw_pos.x + m_size_x, draw_pos.y,m_balloon_hdl, true);
-
-			//DrawGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y, m_clear_up_hdl, true);
 		}
+	}
+
+	if (e_balloon_state == eBalloonState::Floating && m_blink_time < (BLINK_INTERVAL / 2.0f))
+	{
+		DrawGraph(draw_pos.x-100, draw_pos.y,m_clear_up_hdl, true);
 	}
 }
 
@@ -68,7 +71,7 @@ void ClearBalloon::ClearPosChange()
 		if (e_balloon_state == eBalloonState::Hidden)
 		{
 			e_balloon_state = eBalloonState::Rising;
-			m_pos = { m_target_pos.x, DXE_WINDOW_HEIGHT + m_size_y, 0 };
+			m_pos = { m_target_pos.x, DXE_WINDOW_HEIGHT + 1000, 0 };
 		}
 	}
 }
@@ -92,8 +95,17 @@ void ClearBalloon::MoveBalloon(float delta_time)
 	case eBalloonState::Floating:
 		
 		m_float_time += delta_time;
-		m_offset_y = sin(m_float_time) * 5.0f;
-	
+		m_offset_y = sin(m_float_time) * 10.0f;
+		m_pos.y = m_target_pos.y + m_offset_y;
+
+		//ƒ{ƒ^ƒ“‚Ì“_–Å•`‰æ
+		m_blink_time += delta_time;
+		
+		if (m_blink_time > BLINK_INTERVAL)
+		{
+			m_blink_time = 0.0f;
+		}
+
 		break;
 	
 	case eBalloonState::SceneChange:

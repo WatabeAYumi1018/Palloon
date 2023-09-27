@@ -4,10 +4,11 @@
 #include "../../Collision/Collision.h"
 #include "../../Wind/Wind.h"
 #include "../../Map/Map.h"
+#include "../../Logo/Logo.h"
 
 //キャラクターの初期化子
-Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wind* wind):
-	Character(initialPos, SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map),m_wind(wind)
+Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wind* wind, Logo* logo):
+	Character(initialPos, SIZE,MAX_HP,{ VELOCITY_X, VELOCITY_Y,0 }),m_collision(collision), m_map(map),m_wind(wind),m_logo(logo)
 {
 	//MusicManager::GetInstance().LoadSE("move", "music/selectBottan.wav");
 	MusicManager::GetInstance().LoadSE("damaged", "music/damaged.wav");
@@ -15,6 +16,19 @@ Player::Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wi
 
 void Player::Update(float delta_time)
 {
+	if (m_hp <= 0)
+	{
+		m_is_draw = false;
+	}
+
+	if (!m_is_draw)
+	{
+		m_logo->SetIsClear(true);
+		m_logo->SetLogoState(eLogoState::Burst);
+
+		return;
+	}
+
 	m_is_ground = CheckIsGround();
 	Gravity(delta_time);
 	ApplyWind(delta_time);
@@ -381,6 +395,8 @@ void Player::MoveRange()
 	if (m_pos.y >= (m_map->GetMapChipY() * m_map->MAP_CHIP_SIZE - 55))
 	{
 		m_is_dead=true;
+		m_logo->SetIsClear(true);
+		m_logo->SetLogoState(eLogoState::Fall);
 	}
 }
 

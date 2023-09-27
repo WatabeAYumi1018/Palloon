@@ -6,6 +6,7 @@ class Camera;
 class Map;
 class Collision;
 class Wind;
+class Logo;
 
 //プレイヤークラス
 
@@ -13,7 +14,7 @@ class Player :public Character
 {
 public:
 
-	Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wind* wind);
+	Player(const tnl::Vector3& initialPos, Collision* collision, Map* map,Wind* wind,Logo* logo);
 	virtual ~Player() {}
 
 private:
@@ -58,6 +59,7 @@ private:
 	Collision* m_collision=nullptr;
 	Map* m_map=nullptr;
 	Wind* m_wind=nullptr;
+	Logo* m_logo=nullptr;
 
 	//-----メンバ関数-----//
 	void MoveHandle(float delta_time);			/*ゲームパッドスティック操作*/

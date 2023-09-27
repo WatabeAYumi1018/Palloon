@@ -69,6 +69,9 @@
     <Filter Include="program\[004] game\[004]scenePlay\[03]Wind">
       <UniqueIdentifier>{ab7b45af-83c5-4cce-bce1-ab6f5d72fb8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\[004] game\[004]scenePlay\[06]Logo">
+      <UniqueIdentifier>{6aad29e1-795f-4cc9-b29f-c16e0e8f9f14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ManagedDxlGame.cpp">
@@ -271,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="program\game\ScenePlay\Wind\Wind.cpp">
       <Filter>program\[004] game\[004]scenePlay\[03]Wind</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Logo\Logo.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[06]Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Wind\Wind.h">
       <Filter>program\[004] game\[004]scenePlay\[03]Wind</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Logo\Logo.h">
+      <Filter>program\[004] game\[004]scenePlay\[06]Logo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,12 +13,14 @@
 #include "../ScenePlay/Effect/EffectPlayer.h"
 #include "../ScenePlay/Camera/Camera.h"
 #include "../SceneSelect/SceneSelect.h"
+#include "../SceneTitle/SceneTitle.h"
 #include "../../engine/SceneManager.h"
 #include "../SceneAll/BackGround.h"
 #include "../SceneAll/ClearBalloon.h"
 #include "../SceneAll/Balloon.h"
 #include "../SceneAll/BalloonInstruction.h"
 #include "../ScenePlay/Wind/Wind.h"
+#include "../ScenePlay/Logo/Logo.h"
 #include "../ScenePlay/Map/Map.h"
 #include "../SceneAll/UI.h"
 #include "ScenePlay.h"
@@ -38,18 +40,20 @@ void ScenePlay::Initialize()
 	m_clearBalloon = new ClearBalloon(m_collision);
 	m_map = new Map(m_stage_name);
 	m_wind = new Wind();
+	m_logo = new Logo();
 
 	m_backGround->SetBackground(m_map->GetCurrentStageInfo().s_background_hdl);
 	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().s_initial_player_pos;	
 	
-	m_player = new Player(player_init_pos, m_collision, m_map, m_wind);
+	m_player = new Player(player_init_pos, m_collision, m_map, m_wind,m_logo);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());
-	m_gameObjects.emplace_back(m_clearBalloon);
-	m_gameObjects.emplace_back(m_player);
 	InitEnemy();
+	m_gameObjects.emplace_back(m_player);
 	m_gameObjects.emplace_back(new UI(m_player));
+	m_gameObjects.emplace_back(m_clearBalloon);
+	m_gameObjects.emplace_back(m_logo);
 }
 
 void ScenePlay::InitMusic()
@@ -276,13 +280,15 @@ bool ScenePlay::SeqIdle(float delta_time)
 	{
 		m_player->SetIsDraw(false);
 		m_is_change_scene = true;
+		m_logo->SetIsClear(true);
+		m_logo->SetLogoState(eLogoState::Clear);
 	}
 	
 	if((m_is_change_scene && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))) ||
 		(m_player->GetIsDead() && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))))
 	{
 		auto scene = SceneManager::GetInstance();
-		scene->ChangeScene(new SceneSelect());
+		scene->ChangeScene(new SceneTitle());
 	}
 	return true;
 }
@@ -295,17 +301,16 @@ void ScenePlay::CollisionCheck(float delta_time)
 		{
 			m_enemies_remove_list.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ	
 			
+			continue;
+			
 			if (m_stage_name == "stage3" && enemy->GetTypeID() == 3)
 			{
 				m_enemies_respawn_list.emplace_back(enemy,0.0f);
 			}
-			
-			continue;
 		}
 
 		m_collision->CollisionCalculate(enemy, m_map, 10);
 		m_collision->CollisionCharacter(m_player, enemy);
-
 
 		for (auto effect : m_effects)
 		{
