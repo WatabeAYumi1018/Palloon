@@ -13,6 +13,7 @@ void ClearBalloon::Initialize()
 {
 	m_balloon_hdl = LoadGraph("graphics/balloon/clear_balloon.png");
 	m_balloon_clear_hdl = LoadGraph("graphics/balloon/clear_palloon.png");
+	m_clear_up_hdl = LoadGraph("graphics/logo/clear_up.png");
 }
 
 void ClearBalloon::Update(float delta_time)
@@ -32,7 +33,8 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 
 	if (m_pos.x != 0 && m_pos.y != 0)
 	{
-		if (m_collision->GetIsClear() && tnl::Input::IsKeyDown(eKeys::KB_UP))
+		if (m_collision->GetIsClear() && 
+			(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_12)))
 		{
 			m_is_chane_grahic = true;
 		}
@@ -48,6 +50,8 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 		{
 			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
 							draw_pos.x + m_size_x, draw_pos.y,m_balloon_hdl, true);
+
+			//DrawGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y, m_clear_up_hdl, true);
 		}
 	}
 }

@@ -7,10 +7,6 @@ class GameObject;
 
 class SceneTitle : public SceneBase 
 {
-public:
-	SceneTitle() {}
-	~SceneTitle();
-
 private:
 
 	//-----’è”-----//

@@ -5,7 +5,7 @@
 EnemyBird::EnemyBird(const sEnemyData& data, const sEnemyInfo& info, Player* player, Map* map, Collision* collision, Camera* camera) :
     Enemy(data, info, player, map, collision, camera)
 {
-
+    m_is_direction_right = false;
 }
 
 EnemyBird::~EnemyBird()

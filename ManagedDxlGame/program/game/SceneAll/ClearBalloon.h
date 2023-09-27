@@ -15,6 +15,7 @@ private:
 	//-----ƒƒ“ƒo•Ï”-----//
 	int m_balloon_hdl = 0;
 	int m_balloon_clear_hdl = 0;
+	int m_clear_up_hdl = 0;
 
 	float m_size_x = 300;
 	float m_size_y = 500;

@@ -4,11 +4,6 @@
 #include "../../engine/SceneManager.h"
 #include "../SceneAll/Music/MusicManager.h"
 
-SceneTitle::~SceneTitle()
-{
-	Finalize();
-}
-
 void SceneTitle::Update(float delta_time) 
 {
 	sequence_.update(delta_time);

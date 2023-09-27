@@ -330,7 +330,7 @@ bool Player::CheckIsGround()
 	}
 
 	//‘«Œ³‚ÌÀ•W‚ðŽæ“¾
-	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, SIZE, 0);
+	tnl::Vector3 foot_pos = m_pos + tnl::Vector3(0, 55, 0);
 	tnl::Vector3 chip_pos = m_collision->GetCharacterMapChipPos(foot_pos, m_map);
 	sCollisionInfo foot_collision = m_map->GetCollisionInfo()[chip_pos.y][chip_pos.x];
 

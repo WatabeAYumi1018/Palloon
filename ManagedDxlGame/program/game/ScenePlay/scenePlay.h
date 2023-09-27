@@ -45,6 +45,11 @@ private:
 
 	std::string m_stage_name;
 
+	int m_clear_logo_hdl = 0;
+	int m_burst_logo_hdl = 0;
+	int m_fall_logo_hdl = 0;
+	int m_clear_botton_hdl = 0;
+
 	float m_respawn_time= 0.0f;
 
 	bool m_is_change_scene = false;
