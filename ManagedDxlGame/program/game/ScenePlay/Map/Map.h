@@ -32,7 +32,7 @@ private:
 	std::vector<sStageInfo> stageList =						
 	{ 
 		{"stage1","graphics/stage1-1.jpg","csv/stage1-1.csv","csv/stage1-1collision.csv","csv/stage1-1enemy.csv","music/stage1-1.mp3",{0,100,0}},
-		{"stage2","graphics/stage1-2.png","csv/stage1-2.csv","csv/stage1-2collision.csv","csv/stage1-2enemy.csv","music/stage1-2.mp3",{500,6000,0}},
+		{"stage2","graphics/stage1-2.png","csv/stage1-2.csv","csv/stage1-2collision.csv","csv/stage1-2enemy.csv","music/stage1-2.mp3",{0,5800,0}},
 		{"stage3","graphics/stage1-3.png","csv/stage1-3.csv","csv/stage1-3collision.csv","csv/stage1-3enemy.csv","music/stage1-3.mp3",{100,300,0}}
 	};															/*ステージ分けlist*/							
 

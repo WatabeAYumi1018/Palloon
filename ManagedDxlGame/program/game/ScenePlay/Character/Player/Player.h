@@ -88,6 +88,7 @@ public:
 	void Draw(float delta_time, const Camera* camera) override;
 
 	//-----Getter,Setter-----//
+	bool GetIsDraw() const { return m_is_draw; }
 	void SetIsDraw(bool is_draw) { m_is_draw = is_draw; }
 	void SetIsStamp(bool is_stamp) { m_is_stamp = is_stamp; }
 	bool GetIsRolling() const { return m_is_rolling; }

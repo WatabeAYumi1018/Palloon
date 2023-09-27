@@ -81,7 +81,6 @@ void ScenePlay::InitMusic()
 	MusicManager::GetInstance().LoadSE("fire", "music/playerFire.mp3");
 	MusicManager::GetInstance().LoadSE("beam", "music/playerBeam.wav");
 	MusicManager::GetInstance().LoadSE("enter", "music/pushStart.wav");
-	MusicManager::GetInstance().LoadSE("interval", "music/interval.mp3");
 }
 
 void ScenePlay::InitEnemy()
@@ -208,37 +207,43 @@ void ScenePlay::Finalize()
 
 void ScenePlay::CreateEffect()
 {
-	if (!m_is_effect && (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1)))
+	if (m_player->GetIsDraw())
 	{
-		m_is_effect = true;
 
-		if (CheckSoundFile() == 0)
+		if (!m_is_effect && 
+		   (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1)))
 		{
-			MusicManager::GetInstance().PlaySE("beam");
-		}
-		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
-		effect->SetPos(m_player->GetPos()); 
-		effect->SetOffset(tnl::Vector3(400, 0, 0));
-		effect->CalculateCollisionCircles();
-		effect->SetIsActive(true);
-		m_gameObjects.emplace_back(effect);
-		m_effects.emplace_back(effect);
-	}
-	else if (!m_is_effect && (tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0)))
-	{
-		m_is_effect = true;
+			m_is_effect = true;
 
-		if (CheckSoundFile() == 0)
-		{
-			MusicManager::GetInstance().PlaySE("fire");
+			if (CheckSoundFile() == 0)
+			{
+				MusicManager::GetInstance().PlaySE("beam");
+			}
+			EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
+			effect->SetPos(m_player->GetPos());
+			effect->SetOffset(tnl::Vector3(400, 0, 0));
+			effect->CalculateCollisionCircles();
+			effect->SetIsActive(true);
+			m_gameObjects.emplace_back(effect);
+			m_effects.emplace_back(effect);
 		}
-		EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
-		effect->SetPos(m_player->GetPos());
-		effect->SetOffset(tnl::Vector3(270, 0, 0)); // ファイアの初期オフセット
-		effect->CalculateCollisionCircles();
-		effect->SetIsActive(true);
-		m_gameObjects.emplace_back(effect);
-		m_effects.emplace_back(effect);
+		else if (!m_is_effect && 
+				(tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0)))
+		{
+			m_is_effect = true;
+
+			if (CheckSoundFile() == 0)
+			{
+				MusicManager::GetInstance().PlaySE("fire");
+			}
+			EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
+			effect->SetPos(m_player->GetPos());
+			effect->SetOffset(tnl::Vector3(270, 0, 0)); // ファイアの初期オフセット
+			effect->CalculateCollisionCircles();
+			effect->SetIsActive(true);
+			m_gameObjects.emplace_back(effect);
+			m_effects.emplace_back(effect);
+		}
 	}
 }
 
@@ -282,7 +287,6 @@ bool ScenePlay::SeqIdle(float delta_time)
 	if (m_clearBalloon->GetIsChangeGraphic())
 	{
 		MusicManager::GetInstance().StopBGM();
-		MusicManager::GetInstance().PlaySE("interval");
 		m_player->SetIsDraw(false);
 		m_is_change_scene = true;
 		m_logo->SetIsClear(true);
@@ -293,7 +297,6 @@ bool ScenePlay::SeqIdle(float delta_time)
 		(m_player->GetIsDead() && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))))
 	{
 		MusicManager::GetInstance().PlaySE("enter");
-		MusicManager::GetInstance().StopSE("interval");
 		auto scene = SceneManager::GetInstance();
 		scene->ChangeScene(new SceneTitle());
 	}
@@ -308,12 +311,12 @@ void ScenePlay::CollisionCheck(float delta_time)
 		{
 			m_enemies_remove_list.emplace_back(enemy); // 既に死んでいる敵に対する判定はスキップ	
 			
-			continue;
-			
 			if (m_stage_name == "stage3" && enemy->GetTypeID() == 3)
 			{
 				m_enemies_respawn_list.emplace_back(enemy,0.0f);
 			}
+
+			continue;
 		}
 
 		m_collision->CollisionCalculate(enemy, m_map, 10);
