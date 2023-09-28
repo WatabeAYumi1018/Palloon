@@ -90,7 +90,7 @@ void ScenePlay::InitMusic()
 
 	// SEÇÃÉçÅ[Éh
 	MusicManager::GetInstance().LoadSE("dead", "music/rollHit.mp3");
-	MusicManager::GetInstance().LoadSE("fire", "music/playerFire.mp3");
+	MusicManager::GetInstance().LoadSE("fire", "music/PlayerFire.wav");
 	MusicManager::GetInstance().LoadSE("beam", "music/playerBeam.wav");
 	MusicManager::GetInstance().LoadSE("enter", "music/pushStart.wav");
 }

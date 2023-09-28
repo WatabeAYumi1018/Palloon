@@ -1,4 +1,5 @@
 #include "EffectBoss.h"
+#include "../../SceneAll/Music/MusicManager.h"
 #include "../Character/Enemy/Enemy.h"
 #include "../Character/Player/Player.h"
 #include "../Camera/Camera.h"
@@ -7,6 +8,8 @@
 EffectBoss::EffectBoss(Enemy* enemy,Player* player) :
     Effect(tnl::Vector3(0, 0, 0), enemy), m_enemy(enemy), m_player(player)
 {
+   MusicManager::GetInstance().LoadSE("doragonfire", "music/DoragonFire.mp3");
+   
    m_pos = m_enemy->GetPos();
    m_size = 100;
 }
@@ -41,10 +44,10 @@ void EffectBoss::Update(float delta_time)
 }
 void EffectBoss::Draw(float delta_time, const Camera* camera)
 {
-    //if (m_enemy->GetIsActiveBoss())
-    //{
-    //   animLoader->Draw(delta_time, m_pos);
-    //}
+    if (m_enemy->GetIsActiveBoss())
+    {
+       animLoader->Draw(delta_time, m_pos);
+    }
 }
 
 void EffectBoss::CalculateCollisionCircles()
@@ -83,7 +86,9 @@ void EffectBoss::FlameHandle()
     m_pos = m_enemy->GetPos() - m_offset_flame;
 
     e_effectType = eEffectBossType::Flame;
-        
+    
+    MusicManager::GetInstance().PlaySE("doragonfire");
+
     animLoader->SetAnimation(63);
 }
 
