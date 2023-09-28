@@ -34,6 +34,8 @@ private:
 
 	bool m_is_change_grahic = false;
 	bool m_is_scene_change = false;
+	bool m_is_draw = false;
+
 
 	eBalloonState e_balloon_state = eBalloonState::Hidden;
 
@@ -54,4 +56,5 @@ private:
 public:
 	//-----Getter&Setter-----//
 	bool GetIsChangeGraphic() const { return m_is_change_grahic; }
+	void SteIsDraw(bool is_draw) { m_is_draw = is_draw; }
 };

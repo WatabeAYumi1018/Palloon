@@ -144,6 +144,7 @@ void ScenePlay::Update(float delta_time)
 
 	if (m_stage_name == "stage1")
 	{
+		m_clearBalloon->SteIsDraw(true);
 		m_balloonInstruction->Update(delta_time);
 	}
 	
@@ -151,6 +152,7 @@ void ScenePlay::Update(float delta_time)
 
 	if (m_stage_name == "stage2")
 	{
+		m_clearBalloon->SteIsDraw(true);
 		m_wind->Update(delta_time);
 	}
 
@@ -161,6 +163,11 @@ void ScenePlay::Update(float delta_time)
 	if (m_stage_name == "stage3")
 	{
 		CreateEnemy(delta_time);
+
+		if (m_total_respawns >= max_total_respawns)
+		{
+			m_clearBalloon->SteIsDraw(true);
+		}
 	}
 
 	RemoveAndDelete();
@@ -250,25 +257,29 @@ void ScenePlay::CreateEffect()
 void ScenePlay::CreateEnemy(float delta_time)
 {
 	auto it = m_enemies_respawn_list.begin();
-	
 	while (it != m_enemies_respawn_list.end())
 	{
-		Enemy* enemy = it->first;      // 敵の情報
-		float& respawn_timer = it->second; // リスポーンタイマーへの参照
+		Enemy* enemy = it->first;
+		float& respawn_timer = it->second;
 
 		respawn_timer += delta_time;
 
 		if (respawn_timer > 3.0f)
 		{
-			const sEnemyData& respawn_data = enemy->GetEnemyData();
-			m_enemy = new EnemyFairy(respawn_data, m_enemy_infos[respawn_data.s_type_id], m_player, m_map, m_collision, m_camera);
-			static_cast<EnemyFairy*>(m_enemy)->RandomType();
+			if (m_total_respawns < max_total_respawns)  // 追加するチェック
+			{
+				const sEnemyData& respawn_data = enemy->GetEnemyData();
+				m_enemy = new EnemyFairy(respawn_data, m_enemy_infos[respawn_data.s_type_id], m_player, m_map, m_collision, m_camera);
+				static_cast<EnemyFairy*>(m_enemy)->RandomType();
 
-			m_enemies.emplace_back(m_enemy);
-			m_gameObjects.emplace_back(m_enemy);
+				m_enemies.emplace_back(m_enemy);
+				m_gameObjects.emplace_back(m_enemy);
 
-			delete enemy;  // メモリを解放
-			it = m_enemies_respawn_list.erase(it);  // リストから削除
+				m_total_respawns++;  // 再生成回数を増やす
+			}
+
+			delete enemy;
+			it = m_enemies_respawn_list.erase(it);
 		}
 		else
 		{

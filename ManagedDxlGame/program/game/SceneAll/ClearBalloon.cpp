@@ -21,46 +21,52 @@ void ClearBalloon::Initialize()
 
 void ClearBalloon::Update(float delta_time)
 {
-	if (m_pos.x != 0 && m_pos.y != 0)
+	if (m_is_draw)
 	{
-		MoveBalloon(delta_time);
+		if (m_pos.x != 0 && m_pos.y != 0)
+		{
+			MoveBalloon(delta_time);
+		}
 	}
 }
 
 void ClearBalloon::Draw(float delta_time, const Camera* camera)
 {
-	ClearPosChange();
-
-	tnl::Vector3 draw_pos =
-		m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
-	if (m_pos.x != 0 && m_pos.y != 0 && m_collision->GetIsUp())
+	if (m_is_draw)
 	{
-		if (m_collision->GetIsClear() && 
-			(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_12)))
-		{
-			MusicManager::GetInstance().PlaySE("clear");
+		ClearPosChange();
 
-			m_is_change_grahic = true;
+		tnl::Vector3 draw_pos =
+			m_pos - camera->GetTarget() + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
+
+		if (m_pos.x != 0 && m_pos.y != 0 && m_collision->GetIsUp())
+		{
+			if (m_collision->GetIsClear() &&
+				(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_12)))
+			{
+				MusicManager::GetInstance().PlaySE("clear");
+
+				m_is_change_grahic = true;
+			}
+
+			if (m_is_change_grahic)
+			{
+				DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
+					draw_pos.x + m_size_x, draw_pos.y, m_balloon_clear_hdl, true);
+
+				e_balloon_state = eBalloonState::SceneChange;
+			}
+			else
+			{
+				DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
+					draw_pos.x + m_size_x, draw_pos.y, m_balloon_hdl, true);
+			}
 		}
 
-		if(m_is_change_grahic)
+		if (e_balloon_state == eBalloonState::Floating && m_blink_time < (BLINK_INTERVAL / 2.0f))
 		{
-			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
-							draw_pos.x + m_size_x, draw_pos.y, m_balloon_clear_hdl, true);
-
-			e_balloon_state = eBalloonState::SceneChange;
+			DrawGraph(draw_pos.x - 100, draw_pos.y, m_clear_up_hdl, true);
 		}
-		else
-		{
-			DrawExtendGraph(draw_pos.x - m_size_x, draw_pos.y - m_size_y,
-							draw_pos.x + m_size_x, draw_pos.y,m_balloon_hdl, true);
-		}
-	}
-
-	if (e_balloon_state == eBalloonState::Floating && m_blink_time < (BLINK_INTERVAL / 2.0f))
-	{
-		DrawGraph(draw_pos.x-100, draw_pos.y,m_clear_up_hdl, true);
 	}
 }
 
