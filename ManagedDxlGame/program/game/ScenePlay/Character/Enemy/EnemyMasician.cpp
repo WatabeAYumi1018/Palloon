@@ -15,8 +15,10 @@ EnemyMasician::~EnemyMasician()
 
 void EnemyMasician::Update(float delta_time)
 {
-    //ちょっと浮かばせたい
-    tnl_sequence_.update(delta_time);
+    if (m_player)
+    {
+        tnl_sequence_.update(delta_time);
+    }
 }
 
 void EnemyMasician::Draw(float delta_time, const Camera* camera)
@@ -31,11 +33,13 @@ void EnemyMasician::Draw(float delta_time, const Camera* camera)
 bool EnemyMasician::SeqIdle(float delta_time)
 {
     float distance_x = m_pos.x - m_player->GetPos().x;
+    float distance_y = m_pos.y - m_player->GetPos().y;
 
-    //プレイヤーとの距離計算
-    if (std::abs(distance_x) < 200)
+    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
     {
         tnl_sequence_.change(&EnemyMasician::SeqAttack);
+
+        TNL_SEQ_CO_END;
     }
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
@@ -57,44 +61,45 @@ bool EnemyMasician::SeqIdle(float delta_time)
     });
 
     tnl_sequence_.change(&EnemyMasician::SeqMove);
+    
     TNL_SEQ_CO_END;
 }
 
 bool EnemyMasician::SeqMove(float delta_time)
 {
-    if (m_player)
+    float distance_x = m_pos.x - m_player->GetPos().x;
+    float distance_y = m_pos.y - m_player->GetPos().y;
+
+    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
     {
-        float distance_x = m_pos.x - m_player->GetPos().x;
-
-        if (std::abs(distance_x) < 200)
-        {
-            tnl_sequence_.change(&EnemyMasician::SeqAttack);
-        }
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            if (CanMoveRight())
-            {
-                animLoader->SetAnimation(30);
-                m_pos.x += m_velocity.x * delta_time;
-                m_is_direction_right = true;
-            }
-        });
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            if (CanMoveRight())
-            {
-                animLoader->SetAnimation(31);
-                m_pos.x -= m_velocity.x * delta_time;
-                m_is_direction_right = false;
-            }
-        });
-
-        tnl_sequence_.change(&EnemyMasician::SeqIdle);
-
+        tnl_sequence_.change(&EnemyMasician::SeqAttack);
+        
         TNL_SEQ_CO_END;
     }
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    {
+        if (CanMoveRight())
+        {
+            animLoader->SetAnimation(30);
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
+        }
+    });
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    {
+        if (CanMoveRight())
+        {
+            animLoader->SetAnimation(31);
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;
+        }
+    });
+
+    tnl_sequence_.change(&EnemyMasician::SeqIdle);
+
+    TNL_SEQ_CO_END;
 }
 bool EnemyMasician::SeqAttack(float delta_time)
 {
@@ -102,27 +107,21 @@ bool EnemyMasician::SeqAttack(float delta_time)
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if (m_player)
+        if (CanMoveRight() && distance_x < 0)
         {
-            if (CanMoveRight() && distance_x < 0)
-            {
-                animLoader->SetAnimation(32);
-                m_pos.x += m_velocity.x * delta_time;
-                m_is_direction_right = true;
-            }
+            animLoader->SetAnimation(32);
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
         }
     });
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if (m_player)
+        if (CanMoveRight() && distance_x > 0)
         {
-            if (CanMoveRight() && distance_x > 0)
-            {
-                animLoader->SetAnimation(33);
-                m_pos.x -= m_velocity.x * delta_time;
-                m_is_direction_right = false;
-            }
+            animLoader->SetAnimation(33);
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;
         }
     });
 

@@ -15,7 +15,10 @@ EnemyFairy::~EnemyFairy()
 
 void EnemyFairy::Update(float delta_time)
 {
-    tnl_sequence_.update(delta_time);
+    if (m_player)
+    {
+        tnl_sequence_.update(delta_time);
+    }
 }
 
 void EnemyFairy::Draw(float delta_time, const Camera* camera)
@@ -29,11 +32,10 @@ void EnemyFairy::Draw(float delta_time, const Camera* camera)
 
 void EnemyFairy::RandomType()
 {
-    int random_type = rand() % 3;
+    int random_type = rand() % 3 ;
 
     switch (random_type)
-    {
-    
+    {  
     case 0:
         
         s_type = Peach;
@@ -57,9 +59,9 @@ void EnemyFairy::RandomType()
 bool EnemyFairy::SeqIdle(float delta_time)
 {
     float distance_x = m_pos.x - m_player->GetPos().x;
+    float distance_y = m_pos.y - m_player->GetPos().y;
 
-    //プレイヤーとの距離計算
-    if (std::abs(distance_x) < 100)
+    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
     {
         tnl_sequence_.change(&EnemyFairy::SeqAttack);
     }
@@ -111,55 +113,53 @@ bool EnemyFairy::SeqIdle(float delta_time)
 
 bool EnemyFairy::SeqMove(float delta_time)
 {
-    if (m_player)
+    float distance_x = m_pos.x - m_player->GetPos().x;
+    float distance_y = m_pos.y - m_player->GetPos().y;
+
+    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
     {
-        float distance_x = m_pos.x - m_player->GetPos().x;
-
-        if (std::abs(distance_x) < 100)
-        {
-            tnl_sequence_.change(&EnemyFairy::SeqAttack);
-        }
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            if (s_type == Peach)
-            {
-                animLoader->SetAnimation(36);
-            }
-            else if (s_type == Blue)
-            {
-                animLoader->SetAnimation(42);
-            }
-            else if (s_type == Yellow)
-            {
-                animLoader->SetAnimation(48);
-            }
-            m_pos.x += m_velocity.x * delta_time;
-            m_is_direction_right = true;
-        });
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            if (s_type == Peach)
-            {
-                animLoader->SetAnimation(37);
-            }
-            else if (s_type == Blue)
-            {
-                animLoader->SetAnimation(43);
-            }
-            else if (s_type == Yellow)
-            {
-                animLoader->SetAnimation(49);
-            }
-            m_pos.x -= m_velocity.x * delta_time;
-            m_is_direction_right = false;        
-        });
-
-        tnl_sequence_.change(&EnemyFairy::SeqIdle);
-
-        TNL_SEQ_CO_END;
+        tnl_sequence_.change(&EnemyFairy::SeqAttack);
     }
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    {
+        if (s_type == Peach)
+        {
+            animLoader->SetAnimation(36);
+        }
+        else if (s_type == Blue)
+        {
+            animLoader->SetAnimation(42);
+        }
+        else if (s_type == Yellow)
+        {
+            animLoader->SetAnimation(48);
+        }
+        m_pos.x += m_velocity.x * delta_time;
+        m_is_direction_right = true;
+    });
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    {
+        if (s_type == Peach)
+        {
+            animLoader->SetAnimation(37);
+        }
+        else if (s_type == Blue)
+        {
+            animLoader->SetAnimation(43);
+        }
+        else if (s_type == Yellow)
+        {
+            animLoader->SetAnimation(49);
+        }
+        m_pos.x -= m_velocity.x * delta_time;
+        m_is_direction_right = false;        
+    });
+
+    tnl_sequence_.change(&EnemyFairy::SeqIdle);
+
+    TNL_SEQ_CO_END;
 }
 bool EnemyFairy::SeqAttack(float delta_time)
 {
@@ -167,51 +167,44 @@ bool EnemyFairy::SeqAttack(float delta_time)
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if (m_player)
+        if (distance_x < 0)
         {
-            if (distance_x < 0)
+            if (s_type == Peach)
             {
-
-                if (s_type == Peach)
-                {
-                    animLoader->SetAnimation(38);
-                }
-                else if (s_type == Blue)
-                {
-                    animLoader->SetAnimation(44);
-                }
-                else if (s_type == Yellow)
-                {
-                    animLoader->SetAnimation(50);
-                }
-                m_pos.x += m_velocity.x * delta_time;
-                m_is_direction_right = true;
+                animLoader->SetAnimation(38);
             }
+            else if (s_type == Blue)
+            {
+                animLoader->SetAnimation(44);
+            }
+            else if (s_type == Yellow)
+            {
+                animLoader->SetAnimation(50);
+            }
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
         }
     });
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if (m_player)
+        if (distance_x > 0)
         {
-            if (distance_x > 0)
+            if (s_type == Peach)
             {
-                if (s_type == Peach)
-                {
-                    animLoader->SetAnimation(39);
-                }
-                else if (s_type == Blue)
-                {
-                    animLoader->SetAnimation(45);
-                }
-                else if (s_type == Yellow)
-                {
-                    animLoader->SetAnimation(51);
-                }
-
-                m_pos.x -= m_velocity.x * delta_time;
-                m_is_direction_right = false;
+                animLoader->SetAnimation(39);
             }
+            else if (s_type == Blue)
+            {
+                animLoader->SetAnimation(45);
+            }
+            else if (s_type == Yellow)
+            {
+                animLoader->SetAnimation(51);
+            }
+
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;
         }
     });
 

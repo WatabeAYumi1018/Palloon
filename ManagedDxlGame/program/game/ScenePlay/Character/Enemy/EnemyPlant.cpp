@@ -18,7 +18,10 @@ void EnemyPlant::Update(float delta_time)
     //重力で下に落ちる
     m_pos.y += m_gravity.y * delta_time*0.1;
 
-    tnl_sequence_.update(delta_time);
+    if (m_player)
+    {
+        tnl_sequence_.update(delta_time);
+    }
 }
 
 void EnemyPlant::Draw(float delta_time, const Camera* camera)
@@ -36,9 +39,9 @@ void EnemyPlant::Draw(float delta_time, const Camera* camera)
 bool EnemyPlant::SeqIdle(float delta_time)
 {
     float distance_x = m_pos.x - m_player->GetPos().x;
+    float distance_y = m_pos.y - m_player->GetPos().y;
 
-    //プレイヤーとの距離計算
-    if (std::abs(distance_x) < 200)
+    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
     {
         tnl_sequence_.change(&EnemyPlant::SeqAttack);
     }
@@ -70,25 +73,19 @@ bool EnemyPlant::SeqAttack(float delta_time)
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if (m_player)
+        if (CanMoveRight() && distance_x < 0)
         {
-            if (CanMoveRight() && distance_x < 0)
-            {
-                animLoader->SetAnimation(26);
-                m_is_direction_right = true;
-            }
-        }
+            animLoader->SetAnimation(26);
+            m_is_direction_right = true;
+        } 
     });
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if (m_player)
+        if (CanMoveLeft() && distance_x > 0)
         {
-            if (CanMoveLeft() && distance_x > 0)
-            {
-                animLoader->SetAnimation(27);
-                m_is_direction_right = false;
-            }
+            animLoader->SetAnimation(27);
+            m_is_direction_right = false;
         }
     });
 

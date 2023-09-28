@@ -20,7 +20,10 @@ void EnemySlim::Update(float delta_time)
         //重力で下に落ちる
         m_pos.y += (m_gravity.y * delta_time);
 
-        tnl_sequence_.update(delta_time);
+        if (m_player)
+        {
+            tnl_sequence_.update(delta_time);
+        }
     }
 }
 
@@ -39,14 +42,16 @@ void EnemySlim::Draw(float delta_time, const Camera* camera)
 bool EnemySlim::SeqIdle(float delta_time)
 {
     float distance_x = m_pos.x - m_player->GetPos().x;
+    float distance_y = m_pos.y - m_player->GetPos().y;
 
-    //プレイヤーとの距離計算
-    if (std::abs(distance_x) < 100)
+    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
     {
-        tnl_sequence_.change(&EnemySlim::SeqAttack);
+        tnl_sequence_.change(&EnemySlim::SeqAttack); 
+
+        TNL_SEQ_CO_END;
     }
 
-    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
         if (m_is_direction_right)
@@ -55,7 +60,7 @@ bool EnemySlim::SeqIdle(float delta_time)
         }
     });
 
-    TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
+    TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
         //初期値trueのため最初は右向きから
         if (!m_is_direction_right)
@@ -65,44 +70,46 @@ bool EnemySlim::SeqIdle(float delta_time)
     });
 
     tnl_sequence_.change(&EnemySlim::SeqMove);
+
     TNL_SEQ_CO_END;
 }
 
 bool EnemySlim::SeqMove(float delta_time)
 {
-    if (m_player)
+    float distance_x = m_pos.x - m_player->GetPos().x;
+    float distance_y = m_pos.y - m_player->GetPos().y;  
+
+    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
     {
-        float distance_x = m_pos.x - m_player->GetPos().x;
-
-        if (std::abs(distance_x) < 100)
-        {
-            tnl_sequence_.change(&EnemySlim::SeqAttack);
-        }
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            if (CanMoveRight())
-            {
-                animLoader->SetAnimation(20); 
-                m_pos.x += m_velocity.x * delta_time;
-                m_is_direction_right = true;
-            }
-        });
-
-        TNL_SEQ_CO_TIM_YIELD_RETURN(2, delta_time, [&]()
-        {
-            if (CanMoveLeft())
-            {
-                animLoader->SetAnimation(21); 
-                m_pos.x -= m_velocity.x * delta_time;
-                m_is_direction_right = false;
-            }
-        });
-
-        tnl_sequence_.change(&EnemySlim::SeqIdle);
+        tnl_sequence_.change(&EnemySlim::SeqAttack);
 
         TNL_SEQ_CO_END;
     }
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (CanMoveRight())
+        {
+            animLoader->SetAnimation(20); 
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
+        }
+    });
+
+    TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    {
+        if (CanMoveLeft())
+        {
+            animLoader->SetAnimation(21); 
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;
+        }
+    });
+
+    tnl_sequence_.change(&EnemySlim::SeqIdle);
+
+    TNL_SEQ_CO_END;
+    
 }
 bool EnemySlim::SeqAttack(float delta_time)
 {
@@ -110,31 +117,26 @@ bool EnemySlim::SeqAttack(float delta_time)
     
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if(m_player)
+        if (CanMoveRight() && distance_x < 0)
         {
-            if (CanMoveRight() && distance_x < 0)
-            {
-                animLoader->SetAnimation(22);
-                m_pos.x += m_velocity.x * delta_time;
-                m_is_direction_right = true;
-            }
-        }
+            animLoader->SetAnimation(22);
+            m_pos.x += m_velocity.x * delta_time;
+            m_is_direction_right = true;
+        }        
     });
 
     TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
     {
-        if (m_player)
+        if (CanMoveLeft() && distance_x > 0)
         {
-            if (CanMoveLeft() && distance_x > 0)
-            {
-                animLoader->SetAnimation(23);
-                m_pos.x -= m_velocity.x * delta_time;
-                m_is_direction_right = false;
-            }
+            animLoader->SetAnimation(23);
+            m_pos.x -= m_velocity.x * delta_time;
+            m_is_direction_right = false;
         }
+        
     });
 
-    tnl_sequence_.change(&EnemySlim::SeqMove);
+    tnl_sequence_.change(&EnemySlim::SeqIdle);
     TNL_SEQ_CO_END;
 }
 
