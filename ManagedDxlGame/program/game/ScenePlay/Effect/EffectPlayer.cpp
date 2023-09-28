@@ -3,9 +3,9 @@
 #include "EffectPlayer.h"
 
 EffectPlayer::EffectPlayer(Player *player, eEffectPlayerType effectType):
-	Effect(tnl::Vector3(0, 0, 0), player), m_effectType(effectType)
+	Effect(tnl::Vector3(0, 0, 0), player), m_effectType(effectType), m_player(player)
 {
-
+	
 }
 
 EffectPlayer::~EffectPlayer()
@@ -21,11 +21,15 @@ void EffectPlayer::Update(float delta_time)
 		m_pos = m_player->GetPos();
 
 		EffectHandle();
+
 		run_time += delta_time;
 
 		if (run_time > active_time) 
 		{
+			run_time = 0.0f;
 			m_is_active = false;
+
+			return;
 		}
 	}
 }

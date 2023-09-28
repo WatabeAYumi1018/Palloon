@@ -41,6 +41,8 @@ public:
 	EnemyLoad* m_enemyLoad = nullptr;
 	Player *m_player = nullptr;
 	Enemy* m_enemy = nullptr;
+	EffectPlayer* m_effectPlayer_beam = nullptr;
+	EffectPlayer* m_effectPlayer_fire = nullptr;
 	Wind* m_wind = nullptr;
 	UI* m_ui = nullptr;
 	Logo* m_logo = nullptr;
@@ -66,10 +68,7 @@ private:
 	std::list<Enemy*> m_enemies;								/*生成した敵*/
 	std::map<int, sEnemyInfo> m_enemy_infos;					/*敵の情報*/
 
-	std::list<EffectPlayer*> m_effects;							/*エフェクト*/
-
 	std::list<Enemy*> m_enemies_remove_list;					/*削除予定の敵*/
-	std::list<EffectPlayer*> m_effects_remove_list;				/*削除予定のエフェクト*/
 
 	std::list<std::pair<Enemy*, float>> m_enemies_respawn_list;	/*リスポーン敵と秒数*/
 	
@@ -86,7 +85,6 @@ private:
 
 	void CollisionCheck(float delta_time);
 	
-	void RemoveAndDeleteEffect(EffectPlayer *effectPlayer);
 	void RemoveAndDeleteEnemy(Enemy *enemy);
 	void RemoveAndDelete();
 	

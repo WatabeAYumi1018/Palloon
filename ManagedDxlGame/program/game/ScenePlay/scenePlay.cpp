@@ -43,15 +43,20 @@ void ScenePlay::Initialize()
 	m_logo = new Logo();
 
 	m_backGround->SetBackground(m_map->GetCurrentStageInfo().s_background_hdl);
+	
 	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().s_initial_player_pos;	
 	
 	m_player = new Player(player_init_pos, m_collision, m_map, m_wind,m_logo);
 
+	m_effectPlayer_beam = new EffectPlayer(m_player, eEffectPlayerType::Beam);
+	m_effectPlayer_fire = new EffectPlayer(m_player, eEffectPlayerType::Fire);
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());
 	InitEnemy();
 	m_gameObjects.emplace_back(m_player);
+	m_gameObjects.emplace_back(m_effectPlayer_beam);
+	m_gameObjects.emplace_back(m_effectPlayer_fire);
 	m_gameObjects.emplace_back(m_clearBalloon);
 	
 	m_ui = new UI(m_player, m_enemy);
@@ -166,8 +171,6 @@ void ScenePlay::Update(float delta_time)
 		m_wind->Update(delta_time);
 	}
 
-	CreateEffect();
-
 	CollisionCheck(delta_time);
 
 	if (m_stage_name == "stage3")
@@ -181,6 +184,8 @@ void ScenePlay::Update(float delta_time)
 	}
 
 	RemoveAndDelete();
+
+	CreateEffect();
 
 	for (auto obj : m_gameObjects)
 	{
@@ -224,7 +229,6 @@ void ScenePlay::Finalize()
 	m_backGround->Finalize();
 	m_map->Finalize();
 	m_enemies.clear();
-	m_effects.clear();
 
 	MusicManager::GetInstance().StopBGM();
 }
@@ -233,39 +237,27 @@ void ScenePlay::CreateEffect()
 {
 	if (m_player->GetIsDraw())
 	{
-		if (!m_is_effect && 
-		   (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1)))
+		if (!m_effectPlayer_beam->GetIsActive() &&
+			(tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1)))
 		{
 			m_is_effect = true;
+			MusicManager::GetInstance().PlaySE("beam");
 
-			if (CheckSoundFile() == 0)
-			{
-				MusicManager::GetInstance().PlaySE("beam");
-			}
-			EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Beam);
-			effect->SetPos(m_player->GetPos());
-			effect->SetOffset(tnl::Vector3(400, 0, 0));
-			effect->CalculateCollisionCircles();
-			effect->SetIsActive(true);
-			m_gameObjects.emplace_back(effect);
-			m_effects.emplace_back(effect);
+			m_effectPlayer_beam->SetIsActive(true);
+			m_effectPlayer_beam->SetPos(m_player->GetPos());
+			m_effectPlayer_beam->SetOffset(tnl::Vector3(400, 0, 0));
+			m_effectPlayer_beam->CalculateCollisionCircles();
 		}
-		else if (!m_is_effect && 
-				(tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0)))
+		else if (!m_effectPlayer_fire->GetIsActive() &&
+			(tnl::Input::IsKeyDownTrigger(eKeys::KB_X) || tnl::Input::IsPadDownTrigger(ePad::KEY_0)))
 		{
 			m_is_effect = true;
+			MusicManager::GetInstance().PlaySE("fire");
 
-			if (CheckSoundFile() == 0)
-			{
-				MusicManager::GetInstance().PlaySE("fire");
-			}
-			EffectPlayer* effect = new EffectPlayer(m_player, eEffectPlayerType::Fire);
-			effect->SetPos(m_player->GetPos());
-			effect->SetOffset(tnl::Vector3(270, 0, 0)); // ファイアの初期オフセット
-			effect->CalculateCollisionCircles();
-			effect->SetIsActive(true);
-			m_gameObjects.emplace_back(effect);
-			m_effects.emplace_back(effect);
+			m_effectPlayer_fire->SetIsActive(true);
+			m_effectPlayer_fire->SetPos(m_player->GetPos());
+			m_effectPlayer_fire->SetOffset(tnl::Vector3(270, 0, 0));
+			m_effectPlayer_fire->CalculateCollisionCircles();
 		}
 	}
 }
@@ -348,18 +340,13 @@ void ScenePlay::CollisionCheck(float delta_time)
 
 		m_collision->CollisionCalculate(enemy, m_map, 10);
 		m_collision->CollisionCharacter(m_player, enemy);
-
-		for (auto effect : m_effects)
+		
+		for (auto effect : { m_effectPlayer_beam, m_effectPlayer_fire })
 		{
-			if (!effect->GetIsActive())
-			{
-				m_effects_remove_list.emplace_back(effect);
-				continue; // 動いていないエフェクトの判定はスキップ
-			}
+			if (!effect->GetIsActive()) continue;
 
-			bool effect_hit_enemy = false; // 当たり判定があったかどうかのフラグ
+			bool effect_hit_enemy = false;
 
-			// ここでeffect内の全ての円と敵との当たり判定をチェック
 			for (auto circlePos : effect->GetCollisionCirclesPos())
 			{
 				if (wta::IsIntersectCircleCircle(circlePos, effect->GetSize(), enemy->GetPos(), enemy->GetSize()))
@@ -372,7 +359,6 @@ void ScenePlay::CollisionCheck(float delta_time)
 			// 1つ以上の円が敵にヒットした場合の処理
 			if (effect_hit_enemy)
 			{
-
 				// 無敵状態でない場合に敵のHPを減少
 				if (!enemy->GetIsInvincible())
 				{
@@ -382,7 +368,7 @@ void ScenePlay::CollisionCheck(float delta_time)
 
 				if (enemy->GetHp() <= 0)
 				{
-					MusicManager::GetInstance().PlaySE("hit");
+					MusicManager::GetInstance().PlaySE("dead");
 					enemy->SetIsDead(true); // HPが0以下の場合、敵を死亡とする
 				}
 
@@ -390,12 +376,6 @@ void ScenePlay::CollisionCheck(float delta_time)
 			}
 		}
 	}
-}
-
-void ScenePlay::RemoveAndDeleteEffect(EffectPlayer* effect)
-{
-	m_gameObjects.remove(effect);
-	m_effects.remove(effect);
 }
 
 void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
@@ -406,14 +386,6 @@ void ScenePlay::RemoveAndDeleteEnemy(Enemy* enemy)
 
 void ScenePlay::RemoveAndDelete()
 {
-	for (auto effect : m_effects_remove_list)
-	{
-		RemoveAndDeleteEffect(effect);
-		m_is_effect = false;
-	}
-
-	m_effects_remove_list.clear();
-
 	for (auto enemy : m_enemies_remove_list)
 	{
 		RemoveAndDeleteEnemy(enemy);

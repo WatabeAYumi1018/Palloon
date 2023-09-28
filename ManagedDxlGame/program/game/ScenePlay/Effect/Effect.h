@@ -2,20 +2,20 @@
 #include "../../../wta_library/wta_DrawAnim.h"
 #include "../../SceneAll/GameObject.h"
 
-class Player;
+class Character;
 
 class Effect : public GameObject
 {
 public:
 
-	Effect(tnl::Vector3 m_pos, Player* player);
+	Effect(tnl::Vector3 pos, Character* character);
 	virtual ~Effect();
 
 protected:
 	//-----メンバ変数-----//
 	int m_size = 30;						/*サイズ*/
 
-	float active_time = 0.8f;				/*エフェクトの持続時間*/
+	float active_time = 0.9f;				/*エフェクトの持続時間*/
 	float run_time = 0.0f;					/*経過時間*/
 
 	tnl::Vector3 m_offset;					/*オフセット*/
@@ -26,7 +26,7 @@ protected:
 
 	//-----ポインタ変数-----//
 	wta::DrawAnim* animLoader = nullptr;	/*アニメーション*/
-	Player* m_player = nullptr;				/*プレイヤー*/
+	Character *m_character = nullptr;		/*キャラクター*/
 
 public:
 	//-----Getter,Setter-----//

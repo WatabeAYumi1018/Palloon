@@ -23,6 +23,8 @@ private:
 	void EffectFireHandle();
 	void EffectHandle();
 
+	Player* m_player = nullptr;				/*プレイヤー*/
+
 public:
 
 	void CalculateCollisionCircles();							/*円の座標を計算する関数*/

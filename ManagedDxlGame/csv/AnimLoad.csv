@@ -55,10 +55,12 @@ ID,Name,Action,"Direction(0:right,1:left)",GraphicPath,Loop
 53,bird_green,move,1,bird/green/move_left,TRUE
 54,bird_green,attack,0,bird/green/attack_right,FALSE
 55,bird_green,attack,1,bird/green/attack_left,FALSE
-56,effect_player,fire,0,effect_player/fire_right,FALSE
-57,effect_player,fire,1,effect_player/fire_left,FALSE
-58,effect_player,beam,0,effect_player/beam_right,FALSE
-59,effect_player,beam,1,effect_player/beam_left,FALSE
+56,effect_player,fire,0,effect_player/fire_right,TRUE
+57,effect_player,fire,1,effect_player/fire_left,TRUE
+58,effect_player,beam,0,effect_player/beam_right,TRUE
+59,effect_player,beam,1,effect_player/beam_left,TRUE
 60,doragon,idle,1,doragon/idle_left,TRUE
 61,doragon,move,1,doragon/move_left,TRUE
 62,doragon,attack,1,doragon/attack_left,FALSE
+63,effect_boss,flame,1,effect_boss/flame_left,FALSE
+64,effect_boss,fireball,1,effect_boss/fireball_left,FALSE
