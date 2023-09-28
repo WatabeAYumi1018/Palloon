@@ -36,7 +36,6 @@ private:
 	bool m_is_scene_change = false;
 	bool m_is_draw = false;
 
-
 	eBalloonState e_balloon_state = eBalloonState::Hidden;
 
 	Collision *m_collision = nullptr;

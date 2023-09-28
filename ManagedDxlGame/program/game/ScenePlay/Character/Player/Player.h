@@ -76,7 +76,7 @@ private:
 	void HoveringStartLeft(float delta_time);	/*ホバリング開始処理（左）*/
 	//void HoveringEnd();						/*ホバリング終了処理*/
 
-	void Invincible(float delta_time);			/*無敵時間の処理*/
+	//void Invincible(float delta_time);			/*無敵時間の処理*/
 
 public:
 

@@ -14,7 +14,7 @@ public:
 
 private:
 
-	//TNL_CO_SEQUENCE(EnemyDoragon, &EnemyDoragon::SeqMove);						//コルーチンシーケンス
+	TNL_CO_SEQUENCE(EnemyDoragon, &EnemyDoragon::SeqIdle);						//コルーチンシーケンス
 
 public:
 	
@@ -24,7 +24,8 @@ public:
 private:
 	
 	//bool SeqMove(const float delta_time) ;
-	//bool SeqIdle(const float delta_time) ;
-	//bool SeqAttack(const float delta_time);
+	bool SeqIdle(const float delta_time) ;
+	bool SeqFireBall(const float delta_time);
+	bool SeqFire(const float delta_time);
 
 };

@@ -9,7 +9,7 @@ SceneSelect::SceneSelect() : m_selected_stage(0)
 	m_stage_names.emplace_back("stage1");
 	m_stage_names.emplace_back("stage2");
 	m_stage_names.emplace_back("stage3");
-	m_stage_names.emplace_back("boss");
+	m_stage_names.emplace_back("stageBoss");
 };
 
 void SceneSelect::Update(float delta_time)

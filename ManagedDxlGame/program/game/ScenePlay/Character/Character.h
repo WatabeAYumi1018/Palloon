@@ -37,6 +37,8 @@ public:
 	void DecreaseHP(int damage);
 	void MakeInvincible();
 
+	void Invincible(float delta_time);			/*–³“GŠÔ‚Ìˆ—*/
+
 	//-----Setter,Getter-----//
 	int GetSize() const { return m_size; }
 	

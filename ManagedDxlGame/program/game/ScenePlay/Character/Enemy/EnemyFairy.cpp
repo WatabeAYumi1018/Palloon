@@ -19,6 +19,8 @@ void EnemyFairy::Update(float delta_time)
     {
         tnl_sequence_.update(delta_time);
     }
+
+    Invincible(delta_time);
 }
 
 void EnemyFairy::Draw(float delta_time, const Camera* camera)
@@ -27,7 +29,19 @@ void EnemyFairy::Draw(float delta_time, const Camera* camera)
     tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
         tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 
-    animLoader->Draw(delta_time, draw_pos);
+    //無敵中は点滅描画
+    if (m_is_invincible)
+    {
+        // 0.1秒ごとに表示・非表示を切り替えて点滅
+        if (static_cast<int>(m_invincible_time * 10) % 2 == 0)
+        {
+            animLoader->Draw(delta_time, draw_pos);
+        }
+    }
+    else
+    {
+        animLoader->Draw(delta_time, draw_pos);
+    }
 }
 
 void EnemyFairy::RandomType()

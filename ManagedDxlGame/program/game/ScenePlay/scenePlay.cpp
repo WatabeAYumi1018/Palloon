@@ -46,13 +46,17 @@ void ScenePlay::Initialize()
 	tnl::Vector3 player_init_pos = m_map->GetCurrentStageInfo().s_initial_player_pos;	
 	
 	m_player = new Player(player_init_pos, m_collision, m_map, m_wind,m_logo);
+
 	
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());
 	InitEnemy();
 	m_gameObjects.emplace_back(m_player);
-	m_gameObjects.emplace_back(new UI(m_player));
 	m_gameObjects.emplace_back(m_clearBalloon);
+	
+	m_ui = new UI(m_player, m_enemy);
+	
+	m_gameObjects.emplace_back(m_ui);
 	m_gameObjects.emplace_back(m_logo);
 }
 
@@ -127,6 +131,12 @@ void ScenePlay::InitEnemy()
 			
 			break;
 
+		case 5:
+					
+			m_enemy = new EnemyDoragon(data, m_enemy_infos[data.s_type_id], m_player, m_map, m_collision, m_camera);
+			
+			break;
+
 		default:
 			
 			continue;	//無効なIDの場合はスキップ
@@ -189,12 +199,19 @@ void ScenePlay::Draw(float delta_time)
 		m_balloonInstruction->Draw(delta_time, m_camera);
 	}
 	
+	if (m_stage_name == "stageBoss")
+	{
+		m_ui->SetIsDraw(true);
+	}
+
 	m_map->Draw(m_camera);
 
 	for (auto obj : m_gameObjects) 
 	{
 		obj->Draw(delta_time, m_camera);
 	}
+
+
 }
 
 void ScenePlay::Finalize()
@@ -216,7 +233,6 @@ void ScenePlay::CreateEffect()
 {
 	if (m_player->GetIsDraw())
 	{
-
 		if (!m_is_effect && 
 		   (tnl::Input::IsKeyDownTrigger(eKeys::KB_C) || tnl::Input::IsPadDownTrigger(ePad::KEY_1)))
 		{
@@ -356,10 +372,21 @@ void ScenePlay::CollisionCheck(float delta_time)
 			// 1つ以上の円が敵にヒットした場合の処理
 			if (effect_hit_enemy)
 			{
-				MusicManager::GetInstance().PlaySE("dead");
-				enemy->SetIsDead(true);
 
-				break;  //死んだら当たり判定不要
+				// 無敵状態でない場合に敵のHPを減少
+				if (!enemy->GetIsInvincible())
+				{
+					enemy->DecreaseHP(1); // ここでHPを減少させる
+					enemy->MakeInvincible(); // 一定時間無敵状態にする
+				}
+
+				if (enemy->GetHp() <= 0)
+				{
+					MusicManager::GetInstance().PlaySE("hit");
+					enemy->SetIsDead(true); // HPが0以下の場合、敵を死亡とする
+				}
+
+				break; //死んだらまたは無敵状態である場合は当たり判定不要
 			}
 		}
 	}

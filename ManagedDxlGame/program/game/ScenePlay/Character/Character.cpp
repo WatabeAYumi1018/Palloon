@@ -24,6 +24,21 @@ void Character::DecreaseHP(int damage)
 	}
 }
 
+
+void Character::Invincible(float delta_time)
+{
+	// 無敵時間を更新
+	if (m_is_invincible)
+	{
+		m_invincible_time += delta_time;
+
+		if (m_invincible_time >= 5.0f)
+		{
+			m_is_invincible = false;
+		}
+	}
+}
+
 //無敵時間のリセット
 void Character::MakeInvincible()
 {

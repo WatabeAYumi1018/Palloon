@@ -50,6 +50,13 @@ enum class eEffectPlayerType
 	Beam,
 };
 
+enum class eEffectBossType
+{
+	None,
+	FireBall,
+	Flame,
+};
+
 enum class eEffectCollisionType
 {
 	None,

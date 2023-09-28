@@ -59,3 +59,6 @@ ID,Name,Action,"Direction(0:right,1:left)",GraphicPath,Loop
 57,effect_player,fire,1,effect_player/fire_left,FALSE
 58,effect_player,beam,0,effect_player/beam_right,FALSE
 59,effect_player,beam,1,effect_player/beam_left,FALSE
+60,doragon,idle,1,doragon/idle_left,TRUE
+61,doragon,move,1,doragon/move_left,TRUE
+62,doragon,attack,1,doragon/attack_left,FALSE

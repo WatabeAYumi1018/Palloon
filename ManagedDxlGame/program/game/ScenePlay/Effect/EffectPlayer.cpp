@@ -2,18 +2,15 @@
 #include "../Camera/Camera.h"
 #include "EffectPlayer.h"
 
-
 EffectPlayer::EffectPlayer(Player *player, eEffectPlayerType effectType):
 	Effect(tnl::Vector3(0, 0, 0), player), m_effectType(effectType)
 {
-	// CSVからアニメーションデータをロード
-	animLoader = new wta::DrawAnim("csv/AnimLoad.csv", "graphics/animation");
+
 }
 
 EffectPlayer::~EffectPlayer()
 {
-	delete animLoader;
-	animLoader = nullptr;
+
 }
 
 void EffectPlayer::Update(float delta_time)
@@ -22,7 +19,6 @@ void EffectPlayer::Update(float delta_time)
 	{
 		// エフェクトの位置をプレイヤーの位置に更新
 		m_pos = m_player->GetPos();
-
 
 		EffectHandle();
 		run_time += delta_time;

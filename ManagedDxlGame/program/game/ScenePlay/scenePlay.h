@@ -16,6 +16,7 @@ class Player;
 class Enemy;
 class EffectPlayer;
 class Wind;
+class UI;
 class Logo;
 
 class ScenePlay : public SceneBase 
@@ -41,6 +42,7 @@ public:
 	Player *m_player = nullptr;
 	Enemy* m_enemy = nullptr;
 	Wind* m_wind = nullptr;
+	UI* m_ui = nullptr;
 	Logo* m_logo = nullptr;
 
 private:

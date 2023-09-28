@@ -1,4 +1,5 @@
 #pragma once
+#include "../../../wta_library/wta_DrawAnim.h"
 #include "../../SceneAll/GameObject.h"
 
 class Player;
@@ -6,8 +7,9 @@ class Player;
 class Effect : public GameObject
 {
 public:
-	Effect(tnl::Vector3 m_pos, Player* player) :GameObject(m_pos), m_player(player) {}
-	virtual ~Effect() {}
+
+	Effect(tnl::Vector3 m_pos, Player* player);
+	virtual ~Effect();
 
 protected:
 	//-----メンバ変数-----//
@@ -23,6 +25,7 @@ protected:
 	eEffectPlayerType m_type;				/*エフェクトの種類*/
 
 	//-----ポインタ変数-----//
+	wta::DrawAnim* animLoader = nullptr;	/*アニメーション*/
 	Player* m_player = nullptr;				/*プレイヤー*/
 
 public:

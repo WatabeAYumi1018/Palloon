@@ -203,7 +203,7 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
     if (wta::IsIntersectCircleCircle(player_pos, player_size, enemy_pos, enemy_size))
     {
         //–³“Gó‘Ô‚Å‚È‚¢ê‡
-        if (!player->GetIsInvincible())
+        if (!player->GetIsInvincible() && !enemy->GetIsInvincible())
         {
             //ƒvƒŒƒCƒ„[‚Ì•û‚ª‚‚¢ˆÊ’u‚É‚¢‚éê‡
             if (enemy_pos.y > player_pos.y)
@@ -212,17 +212,34 @@ void Collision::CollisionCharacter(Player* player, Enemy* enemy)
                 {
                     MusicManager::GetInstance().PlaySE("hit");
                 }
-                //“G‚ð“¥‚ñ‚Å‚¢‚é‚Æ”FŽ¯
+                // “G‚ÌHP‚ðŒ¸­‚³‚¹‚é
+                enemy->DecreaseHP(1);
+                //ˆê’èŽžŠÔ–³“Gó‘Ô‚É‚·‚é
+                enemy->MakeInvincible();
+
+                if (enemy->GetHp() <= 0)
+                {
+                    // HP‚ª0ˆÈ‰º‚Ìê‡A“G‚ðŽ€–S‚Æ‚·‚é
+                    enemy->SetIsDead(true);
+                }
                 player->SetIsStamp(true);
-                enemy->SetIsDead(true);
             }
 
             //ƒvƒŒƒCƒ„[‚Ìƒ[ƒ‹’†
             else if (player->GetIsRolling())
             {
                 MusicManager::GetInstance().PlaySE("hit");
-				//‰ñ“]’†‚Í“G‚ð“|‚·
-				enemy->SetIsDead(true);
+                
+                // “G‚ÌHP‚ðŒ¸­‚³‚¹‚é
+                enemy->DecreaseHP(1);
+                //ˆê’èŽžŠÔ–³“Gó‘Ô‚É‚·‚é
+                enemy->MakeInvincible();
+
+                if (enemy->GetHp() <= 0)
+                {
+                    // HP‚ª0ˆÈ‰º‚Ìê‡A“G‚ðŽ€–S‚Æ‚·‚é
+                    enemy->SetIsDead(true);
+                }
 			}
 
             else

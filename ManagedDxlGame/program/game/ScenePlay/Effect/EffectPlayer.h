@@ -1,5 +1,4 @@
 #pragma once
-#include "../../../wta_library/wta_DrawAnim.h"
 #include "../engine/GameEngine.h"
 #include "Effect.h"
 
@@ -19,9 +18,6 @@ private:
 
 	eEffectPlayerType m_effectType = eEffectPlayerType::None;	/*エフェクトの種類*/
 	
-	//-----ポインタ変数-----//
-	wta::DrawAnim* animLoader = nullptr;						/*アニメーション*/
-
 	//-----メンバ関数-----//
 	void EffectBeamHandle();
 	void EffectFireHandle();

@@ -4,4 +4,4 @@ EnemyID,Type,Color,HP,Size
 2,Magician,yellow,2,35
 3,Fairy,peach,2,25
 4,Bird,green,1,35
-5,Doragon,red,20,500
+5,Doragon,red,20,50

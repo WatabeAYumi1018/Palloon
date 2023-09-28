@@ -278,6 +278,12 @@
     <ClCompile Include="program\game\ScenePlay\Logo\Logo.cpp">
       <Filter>program\[004] game\[004]scenePlay\[06]Logo</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Effect\EffectBoss.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\ScenePlay\Effect\Effect.cpp">
+      <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -484,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="program\game\ScenePlay\Logo\Logo.h">
       <Filter>program\[004] game\[004]scenePlay\[06]Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\ScenePlay\Effect\EffectBoss.h">
+      <Filter>program\[004] game\[004]scenePlay\[04]Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
