@@ -16,16 +16,13 @@ private:
 
 	TNL_CO_SEQUENCE(EnemyDoragon, &EnemyDoragon::SeqIdle);						//コルーチンシーケンス
 
+	//-----メンバ関数-----//
+	bool SeqIdle(const float delta_time);
+	bool SeqFireBall(const float delta_time);
+	bool SeqFlame(const float delta_time);
+
 public:
 	
 	void Update(const float delta_time) override;	//更新処理
 	void Draw(const float delta_time, const Camera* camera) override;		//描画処理
-
-private:
-	
-	//bool SeqMove(const float delta_time) ;
-	bool SeqIdle(const float delta_time) ;
-	bool SeqFireBall(const float delta_time);
-	bool SeqFire(const float delta_time);
-
 };

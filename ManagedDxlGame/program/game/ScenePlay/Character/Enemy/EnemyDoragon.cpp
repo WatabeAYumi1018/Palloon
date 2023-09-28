@@ -15,9 +15,6 @@ EnemyDoragon::~EnemyDoragon()
 
 void EnemyDoragon::Update(float delta_time)
 {
-    //重力で下に落ちる
-    m_pos.y += m_gravity.y * delta_time *0.1f;
-
     if (m_player)
     {
         tnl_sequence_.update(delta_time);
@@ -28,22 +25,18 @@ void EnemyDoragon::Update(float delta_time)
 
 void EnemyDoragon::Draw(float delta_time, const Camera* camera)
 {
-    //カメラの位置に合わせて描画位置をずらす
-    tnl::Vector3 draw_pos = m_pos - camera->GetTarget() +
-        tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
     //無敵中は点滅描画
     if (m_is_invincible)
     {
         // 0.1秒ごとに表示・非表示を切り替えて点滅
         if (static_cast<int>(m_invincible_time * 10) % 2 == 0)
         {
-            animLoader->Draw(delta_time, draw_pos);
+            animLoader->Draw(delta_time, m_pos);
         }
     }
     else
     {
-        animLoader->Draw(delta_time, draw_pos);
+        animLoader->Draw(delta_time, m_pos);
     }
 }
 
@@ -53,7 +46,7 @@ void EnemyDoragon::Draw(float delta_time, const Camera* camera)
 //離れているとプレイヤーの方向へ進む（火の玉と突進は確率で二分）
 bool EnemyDoragon::SeqIdle(float delta_time)
 {
-    TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    TNL_SEQ_CO_TIM_YIELD_RETURN(3, delta_time, [&]()
     {
         if (!m_is_direction_right)
         {
@@ -65,16 +58,16 @@ bool EnemyDoragon::SeqIdle(float delta_time)
     float distance_y = m_pos.y - m_player->GetPos().y;
 
     //プレイヤーとの距離が遠ければ火の玉か突進
-    if (std::abs(distance_x) > 200 && std::abs(distance_y) > 200)
+    if (std::abs(distance_x) > 700 && std::abs(distance_y) > 700)
     {
         tnl_sequence_.change(&EnemyDoragon::SeqFireBall);
 
         TNL_SEQ_CO_END;
     }
 
-    if (std::abs(distance_x) < 200 && std::abs(distance_y) < 200)
+    if (std::abs(distance_x) <= 700 && std::abs(distance_y) <= 700)
     {
-        tnl_sequence_.change(&EnemyDoragon::SeqFire);
+        tnl_sequence_.change(&EnemyDoragon::SeqFlame);
 
         TNL_SEQ_CO_END;
     }
@@ -82,11 +75,13 @@ bool EnemyDoragon::SeqIdle(float delta_time)
     TNL_SEQ_CO_END;
 }
 
-
 bool EnemyDoragon::SeqFireBall(float delta_time)
 {
-    TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    TNL_SEQ_CO_TIM_YIELD_RETURN(3, delta_time, [&]()
     {
+        m_is_fireball = true;
+        m_is_active_boss = true;
+
         animLoader->SetAnimation(62);
     });
 
@@ -95,10 +90,13 @@ bool EnemyDoragon::SeqFireBall(float delta_time)
     TNL_SEQ_CO_END;
 }
 
-bool EnemyDoragon::SeqFire(float delta_time)
+bool EnemyDoragon::SeqFlame(float delta_time)
 {
-    TNL_SEQ_CO_TIM_YIELD_RETURN(1, delta_time, [&]()
+    TNL_SEQ_CO_TIM_YIELD_RETURN(3, delta_time, [&]()
     {
+        m_is_flame= true;
+        m_is_active_boss = true;
+
         animLoader->SetAnimation(62);
     });
 

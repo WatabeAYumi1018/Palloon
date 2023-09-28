@@ -55,5 +55,5 @@ private:
 public:
 	//-----Getter&Setter-----//
 	bool GetIsChangeGraphic() const { return m_is_change_grahic; }
-	void SteIsDraw(bool is_draw) { m_is_draw = is_draw; }
+	void SetIsDraw(bool is_draw) { m_is_draw = is_draw; }
 };

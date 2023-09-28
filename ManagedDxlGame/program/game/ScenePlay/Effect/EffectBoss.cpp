@@ -1,18 +1,13 @@
 #include "EffectBoss.h"
 #include "../Character/Enemy/Enemy.h"
+#include "../Character/Player/Player.h"
 #include "../Camera/Camera.h"
 
 
-EffectBoss::EffectBoss(Enemy* enemy, eEffectBossType effectType) :
-    Effect(tnl::Vector3(0, 0, 0), enemy), e_effectType(effectType)
+EffectBoss::EffectBoss(Enemy* enemy,Player* player) :
+    Effect(tnl::Vector3(0, 0, 0), enemy), m_enemy(enemy), m_player(player)
 {
-    //if (e_effectType == eEffectBossType::FireBall)
-    //{
-    //    m_fireball_pos = m_enemy->GetPos();
-    //    //プレイヤーの座標を取得
-    //    tnl::Vector3 playerPos = m_player->GetPos();
-    //    m_fireball_direction = (playerPos - m_fireball_pos).tnl::normalized();
-    //}
+   m_pos = m_enemy->GetPos();
 }
 
 EffectBoss::~EffectBoss()
@@ -22,38 +17,33 @@ EffectBoss::~EffectBoss()
 
 void EffectBoss::Update(float delta_time)
 {
-    if (m_is_active)
+    if (m_enemy->GetIsActiveBoss())
     {
-        m_pos = m_enemy->GetPos();
-
         EffectHandle();
+
+        CalculateCollisionCircles();
 
         run_time += delta_time;
 
         if (run_time > active_time)
         {
             run_time = 0;
-            m_is_active = false;
+            m_enemy->SetIsActiveBoss(false);
         }
-        //ファイアボールの座標更新
-        if (m_is_fireball && e_effectType == eEffectBossType::FireBall)
+
+        // ファイアボールの座標更新
+        if (e_effectType == eEffectBossType::FireBall)
         {
-            m_fireball_pos += m_fireball_direction * FIREBALL_SPEED;
+            m_pos += m_fireball_dir * delta_time * 2;
         }
     }
 }
-
 void EffectBoss::Draw(float delta_time, const Camera* camera)
 {
-    if (m_is_active)
-    {
-        tnl::Vector3 draw_pos;
-
-            draw_pos = m_pos - m_offset - camera->GetTarget() +
-                tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-
-        animLoader->Draw(delta_time * 2, draw_pos);
-    }
+    //if (m_enemy->GetIsActiveBoss())
+    //{
+    //   animLoader->Draw(delta_time, m_pos);
+    //}
 }
 
 void EffectBoss::CalculateCollisionCircles()
@@ -67,21 +57,31 @@ void EffectBoss::CalculateCollisionCircles()
     if (e_effectType == eEffectBossType::Flame)
     {
         //右：１つの円
-        circle_pos = -m_pos;
+        circle_pos = m_pos.x+ DRAGON_FIRE_SIZE;
+
+        DrawCircle(circle_pos.x, circle_pos.y, DRAGON_FIRE_SIZE, -1, true);
+
         m_collision_circles_pos.emplace_back(circle_pos);
 
-        //中央：２つの円
+        //中央右：２つの円
         for (int i = 1; i <= 2; i++)
         {
             circle_pos = m_pos - tnl::Vector3(i * DRAGON_FIRE_SIZE, 0, 0);
+
+            DrawCircle(circle_pos.x, circle_pos.y, DRAGON_FIRE_SIZE, -1, true);
+
             m_collision_circles_pos.emplace_back(circle_pos);
         }
 
-        //左：３つの円
+        //中央左：３つの円
         for (int i = 1; i <= 3; i++)
         {
             circle_pos = m_pos - tnl::Vector3((i + 2) * DRAGON_FIRE_SIZE, 0, 0);
+            
+            DrawCircle(circle_pos.x, circle_pos.y, DRAGON_FIRE_SIZE, -1, true);
+
             m_collision_circles_pos.emplace_back(circle_pos);
+
         }
     }
 
@@ -91,29 +91,44 @@ void EffectBoss::CalculateCollisionCircles()
         m_collision_circles_pos.emplace_back(m_fireball_pos);
     }
 }
+
 void EffectBoss::FlameHandle()
 {
-    if (m_is_flame)
-    {
-        animLoader->SetAnimation(63);
-    }
+    m_pos = m_enemy->GetPos() - m_offset_flame;
+
+    e_effectType = eEffectBossType::Flame;
+        
+    animLoader->SetAnimation(63);
 }
 
 void EffectBoss::FireballHandle()
 {
-    if (m_is_fireball)
+    e_effectType = eEffectBossType::FireBall;
+       
+    animLoader->SetAnimation(64);
+
+    m_pos = m_enemy->GetPos() - m_offset_fireball;
+
+    m_fireball_dir = m_player->GetPos() - m_pos;
+
+    //ベクトルの正規化
+    float length =
+        std::sqrt(m_fireball_dir.x * m_fireball_dir.x + m_fireball_dir.y * m_fireball_dir.y);
+
+    if (length != 0)
     {
-        animLoader->SetAnimation(64);  
+        m_fireball_dir.x /= length;
+        m_fireball_dir.y /= length;
     }
 }
 
 void EffectBoss::EffectHandle()
 {
-    if (e_effectType == eEffectBossType::Flame)
+    if (m_enemy->GetIsFlame())
     {
         FlameHandle();
     }
-    else if (e_effectType == eEffectBossType::FireBall)
+    else if (m_enemy->GetIsFireBall())
     {
         FireballHandle();
     }

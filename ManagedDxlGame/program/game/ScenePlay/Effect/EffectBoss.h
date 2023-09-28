@@ -4,12 +4,13 @@
 #include "Effect.h"
 
 class Enemy;
+class Player;
 
 class EffectBoss : public Effect
 {
 public:
 
-    EffectBoss(Enemy* enemy, eEffectBossType effectType);
+    EffectBoss(Enemy* enemy,Player* player);
     ~EffectBoss();
 
 private:
@@ -20,19 +21,19 @@ private:
 
     //-----メンバ変数-----//
     tnl::Vector3 m_fireball_pos;  // ファイアーボールの位置
-    tnl::Vector3 m_fireball_direction; // ファイアーボールが飛ぶ方向
+    tnl::Vector3 m_offset_flame = {600,-100,0};     // 火炎放射の位置
+    tnl::Vector3 m_offset_fireball = { 200,0,0 };  // ファイアーボールの位置
+    tnl::Vector3 m_fireball_dir; // ファイアーボールが飛ぶ方向
 
     std::vector<tnl::Vector3> m_collision_circles_pos;		/*5つの円の座標*/
 
-    
     eEffectBossType e_effectType = eEffectBossType::None;
 
-    Enemy* m_enemy = nullptr;				/*プレイヤー*/
+    //-----ポインタ変数-----//
+    Enemy* m_enemy = nullptr;				
+    Player* m_player = nullptr;				
 
-
-    bool m_is_fireball = false;  /*火炎ボール*/
-    bool m_is_flame = false;     /*火炎放射*/
-
+    //-----メンバ関数-----//
     void FireballHandle();
     void FlameHandle();
     void EffectHandle();

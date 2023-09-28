@@ -18,6 +18,10 @@ namespace wta
         int currentFrame;							 //現在のフレーム
         float frameDuration;		                 //1フレームの時間（アニメーション描画のスピード調整）
 
+        float lastFrameElapsedTime = 0.0f;
+        const float LAST_FRAME_DURATION = 2.0f; // 最後のフレームを表示する時間
+
+
     public:
         // 指定IDのアニメーションをセット
         void SetAnimation(int id);

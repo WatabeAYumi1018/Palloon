@@ -11,6 +11,7 @@
 #include "../ScenePlay/Character/Enemy/EnemyFairy.h"
 #include "../ScenePlay/Character/Enemy/EnemyDoragon.h"
 #include "../ScenePlay/Effect/EffectPlayer.h"
+#include "../ScenePlay/Effect/EffectBoss.h"
 #include "../ScenePlay/Camera/Camera.h"
 #include "../SceneSelect/SceneSelect.h"
 #include "../SceneTitle/SceneTitle.h"
@@ -50,7 +51,7 @@ void ScenePlay::Initialize()
 
 	m_effectPlayer_beam = new EffectPlayer(m_player, eEffectPlayerType::Beam);
 	m_effectPlayer_fire = new EffectPlayer(m_player, eEffectPlayerType::Fire);
-	
+
 	//プレイシーンに必要なObjectを読み込み、初期化する
 	m_gameObjects.emplace_back(new Balloon());
 	InitEnemy();
@@ -59,8 +60,10 @@ void ScenePlay::Initialize()
 	m_gameObjects.emplace_back(m_effectPlayer_fire);
 	m_gameObjects.emplace_back(m_clearBalloon);
 	
-	m_ui = new UI(m_player, m_enemy);
-	
+	m_effectBoss = new EffectBoss(m_enemy,m_player);
+	m_gameObjects.emplace_back(m_effectBoss);
+
+	m_ui = new UI(m_player, m_enemy);	
 	m_gameObjects.emplace_back(m_ui);
 	m_gameObjects.emplace_back(m_logo);
 }
@@ -159,7 +162,7 @@ void ScenePlay::Update(float delta_time)
 
 	if (m_stage_name == "stage1")
 	{
-		m_clearBalloon->SteIsDraw(true);
+		m_clearBalloon->SetIsDraw(true);
 		m_balloonInstruction->Update(delta_time);
 	}
 	
@@ -167,7 +170,7 @@ void ScenePlay::Update(float delta_time)
 
 	if (m_stage_name == "stage2")
 	{
-		m_clearBalloon->SteIsDraw(true);
+		m_clearBalloon->SetIsDraw(true);
 		m_wind->Update(delta_time);
 	}
 
@@ -179,7 +182,17 @@ void ScenePlay::Update(float delta_time)
 
 		if (m_total_respawns >= max_total_respawns)
 		{
-			m_clearBalloon->SteIsDraw(true);
+			m_clearBalloon->SetIsDraw(true);
+		}
+	}
+
+	if (m_stage_name == "stageBoss")
+	{
+		CollisionCheckBoss();
+
+		if (m_enemy->GetIsDead())
+		{
+			m_clearBalloon->SetIsDraw(true);
 		}
 	}
 
@@ -197,7 +210,7 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	m_backGround->Draw(delta_time, m_camera);
+	//m_backGround->Draw(delta_time, m_camera);
 	
 	if (m_stage_name == "stage1")
 	{
@@ -320,6 +333,25 @@ bool ScenePlay::SeqIdle(float delta_time)
 		scene->ChangeScene(new SceneTitle());
 	}
 	return true;
+}
+
+void ScenePlay::CollisionCheckBoss()
+{
+	if (!m_enemy->GetIsActiveBoss()) return;
+
+	// ボスのエフェクトの位置を取得
+	tnl::Vector3 circlePosBoss = m_effectBoss->GetPos();
+	
+	if (wta::IsIntersectCircleCircle(m_effectBoss->GetPos(), m_effectBoss->GetSize(), m_player->GetPos(), m_player->GetSize()))
+	{
+		// 無敵状態でない場合に敵のHPを減少
+		if (!m_player->GetIsInvincible())
+		{
+			MusicManager::GetInstance().PlaySE("damaged");
+			m_player->DecreaseHP(1); // ここでHPを減少させる
+			m_player->MakeInvincible(); // 一定時間無敵状態にする
+		}
+	}
 }
 
 void ScenePlay::CollisionCheck(float delta_time)

@@ -27,6 +27,10 @@ protected:
 	
 	bool m_is_active = true;								/*UŒ‚’†*/
 
+	bool m_is_active_boss = false;								/*UŒ‚’†‚©*/
+	bool m_is_fireball = false;								/*‰Î‚ğ“f‚¢‚Ä‚¢‚é‚©*/
+	bool m_is_flame = false;								/*‰Š‚ğ“f‚¢‚Ä‚¢‚é‚©*/
+
 	Player* m_player = nullptr;		
 	Map* m_map = nullptr;
 	Collision * m_collision = nullptr;
@@ -49,6 +53,12 @@ public:
 
 	bool GetIsActive() const { return m_is_active; }
 	void SetIsActive(const bool is_active) { m_is_active = is_active; }
+
+	bool GetIsActiveBoss() const { return m_is_active_boss; }
+	void SetIsActiveBoss(const bool is_active_boss) { m_is_active_boss = is_active_boss; }
+
+	bool GetIsFireBall() const { return m_is_fireball; }
+	bool GetIsFlame() const { return m_is_flame; }
 
 	const sEnemyData& GetEnemyData() const { return s_date; }
 };

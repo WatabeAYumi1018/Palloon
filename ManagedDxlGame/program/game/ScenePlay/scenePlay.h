@@ -15,6 +15,7 @@ class EnemyLoad;
 class Player;
 class Enemy;
 class EffectPlayer;
+class EffectBoss;
 class Wind;
 class UI;
 class Logo;
@@ -43,6 +44,7 @@ public:
 	Enemy* m_enemy = nullptr;
 	EffectPlayer* m_effectPlayer_beam = nullptr;
 	EffectPlayer* m_effectPlayer_fire = nullptr;
+	EffectBoss* m_effectBoss = nullptr;
 	Wind* m_wind = nullptr;
 	UI* m_ui = nullptr;
 	Logo* m_logo = nullptr;
@@ -83,6 +85,7 @@ private:
 	void CreateEffect();
 	void CreateEnemy(float delta_time);
 
+	void CollisionCheckBoss();
 	void CollisionCheck(float delta_time);
 	
 	void RemoveAndDeleteEnemy(Enemy *enemy);
