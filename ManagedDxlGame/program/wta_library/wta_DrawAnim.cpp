@@ -30,18 +30,21 @@ namespace wta
     void DrawAnim::Draw(float delta_time, tnl::Vector3 pos, float scale, float angle) 
     {
         if (!currentAnim || currentAnim->s_animImage.empty()) return; //現在のアニメーションがない、空の場合何もしない
+       
         elapsedTime += delta_time;
+        
         if (elapsedTime >= frameDuration) 
         {
             elapsedTime -= frameDuration;
             ++currentFrame;
+           
             if (currentAnim->s_loop) 
             {
                 currentFrame %= currentAnim->s_animImage.size();
             }
             else if (currentFrame >= currentAnim->s_animImage.size())
             {
-                currentFrame = currentAnim->s_animImage.size() - 1;
+                currentFrame = 0;  //ループしない場合最初のフレームにリセット
             }
         }
         //線分との当たり判定＆補正発生中はangleを45度に固定
