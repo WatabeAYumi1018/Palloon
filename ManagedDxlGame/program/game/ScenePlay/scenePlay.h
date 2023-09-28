@@ -75,7 +75,7 @@ private:
 	std::list<std::pair<Enemy*, float>> m_enemies_respawn_list;	/*リスポーン敵と秒数*/
 	
 	int m_total_respawns = 0;  // すべての敵の再生成回数をカウント
-	const int max_total_respawns = 20;  // 最大再生成回数
+	const int max_total_respawns = 10;  // 最大再生成回数
 
 	tnl::Sequence<ScenePlay> m_sequence = tnl::Sequence<ScenePlay>(this, &ScenePlay::SeqIdle);
 

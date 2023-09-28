@@ -159,6 +159,9 @@ void ScenePlay::Update(float delta_time)
 {	
 	m_collision->CollisionCalculate(m_player, m_map, 10);
 	m_camera->Update(delta_time, m_player, m_map);
+	m_map->LoadMapCollision();
+
+	CollisionCheck(delta_time);
 
 	if (m_stage_name == "stage1")
 	{
@@ -166,15 +169,11 @@ void ScenePlay::Update(float delta_time)
 		m_balloonInstruction->Update(delta_time);
 	}
 	
-	m_map->LoadMapCollision();
-
 	if (m_stage_name == "stage2")
 	{
 		m_clearBalloon->SetIsDraw(true);
 		m_wind->Update(delta_time);
 	}
-
-	CollisionCheck(delta_time);
 
 	if (m_stage_name == "stage3")
 	{
@@ -183,16 +182,16 @@ void ScenePlay::Update(float delta_time)
 		if (m_total_respawns >= max_total_respawns)
 		{
 			m_clearBalloon->SetIsDraw(true);
+			m_balloonInstruction->Update(delta_time);
 		}
 	}
 
 	if (m_stage_name == "stageBoss")
 	{
-		CollisionCheckBoss();
-
 		if (m_enemy->GetIsDead())
 		{
 			m_clearBalloon->SetIsDraw(true);
+			m_balloonInstruction->Update(delta_time);
 		}
 	}
 
@@ -210,7 +209,7 @@ void ScenePlay::Update(float delta_time)
 
 void ScenePlay::Draw(float delta_time)
 {
-	//m_backGround->Draw(delta_time, m_camera);
+	m_backGround->Draw(delta_time, m_camera);
 	
 	if (m_stage_name == "stage1")
 	{
@@ -228,8 +227,6 @@ void ScenePlay::Draw(float delta_time)
 	{
 		obj->Draw(delta_time, m_camera);
 	}
-
-
 }
 
 void ScenePlay::Finalize()
@@ -287,7 +284,7 @@ void ScenePlay::CreateEnemy(float delta_time)
 
 		if (respawn_timer > 3.0f)
 		{
-			if (m_total_respawns < max_total_respawns)  // 追加するチェック
+			if (m_total_respawns < max_total_respawns)
 			{
 				const sEnemyData& respawn_data = enemy->GetEnemyData();
 				m_enemy = new EnemyFairy(respawn_data, m_enemy_infos[respawn_data.s_type_id], m_player, m_map, m_collision, m_camera);
@@ -337,25 +334,40 @@ bool ScenePlay::SeqIdle(float delta_time)
 
 void ScenePlay::CollisionCheckBoss()
 {
-	if (!m_enemy->GetIsActiveBoss()) return;
-
-	// ボスのエフェクトの位置を取得
-	tnl::Vector3 circlePosBoss = m_effectBoss->GetPos();
-	
-	if (wta::IsIntersectCircleCircle(m_effectBoss->GetPos(), m_effectBoss->GetSize(), m_player->GetPos(), m_player->GetSize()))
+	if (!m_enemy->GetIsActiveBoss())
 	{
-		// 無敵状態でない場合に敵のHPを減少
-		if (!m_player->GetIsInvincible())
+		return;
+	}
+
+	// ボスのエフェクトの各当たり判定の位置を取得
+	std::vector<tnl::Vector3> collision_circles_boss = m_effectBoss->GetCollisionCirclesPos();
+
+	// 各当たり判定に対して、プレイヤーとの衝突をチェック
+	for (auto circle_pos_boss : collision_circles_boss)
+	{
+		if (wta::IsIntersectCircleCircle(circle_pos_boss, m_effectBoss->GetSize(), m_player->GetPos(), m_player->GetSize()))
 		{
-			MusicManager::GetInstance().PlaySE("damaged");
-			m_player->DecreaseHP(1); // ここでHPを減少させる
-			m_player->MakeInvincible(); // 一定時間無敵状態にする
+			// 無敵状態でない場合にプレイヤーのHPを減少
+			if (!m_player->GetIsInvincible())
+			{
+				MusicManager::GetInstance().PlaySE("damaged");
+				m_player->DecreaseHP(1); // ここでHPを減少させる
+				m_player->MakeInvincible(); // 一定時間無敵状態にする
+
+				break; // 一つでも当たりがあればループを抜ける
+			}
 		}
 	}
 }
 
 void ScenePlay::CollisionCheck(float delta_time)
 {
+	if (m_stage_name == "stageBoss")
+	{
+		CollisionCheckBoss();
+		m_collision->CollisionCharacter(m_player, m_enemy);
+	}
+
 	for (auto enemy : m_enemies)
 	{
 		if (enemy->GetIsDead())

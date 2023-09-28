@@ -25,7 +25,7 @@ private:
     tnl::Vector3 m_offset_fireball = { 200,0,0 };  // ファイアーボールの位置
     tnl::Vector3 m_fireball_dir; // ファイアーボールが飛ぶ方向
 
-    std::vector<tnl::Vector3> m_collision_circles_pos;		/*5つの円の座標*/
+    std::vector<tnl::Vector3> m_collision_circles_pos;		/*3つの円の座標*/
 
     eEffectBossType e_effectType = eEffectBossType::None;
 
@@ -44,4 +44,7 @@ public:
 
     void Update(float delta_time) override;
     void Draw(float delta_time, const Camera* camera) override;
+
+    //-----Getter,Setter-----//
+    std::vector<tnl::Vector3> GetCollisionCirclesPos() const { return m_collision_circles_pos; }
 };

@@ -8,6 +8,7 @@ EffectBoss::EffectBoss(Enemy* enemy,Player* player) :
     Effect(tnl::Vector3(0, 0, 0), enemy), m_enemy(enemy), m_player(player)
 {
    m_pos = m_enemy->GetPos();
+   m_size = 100;
 }
 
 EffectBoss::~EffectBoss()
@@ -59,29 +60,14 @@ void EffectBoss::CalculateCollisionCircles()
         //‰EF‚P‚Â‚Ì‰~
         circle_pos = m_pos.x+ DRAGON_FIRE_SIZE;
 
-        DrawCircle(circle_pos.x, circle_pos.y, DRAGON_FIRE_SIZE, -1, true);
-
         m_collision_circles_pos.emplace_back(circle_pos);
 
-        //’†‰›‰EF‚Q‚Â‚Ì‰~
+        //¶F‚Q‚Â‚Ì‰~
         for (int i = 1; i <= 2; i++)
         {
             circle_pos = m_pos - tnl::Vector3(i * DRAGON_FIRE_SIZE, 0, 0);
 
-            DrawCircle(circle_pos.x, circle_pos.y, DRAGON_FIRE_SIZE, -1, true);
-
             m_collision_circles_pos.emplace_back(circle_pos);
-        }
-
-        //’†‰›¶F‚R‚Â‚Ì‰~
-        for (int i = 1; i <= 3; i++)
-        {
-            circle_pos = m_pos - tnl::Vector3((i + 2) * DRAGON_FIRE_SIZE, 0, 0);
-            
-            DrawCircle(circle_pos.x, circle_pos.y, DRAGON_FIRE_SIZE, -1, true);
-
-            m_collision_circles_pos.emplace_back(circle_pos);
-
         }
     }
 
