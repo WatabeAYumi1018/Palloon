@@ -42,7 +42,7 @@ void ClearBalloon::Draw(float delta_time, const Camera* camera)
 		if (m_pos.x != 0 && m_pos.y != 0 && m_collision->GetIsUp())
 		{
 			if (m_collision->GetIsClear() &&
-				(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_12)))
+				(tnl::Input::IsKeyDown(eKeys::KB_UP) || tnl::Input::IsPadDown(ePad::KEY_UP)))
 			{
 				MusicManager::GetInstance().PlaySE("clear");
 

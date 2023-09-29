@@ -3,7 +3,7 @@
 #include "Enemy.h"
 
 
-//スライムクラス
+//ボスクラス
 
 class EnemyDoragon :public Enemy
 {

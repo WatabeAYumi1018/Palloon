@@ -57,7 +57,7 @@ bool SceneTitle::SeqIdle(float delta_time)
 		m_current_width = 0;
 	}
 
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)|| tnl::Input::IsPadDownTrigger(ePad::KEY_1))
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN) || tnl::Input::IsPadDownTrigger(ePad::KEY_1))
 	{
 		MusicManager::GetInstance().PlaySE("start");
 

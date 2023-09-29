@@ -2,7 +2,7 @@
 #include "../../../../engine/GameEngine.h"
 #include "Enemy.h"
 
-//スライムクラス
+//バードクラス
 
 class EnemyBird :public Enemy
 {

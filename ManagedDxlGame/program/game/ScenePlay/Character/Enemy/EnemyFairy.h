@@ -2,6 +2,7 @@
 #include "../../../../engine/GameEngine.h"
 #include "Enemy.h"
 
+//—d¸ƒNƒ‰ƒX
 
 class EnemyFairy :public Enemy
 {

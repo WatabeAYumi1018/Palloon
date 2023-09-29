@@ -322,8 +322,8 @@ bool ScenePlay::SeqIdle(float delta_time)
 		m_logo->SetLogoState(eLogoState::Clear);
 	}
 	
-	if((m_is_change_scene && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))) ||
-		(m_player->GetIsDead() && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_1))))
+	if((m_is_change_scene && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_12))) ||
+		(m_player->GetIsDead() && (tnl::Input::IsKeyDown(eKeys::KB_RETURN) || tnl::Input::IsPadDown(ePad::KEY_12))))
 	{
 		MusicManager::GetInstance().PlaySE("enter");
 		auto scene = SceneManager::GetInstance();
