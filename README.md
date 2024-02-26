@@ -113,7 +113,7 @@
 
 ※そちらのリポジトリにも同じ内容のReadMeを付けさせていただいてます。
 
-http:
+http:https://github.com/WatabeAYumi1018/Palloon002
 
 ～アセットの著作権について～
 
